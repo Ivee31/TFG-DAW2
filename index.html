@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memoria TFG - Iván Martín Nieto</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Suavizado de scroll */
+        html { scroll-behavior: smooth; }
+        
+        /* Ajustes de impresión */
+        @media print {
+            body { background: none; }
+            .page-shadow { box-shadow: none; }
+            .print-padding { padding: 0; margin: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-200 py-10 min-h-screen text-gray-800 font-sans">
+
+    <div class="page-shadow w-full md:w-[210mm] min-h-[297mm] mx-auto bg-white shadow-2xl p-[25mm] box-border relative">
+
+        <a id="figura1-logo"></a>
+        <figure class="text-center mb-8">
+            <img src="img/logoIanuarius.png" class="w-[400px] mx-auto" alt="Logotipo Ianuarius">
+            <figcaption class="text-gray-500 text-sm mt-2 italic">Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</figcaption>
+        </figure>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="text-right mb-12 space-y-1">
+            <p class="text-[13px] font-medium uppercase tracking-wide">Ciclo Formativo de Grado Superior</p>
+            <p class="text-xl font-bold text-gray-900">Desarrollo de Aplicaciones Web</p>
+            <p class="text-[13px]">I.E.S. «Venancio Blanco» SALAMANCA</p>
+            
+            <a id="figura2-venancio"></a>
+            <div class="inline-block my-4 bg-white">
+                <img src="img/logoVenancio.png" class="w-[50px]" alt="Logotipo Venancio">
+            </div>
+            
+            <div class="mt-4">
+                <p class="text-[13px] font-bold text-gray-900">TUTOR</p>
+                <p class="mb-2">Serafina Martín Marcos</p>
+                <p class="text-[13px] font-bold text-gray-900">AUTOR</p>
+                <p>Iván Martín Nieto</p>
+            </div>
+        </div>
+        
+        <section class="mb-12 border-t pt-4 border-gray-300">
+            <h3 class="font-bold text-sm text-gray-700 uppercase mb-2">Licencia</h3>
+            <p class="text-xs text-gray-500 leading-relaxed text-justify">
+                Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. 
+                Para ver una copia de la licencia, visite <a href="http://creativecommons.org" class="text-blue-600 hover:underline">http://creativecommons.org</a>.
+            </p>
+        </section>
+
+        <div class="prose prose-slate max-w-none text-justify prose-h2:border-b-2 prose-h2:border-gray-700 prose-h2:pb-2 prose-h2:mt-10 prose-a:text-blue-700 prose-a:no-underline hover:prose-a:underline">
+            
+            <h2>Índice de Contenido</h2>
+            <ul class="list-none pl-0">
+                <li>- <a href="#indice-figuras">Índice de Figuras</a></li>
+                <li>- <a href="#indice-tablas">Índice de Tablas</a></li>
+            </ul>
+
+            <ol>
+                <li>
+                    <a href="#estudio-problema">Estudio del problema y análisis del sistema</a>
+                    <ul> <li><a href="#introduccion">1.1. Introducción</a></li>
+                        <li><a href="#objetivos-alcance">1.2. Objetivos y alcance</a></li>
+                        <li><a href="#requisitos-sistema">1.3. Requisitos del sistema (SRS)</a></li>
+                    </ul>
+                </li>
+                <li><a href="#recursos-necesarios">Recursos necesarios</a></li>
+                </ol>
+            
+            <a id="indice-figuras" class="scroll-mt-10"></a>
+            <h2>Índice de Figuras</h2>
+            <ul>
+                <li><a href="#figura1-logo">Figura 1. Logo Ianuarius</a></li>
+                <li><a href="#figura2-venancio">Figura 2. Logo Venancio Blanco</a></li>
+            </ul>
+
+            <a id="estudio-problema" class="scroll-mt-10"></a> <h2>1. Estudio del problema y análisis del sistema</h2>
+            
+            <div id="introduccion">
+                <h4>1.1. Introducción</h4>
+                <p>
+                    Aplicación web centrada en la gestión del club de atletismo Ianuarius, de forma que se digitalice su gestión.
+                </p>
+                <p>
+                    Por otra parte, gracias a esta transición al mundo digital, permitirá añadir funcionalidades que, en un entorno físico, sin esta aplicación, serían muy costosos...
+                </p>
+            </div>
+
+            <div id="objetivos-alcance">
+                <h4>1.2. Objetivos y alcance</h4>
+                <p>(Objetivos funcionales, no funcionales y el alcance exacto de qué incluye y qué no el proyecto.)</p>
+                
+                <h5>Objetivos Funcionales</h5>
+                <ul>
+                    <li>Registro y LogIn de cuentas con distinción de roles <span class="text-gray-400 text-sm">(adjuntar guía visual)</span></li>
+                    <li>Sistema de inscripción y creación de ficha de club mediante rellenado de formulario</li>
+                </ul>
+            </div>
+
+        </div> </div> </body>
+</html>

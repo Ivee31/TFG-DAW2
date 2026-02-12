@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* Fondo de la web */
+body {
+    background-color: #e0e0e0;
+    margin: 0;
+    padding: 40px 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Contenedor efecto hoja DIN A4 */
+.page-container {
+    background-color: white;
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 25mm;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Ajustes de formato */
+h2 { border-bottom: 2px solid #444; padding-bottom: 5px; margin-top: 40px; }
+h4 { margin-top: 20px; margin-bottom: 10px; }
+p { line-height: 1.5; margin: 10px 0; }
+
+/* Enlaces */
+a { color: #0056b3; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Imágenes */
+img { max-width: 100%; height: auto; }
+
+/* Clases de utilidad */
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.gray-text { color: gray; }
+.no-list { list-style: none; padding-left: 0; }
+
+/* Suavizar el scroll al hacer clic en el índice */
+html { scroll-behavior: smooth; }
