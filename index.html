@@ -4,76 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memoria TFG - Iván Martín Nieto</title>
-    
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        html { scroll-behavior: smooth; }
-        /* Ajuste para que el título no se quede pegado arriba al hacer clic en el índice */
-        .scroll-mt-10 { scroll-margin-top: 2.5rem; }
-        
-        @media print {
-            body { background: white; }
-            .page-shadow { box-shadow: none; margin: 0; width: 100%; padding: 0; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-200 py-10 min-h-screen text-gray-800 font-sans">
+<body>
 
-    <div class="page-shadow w-full md:w-[210mm] min-h-[297mm] mx-auto bg-white shadow-2xl p-[25mm] box-border relative">
+    <div class="contenedor-pag">
 
-        <a id="figura1-logo" class="scroll-mt-10"></a>
-        <figure class="text-center mb-8">
-            <img src="img/logoIanuarius.png" class="w-[400px] mx-auto" alt="Logotipo">
-            <figcaption class="text-gray-500 text-sm mt-2 italic">Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</figcaption>
+        <a id="figura1-logo" class="ancla-top"></a>
+        <figure class="figura-logo">
+            <img src="img/logoIanuarius.png" class="logo-ianuarius" alt="Logotipo Ianuarius">
+            <figcaption class="pie-foto">Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</figcaption>
         </figure>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class="text-right mb-12 space-y-1">
-            <p class="text-[13px] font-medium uppercase tracking-wide">CICLO FORMATIVO DE GRADO SUPERIOR</p>
-            <p class="text-xl font-bold text-gray-900">Desarrollo de Aplicaciones Web</p>
-            <p class="text-[13px]">I.E.S. «Venancio Blanco» SALAMANCA</p>
+        <br><br><br><br>
+        
+        <div class="info-cabecera">
+            <p class="txt-mayus">Ciclo Formativo de Grado Superior</p>
+            <p class="txt-titulo">Desarrollo de Aplicaciones Web</p>
+            <p class="txt-insti">I.E.S. «Venancio Blanco» SALAMANCA</p>
             
-            <a id="figura2-venancio" class="scroll-mt-10"></a>
-            <div class="inline-block my-4 bg-white">
-                <img src="img/logoVenancio.png" class="w-[50px]" alt="Logotipo" style="margin-right: 0;"> 
+            <a id="figura2-venancio" class="ancla-top"></a>
+            <div class="cont-logo-venancio">
+                <img src="img/logoVenancio.png" class="logo-venancio" alt="Logotipo Venancio">
             </div>
             
-            <div class="mt-4">
-                <p class="text-[13px] font-bold text-gray-900">TUTOR</p>
-                <p class="mb-2">Serafina Martín Marcos</p>
-                <p class="text-[13px] font-bold text-gray-900">AUTOR</p>
+            <div>
+                <p class="txt-negrita">TUTOR</p>
+                <p>Serafina Martín Marcos</p>
+                <p class="txt-negrita">AUTOR</p>
                 <p>Iván Martín Nieto</p>
             </div>
         </div>
 
-        <section class="mb-12 border-t pt-4 border-gray-300">
-            <h3 class="font-bold text-sm text-gray-700 uppercase mb-2">Licencia</h3>
-            <p class="text-xs text-gray-500 leading-relaxed text-justify">
-                Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. Para ver una copia de la licencia, visite <a href="http://creativecommons.org/licenses/by-sa/3.0/es/" class="text-blue-600 hover:underline">http://creativecommons.org/licenses/by-sa/3.0/es/</a> o envíe una carta a Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
+        <section class="sec-licencia">
+            <h3 class="tit-licencia">Licencia</h3>
+            <p class="txt-licencia">
+                Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. Para ver una copia de la licencia, visite <a href="http://creativecommons.org/licenses/by-sa/3.0/es/" class="enlace-azul">http://creativecommons.org/licenses/by-sa/3.0/es/</a> o envíe una carta a Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
             </p>
         </section>
 
-        <div class="prose prose-slate max-w-none text-justify prose-h2:border-b-2 prose-h2:border-gray-700 prose-h2:pb-2 prose-h2:mt-12 prose-h4:text-slate-700 prose-h4:mt-6 prose-a:text-blue-700 prose-a:no-underline hover:prose-a:underline">
+        <div class="prose max-w-none">
 
             <h2>Índice de Contenido</h2>
-            <ul class="list-none pl-0">
+            <ul>
                 <li>- <a href="#indice-figuras">Índice de Figuras</a></li>
                 <li>- <a href="#indice-tablas">Índice de Tablas</a></li>
             </ul>
@@ -133,7 +106,7 @@
             </ol>
 
 
-            <a id="indice-figuras" class="scroll-mt-10"></a>
+            <a id="indice-figuras" class="ancla-top"></a>
             <h2>Índice de Figuras</h2>
             <ul>
                 <li><a href="#figura1-logo">Figura 1. Logo Ianuarius</a></li>
@@ -141,153 +114,197 @@
             </ul>
 
 
-            <a id="indice-tablas" class="scroll-mt-10"></a>
+            <a id="indice-tablas" class="ancla-top"></a>
             <h2>Índice de Tablas</h2>
             <p>- (Aquí irán tus tablas)</p>
 
 
-            <a id="estudio-problema" class="scroll-mt-10"></a>
+            <a id="estudio-problema" class="ancla-top"></a>
             <h2>1. Estudio del problema y análisis del sistema</h2>
             
-            <div id="introduccion" class="scroll-mt-10">
+            <div id="introduccion" class="ancla-top">
                 <h4>1.1. Introducción</h4>
                 <p>Aplicación web centrada en la gestión del club de atletismo Ianuarius, de forma que se digitalice su gestión.</p>
-                <p>Por otra parte, gracias a esta transición al mundo digital, permitirá añadir funcionalidades que, en un entorno físico, sin esta aplicación, se rían muy costosos, complicados o incluso, imposibles de llevar a cabo, sobre todo teniendo en cuenta el gran número de atletas pertenecientes al club, de los cuales, su gran mayoría son menores, o lo suficientemente pequeños como para no estar capacitados para manejarse por sí mismos.</p>
+                <p>Por otra parte, gracias a esta transición al mundo digital, permitirá añadir funcionalidades que, en un entorno físico, sin esta aplicación, serían muy costosos, complicados o incluso, imposibles de llevar a cabo, sobre todo teniendo en cuenta el gran número de atletas pertenecientes al club, de los cuales, su gran mayoría son menores, o lo suficientemente pequeños como para no estar capacitados para manejarse por sí mismos.</p>
                 <p>En cuanto a una oportunidad de negocio, este proyecto está inspirado desde la experiencia personal, de este modo, se ha podido observar que los clubes de atletismo, por lo general, no disponen de ningún sistema para gestionar y administrar a sus atletas de forma medianamente automatizada, por lo que este proyecto en sí, aporta algo totalmente nuevo al sector.</p>
                 <p>En cualquiera de los casos, cabe destacar que el proyecto ha sido ampliamente pensado para el club homónimo al título de este, por lo que, para otros clubes, cabría la posibilidad de que haya funciones insuficientes o que, por el contrario, haya un exceso de estas.</p>
             </div>
             
-            <div id="objetivos-alcance" class="scroll-mt-10">
+            <div id="objetivos-alcance" class="ancla-top">
                 <h4>1.2. Objetivos y alcance</h4>
                 <p>(Objetivos funcionales, no funcionales y el alcance exacto de qué incluye y qué no el proyecto.)</p>
                 
                 <h5>Objetivos Funcionales</h5>
-                <ul class="list-none pl-0">
+                <ul>
                     <li>
                         <p>- Registro y LogIn de cuentas con distinción de roles</p>
-                        <p class="text-gray-500 text-sm">(adjuntar guía visual)</p>
+                        <p class="nota-gris">(adjuntar guía visual)</p>
                     </li>
                     <li>
                         <p>- Sistema de inscripción y creación de ficha de club mediante rellenado de formulario</p>
-                        <p class="text-gray-500 text-sm">(adjuntar guía visual)</p>
+                        <p class="nota-gris">(adjuntar guía visual)</p>
                     </li>
                     <li>
                         <p>- En defecto del anterior, sistema de subida de archivos PDF con la ficha previamente rellenada en físico</p>
-                        <p class="text-gray-500 text-sm">(adjuntar guía visual)</p>
+                        <p class="nota-gris">(adjuntar guía visual)</p>
                     </li>
                     <li>
-                        <p>- En defecto del anterior, sistema de subida de archivos PDF con la ficha ya rellenada en físico</p>
-                        <p class="text-gray-500 text-sm">(adjuntar guia visual)</p>
+                        <p>- Envío de confirmación de inscripción y ficha rellenada</p>
+                        <p class="nota-gris">(adjuntar guía visual)</p>
+                    </li>
+                    <li>
+                        <p>- Filtro de busqueda de datos de atletas para entrenadores y atletas: Marcas, fechas, ficha, etc. Con filtros de búsqueda como categoria, edad o prueba, entre otros</p>
+                        <p class="nota-gris">(adjuntar guía visual)</p>
+                    </li>
+                    <li>
+                        <p>- Calendario con fechas de pagos, de inscripción, de competiciones o de reconocimientos médicos</p>
+                        <p class="nota-gris">(adjuntar guía visual)</p>
+                    </li>
+                </ul>
+
+                <h5>Objetivos No Funcionales</h5>
+                <ul>
+                    <li>
+                        <p>- Diseño con formato responsivo</p>
+                        <p class="nota-gris">(adjuntar guía visual)</p>
+                    </li>
+                    <li>
+                        <p>- Página de bienvenida con información del club, presentación, etc.</p>
+                        <p class="nota-gris">(adjuntar guía visual)</p>
+                    </li>
+                    <li>
+                        <p>- Diseño limpio, moderno y accesible</p>
+                        <p class="nota-gris">(adjuntar guía visual)</p>
                     </li>
                 </ul>
             </div>
 
-            <div id="requisitos-sistema" class="scroll-mt-10">
+            <div id="requisitos-sistema" class="ancla-top">
                 <h4>1.3. Requisitos del sistema (SRS)</h4>
                 <p>(Incluye aquí el Documento de Especificación de Requisitos: funcionales, no funcionales, restricciones técnicas y normativa aplicable como RGPD).</p>
+                <ul>
+                    <li>
+                        <p>- Funcionalidades: CRUD de eventos, generación dinámica de PDF y subida segura de archivos</p>
+                    </li>
+                    <li>
+                        <p>- No Funcionales (Técnicos): Arquitectura MVC, sistema de autenticación seguro, validación de datos cliente/ servidor, diseño responsivo</p>
+                    </li>
+                    <li>
+                        <p>- Requisitos de ejecución: Navegador web (móvil/ PC), servidor (apache o nginx o en su defecto, lanzado desde un repositorio) con PHP, base de datos MySQL y conexión a internet</p>
+                    </li>
+                </ul>
             </div>
 
 
-            <a id="recursos-necesarios" class="scroll-mt-10"></a>
+            <a id="recursos-necesarios" class="ancla-top"></a>
             <h2>2. Recursos necesarios</h2>
             
-            <div id="recursos-humanos" class="scroll-mt-10">
+            <div id="recursos-humanos" class="ancla-top">
                 <h4>2.1. Recursos humanos, hardware y software</h4>
-                <p>(Detalla roles, equipos, sistemas operativos, lenguajes, frameworks y herramientas)</p>
+                <ul>
+                    <li>
+                        <p>- Lenguajes: HTML, CSS, JS, PHP, SQL.</p>
+                    </li>
+                    <li>
+                        <p>- Herramientas: VS Code, XAMPP, Obsidian</p>
+                    </li>
+                    <li>
+                        <p>- Librerias/ Frameworks: Node, React, Tailwind CSS, librería de generación de PDFs</p>
+                    </li>
+                    <li>
+                        <p>- Diseño: Figma (mockup), </p>
+                    </li>
+                </ul>
             </div>
             
-            <div id="estimacion-costes" class="scroll-mt-10">
+            <div id="estimacion-costes" class="ancla-top">
                 <h4>2.2. Estimación de costes y presupuesto</h4>
                 <p>(Calcula costes de hardware, software, licencias y horas de desarrollo)</p>
             </div>
 
 
-            <a id="planif-metodo" class="scroll-mt-10"></a>
+            <a id="planif-metodo" class="ancla-top"></a>
             <h2>3. Planificación y metodología</h2>
             
-            <div id="metodologia-desarrollo" class="scroll-mt-10">
+            <div id="metodologia-desarrollo" class="ancla-top">
                 <h4>3.1. Metodología de desarrollo</h4>
-                <p>(Justifica y describe la metodología: Ágil, Scrum, Cascada, etc.)</p>
+                <p>La metodología usada será MVC para la parte técnica</p>
             </div>
             
-            <div id="diseno-tecnico" class="scroll-mt-10">
+            <div id="diseno-tecnico" class="ancla-top">
                 <h4>3.2. Diseño técnico del sistema</h4>
                 <p>(Inserta aquí: Arquitectura, Diagrama de casos de uso, Diagrama de clases, Diagrama de secuencia, Prototipos Figma/Wireframes y Patrones)</p>
             </div>
             
-            <div id="planificacion-temporal" class="scroll-mt-10">
+            <div id="planificacion-temporal" class="ancla-top">
                 <h4>3.3. Planificación temporal</h4>
                 <p>(Inserta el Diagrama de Gantt inicial y final, comparando la previsión con la realidad)</p>
             </div>
 
 
-            <a id="desarrollo-proyecto" class="scroll-mt-10"></a>
+            <a id="desarrollo-proyecto" class="ancla-top"></a>
             <h2>4. Desarrollo del proyecto</h2>
             
-            <div id="organizacion-real" class="scroll-mt-10">
+            <div id="organizacion-real" class="ancla-top">
                 <h4>4.1. Organización real del trabajo</h4>
                 <p>(Describe las fases reales, cambios, problemas y ajustes)</p>
             </div>
             
-            <div id="modelo-datos" class="scroll-mt-10">
+            <div id="modelo-datos" class="ancla-top">
                 <h4>4.2. Modelo de datos</h4>
                 <p>(Inserta el Diagrama Entidad-Relación, modelo relacional y explicación de tablas)</p>
             </div>
             
-            <div id="implementacion-despliegue" class="scroll-mt-10">
+            <div id="implementacion-despliegue" class="ancla-top">
                 <h4>4.3. Implementación y despliegue</h4>
                 <p>(Describe tecnologías, estructura de carpetas, fragmentos clave de código, diagrama de despliegue y entorno de ejecución)</p>
             </div>
 
 
-            <a id="fase-pruebas" class="scroll-mt-10"></a>
+            <a id="fase-pruebas" class="ancla-top"></a>
             <h2>5. Fase de pruebas y control de calidad</h2>
             
-            <div id="plan-pruebas" class="scroll-mt-10">
+            <div id="plan-pruebas" class="ancla-top">
                 <h4>5.1. Plan de pruebas</h4>
                 <p>(Describe pruebas unitarias y de integración)</p>
             </div>
             
-            <div id="registro-incidencias" class="scroll-mt-10">
+            <div id="registro-incidencias" class="ancla-top">
                 <h4>5.2. Registro de incidencias</h4>
                 <p>(Inserta tabla con: Error, Fecha, Causa, Solución)</p>
             </div>
             
-            <div id="validacion-final" class="scroll-mt-10">
+            <div id="validacion-final" class="ancla-top">
                 <h4>5.3. Validación final</h4>
                 <p>(Análisis de cumplimiento de requisitos)</p>
             </div>
 
 
-            <a id="conclusiones" class="scroll-mt-10"></a>
+            <a id="conclusiones" class="ancla-top"></a>
             <h2>6. Conclusiones</h2>
             
-            <div id="reflexion-personal" class="scroll-mt-10">
+            <div id="reflexion-personal" class="ancla-top">
                 <h4>6.1. Reflexión personal sobre el proyecto</h4>
-                <p></p>
-            </div>
+                </div>
             
-            <div id="dificultades" class="scroll-mt-10">
+            <div id="dificultades" class="ancla-top">
                 <h4>6.2. Dificultades encontradas y resolución</h4>
-                <p></p>
             </div>
             
-            <div id="objetivos-cumplidos" class="scroll-mt-10">
+            <div id="objetivos-cumplidos" class="ancla-top">
                 <h4>6.3. Grado de cumplimiento de objetivos</h4>
-                <p></p>
             </div>
             
-            <div id="propuestas-mejora" class="scroll-mt-10">
+            <div id="propuestas-mejora" class="ancla-top">
                 <h4>6.4. Propuestas de mejora y evolución futura</h4>
-                <p></p>
             </div>
 
-            <a id="referencias" class="scroll-mt-10"></a>
+            <a id="referencias" class="ancla-top"></a>
             <h2>7. Referencias y bibliografía</h2>
             
-            <a id="anexos" class="scroll-mt-10"></a>
+            <a id="anexos" class="ancla-top"></a>
             <h2>8. Anexos</h2>
-            <ul class="list-none pl-0">
+            <ul>
                 <li id="manual-instalacion">
                     <h4>8.1. Manual de instalación</h4>
                 </li>
