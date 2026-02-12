@@ -1,6 +1,6 @@
 <a id="figura1-logo"></a>
 <figure style="text-align: center">
-	<img src="logoIanuarius.png" width="400" alt="Logotipo">
+	<img src="IMG/logoIanuarius.png" width="400" alt="Logotipo">
 	<figcaption style="color: gray">Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</figcaption>
 </figure>
 
@@ -9,7 +9,7 @@
 	<p style="font-weight: bold; font-size: 18">Desarrollo de Aplicaciones Web</p>
 	<p style="font-size: 13">I.E.S. «Venancio Blanco» SALAMANCA</p>
 	<a id="figura2-venancio"></a>
-	<img src="logoVenancio.png" width="50" alt="Logotipo" style="background-color: white; margin-right: 135">
+	<img src="IMG/logoVenancio.png" width="50" alt="Logotipo" style="background-color: white; margin-right: 135">
 	<p style="font-size: 13; font-weight: bold">TUTOR</p>
 	<p>Serafina Martín Marcos</p>
 	<p style="font-size: 13; font-weight: bold">AUTOR</p>
