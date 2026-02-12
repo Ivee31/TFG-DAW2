@@ -1,26 +1,20 @@
-<table>
-  <tr>
-    <td width="50%" align="center" valign="middle">
-      <img src="IMG/logoIanuarius.png" width="400" alt="Logotipo Ianuarius"><br>
-      <em>Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</em>
-    </td>
-    <td width="50%" align="right" valign="top">
-      CICLO FORMATIVO DE GRADO SUPERIOR<br>
-      <b>Desarrollo de Aplicaciones Web</b><br>
-      I.E.S. «Venancio Blanco» SALAMANCA<br>
-      <br>
-      <img src="IMG/logoVenancio.png" width="50" alt="Logo Venancio"><br>
-      <br>
-      <b>TUTOR</b><br>
-      Serafina Martín Marcos<br>
-      <b>AUTOR</b><br>
-      Iván Martín Nieto
-    </td>
-  </tr>
-</table>
+![Logotipo Ianuarius](IMG/logoIanuarius.png)
+
+*Figura 1. Logotipo "Atletismo Salamanca Ianuarius"*
+
+---
+
+**CICLO FORMATIVO DE GRADO SUPERIOR**
+**Desarrollo de Aplicaciones Web**
+I.E.S. «Venancio Blanco» SALAMANCA
+
+![Logo Venancio](IMG/logoVenancio.png)
+
+**TUTOR:** Serafina Martín Marcos
+**AUTOR:** Iván Martín Nieto
 
 ### Licencia
-Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. Para ver una copia de la licencia, visite [Creative Commons](http://creativecommons.org/licenses/by-sa/3.0/es/).
+Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons.
 
 ## Índice de Contenido
 - [Índice de Figuras](#índice-de-figuras)
@@ -49,7 +43,7 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 ## 1. Estudio del problema y análisis del sistema
 
 ### 1.1. Introducción
-Aplicación web centrada en la gestión del club de atletismo Ianuarius, de forma que se digitalice su gestión.
+Aplicación web centrada en la gestión del Club de Atletismo Ianuarius, de forma que se digitalice su gestión.
 
 Por otra parte, gracias a esta transición al mundo digital, permitirá añadir funcionalidades que, en un entorno físico, sin esta aplicación, serían muy costosos, complicados o incluso, imposibles de llevar a cabo.
 
