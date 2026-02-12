@@ -146,3 +146,9 @@ body {
         padding: 0;
     }
 }
+
+/* --- CLASE PARA CONTENIDO NO INCLUIDO EN ESTA ENTREGA --- */
+.zona-apagada {
+    opacity: 0.4;
+    filter: grayscale(100%); /* Opcional: lo pone en blanco y negro suave */
+}
