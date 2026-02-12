@@ -1,19 +1,23 @@
-<p align="center">
-  <img src="IMG/logoIanuarius.png" width="400" alt="Logotipo Ianuarius">
-  <br>
-  <em>Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</em>
-</p>
+<div align="center">
+<img src="IMG/logoIanuarius.png" width="400" alt="Logotipo">
+<br>
+<em>Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</em>
+</div>
 
-<p align="right">
-  CICLO FORMATIVO DE GRADO SUPERIOR<br>
-  <b>Desarrollo de Aplicaciones Web</b><br>
-  I.E.S. «Venancio Blanco» SALAMANCA<br>
-  <img src="IMG/logoVenancio.png" width="50" alt="Logo Venancio"><br>
-  <b>TUTOR</b><br>
-  Serafina Martín Marcos<br>
-  <b>AUTOR</b><br>
-  Iván Martín Nieto
-</p>
+<br>
+
+<div align="right">
+CICLO FORMATIVO DE GRADO SUPERIOR<br>
+<b>Desarrollo de Aplicaciones Web</b><br>
+I.E.S. «Venancio Blanco» SALAMANCA<br>
+<br>
+<img src="IMG/logoVenancio.png" width="50" alt="Logo Venancio"><br>
+<br>
+<b>TUTOR</b><br>
+Serafina Martín Marcos<br>
+<b>AUTOR</b><br>
+Iván Martín Nieto
+</div>
 
 ### Licencia
 Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. Para ver una copia de la licencia, visite [Creative Commons](http://creativecommons.org/licenses/by-sa/3.0/es/) o envíe una carta a Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
