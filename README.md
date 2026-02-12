@@ -1,11 +1,10 @@
-<svg align="right" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
 <foreignObject width="100" height="100">
-    <div xmlns="http://www.w3.org/1999/xhtml">
-        <ul>
-            <li>text</li>
-        </ul>
-        <!-- Other embed HTML element/text into SVG -->
-    </div>
+    <a id="figura1-logo"></a>
+	<figure style="text-align: center">
+		<img src="img/logoIanuarius.png" width="400" alt="Logotipo">
+		<figcaption style="color: gray">Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</figcaption>
+	</figure>
 </foreignObject>
 </svg>
 
