@@ -59,7 +59,7 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 
 ## Índice de Figuras
 - [Figura 1. Logo Ianuarius](#figura1)
-- [Figura 2. Logo Venancio Blanco](#figura2)
+
 
 ## Índice de Tablas
 - (Aquí irán tus tablas)
