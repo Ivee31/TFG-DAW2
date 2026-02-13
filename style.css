@@ -39,7 +39,7 @@
     --h2-border: #9ca3af;
     --h4-color: #ffffff;
     --h5-color: #d1d5db;
-    --shadow-paper: 0 0 25px rgba(255, 255, 255, 0.1); /* Sombra blanca resplandeciente */
+    --shadow-paper: 0 0 25px rgba(255, 255, 255, 0.05); /* Sombra blanca resplandeciente */
 
     /* Tablas y Etiquetas (Adaptadas a oscuro) */
     --th-bg: #450a0a;       
