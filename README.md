@@ -1,12 +1,22 @@
 # MEMORIA DEL PROYECTO - IANUARIUS
 
+<a name="figura1"></a>
 <p align="center">
   <img src="img/logoIanuarius.png" alt="Logotipo Ianuarius" width="300">
+  <br>
+  <em>Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</em>
 </p>
 
 - **Autor:** Iván Martín Nieto
 - **Tutor:** Serafina Martín Marcos
 - **Ciclo:** Desarrollo de Aplicaciones Web (I.E.S. Venancio Blanco)
+
+<a name="figura2"></a>
+<p align="right">
+  <img src="img/logoVenancio.png" alt="Logotipo Venancio" width="50">
+  <br>
+  <em>Figura 2. Logotipo Venancio Blanco</em>
+</p>
 
 ---
 
@@ -54,8 +64,8 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 ---
 
 ## Índice de Figuras
-- Figura 1. Logo Ianuarius
-- Figura 2. Logo Venancio Blanco
+- [Figura 1. Logo Ianuarius](#figura1)
+- [Figura 2. Logo Venancio Blanco](#figura2)
 
 ## Índice de Tablas
 - (Aquí irán tus tablas)
