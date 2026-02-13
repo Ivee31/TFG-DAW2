@@ -9,6 +9,16 @@
 </head>
 <body>
 
+    <div class="toggle-container">
+        <input type="checkbox" id="toggle-tema" class="toggle-input">
+        <label for="toggle-tema" class="toggle-label" aria-label="Cambiar modo oscuro/claro">
+            <span class="toggle-knob">
+                <span class="icon-moon">🌙</span> 
+                <span class="icon-sun">☀️</span>
+            </span>
+        </label>
+    </div>
+
     <div class="contenedor-pag">
 
         <a id="figura1-logo" class="ancla-top"></a>
@@ -132,50 +142,107 @@
             
             <div id="objetivos-alcance" class="ancla-top">
                 <h4>1.2. Objetivos y alcance</h4>
-                <p>(Objetivos funcionales, no funcionales y el alcance exacto de qué incluye y qué no el proyecto.)</p>
+                <p>Siguiendo los criterios SMART (Específico, Medible, Alcanzable, Relevante y Temporal), se definen a continuación los objetivos del proyecto.</p>
                 
-                <h5>Objetivos Funcionales</h5>
-                <ul>
-                    <li>
-                        <p>- Registro y LogIn de cuentas con distinción de roles</p>
-                        <p class="nota-gris">(adjuntar guía visual)</p>
-                    </li>
-                    <li>
-                        <p>- Sistema de inscripción y creación de ficha de club mediante rellenado de formulario</p>
-                        <p class="nota-gris">(adjuntar guía visual)</p>
-                    </li>
-                    <li>
-                        <p>- En defecto del anterior, sistema de subida de archivos PDF con la ficha previamente rellenada en físico</p>
-                        <p class="nota-gris">(adjuntar guía visual)</p>
-                    </li>
-                    <li>
-                        <p>- Envío de confirmación de inscripción y ficha rellenada</p>
-                        <p class="nota-gris">(adjuntar guía visual)</p>
-                    </li>
-                    <li>
-                        <p>- Filtro de busqueda de datos de atletas para entrenadores y atletas: Marcas, fechas, ficha, etc. Con filtros de búsqueda como categoria, edad o prueba, entre otros</p>
-                        <p class="nota-gris">(adjuntar guía visual)</p>
-                    </li>
-                    <li>
-                        <p>- Calendario con fechas de pagos, de inscripción, de competiciones o de reconocimientos médicos</p>
-                        <p class="nota-gris">(adjuntar guía visual)</p>
-                    </li>
-                </ul>
+                <h5>1. Objetivo General</h5>
+                <table class="tabla-smart">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Concepto</th>
+                            <th style="width: 40%;">Descripción</th>
+                            <th style="width: 40%;">Análisis SMART</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Propósito Principal</strong></td>
+                            <td>Desarrollar una plataforma web integral para la digitalización de la gestión del Club Atletismo Ianuarius (inscripciones, fichas y seguimiento).</td>
+                            <td>
+                                <strong>S:</strong> Web de gestión de fichas y atletas.<br>
+                                <strong>M:</strong> Gestión de licencias por vias digitales.<br>
+                                <strong>A:</strong> Stack LAMP (Linux, Apache, MySQL, PHP).<br>
+                                <strong>R:</strong> Elimina el uso de papel físico.<br>
+                                <strong>T:</strong> Funcional para la temporada 2026 - 2027 (Utilizable de ahí en adelante).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
+                <h5>2. Objetivos Funcionales</h5>
+                <p>Desglose de las funcionalidades principales ("Qué hace" el sistema):</p>
+
+                <table class="tabla-smart">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">ID</th>
+                            <th style="width: 15%;">Módulo</th>
+                            <th style="width: 35%;">Descripción</th>
+                            <th style="width: 30%;">Justificación SMART</th>
+                            <th style="width: 10%;">Prioridad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>OBJ-01</strong></td>
+                            <td>Usuarios</td>
+                            <td>Registro, Login y distinción de roles (Admin, Entrenador, Atleta).</td>
+                            <td>
+                                <strong>S:</strong> Acceso seguro por credenciales.<br>
+                                <strong>M:</strong> 3 roles diferenciados.<br>
+                                <strong>T:</strong> Fase 1 (Base de datos).
+                            </td>
+                            <td><span class="etiqueta prio-alta">Alta</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>OBJ-02</strong></td>
+                            <td>Fichas</td>
+                            <td>Subida de archivos escaneados para inscripciones físicas (legacy).</td>
+                            <td>
+                                <strong>S:</strong> Upload de PDF/JPG.<br>
+                                <strong>R:</strong> Soporte a inscripciones manuales.<br>
+                                <strong>T:</strong> Fase 2.
+                            </td>
+                            <td><span class="etiqueta prio-alta">Alta</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>OBJ-03</strong></td>
+                            <td>Fichas</td>
+                            <td>Inscripción online con generación automática de PDF y envío por email.</td>
+                            <td>
+                                <strong>S:</strong> Formulario a PDF automático.<br>
+                                <strong>M:</strong> 0 errores de transcripción.<br>
+                                <strong>T:</strong> Fase 2 (Lógica de negocio).
+                            </td>
+                            <td><span class="etiqueta prio-media">Media</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>OBJ-04</strong></td>
+                            <td>Gestión</td>
+                            <td>Filtros de búsqueda avanzada (Categoría, edad, prueba, marcas).</td>
+                            <td>
+                                <strong>S:</strong> Filtrado SQL dinámico.<br>
+                                <strong>T:</strong> Fase 3 (Panel Admin).
+                            </td>
+                            <td><span class="etiqueta prio-media">Media</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>OBJ-05</strong></td>
+                            <td>Atletas</td>
+                            <td>Calendario de eventos y feedback de entrenamientos (sensaciones).</td>
+                            <td>
+                                <strong>S:</strong> Calendario visual interactivo.<br>
+                                <strong>R:</strong> Seguimiento deportivo.<br>
+                                <strong>T:</strong> Fase Final.
+                            </td>
+                            <td><span class="etiqueta prio-baja">Baja</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
                 <h5>Objetivos No Funcionales</h5>
                 <ul>
-                    <li>
-                        <p>- Diseño con formato responsivo</p>
-                        <p class="nota-gris">(adjuntar guía visual)</p>
-                    </li>
-                    <li>
-                        <p>- Página de bienvenida con información del club, presentación, etc.</p>
-                        <p class="nota-gris">(adjuntar guía visual)</p>
-                    </li>
-                    <li>
-                        <p>- Diseño limpio, moderno y accesible</p>
-                        <p class="nota-gris">(adjuntar guía visual)</p>
-                    </li>
+                    <li><p>- Diseño Responsive (Mobile First).</p></li>
+                    <li><p>- Interfaz limpia y accesible según estándares web.</p></li>
                 </ul>
             </div>
 
@@ -223,10 +290,10 @@
             </div>
 
 
-            <a id="planif-metodo" class="ancla-top"></a>
-            <h2>3. Planificación y metodología</h2>
+            <a id="planif-metodo" class="ancla-top zona-apagada"></a>
+            <h2 class="zona-apagada">3. Planificación y metodología</h2>
             
-            <div id="metodologia-desarrollo" class="ancla-top">
+            <div id="metodologia-desarrollo" class="ancla-top zona-apagada">
                 <h4>3.1. Metodología de desarrollo</h4>
                 <p>La metodología usada será MVC para la parte técnica</p>
             </div>
@@ -319,5 +386,30 @@
                 </li>
             </ul>
 
-        </div> </div> </body>
+        </div> </div> 
+
+    <script>
+        const toggleInput = document.getElementById('toggle-tema');
+        const body = document.body;
+
+        // 1. Detectar preferencia del sistema al cargar
+        // Si el sistema prefiere oscuro, activamos el modo y marcamos el checkbox
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            body.setAttribute('data-theme', 'dark');
+            toggleInput.checked = true;
+        }
+
+        // 2. Función para cambiar el tema al usar el interruptor
+        // Escuchamos el evento 'change' del checkbox
+        toggleInput.addEventListener('change', () => {
+            if (toggleInput.checked) {
+                // Si está marcado -> Modo Oscuro
+                body.setAttribute('data-theme', 'dark');
+            } else {
+                // Si no está marcado -> Modo Claro
+                body.removeAttribute('data-theme');
+            }
+        });
+    </script>
+</body>
 </html>

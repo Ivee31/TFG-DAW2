@@ -1,21 +1,151 @@
+/* style.css */
+
+/* --- DEFINICIÓN DE VARIABLES DE COLOR (THEMING) --- */
+:root {
+    /* MODO CLARO (Por defecto) */
+    --bg-body: #e5e7eb;
+    --bg-paper: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --text-paragraph: #212121;
+    --border-color: #d1d5db;
+    --link-color: #2563eb;
+    --h2-border: #374151;
+    --h4-color: black;
+    --h5-color: #303741;
+    --shadow-paper: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* Sombra negra */
+    
+    /* Tablas y Etiquetas */
+    --th-bg: #fee2e2;       
+    --th-text: #991b1b;     
+    --td-text: #1f2937;     
+    --badge-alta-bg: #ffedd5;
+    --badge-alta-text: #9a3412;
+    --badge-media-bg: #dbeafe;
+    --badge-media-text: #1e40af;
+    --badge-baja-bg: #dcfce7;
+    --badge-baja-text: #166534;
+}
+
+/* MODO OSCURO */
+[data-theme="dark"] {
+    --bg-body: #111827;     
+    --bg-paper: #1f2937;    
+    --text-main: #f3f4f6;   
+    --text-muted: #9ca3af;  
+    --text-paragraph: #e5e7eb;
+    --border-color: #374151;
+    --link-color: #60a5fa;  
+    --h2-border: #9ca3af;
+    --h4-color: #ffffff;
+    --h5-color: #d1d5db;
+    --shadow-paper: 0 0 25px rgba(255, 255, 255, 0.1); /* Sombra blanca resplandeciente */
+
+    /* Tablas y Etiquetas (Adaptadas a oscuro) */
+    --th-bg: #450a0a;       
+    --th-text: #fca5a5;     
+    --td-text: #ffffff;     /* Blanco puro para máximo contraste */
+    --badge-alta-bg: #7c2d12;
+    --badge-alta-text: #ffedd5;
+    --badge-media-bg: #1e3a8a;
+    --badge-media-text: #dbeafe;
+    --badge-baja-bg: #14532d;
+    --badge-baja-text: #dcfce7;
+}
+
+/* --- REGLAS DE FORZADO PARA MODO OSCURO (Soluciona el problema de Tailwind) --- */
+/* Esto obliga a las negritas (S, M, A, R, T) y al texto de tabla a ser blancos */
+[data-theme="dark"] .prose strong,
+[data-theme="dark"] .tabla-smart strong {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .prose td,
+[data-theme="dark"] .tabla-smart td {
+    color: #e5e7eb !important;
+}
+
+/* --- Configuración General --- */
 html {
     scroll-behavior: smooth;
 }
 
 body {
-    background-color: #e5e7eb;
+    background-color: var(--bg-body);
     margin: 0;
     padding: 40px 0;
     font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-    color: #1f2937;
+    color: var(--text-main);
+    transition: background-color 0.3s, color 0.3s; 
 }
 
+/* --- NUEVO INTERRUPTOR DESLIZANTE (TOGGLE) --- */
+.toggle-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toggle-input {
+    display: none;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    width: 60px;
+    height: 30px;
+    background-color: #1f2937; /* Color oscuro del carril */
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: 2px solid var(--border-color);
+}
+
+.toggle-knob {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.icon-moon, .icon-sun {
+    position: absolute;
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* Animaciones de los iconos */
+.icon-moon { opacity: 1; transform: rotate(0deg); transition: all 0.3s; }
+.icon-sun { opacity: 0; transform: rotate(-90deg); transition: all 0.3s; }
+
+/* ESTADOS ACTIVADOS (Modo Oscuro) */
+.toggle-input:checked + .toggle-label .toggle-knob {
+    transform: translateX(30px);
+}
+
+.toggle-input:checked + .toggle-label .icon-moon { opacity: 0; transform: rotate(90deg); }
+.toggle-input:checked + .toggle-label .icon-sun { opacity: 1; transform: rotate(0deg); color: #f59e0b; }
+
+
+/* --- Ajuste de Scroll --- */
 .ancla-top {
     scroll-margin-top: 2.5rem;
 }
 
+/* --- Contenedor Principal (A4) --- */
 .contenedor-pag {
-    background-color: white;
+    background-color: var(--bg-paper);
     width: 100%;
     max-width: 210mm;
     min-height: 297mm;
@@ -23,9 +153,11 @@ body {
     padding: 25mm;
     box-sizing: border-box;
     position: relative;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-paper); /* Sombra variable según tema */
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+/* --- Cabecera y Logos --- */
 .figura-logo {
     text-align: center;
     margin-bottom: 2rem;
@@ -36,10 +168,11 @@ body {
     max-width: 100%;
     margin: 0 auto;
     display: block;
+    transition: background-color 0.3s;
 }
 
 .pie-foto {
-    color: #6b7280;
+    color: var(--text-muted);
     font-size: 0.875rem;
     font-style: italic;
     margin-top: 0.5rem;
@@ -52,42 +185,47 @@ body {
 
 .info-cabecera p { margin: 0.25rem 0; }
 .txt-mayus { text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px; font-weight: 500; }
-.txt-titulo { font-size: 1.25rem; font-weight: bold; color: #111827; }
+.txt-titulo { font-size: 1.25rem; font-weight: bold; color: var(--text-main); }
 .txt-insti { font-size: 13px; }
 
+/* LOGO VENANCIO: Margen 150px y fondo blanco en oscuro */
 .cont-logo-venancio {
     display: inline-block;
-    margin: 1rem 0;
-    background-color: white;
+    margin: 1rem 150px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 5px;
+    border-radius: 4px;
 }
 
-.logo-venancio { width: 50px; }
-.txt-negrita { font-size: 13px; font-weight: bold; color: #111827; margin-top: 1rem; }
+.logo-venancio { width: 50px; transition: background-color 0.3s; }
+.txt-negrita { font-size: 13px; font-weight: bold; color: var(--text-main); margin-top: 1rem; }
 
+/* --- Licencia --- */
 .sec-licencia {
     margin-bottom: 3rem;
     padding-top: 1rem;
-    border-top: 1px solid #d1d5db;
+    border-top: 1px solid var(--border-color);
 }
 
-.tit-licencia { font-weight: bold; font-size: 0.875rem; color: #374151; text-transform: uppercase; margin-bottom: 0.5rem; }
-.txt-licencia { font-size: 0.75rem; color: #6b7280; line-height: 1.6; text-align: justify; }
-.enlace-azul { color: #2563eb; text-decoration: none; }
+.tit-licencia { font-weight: bold; font-size: 0.875rem; color: var(--text-paragraph); text-transform: uppercase; margin-bottom: 0.5rem; }
+.txt-licencia { font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; text-align: justify; }
+.enlace-azul { color: var(--link-color); text-decoration: none; }
 .enlace-azul:hover { text-decoration: underline; }
 
+/* --- Estilos del Texto y Títulos --- */
 .prose h2 {
-    border-bottom: 2px solid #374151;
+    border-bottom: 2px solid var(--h2-border);
     padding-bottom: 0.5rem;
     margin-top: 3rem;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #1a202c;
+    color: var(--text-main);
 }
 
 .prose h4 {
     font-size: 0.9rem;
     font-weight: 700;
-    color: black;
+    color: var(--h4-color);
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
 }
@@ -95,7 +233,7 @@ body {
 .prose h5 {
     font-size: 0.9rem;
     font-weight: 700;
-    color: #303741;
+    color: var(--h5-color);
     margin-top: 2em;
     margin-bottom: 0.02rem;
 }
@@ -103,9 +241,10 @@ body {
 .prose p {
     text-align: justify;
     margin-bottom: 0.2rem;
-    color: #212121;
+    color: var(--text-paragraph);
 }
 
+/* --- Listas --- */
 .prose ul {
     list-style: none !important;
     padding-left: 0 !important;
@@ -123,15 +262,15 @@ body {
 }
 
 .prose ol > li::marker {
-    color: #111827 !important;
+    color: var(--text-main) !important;
     font-weight: 800;
 }
 
-.prose a { color: #1d4ed8; text-decoration: none; }
+.prose a { color: var(--link-color); text-decoration: none; }
 .prose a:hover { text-decoration: underline; }
 
 .nota-gris {
-    color: #6b7280;
+    color: var(--text-muted);
     font-size: 0.875rem;
     margin-top: 0;
 }
@@ -145,10 +284,49 @@ body {
         max-width: none;
         padding: 0;
     }
+    .toggle-container { display: none; } 
 }
 
-/* --- CLASE PARA CONTENIDO NO INCLUIDO EN ESTA ENTREGA --- */
+/* --- CLASE PARA CONTENIDO NO INCLUIDO --- */
 .zona-apagada {
     opacity: 0.4;
-    filter: grayscale(100%); /* Opcional: lo pone en blanco y negro suave */
+    filter: grayscale(100%);
 }
+
+/* --- TABLAS SMART (Adaptables) --- */
+.tabla-smart {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+.tabla-smart th {
+    background-color: var(--th-bg);
+    color: var(--th-text);
+    font-weight: bold;
+    text-align: left;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+}
+
+.tabla-smart td {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    vertical-align: top;
+    color: var(--td-text); 
+}
+
+/* Etiquetas de prioridad */
+.etiqueta {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.prio-alta { background-color: var(--badge-alta-bg); color: var(--badge-alta-text); }
+.prio-media { background-color: var(--badge-media-bg); color: var(--badge-media-text); }
+.prio-baja { background-color: var(--badge-baja-bg); color: var(--badge-baja-text); }
