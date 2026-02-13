@@ -1,6 +1,8 @@
 # MEMORIA DEL PROYECTO - IANUARIUS
 
-[[img/logoIanuarius.png|250]]
+<p align="center">
+  <img src="img/logoIanuarius.png" alt="Logotipo Ianuarius" width="300">
+</p>
 
 - **Autor:** Iván Martín Nieto
 - **Tutor:** Serafina Martín Marcos
