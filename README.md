@@ -1,6 +1,6 @@
 # MEMORIA DEL PROYECTO - IANUARIUS
 
-<p align="center">
+<p align="right">
   <img src="img/logoIanuarius.png" alt="Logotipo Ianuarius" width="300">
 </p>
 
