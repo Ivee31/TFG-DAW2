@@ -13,7 +13,7 @@
 - **Ciclo:** Desarrollo de Aplicaciones Web (I.E.S. Venancio Blanco)
 
 <p align="right">
-	<a href="https://ivee31.github.io/TFG-DAW2/">🌐 Ver Documentación Online</a>
+	<a href="https://ivee31.github.io/TFG-DAW2/" target="_blank">🌐 Ver Documentación Online</a>
 </p>
 
 
