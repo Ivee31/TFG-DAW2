@@ -1,5 +1,6 @@
 # MEMORIA DEL PROYECTO - IANUARIUS
 ![Logotipo Ianuarius|300](img/logoIanuarius.png)
+
 **Autor:** Iván Martín Nieto
 **Tutor:** Serafina Martín Marcos
 **Ciclo:** Desarrollo de Aplicaciones Web (I.E.S. Venancio Blanco)
