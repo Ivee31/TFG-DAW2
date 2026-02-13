@@ -1,5 +1,6 @@
 # MEMORIA DEL PROYECTO - IANUARIUS
-![Logotipo Ianuarius|300](img/logoIanuarius.png)
+
+[[img/logoIanuarius.png|250]]
 
 - **Autor:** Iván Martín Nieto
 - **Tutor:** Serafina Martín Marcos
@@ -9,6 +10,53 @@
 
 ## Licencia
 Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. Para ver una copia de la licencia, visite [Creative Commons](http://creativecommons.org/licenses/by-sa/3.0/es/) o envíe una carta a Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
+
+---
+
+## Índice de Contenido
+
+- [Índice de Figuras](#índice-de-figuras)
+- [Índice de Tablas](#índice-de-tablas)
+
+1. [Estudio del problema y análisis del sistema](#1-estudio-del-problema-y-análisis-del-sistema)
+	- 1.1. [Introducción](#11-introducción)
+	- 1.2. [Objetivos y alcance](#12-objetivos-y-alcance)
+	- 1.3. [Requisitos del sistema (SRS)](#13-requisitos-del-sistema-srs)
+2. [Recursos necesarios](#2-recursos-necesarios)
+	- 2.1. [Recursos humanos, hardware y software](#21-recursos-humanos-hardware-y-software)
+	- 2.2. [Estimación de costes y presupuesto](#22-estimación-de-costes-y-presupuesto)
+3. [Planificación y metodología](#3-planificación-y-metodología)
+	- 3.1. [Metodología de desarrollo](#31-metodología-de-desarrollo)
+	- 3.2. [Diseño técnico del sistema](#32-diseño-técnico-del-sistema)
+	- 3.3. [Planificación temporal](#33-planificación-temporal)
+4. [Desarrollo del proyecto](#4-desarrollo-del-proyecto)
+	- 4.1. [Organización real del trabajo](#41-organización-real-del-trabajo)
+	- 4.2. [Modelo de datos](#42-modelo-de-datos)
+	- 4.3. [Implementación y despliegue](#43-implementación-y-despliegue)
+5. [Fase de pruebas y control de calidad](#5-fase-de-pruebas-y-control-de-calidad)
+	- 5.1. [Plan de pruebas](#51-plan-de-pruebas)
+	- 5.2. [Registro de incidencias](#52-registro-de-incidencias)
+	- 5.3. [Validación final](#53-validación-final)
+6. [Conclusiones](#6-conclusiones)
+	- 6.1. [Reflexión personal sobre el proyecto](#61-reflexión-personal-sobre-el-proyecto)
+	- 6.2. [Dificultades encontradas y resolución](#62-dificultades-encontradas-y-resolución)
+	- 6.3. [Grado de cumplimiento de objetivos](#63-grado-de-cumplimiento-de-objetivos)
+	- 6.4. [Propuestas de mejora y evolución futura](#64-propuestas-de-mejora-y-evolución-futura)
+7. [Referencias y bibliografía](#7-referencias-y-bibliografía)
+8. [Anexos](#8-anexos)
+	- 8.1. [Manual de instalación](#81-manual-de-instalación)
+	- 8.2. [Manual de usuario](#82-manual-de-usuario)
+	- 8.3. [Documentación complementaria digital](#83-documentación-complementaria-digital)
+	- 8.4. [Anexos Técnicos y Documentales](#84-anexos-técnicos-y-documentales)
+
+---
+
+## Índice de Figuras
+- Figura 1. Logo Ianuarius
+- Figura 2. Logo Venancio Blanco
+
+## Índice de Tablas
+- (Aquí irán tus tablas)
 
 ---
 
