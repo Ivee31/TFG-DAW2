@@ -11,13 +11,6 @@
 - **Tutor:** Serafina Martín Marcos
 - **Ciclo:** Desarrollo de Aplicaciones Web (I.E.S. Venancio Blanco)
 
-<a name="figura2"></a>
-<p align="right">
-  <img src="img/logoVenancio.png" alt="Logotipo Venancio" width="50">
-  <br>
-  <em>Figura 2. Logotipo Venancio Blanco</em>
-</p>
-
 ---
 
 ## Licencia
