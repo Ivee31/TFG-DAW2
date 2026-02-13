@@ -6,6 +6,7 @@
   <br>
   <em>Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</em>
 </p>
+<br><br>
 
 - **Autor:** Iván Martín Nieto
 - **Tutor:** Serafina Martín Marcos
