@@ -115,7 +115,6 @@
                 </li>
             </ol>
 
-
             <a id="indice-figuras" class="ancla-top"></a>
             <h2>Índice de Figuras</h2>
             <ul>
@@ -123,16 +122,14 @@
                 <li><a href="#figura2-venancio">Figura 2. Logo Venancio Blanco</a></li>
             </ul>
 
-
             <a id="indice-tablas" class="ancla-top"></a>
             <h2>Índice de Tablas</h2>
             <p>- (Aquí irán tus tablas)</p>
 
-
             <a id="estudio-problema" class="ancla-top"></a>
             <h2>1. Estudio del problema y análisis del sistema</h2>
             
-            <div id="introduccion" class="ancla-top">
+            <div id="introduccion" class="ancla-top sangria-1">
                 <h4>1.1. Introducción</h4>
                 <p>Aplicación web centrada en la gestión del club de atletismo Ianuarius, de forma que se digitalice su gestión.</p>
                 <p>Por otra parte, gracias a esta transición al mundo digital, permitirá añadir funcionalidades que, en un entorno físico, sin esta aplicación, serían muy costosos, complicados o incluso, imposibles de llevar a cabo, sobre todo teniendo en cuenta el gran número de atletas pertenecientes al club, de los cuales, su gran mayoría son menores, o lo suficientemente pequeños como para no estar capacitados para manejarse por sí mismos.</p>
@@ -140,133 +137,323 @@
                 <p>En cualquiera de los casos, cabe destacar que el proyecto ha sido ampliamente pensado para el club homónimo al título de este, por lo que, para otros clubes, cabría la posibilidad de que haya funciones insuficientes o que, por el contrario, haya un exceso de estas.</p>
             </div>
             
-            <div id="objetivos-alcance" class="ancla-top">
+            <div id="objetivos-alcance" class="ancla-top sangria-1">
                 <h4>1.2. Objetivos y alcance</h4>
                 <p>Siguiendo los criterios SMART (Específico, Medible, Alcanzable, Relevante y Temporal), se definen a continuación los objetivos del proyecto.</p>
                 
-                <h5>1. Objetivo General</h5>
-                <table class="tabla-smart">
-                    <thead>
-                        <tr>
-                            <th style="width: 20%;">Concepto</th>
-                            <th style="width: 40%;">Descripción</th>
-                            <th style="width: 40%;">Análisis SMART</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Propósito Principal</strong></td>
-                            <td>Desarrollar una plataforma web integral para la digitalización de la gestión del Club Atletismo Ianuarius (inscripciones, fichas y seguimiento).</td>
-                            <td>
-                                <strong>S:</strong> Web de gestión de fichas y atletas.<br>
-                                <strong>M:</strong> Gestión de licencias por vias digitales.<br>
-                                <strong>A:</strong> Stack LAMP (Linux, Apache, MySQL, PHP).<br>
-                                <strong>R:</strong> Elimina el uso de papel físico.<br>
-                                <strong>T:</strong> Funcional para la temporada 2026 - 2027 (Utilizable de ahí en adelante).
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="sangria-2">
+                    <h5>1.2.1. Objetivo General</h5>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Concepto</th>
+                                <th style="width: 40%;">Descripción</th>
+                                <th style="width: 40%;">Análisis SMART</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Propósito Principal</strong></td>
+                                <td>Desarrollar una plataforma web integral para la digitalización de la gestión del Club Atletismo Ianuarius (inscripciones, fichas y seguimiento).</td>
+                                <td>
+                                    <strong>S:</strong> Web de gestión de fichas y atletas.<br>
+                                    <strong>M:</strong> Gestión de licencias por vías digitales.<br>
+                                    <strong>A:</strong> Stack LAMP (Linux, Apache, MySQL, PHP).<br>
+                                    <strong>R:</strong> Elimina el uso de papel físico.<br>
+                                    <strong>T:</strong> Funcional para la temporada 2026 - 2027 (Utilizable de ahí en adelante).
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <h5>2. Objetivos Funcionales</h5>
-                <p>Desglose de las funcionalidades principales ("Qué hace" el sistema):</p>
+                <div class="sangria-2">
+                    <h5>1.2.2. Objetivos Funcionales</h5>
+                    <p>Desglose de las funcionalidades principales ("Qué hace" el sistema):</p>
 
-                <table class="tabla-smart">
-                    <thead>
-                        <tr>
-                            <th style="width: 10%;">ID</th>
-                            <th style="width: 15%;">Módulo</th>
-                            <th style="width: 35%;">Descripción</th>
-                            <th style="width: 30%;">Justificación SMART</th>
-                            <th style="width: 10%;">Prioridad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>OBJ-01</strong></td>
-                            <td>Usuarios</td>
-                            <td>Registro, Login y distinción de roles (Admin, Entrenador, Atleta).</td>
-                            <td>
-                                <strong>S:</strong> Acceso seguro por credenciales.<br>
-                                <strong>M:</strong> 3 roles diferenciados.<br>
-                                <strong>T:</strong> Fase 1 (Base de datos).
-                            </td>
-                            <td><span class="etiqueta prio-alta">Alta</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>OBJ-02</strong></td>
-                            <td>Fichas</td>
-                            <td>Subida de archivos escaneados para inscripciones físicas (legacy).</td>
-                            <td>
-                                <strong>S:</strong> Upload de PDF/JPG.<br>
-                                <strong>R:</strong> Soporte a inscripciones manuales.<br>
-                                <strong>T:</strong> Fase 2.
-                            </td>
-                            <td><span class="etiqueta prio-alta">Alta</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>OBJ-03</strong></td>
-                            <td>Fichas</td>
-                            <td>Inscripción online con generación automática de PDF y envío por email.</td>
-                            <td>
-                                <strong>S:</strong> Formulario a PDF automático.<br>
-                                <strong>M:</strong> 0 errores de transcripción.<br>
-                                <strong>T:</strong> Fase 2 (Lógica de negocio).
-                            </td>
-                            <td><span class="etiqueta prio-media">Media</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>OBJ-04</strong></td>
-                            <td>Gestión</td>
-                            <td>Filtros de búsqueda avanzada (Categoría, edad, prueba, marcas).</td>
-                            <td>
-                                <strong>S:</strong> Filtrado SQL dinámico.<br>
-                                <strong>T:</strong> Fase 3 (Panel Admin).
-                            </td>
-                            <td><span class="etiqueta prio-media">Media</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>OBJ-05</strong></td>
-                            <td>Atletas</td>
-                            <td>Calendario de eventos y feedback de entrenamientos (sensaciones).</td>
-                            <td>
-                                <strong>S:</strong> Calendario visual interactivo.<br>
-                                <strong>R:</strong> Seguimiento deportivo.<br>
-                                <strong>T:</strong> Fase Final.
-                            </td>
-                            <td><span class="etiqueta prio-baja">Baja</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h5>Objetivos No Funcionales</h5>
-                <ul>
-                    <li><p>- Diseño Responsive (Mobile First).</p></li>
-                    <li><p>- Interfaz limpia y accesible según estándares web.</p></li>
-                </ul>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">ID</th>
+                                <th style="width: 15%;">Módulo</th>
+                                <th style="width: 35%;">Descripción</th>
+                                <th style="width: 30%;">Justificación SMART</th>
+                                <th style="width: 10%;">Prioridad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>OBJ-01</strong></td>
+                                <td>Usuarios</td>
+                                <td>Registro, Login y distinción de roles (Admin, Entrenador, Atleta).</td>
+                                <td>
+                                    <strong>S:</strong> Acceso seguro por credenciales.<br>
+                                    <strong>M:</strong> 3 roles diferenciados.<br>
+                                    <strong>T:</strong> Fase 1 (Base de datos).
+                                </td>
+                                <td><span class="etiqueta prio-alta">Alta</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>OBJ-02</strong></td>
+                                <td>Fichas</td>
+                                <td>Subida de archivos escaneados para inscripciones físicas (legacy).</td>
+                                <td>
+                                    <strong>S:</strong> Upload de PDF/JPG.<br>
+                                    <strong>R:</strong> Soporte a inscripciones manuales.<br>
+                                    <strong>T:</strong> Fase 2.
+                                </td>
+                                <td><span class="etiqueta prio-alta">Alta</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>OBJ-03</strong></td>
+                                <td>Fichas</td>
+                                <td>Inscripción online con generación automática de PDF y envío por email.</td>
+                                <td>
+                                    <strong>S:</strong> Formulario a PDF automático.<br>
+                                    <strong>M:</strong> 0 errores de transcripción.<br>
+                                    <strong>T:</strong> Fase 2 (Lógica de negocio).
+                                </td>
+                                <td><span class="etiqueta prio-media">Media</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>OBJ-04</strong></td>
+                                <td>Gestión</td>
+                                <td>Filtros de búsqueda avanzada (Categoría, edad, prueba, marcas).</td>
+                                <td>
+                                    <strong>S:</strong> Filtrado SQL dinámico.<br>
+                                    <strong>T:</strong> Fase 3 (Panel Admin).
+                                </td>
+                                <td><span class="etiqueta prio-media">Media</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>OBJ-05</strong></td>
+                                <td>Atletas</td>
+                                <td>Calendario de eventos y feedback de entrenamientos (sensaciones).</td>
+                                <td>
+                                    <strong>S:</strong> Calendario visual interactivo.<br>
+                                    <strong>R:</strong> Seguimiento deportivo.<br>
+                                    <strong>T:</strong> Fase Final.
+                                </td>
+                                <td><span class="etiqueta prio-baja">Baja</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5>Objetivos No Funcionales</h5>
+                    <ul>
+                        <li><p>- Diseño Responsive (Mobile First).</p></li>
+                        <li><p>- Interfaz limpia y accesible según estándares web.</p></li>
+                    </ul>
+                </div>
             </div>
 
-            <div id="requisitos-sistema" class="ancla-top">
+            <div id="requisitos-sistema" class="ancla-top sangria-1">
                 <h4>1.3. Requisitos del sistema (SRS)</h4>
-                <p>(Incluye aquí el Documento de Especificación de Requisitos: funcionales, no funcionales, restricciones técnicas y normativa aplicable como RGPD).</p>
-                <ul>
-                    <li>
-                        <p>- Funcionalidades: CRUD de eventos, generación dinámica de PDF y subida segura de archivos</p>
-                    </li>
-                    <li>
-                        <p>- No Funcionales (Técnicos): Arquitectura MVC, sistema de autenticación seguro, validación de datos cliente/ servidor, diseño responsivo</p>
-                    </li>
-                    <li>
-                        <p>- Requisitos de ejecución: Navegador web (móvil/ PC), servidor (apache o nginx o en su defecto, lanzado desde un repositorio) con PHP, base de datos MySQL y conexión a internet</p>
-                    </li>
-                </ul>
-            </div>
+                <p>En este apartado se detallan las especificaciones técnicas, normativas y requisitos necesarios para el funcionamiento de la plataforma Ianuarius.</p>
 
+                <div class="sangria-2">
+                    <h5>1.3.1. Normativa y Legislación</h5>
+                    <p>Debido a que el sistema gestiona inscripciones de atletas (en su mayoría menores) y realiza un seguimiento de sus entrenamientos, el cumplimiento normativo es estricto:</p>
+                    <ul>
+                        <li><p>- <strong>RGPD y LOPDGDD:</strong> Los datos (identificativos, documentos de salud e imágenes) se alojarán en servidores del Espacio Económico Europeo (EEE). Se requerirá consentimiento verificable de tutores legales para menores de 14 años.</p></li>
+                        <li><p>- <strong>Derecho al olvido:</strong> Debido a la necesidad de los datos personales aportados por cada individuo a la hora de federarse, se podrá solicitar la eliminación de dichos datos una vez el atleta inscrito abandone el club (de lo contrario, no podría pertenecer al club, ya que no tendría seguro médico aportado por la federación).</p></li>
+                        <li><p>- <strong>LSSI-CE y Accesibilidad:</strong> Se incluirá un Aviso Legal con los datos del club. Se buscará cumplir con el nivel AA de las directrices WCAG 2.1 (contraste 4.5:1, etiquetas 'alt' y navegación por teclado).</p></li>
+                        <li><p>- <strong>Licencias:</strong> Tecnologías libres (HTML, CSS, PHP, MySQL), Tailwind CSS (MIT) y librerías de generación de PDF (MIT/GPL) compatibles con el proyecto.</p></li>
+                    </ul>
+                </div>
+
+                <div class="sangria-2">
+                    <h5>1.3.2. Definición de Actores</h5>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">ID: ACT-01</th>
+                                <th style="width: 80%;">Visitante</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Descripción</strong></td>
+                                <td>Usuario no registrado que accede a la parte pública (portfolio informativo).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Permisos</strong></td>
+                                <td>Visualizar información básica del club (plazos de fichas, horarios, periodos de entreno, etc.).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">ID: ACT-02</th>
+                                <th style="width: 80%;">Atleta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Descripción</strong></td>
+                                <td>Integrante del club registrado de forma oficial.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Permisos</strong></td>
+                                <td>Iniciar sesión, realizar inscripciones (formulario o subida de PDF), acceder a su historial, editar inscripciones en plazo y registrar feedback de entrenamientos.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">ID: ACT-03</th>
+                                <th style="width: 80%;">Entrenador (Administrador)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Descripción</strong></td>
+                                <td>Miembro del cuerpo técnico encargado de la gestión del club.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Permisos</strong></td>
+                                <td>Permisos de Atleta + visualizar todas las fichas, filtrar atletas (edad, categoría) y consultar el calendario global.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="sangria-2">
+                    <h5>1.3.3. Requisitos Funcionales (RF)</h5>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">ID</th>
+                                <th style="width: 15%;">Función</th>
+                                <th style="width: 35%;">Descripción Detallada</th>
+                                <th style="width: 15%;">Actor</th>
+                                <th style="width: 10%;">CU</th>
+                                <th style="width: 15%;">Prioridad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>RF-01</strong></td>
+                                <td>Registro</td>
+                                <td>El sistema permitirá crear una cuenta mediante formulario validando el email.</td>
+                                <td>Visitante</td>
+                                <td>UC-01</td>
+                                <td><span class="etiqueta prio-alta">Alta</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-02</strong></td>
+                                <td>Login</td>
+                                <td>El sistema verificará credenciales contra la BBDD y asignará la sesión.</td>
+                                <td>Atleta/Admin</td>
+                                <td>UC-01</td>
+                                <td><span class="etiqueta prio-alta">Alta</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-03</strong></td>
+                                <td>Inscripción</td>
+                                <td>El sistema generará un PDF automático a partir de los datos del formulario.</td>
+                                <td>Atleta</td>
+                                <td>UC-02</td>
+                                <td><span class="etiqueta prio-alta">Alta</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-04</strong></td>
+                                <td>Subida PDF</td>
+                                <td>El sistema permitirá adjuntar archivos físicos escaneados (JPG/PDF).</td>
+                                <td>Atleta</td>
+                                <td>UC-03</td>
+                                <td><span class="etiqueta prio-media">Media</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-05</strong></td>
+                                <td>Filtros</td>
+                                <td>El sistema ordenará las fichas por categoría, fecha o edad.</td>
+                                <td>Admin</td>
+                                <td>UC-04</td>
+                                <td><span class="etiqueta prio-media">Media</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-06</strong></td>
+                                <td>Generación PDF</td>
+                                <td>El sistema generará ficha de inscripción en PDF en base a los datos aportados en el formulario de inscripción.</td>
+                                <td>Atleta</td>
+                                <td>UC-03</td>
+                                <td><span class="etiqueta prio-baja">Baja</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="sangria-2">
+                    <h5>1.3.4. Requisitos No Funcionales (RNF)</h5>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">ID</th>
+                                <th style="width: 25%;">Tipo</th>
+                                <th style="width: 60%;">Descripción y Métrica</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>RNF-01</strong></td>
+                                <td>Seguridad</td>
+                                <td>Las contraseñas se almacenarán cifradas mediante hash en la BBDD.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RNF-02</strong></td>
+                                <td>Rendimiento</td>
+                                <td>La generación del PDF de inscripción habría de tardar menos de 5000ms.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RNF-03</strong></td>
+                                <td>Disponibilidad</td>
+                                <td>El sistema será responsivo (Mobile First) para uso en pistas de atletismo.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="sangria-2">
+                    <h5>1.3.5. Requisitos de Información (IRQ)</h5>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">ID: IRQ-01</th>
+                                <th style="width: 80%;">Información de Usuarios y Fichas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Descripción</strong></td>
+                                <td>El sistema debe almacenar permanentemente los datos de registro e inscripción.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Datos concretos</strong></td>
+                                <td>
+                                    • ID Usuario (PK)<br>
+                                    • Nombre, Apellidos, DNI, Email (Único), Contraseña (Hash)<br>
+                                    • Rol (Atleta o Entrenador/Admin)<br>
+                                    • Ruta del PDF de inscripción generado
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Comentarios</strong></td>
+                                <td>Los campos DNI y Email son obligatorios y únicos.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <a id="recursos-necesarios" class="ancla-top"></a>
             <h2>2. Recursos necesarios</h2>
             
-            <div id="recursos-humanos" class="ancla-top">
+            <div id="recursos-humanos" class="ancla-top sangria-1">
                 <h4>2.1. Recursos humanos, hardware y software</h4>
                 <ul>
                     <li>
@@ -284,85 +471,338 @@
                 </ul>
             </div>
             
-            <div id="estimacion-costes" class="ancla-top zona-apagada">
+            <div id="estimacion-costes" class="ancla-top sangria-1">
                 <h4>2.2. Estimación de costes y presupuesto</h4>
-                <p>(Calcula costes de hardware, software, licencias y horas de desarrollo)</p>
+                <p>Aunque el proyecto se desarrolla en un ámbito académico, a continuación se presenta una estimación del presupuesto como si se tratase de un encargo profesional para el Club Atletismo Ianuarius.</p>
+
+                <div class="sangria-2">
+                    <h5>1. Costes de Hardware y Software</h5>
+                    <p>Se ha optado por un entorno de desarrollo basado en software libre y herramientas de código abierto (Open Source), reduciendo drásticamente los costes de licencias.</p>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">Concepto</th>
+                                <th style="width: 50%;">Descripción</th>
+                                <th style="width: 20%;">Coste Estimado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Hardware</strong></td>
+                                <td>Amortización de equipo informático (Portátil desarrollo).</td>
+                                <td>250,00 €</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Software IDE</strong></td>
+                                <td>Visual Studio Code, Obsidian.</td>
+                                <td>0,00 € (Free)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Entorno Servidor</strong></td>
+                                <td>XAMPP (Apache, MySQL, PHP).</td>
+                                <td>0,00 € (Free)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Diseño / UI</strong></td>
+                                <td>Figma (Plan gratuito), Tailwind CSS.</td>
+                                <td>0,00 € (Free)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Despliegue (Fase 1)</strong></td>
+                                <td>GitHub Pages (Frontend) / Servidor local.</td>
+                                <td>0,00 € (Free)</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align: right;"><strong>Total Recursos</strong></td>
+                                <td><strong>250,00 €</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="sangria-2">
+                    <h5>2. Costes de Personal (Desarrollo)</h5>
+                    <p>Estimación basada en la tarifa horaria de un perfil <em>Junior Web Developer</em> (aprox. 18 €/hora) para una carga de trabajo de unas 150 horas a lo largo del proyecto.</p>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">Fase</th>
+                                <th style="width: 30%;">Horas Estimadas</th>
+                                <th style="width: 30%;">Coste (18 € / h)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Análisis y Diseño</td>
+                                <td>40 h</td>
+                                <td>720,00 €</td>
+                            </tr>
+                            <tr>
+                                <td>Desarrollo Backend y BBDD</td>
+                                <td>50 h</td>
+                                <td>900,00 €</td>
+                            </tr>
+                            <tr>
+                                <td>Desarrollo Frontend y Vistas</td>
+                                <td>40 h</td>
+                                <td>720,00 €</td>
+                            </tr>
+                            <tr>
+                                <td>Pruebas y Documentación</td>
+                                <td>20 h</td>
+                                <td>360,00 €</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;"><strong>Total Desarrollo</strong></td>
+                                <td><strong>150 h</strong></td>
+                                <td><strong>2.700,00 €</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Presupuesto Total Estimado: 2.950,00 €</strong> (Impuestos no incluidos).</p>
+                </div>
             </div>
 
-
-            <a id="planif-metodo" class="ancla-top zona-apagada"></a>
+            <a id="planif-metodo" class="ancla-top"></a>
             <h2>3. Planificación y metodología</h2>
             
-            <div id="metodologia-desarrollo" class="ancla-top zona-apagada">
+            <div id="metodologia-desarrollo" class="ancla-top sangria-1">
                 <h4>3.1. Metodología de desarrollo</h4>
-                <p>(Sección sin completar)</p>
-            </div>
-            
-            <div id="diseno-tecnico" class="ancla-top zona-apagada">
-                <h4>3.2. Diseño técnico del sistema</h4>
-                <p>(Inserta aquí: Arquitectura, Diagrama de casos de uso, Diagrama de clases, Diagrama de secuencia, Prototipos Figma/Wireframes y Patrones)</p>
-            </div>
-            
-            <div id="planificacion-temporal" class="ancla-top zona-apagada">
-                <h4>3.3. Planificación temporal</h4>
-                <p>(Inserta el Diagrama de Gantt inicial y final, comparando la previsión con la realidad)</p>
-            </div>
+                <p>Para la ejecución de la plataforma Ianuarius, se ha optado por una <strong>Metodología Ágil basada en un modelo Scrum adaptado</strong> a un único desarrollador.</p>
+                <p>Las razones de esta elección son:</p>
 
+                <div class="sangria-2">
+                    <h5>3.1.1. Desarrollo iterativo e incremental:</h5>
+                    <p>Permite tener versiones funcionales (prototipos) desde las primeras semanas, añadiendo módulos (login, PDF, filtros) de forma progresiva.</p>
+                    
+                    <h5>3.1.2. Flexibilidad ante cambios:</h5>
+                    <p>Al interactuar con el tutor/cliente, es posible ajustar los requisitos sobre la marcha (por ejemplo, añadir campos nuevos a la ficha médica) sin romper la estructura de trabajo.</p>
+                    
+                    <h5>3.1.3. Herramientas de gestión:</h5>
+                    <p>Se utilizará un tablero tipo Kanban (como Trello o GitHub Projects) dividido en las columnas básicas: <em>Backlog</em> (Tareas pendientes), <em>In Progress</em> (En desarrollo), <em>Testing</em> (Pruebas) y <em>Done</em> (Completado).</p>
+                </div>
+            </div>
+            
+            <div id="diseno-tecnico" class="ancla-top sangria-1">
+                <h4>3.2. Diseño técnico del sistema</h4>
+                <p>En esta fase se modelan las interacciones de los usuarios con el sistema para definir la arquitectura lógica de la aplicación.</p>
+
+                <div class="sangria-2">
+                    <h5>3.2.1. Diagrama de Casos de Uso</h5>
+                    <p><em>(A continuación se insertará el diagrama UML mostrando los límites del sistema y las relaciones entre Visitante, Atleta y Administrador).</em></p>
+                    
+                    <figure class="figura-logo">
+                        <img src="img/diagrama_uml.png" class="img-diagrama" style="width: 800px; max-width: 100%;" alt="Diagrama de Casos de Uso">
+                        <figcaption class="pie-foto">Figura 3. Diagrama de Casos de Uso del Sistema</figcaption>
+                    </figure>
+
+                    <h5>3.2.2. Especificación de Casos de Uso</h5>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">UC-01</th>
+                                <th style="width: 80%;">Registro y Autenticación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Actor</strong></td>
+                                <td>Visitante (pasa a ser Atleta/Entrenador)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interés</strong></td>
+                                <td>Crear una cuenta segura, para acceder a un más amplio registro de funciones del club.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Precondición</strong></td>
+                                <td>No tener una cuenta previamente registrada con el email aportado.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Garantía</strong></td>
+                                <td>Datos almacenados (contraseñas cifradas) y sesión iniciada.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Flujo Básico</strong></td>
+                                <td>
+                                    1. El sistema solicita datos (Nombre, Email, Pass).<br>
+                                    2. El sistema valida el formato.<br>
+                                    3. El sistema crea la cuenta y autentica.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Excepciones</strong></td>
+                                <td>
+                                    2.a Email existente: El sistema avisa y ofrece recuperar contraseña.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">UC-02</th>
+                                <th style="width: 80%;">Generar Inscripción Online</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Actor</strong></td>
+                                <td>Atleta / Entrenador</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interés</strong></td>
+                                <td>Completar la ficha digitalmente y generar el documento oficial.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Precondición</strong></td>
+                                <td>Haber iniciado sesión (UC-01).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Garantía</strong></td>
+                                <td>PDF generado, guardado en el perfil y enviado por correo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Flujo Básico</strong></td>
+                                <td>
+                                    1. Usuario accede al formulario.<br>
+                                    2. Sistema solicita datos y subida de imágenes (DNI).<br>
+                                    3. Sistema compila datos y genera el PDF.<br>
+                                    4. Sistema envía el PDF al email.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Excepciones</strong></td>
+                                <td>
+                                    2.a Archivo no soportado: El sistema rechaza la imagen e indica formatos válidos (JPG/PNG).
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="planificacion-temporal" class="ancla-top sangria-1">
+                <h4>3.3. Planificación temporal</h4>
+                <p>El desarrollo se ha planificado en un bloque temporal de 15 semanas. Se ha optado por solapar parcialmente las fases de Backend y Frontend para optimizar el tiempo de integración.</p>
+                <p><em>(A continuación se insertará la imagen del Diagrama de Gantt generado externamente).</em></p>
+                
+                <figure class="figura-logo">
+                    <img src="img/gantt.png" class="img-diagrama" alt="Diagrama de Gantt">
+                    <figcaption class="pie-foto">Figura 4. Diagrama de Gantt con la previsión del proyecto.</figcaption>
+                </figure>
+
+                <div class="sangria-2">
+                    <h5>Tabla Resumen de Fases</h5>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">Fase</th>
+                                <th style="width: 55%;">Tarea Principal</th>
+                                <th style="width: 15%;">Duración</th>
+                                <th style="width: 15%;">Semanas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. Análisis</strong></td>
+                                <td>Definición de actores, Casos de Uso y Requisitos (RGPD, Funcionales).</td>
+                                <td>2 semanas</td>
+                                <td>1 – 2</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. Diseño</strong></td>
+                                <td>Diseño de BBDD, arquitectura y prototipos visuales en Figma.</td>
+                                <td>2 semanas</td>
+                                <td>3 – 4</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. Backend</strong></td>
+                                <td>Desarrollo MySQL, PHP, autenticación y generación de PDFs.</td>
+                                <td>4 semanas</td>
+                                <td>5 – 8</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. Frontend</strong></td>
+                                <td>Maquetación web pública y panel responsivo (Tailwind).</td>
+                                <td>4 semanas</td>
+                                <td>6 – 9 (Paralelo)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. Integración</strong></td>
+                                <td>Unificación Front/Back, filtros de administración y calendarios.</td>
+                                <td>3 semanas</td>
+                                <td>10 – 12</td>
+                            </tr>
+                            <tr>
+                                <td><strong>6. Pruebas</strong></td>
+                                <td>Tests de validación (formularios, roles) y corrección de bugs.</td>
+                                <td>2 semanas</td>
+                                <td>13 – 14</td>
+                            </tr>
+                            <tr>
+                                <td><strong>7. Entrega</strong></td>
+                                <td>Redacción de memoria final y preparación de la defensa.</td>
+                                <td>1 semana</td>
+                                <td>15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <a id="desarrollo-proyecto" class="ancla-top zona-apagada"></a>
             <h2 class="zona-apagada">4. Desarrollo del proyecto</h2>
             
-            <div id="organizacion-real" class="ancla-top zona-apagada">
+            <div id="organizacion-real" class="ancla-top zona-apagada sangria-1">
                 <h4>4.1. Organización real del trabajo</h4>
                 <p>(Describe las fases reales, cambios, problemas y ajustes)</p>
             </div>
             
-            <div id="modelo-datos" class="ancla-top zona-apagada">
+            <div id="modelo-datos" class="ancla-top zona-apagada sangria-1">
                 <h4>4.2. Modelo de datos</h4>
                 <p>(Inserta el Diagrama Entidad-Relación, modelo relacional y explicación de tablas)</p>
             </div>
             
-            <div id="implementacion-despliegue" class="ancla-top zona-apagada">
+            <div id="implementacion-despliegue" class="ancla-top zona-apagada sangria-1">
                 <h4>4.3. Implementación y despliegue</h4>
                 <p>(Describe tecnologías, estructura de carpetas, fragmentos clave de código, diagrama de despliegue y entorno de ejecución)</p>
             </div>
 
-
             <a id="fase-pruebas" class="ancla-top zona-apagada"></a>
             <h2 class="zona-apagada">5. Fase de pruebas y control de calidad</h2>
             
-            <div id="plan-pruebas" class="ancla-top zona-apagada">
+            <div id="plan-pruebas" class="ancla-top zona-apagada sangria-1">
                 <h4>5.1. Plan de pruebas</h4>
                 <p>(Describe pruebas unitarias y de integración)</p>
             </div>
             
-            <div id="registro-incidencias" class="ancla-top zona-apagada">
+            <div id="registro-incidencias" class="ancla-top zona-apagada sangria-1">
                 <h4>5.2. Registro de incidencias</h4>
                 <p>(Inserta tabla con: Error, Fecha, Causa, Solución)</p>
             </div>
             
-            <div id="validacion-final" class="ancla-top zona-apagada">
+            <div id="validacion-final" class="ancla-top zona-apagada sangria-1">
                 <h4>5.3. Validación final</h4>
                 <p>(Análisis de cumplimiento de requisitos)</p>
             </div>
 
-
             <a id="conclusiones" class="ancla-top zona-apagada"></a>
             <h2 class="zona-apagada">6. Conclusiones</h2>
             
-            <div id="reflexion-personal" class="ancla-top zona-apagada">
+            <div id="reflexion-personal" class="ancla-top zona-apagada sangria-1">
                 <h4>6.1. Reflexión personal sobre el proyecto</h4>
-                </div>
+            </div>
             
-            <div id="dificultades" class="ancla-top zona-apagada">
+            <div id="dificultades" class="ancla-top zona-apagada sangria-1">
                 <h4>6.2. Dificultades encontradas y resolución</h4>
             </div>
             
-            <div id="objetivos-cumplidos" class="ancla-top zona-apagada">
+            <div id="objetivos-cumplidos" class="ancla-top zona-apagada sangria-1">
                 <h4>6.3. Grado de cumplimiento de objetivos</h4>
             </div>
             
-            <div id="propuestas-mejora" class="ancla-top zona-apagada">
+            <div id="propuestas-mejora" class="ancla-top zona-apagada sangria-1">
                 <h4>6.4. Propuestas de mejora y evolución futura</h4>
             </div>
 
@@ -371,7 +811,7 @@
             
             <a id="anexos" class="ancla-top zona-apagada"></a>
             <h2 class="zona-apagada">8. Anexos</h2>
-            <ul class="zona-apagada">
+            <ul class="zona-apagada sangria-1">
                 <li id="manual-instalacion">
                     <h4>8.1. Manual de instalación</h4>
                 </li>
@@ -386,27 +826,24 @@
                 </li>
             </ul>
 
-        </div> </div> 
+        </div> 
+    </div> 
 
     <script>
         const toggleInput = document.getElementById('toggle-tema');
         const body = document.body;
 
         // 1. Detectar preferencia del sistema al cargar
-        // Si el sistema prefiere oscuro, activamos el modo y marcamos el checkbox
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             body.setAttribute('data-theme', 'dark');
             toggleInput.checked = true;
         }
 
         // 2. Función para cambiar el tema al usar el interruptor
-        // Escuchamos el evento 'change' del checkbox
         toggleInput.addEventListener('change', () => {
             if (toggleInput.checked) {
-                // Si está marcado -> Modo Oscuro
                 body.setAttribute('data-theme', 'dark');
             } else {
-                // Si no está marcado -> Modo Claro
                 body.removeAttribute('data-theme');
             }
         });

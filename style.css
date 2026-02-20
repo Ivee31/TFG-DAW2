@@ -65,9 +65,20 @@
     color: #e5e7eb !important;
 }
 
-/* --- Configuración General --- */
+[data-theme="dark"] .prose li {
+    color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .img-diagrama {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+
 html {
     scroll-behavior: smooth;
+    font-size: clamp(14px, 1.5vw + 10px, 16px);
 }
 
 body {
@@ -77,6 +88,10 @@ body {
     font-family: 'Segoe UI', Roboto, Arial, sans-serif;
     color: var(--text-main);
     transition: background-color 0.3s, color 0.3s; 
+    
+    /* ESTA ES LA MAGIA: Impide que la pantalla se desplace hacia los lados */
+    max-width: 100%;
+    overflow-x: hidden; 
 }
 
 /* --- NUEVO INTERRUPTOR DESLIZANTE (TOGGLE) --- */
@@ -113,8 +128,11 @@ body {
     background-color: #ffffff;
     border-radius: 50%;
     position: absolute;
-    top: 1px;
-    left: 2px;
+    /* --- AQUÍ ESTÁ LA MAGIA DEL CENTRADO EXACTO --- */
+    top: 50%;
+    margin-top: -12px; /* Sube exactamente la mitad de su altura para clavarlo al centro */
+    left: 1px;         /* Ajustado a 1px para que el margen derecho al encenderlo sea simétrico */
+    /* ----------------------------------------------- */
     transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
@@ -168,6 +186,15 @@ body {
     max-width: 100%;
     margin: 0 auto;
     display: block;
+    transition: background-color 0.3s;
+}
+
+.img-diagrama {
+    width: 800px;
+    max-width: 100%;
+    margin: 1rem auto;
+    display: block;
+    border-radius: 6px;
     transition: background-color 0.3s;
 }
 
@@ -234,8 +261,15 @@ body {
     font-size: 0.9rem;
     font-weight: 700;
     color: var(--h5-color);
-    margin-top: 2em;
-    margin-bottom: 0.02rem;
+    margin-top: 1.5em;
+    margin-bottom: 0 !important;
+}
+
+.prose h5 + p,
+.prose h5 + ul,
+.prose h5 + table,
+.prose h5 + div {
+    margin-top: 0.2rem !important; /* Obliga a Tailwind a pegar el contenido al título */
 }
 
 .prose p {
@@ -268,6 +302,11 @@ body {
 
 .prose a { color: var(--link-color); text-decoration: none; }
 .prose a:hover { text-decoration: underline; }
+
+.prose a, .txt-licencia a {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
 
 .nota-gris {
     color: var(--text-muted);
@@ -330,3 +369,79 @@ body {
 .prio-alta { background-color: var(--badge-alta-bg); color: var(--badge-alta-text); }
 .prio-media { background-color: var(--badge-media-bg); color: var(--badge-media-text); }
 .prio-baja { background-color: var(--badge-baja-bg); color: var(--badge-baja-text); }
+
+
+/* --- SANGRÍAS JERÁRQUICAS (Indentación de niveles) --- */
+    /* Por defecto (Móviles): Sangrías más pequeñas para no comerse el espacio de lectura */
+    .nivel-h3 { margin-left: 0.5rem; }
+    .nivel-h4 { margin-left: 1rem; }
+    .nivel-h5 { margin-left: 1.5rem; }
+    /* En pantallas medianas y grandes (Tablets y PC): Sangrías completas */
+    @media (min-width: 768px) {
+        .nivel-h3 { margin-left: 1.5rem; } /* Aprox 24px */
+        .nivel-h4 { margin-left: 3rem; }   /* Aprox 48px */
+        .nivel-h5 { margin-left: 4.5rem; } /* Aprox 72px */
+    }
+
+/* --- SANGRÍAS JERÁRQUICAS --- */
+.sangria-1 { margin-left: 1.5rem; }
+.sangria-2 { margin-left: 3rem; }
+
+/* En móviles reducimos la sangría para que el texto no se aplaste */
+@media (max-width: 768px) {
+    .sangria-1 { margin-left: 0.5rem; }
+    .sangria-2 { margin-left: 1rem; }
+}
+
+/* --- AJUSTES RESPONSIVOS (Tablets y Móviles) --- */
+
+/* 1. Pantallas medianas (Tablets y ventanas reducidas) */
+@media (max-width: 1024px) {
+    .toggle-container {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+    body {
+        padding-top: 60px; 
+    }
+    .contenedor-pag {
+        width: calc(100% - 60px); /* Forzamos 30px de margen gris a cada lado */
+        padding: 30px; 
+    }
+}
+
+/* 2. Pantallas muy pequeñas (Móviles) */
+/* 2. Pantallas muy pequeñas (Móviles) */
+@media (max-width: 640px) {
+    /* Botón todavía más pequeñito para que no desentone */
+    .toggle-container {
+        transform: scale(0.73); 
+        transform-origin: top right;
+        top: 10px;    /* Lo subimos un pelín más al ser más chico */
+        right: 10px;  /* Lo pegamos un poco más al borde */
+    }
+
+    .contenedor-pag {
+        width: 100vw; 
+        max-width: 100%;
+        padding: 15px; 
+        box-shadow: none; 
+        border-radius: 0;
+        box-sizing: border-box !important;
+        overflow: hidden; 
+    }
+
+    /* Tablas domadas con scroll horizontal */
+    .tabla-smart {
+        display: block !important;
+        overflow-x: auto !important; 
+        white-space: normal;
+        -webkit-overflow-scrolling: touch; 
+        width: 100%; 
+    }
+
+    .tabla-smart th, .tabla-smart td {
+        min-width: 130px; 
+    }
+}
