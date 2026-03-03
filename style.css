@@ -75,7 +75,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-
 html {
     scroll-behavior: smooth;
     font-size: clamp(14px, 1.5vw + 10px, 16px);
@@ -92,6 +91,10 @@ body {
     /* ESTA ES LA MAGIA: Impide que la pantalla se desplace hacia los lados */
     max-width: 100%;
     overflow-x: hidden; 
+}
+
+.prose p, .prose ul, .prose ol, .txt-licencia, .tabla-smart td {
+    text-align: left !important;
 }
 
 /* --- NUEVO INTERRUPTOR DESLIZANTE (TOGGLE) --- */
@@ -371,26 +374,38 @@ body {
 .prio-baja { background-color: var(--badge-baja-bg); color: var(--badge-baja-text); }
 
 
-/* --- SANGRÍAS JERÁRQUICAS (Indentación de niveles) --- */
-    /* Por defecto (Móviles): Sangrías más pequeñas para no comerse el espacio de lectura */
-    .nivel-h3 { margin-left: 0.5rem; }
-    .nivel-h4 { margin-left: 1rem; }
-    .nivel-h5 { margin-left: 1.5rem; }
-    /* En pantallas medianas y grandes (Tablets y PC): Sangrías completas */
-    @media (min-width: 768px) {
-        .nivel-h3 { margin-left: 1.5rem; } /* Aprox 24px */
-        .nivel-h4 { margin-left: 3rem; }   /* Aprox 48px */
-        .nivel-h5 { margin-left: 4.5rem; } /* Aprox 72px */
-    }
+/* SANGRÍAS JERÁRQUICAS (Indentación de niveles) */
+/* Por defecto (Móviles): Sangrías más pequeñas para no comerse el espacio de lectura */
+.nivel-h3 { margin-left: 0.5rem; }
+.nivel-h4 { margin-left: 1rem; }
+.nivel-h5 { margin-left: 1.5rem; }
+/* En pantallas medianas y grandes (Tablets y PC): Sangrías completas */
+@media (min-width: 768px) {
+    .nivel-h3 { margin-left: 1.5rem; } /* Aprox 24px */
+    .nivel-h4 { margin-left: 3rem; }   /* Aprox 48px */
+    .nivel-h5 { margin-left: 4.5rem; } /* Aprox 72px */
+}
 
+.prose h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.25rem;
+}
 /* --- SANGRÍAS JERÁRQUICAS --- */
 .sangria-1 { margin-left: 1.5rem; }
 .sangria-2 { margin-left: 3rem; }
+.sangria-3 { margin-left: 4.5rem; }
 
 /* En móviles reducimos la sangría para que el texto no se aplaste */
 @media (max-width: 768px) {
     .sangria-1 { margin-left: 0.5rem; }
     .sangria-2 { margin-left: 1rem; }
+    .sangria-3 { margin-left: 1.5rem; }
+    
 }
 
 /* --- AJUSTES RESPONSIVOS (Tablets y Móviles) --- */
