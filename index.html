@@ -161,36 +161,27 @@
                 <p>Para evaluar la viabilidad y necesidad del proyecto, se ha realizado un análisis de las principales soluciones de software de gestión deportiva existentes en el mercado actual:</p>
                 
                 <div class="sangria-2">
-                    <h4>1. Clupik</h4>
-                    <p>Es una plataforma muy popular y visualmente atractiva. Sin embargo, su enfoque principal es la comunicación bidireccional y la venta de merchandising. Carece de herramientas ágiles para la autogeneración de documentos burocráticos (como los PDF federativos) y su modelo de suscripción mensual resulta inasumible para un club de atletismo sin ánimo de lucro.</p>
+                    <h4>1.4.1. Clupik</h4>
+                    <p>Es una plataforma centrada fundamentalmente en la gestión de competiciones. Permite a los usuarios inscribirse en eventos deportivos, hacer un seguimiento de los mismos y, a nivel de administración, crear y organizar dichos torneos. Sin embargo, no está diseñada para cubrir la gestión burocrática interna del día a día de un club modesto. Carece de herramientas para la gestión de un club de atletismo (independientemente de sus dimensiones)</p>
                     <figure class="figura-logo">
-                        <div style="width: 100%; height: 150px; background-color: var(--border-color); display: flex; align-items: center; justify-content: center; border-radius: 6px;">
-                            <span class="nota-gris">[Insertar aquí captura de Clupik]</span>
-                        </div>
+                        <img src="img/clupikInterface.png" alt="Interfaz de competiciones de Clupik" class="img-diagrama">
                     </figure>
 
-                    <h4>2. Playoff Informática</h4>
-                    <p>Es uno de los sistemas más potentes y consolidados. Permite la gestión de recibos y remesas bancarias con gran eficacia. El problema radica en que es una herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, generando una curva de aprendizaje muy pronunciada para los entrenadores y padres.</p>
+                    <h4>1.4.2. Playoff Informática</h4>
+                    <p>Es uno de los sistemas más potentes y consolidados. Permite la gestión de recibos y remesas bancarias con gran eficacia. El problema radica en que es una herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, generando una curva de aprendizaje muy pronunciada para los entrenadores y padres y aumentando inecesariamente el precio del servicio al estar pagando funciones no utiles para el caso de un club pequeño de atletismo.</p>
                     <figure class="figura-logo">
-                        <div style="width: 100%; height: 150px; background-color: var(--border-color); display: flex; align-items: center; justify-content: center; border-radius: 6px;">
-                            <span class="nota-gris">[Insertar aquí captura de Playoff]</span>
-                        </div>
+                        <img src="img/playOffInterface1.png" alt="Interfaz de gestión de Playoff Informática" class="img-diagrama">
+                    </figure>
+                    <figure class="figura-logo">
+                        <img src="img/playOffFunctions.png" alt="Interfaz de gestión de Playoff Informática" class="img-diagrama">
                     </figure>
 
-                    <h4>3. Cluber</h4>
-                    <p>Su propuesta de valor se centra casi exclusivamente en el aspecto económico (cobro de cuotas y pasarela de pagos). Deja totalmente de lado el seguimiento deportivo, la subida de documentos médicos y el feedback de entrenamientos que requiere el club Ianuarius.</p>
-                    <figure class="figura-logo">
-                        <div style="width: 100%; height: 150px; background-color: var(--border-color); display: flex; align-items: center; justify-content: center; border-radius: 6px;">
-                            <span class="nota-gris">[Insertar aquí captura de Cluber]</span>
-                        </div>
-                    </figure>
-
-                    <h4>Necesidades reales no cubiertas (El hueco de Ianuarius)</h4>
+                    <h4>1.4.3. Necesidades reales no cubiertas (El hueco de Ianuarius)</h4>
                     <p>Tras este análisis, se concluye que el sector adolece de una herramienta que satisfaga las siguientes demandas clave del Club Ianuarius:</p>
                     <ul>
-                        <li><p><strong>1. Generación automatizada de burocracia:</strong> Ninguna de las alternativas genera de forma automática el PDF oficial de inscripción requerido por la Federación combinando los datos del usuario.</p></li>
-                        <li><p><strong>2. Seguimiento de sensaciones:</strong> Falta de un módulo sencillo donde el atleta pueda registrar su "feedback" post-entrenamiento en la pista.</p></li>
-                        <li><p><strong>3. Accesibilidad económica:</strong> Inexistencia de un sistema de bajo mantenimiento adaptado a la realidad financiera de los clubes pequeños.</p></li>
+                        <li><p><strong>Generación automatizada de burocracia:</strong> Ninguna de las alternativas genera de forma automática el PDF oficial de inscripción requerido por la Federación combinando los datos del usuario.</p></li>
+                        <li><p><strong>Seguimiento de sensaciones:</strong> Falta de un módulo sencillo donde el atleta pueda registrar su "feedback" post-entrenamiento en la pista.</p></li>
+                        <li><p><strong>Accesibilidad económica:</strong> Inexistencia de un sistema de bajo mantenimiento adaptado a la realidad financiera de los clubes pequeños.</p></li>
                     </ul>
                 </div>
             </div>
@@ -488,7 +479,39 @@
 
             <div id="guion-trabajo" class="ancla-top sangria-1">
                 <h3>4.3. Guion de Trabajo</h3>
-                <p class="nota-gris"><em>(Pendiente: Roadmap de hitos clave para el Entregable 1).</em></p>
+                <p>A continuación se detalla el "Roadmap" del proyecto, desglosando las fases de la planificación temporal en tareas técnicas específicas y asignadas por semanas, para garantizar un seguimiento exhaustivo del desarrollo:</p>
+                
+                <div class="sangria-2">
+                    <h4>Fase 1: Análisis y Diseño (Semanas 1 - 4)</h4>
+                    <ul>
+                        <li><p><strong>Semana 1-2:</strong> Toma de requisitos, análisis de competencia y elaboración de diagramas de Casos de Uso.</p></li>
+                        <li><p><strong>Semana 3:</strong> Diseño del modelo Entidad-Relación y creación de los esquemas relacionales (MySQL).</p></li>
+                        <li><p><strong>Semana 4:</strong> Elaboración de wireframes y maquetado visual de la interfaz de usuario en Figma.</p></li>
+                    </ul>
+
+                    <h4>Fase 2: Backend y Base de Datos (Semanas 5 - 8)</h4>
+                    <ul>
+                        <li><p><strong>Semana 5:</strong> Configuración del entorno (XAMPP), despliegue de la BBDD e implementación de la librería FPDF/TCPDF para la futura generación de documentos.</p></li>
+                        <li><p><strong>Semana 6:</strong> Desarrollo de la API REST (PHP 8.2) y creación de los endpoints básicos (Registro, Login) con cifrado de contraseñas.</p></li>
+                        <li><p><strong>Semana 7:</strong> Programación de la lógica de filtros de marcas deportivas y categorías por edades en el servidor.</p></li>
+                        <li><p><strong>Semana 8:</strong> Desarrollo del módulo de control de acceso y protección de directorios para los archivos PDF de los atletas (cumplimiento RGPD).</p></li>
+                    </ul>
+
+                    <h4>Fase 3: Frontend e Integración (Semanas 9 - 12)</h4>
+                    <ul>
+                        <li><p><strong>Semana 9:</strong> Inicialización del proyecto en React 18, configuración del enrutamiento y aplicación de Tailwind CSS.</p></li>
+                        <li><p><strong>Semana 10:</strong> Maquetación de los paneles de control (dashboard del Entrenador y vista del Atleta).</p></li>
+                        <li><p><strong>Semana 11:</strong> Conexión asíncrona (Fetch/Axios) entre el Frontend y la API REST para el intercambio de datos JSON.</p></li>
+                        <li><p><strong>Semana 12:</strong> Integración del formulario dinámico de inscripciones con el generador de PDF del backend.</p></li>
+                    </ul>
+
+                    <h4>Fase 4: Pruebas y Despliegue (Semanas 13 - 15)</h4>
+                    <ul>
+                        <li><p><strong>Semana 13:</strong> Ejecución de pruebas unitarias en formularios y validación de seguridad en la subida de archivos (DNI/Fotos).</p></li>
+                        <li><p><strong>Semana 14:</strong> Resolución de errores (testing continuo) y auditoría de accesibilidad web.</p></li>
+                        <li><p><strong>Semana 15:</strong> Despliegue en el servidor de producción (hosting), redacción final de los manuales y preparación de la defensa.</p></li>
+                    </ul>
+                </div>
             </div>
 
             <a id="desarrollo-implementacion" class="ancla-top zona-apagada"></a>
