@@ -129,11 +129,27 @@
                 <li><a href="#figura2-venancio">Figura 2. Logo Venancio Blanco</a></li>
                 <li><a href="#figura3-uml">Figura 3. Diagrama de Casos de Uso del Sistema</a></li>
                 <li><a href="#figura4-gantt">Figura 4. Diagrama de Gantt con la previsión del proyecto</a></li>
+                <li><a href="#figura5-clupik">Figura 5. Interfaz de competiciones de Clupik</a></li>
+                <li><a href="#figura6-playoff1">Figura 6. Interfaz de gestión de Playoff Informática</a></li>
+                <li><a href="#figura7-playoff2">Figura 7. Funcionalidades de Playoff Informática</a></li>
             </ul>
 
             <a id="indice-tablas" class="ancla-top"></a>
             <h2>Índice de Tablas</h2>
-            <p>- (Las tablas se generarán en el documento final Word)</p>
+            <ul style="list-style-type: none; padding-left: 0;">
+                <li><a href="#analisis-viabilidad">Tabla 1. Costes de Hardware y Software</a></li>
+                <li><a href="#analisis-viabilidad">Tabla 2. Costes de Personal (Desarrollo)</a></li>
+                <li><a href="#analisis-viabilidad">Tabla 3. Costes de Mantenimiento Anual</a></li>
+                <li><a href="#objetivos-proyecto">Tabla 4. Análisis SMART: Objetivo General</a></li>
+                <li><a href="#objetivos-proyecto">Tabla 5. Análisis SMART: Objetivos Funcionales</a></li>
+                <li><a href="#definicion-actores">Tabla 6. Definición de Actores</a></li>
+                <li><a href="#especificacion-funcional">Tabla 7. Especificación de Casos de Uso</a></li>
+                <li><a href="#requisitos-srs">Tabla 8. Requisitos Funcionales y No Funcionales</a></li>
+                <li><a href="#requisitos-srs">Tabla 9. Requisitos de Información (IRQ)</a></li>
+                <li><a href="#stack-tecnologico">Tabla 10. Stack Tecnológico</a></li>
+                <li><a href="#planificacion-temporal">Tabla 11. Fases de Planificación (Gantt)</a></li>
+                <li><a href="#glosario">Tabla 12. Glosario de Términos</a></li>
+            </ul>
 
 
             <a id="intro-justificacion" class="ancla-top"></a>
@@ -161,36 +177,33 @@
                 <p>Para evaluar la viabilidad y necesidad del proyecto, se ha realizado un análisis de las principales soluciones de software de gestión deportiva existentes en el mercado actual:</p>
                 
                 <div class="sangria-2">
-                    <h4>1. Clupik</h4>
-                    <p>Es una plataforma muy popular y visualmente atractiva. Sin embargo, su enfoque principal es la comunicación bidireccional y la venta de merchandising. Carece de herramientas ágiles para la autogeneración de documentos burocráticos (como los PDF federativos) y su modelo de suscripción mensual resulta inasumible para un club de atletismo sin ánimo de lucro.</p>
+                    <h4>1.4.1. Clupik</h4>
+                    <p>Es una plataforma centrada fundamentalmente en la gestión de competiciones. Permite a los usuarios inscribirse en eventos deportivos, hacer un seguimiento de los mismos y, a nivel de administración, crear y organizar dichos torneos. Sin embargo, no está diseñada para cubrir la gestión burocrática interna del día a día de un club modesto. Carece de herramientas para la gestión de un club de atletismo (independientemente de sus dimensiones)</p>
+                    <a id="figura5-clupik" class="ancla-top"></a>
                     <figure class="figura-logo">
-                        <div style="width: 100%; height: 150px; background-color: var(--border-color); display: flex; align-items: center; justify-content: center; border-radius: 6px;">
-                            <span class="nota-gris">[Insertar aquí captura de Clupik]</span>
-                        </div>
+                        <img src="img/clupikInterface.png" alt="Interfaz de competiciones de Clupik" class="img-diagrama">
+                        <figcaption class="pie-foto">Figura 5. Interfaz de competiciones de Clupik</figcaption>
                     </figure>
 
-                    <h4>2. Playoff Informática</h4>
-                    <p>Es uno de los sistemas más potentes y consolidados. Permite la gestión de recibos y remesas bancarias con gran eficacia. El problema radica en que es una herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, generando una curva de aprendizaje muy pronunciada para los entrenadores y padres.</p>
+                    <h4>1.4.2. Playoff Informática</h4>
+                    <p>Es uno de los sistemas más potentes y consolidados. Permite la gestión de recibos y remesas bancarias con gran eficacia. El problema radica en que es una herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, generando una curva de aprendizaje muy pronunciada para los entrenadores y padres y aumentando inecesariamente el precio del servicio al estar pagando funciones no utiles para el caso de un club pequeño de atletismo.</p>
+                    <a id="figura6-playoff1" class="ancla-top"></a>
                     <figure class="figura-logo">
-                        <div style="width: 100%; height: 150px; background-color: var(--border-color); display: flex; align-items: center; justify-content: center; border-radius: 6px;">
-                            <span class="nota-gris">[Insertar aquí captura de Playoff]</span>
-                        </div>
+                        <img src="img/playOffInterface1.png" alt="Interfaz de gestión de Playoff Informática" class="img-diagrama">
+                        <figcaption class="pie-foto">Figura 6. Interfaz de gestión de Playoff Informática</figcaption>
+                    </figure>
+                    <a id="figura7-playoff2" class="ancla-top"></a>
+                    <figure class="figura-logo">
+                        <img src="img/playOffFunctions.png" alt="Funcionalidades de Playoff Informática" class="img-diagrama">
+                        <figcaption class="pie-foto">Figura 7. Funcionalidades de Playoff Informática</figcaption>
                     </figure>
 
-                    <h4>3. Cluber</h4>
-                    <p>Su propuesta de valor se centra casi exclusivamente en el aspecto económico (cobro de cuotas y pasarela de pagos). Deja totalmente de lado el seguimiento deportivo, la subida de documentos médicos y el feedback de entrenamientos que requiere el club Ianuarius.</p>
-                    <figure class="figura-logo">
-                        <div style="width: 100%; height: 150px; background-color: var(--border-color); display: flex; align-items: center; justify-content: center; border-radius: 6px;">
-                            <span class="nota-gris">[Insertar aquí captura de Cluber]</span>
-                        </div>
-                    </figure>
-
-                    <h4>Necesidades reales no cubiertas (El hueco de Ianuarius)</h4>
+                    <h4>1.4.3. Necesidades reales no cubiertas (El hueco de Ianuarius)</h4>
                     <p>Tras este análisis, se concluye que el sector adolece de una herramienta que satisfaga las siguientes demandas clave del Club Ianuarius:</p>
                     <ul>
-                        <li><p><strong>1. Generación automatizada de burocracia:</strong> Ninguna de las alternativas genera de forma automática el PDF oficial de inscripción requerido por la Federación combinando los datos del usuario.</p></li>
-                        <li><p><strong>2. Seguimiento de sensaciones:</strong> Falta de un módulo sencillo donde el atleta pueda registrar su "feedback" post-entrenamiento en la pista.</p></li>
-                        <li><p><strong>3. Accesibilidad económica:</strong> Inexistencia de un sistema de bajo mantenimiento adaptado a la realidad financiera de los clubes pequeños.</p></li>
+                        <li><p><strong>Generación automatizada de burocracia:</strong> Ninguna de las alternativas genera de forma automática el PDF oficial de inscripción requerido por la Federación combinando los datos del usuario.</p></li>
+                        <li><p><strong>Seguimiento de sensaciones:</strong> Falta de un módulo sencillo donde el atleta pueda registrar su "feedback" post-entrenamiento en la pista.</p></li>
+                        <li><p><strong>Accesibilidad económica:</strong> Inexistencia de un sistema de bajo mantenimiento adaptado a la realidad financiera de los clubes pequeños.</p></li>
                     </ul>
                 </div>
             </div>
@@ -302,11 +315,11 @@
                             <tr><th style="width: 10%;">ID</th><th style="width: 15%;">Módulo</th><th style="width: 35%;">Descripción</th><th style="width: 30%;">Justificación SMART</th><th style="width: 10%;">Prio.</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><strong>OBJ-01</strong></td><td>Usuarios</td><td>Registro, Login y distinción de roles (Admin, Entrenador, Atleta).</td><td><strong>S:</strong> Acceso seguro por credenciales.<br><strong>M:</strong> 3 roles diferenciados.<br><strong>T:</strong> Fase 1 (Base de datos).</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
-                            <tr><td><strong>OBJ-02</strong></td><td>Fichas</td><td>Subida de archivos escaneados para inscripciones físicas (legacy).</td><td><strong>S:</strong> Upload de PDF/JPG.<br><strong>R:</strong> Soporte a inscripciones manuales.<br><strong>T:</strong> Fase 2.</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
-                            <tr><td><strong>OBJ-03</strong></td><td>Fichas</td><td>Inscripción online con generación automática de PDF y envío por email.</td><td><strong>S:</strong> Formulario a PDF automático.<br><strong>M:</strong> 0 errores de transcripción.<br><strong>T:</strong> Fase 2.</td><td><span class="etiqueta prio-media">Media</span></td></tr>
-                            <tr><td><strong>OBJ-04</strong></td><td>Gestión</td><td>Filtros de búsqueda avanzada (Categoría, edad, prueba, marcas).</td><td><strong>S:</strong> Filtrado SQL dinámico.<br><strong>T:</strong> Fase 3 (Panel Admin).</td><td><span class="etiqueta prio-media">Media</span></td></tr>
-                            <tr><td><strong>OBJ-05</strong></td><td>Atletas</td><td>Calendario de eventos y feedback de entrenamientos (sensaciones).</td><td><strong>S:</strong> Calendario visual interactivo.<br><strong>R:</strong> Seguimiento deportivo.<br><strong>T:</strong> Fase Final.</td><td><span class="etiqueta prio-baja">Baja</span></td></tr>
+                            <tr><td><strong>OBJ-01</strong></td><td>Usuarios</td><td>Registro, Login y distinción de roles (Admin, Entrenador, Atleta).</td><td><strong>S:</strong> Acceso seguro por credenciales.<br><strong>M:</strong> 3 roles diferenciados.<br><strong>T:</strong> Desarrollado entre la Semana 6 (Backend) y Semana 10 (Frontend).</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>OBJ-02</strong></td><td>Fichas</td><td>Subida de archivos escaneados para inscripciones físicas (legacy).</td><td><strong>S:</strong> Upload de PDF/JPG.<br><strong>R:</strong> Soporte a inscripciones manuales.<br><strong>T:</strong> Operativo en la Semana 8 (Módulo de protección de archivos).</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>OBJ-03</strong></td><td>Fichas</td><td>Inscripción online con generación automática de PDF y envío por email.</td><td><strong>S:</strong> Formulario a PDF automático.<br><strong>M:</strong> 0 errores de transcripción.<br><strong>T:</strong> Completado en la Semana 12 (Integración).</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>OBJ-04</strong></td><td>Gestión</td><td>Filtros de búsqueda avanzada (Categoría, edad, prueba, marcas).</td><td><strong>S:</strong> Filtrado SQL dinámico.<br><strong>T:</strong> Implementado entre la Semana 7 (Lógica servidor) y Semana 11 (Vistas).</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>OBJ-05</strong></td><td>Atletas</td><td>Calendario de eventos y feedback de entrenamientos (sensaciones).</td><td><strong>S:</strong> Calendario visual interactivo.<br><strong>R:</strong> Seguimiento deportivo.<br><strong>T:</strong> Integrado en la Semana 13 (Fase de validación).</td><td><span class="etiqueta prio-baja">Baja</span></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -354,7 +367,7 @@
                         <thead><tr><th style="width: 20%;">UC-01</th><th style="width: 80%;">Registro y Autenticación</th></tr></thead>
                         <tbody>
                             <tr><td><strong>Actor</strong></td><td>Visitante (pasa a ser Atleta/Entrenador)</td></tr>
-                            <tr><td><strong>Interés</strong></td><td>Crear una cuenta segura, para acceder a un catálogo de funciones más extenso del club.</td></tr>
+                            <tr><td><strong>Interés</strong></td><td>Crear una cuenta segura, para acceder a un catálogo de funciones del club más extenso .</td></tr>
                             <tr><td><strong>Precondición</strong></td><td>No tener una cuenta previamente registrada con el email aportado.</td></tr>
                             <tr><td><strong>Garantía</strong></td><td>Datos almacenados (contraseñas cifradas) y sesión iniciada.</td></tr>
                             <tr><td><strong>Flujo Básico</strong></td><td>1. El sistema solicita datos.<br>2. El sistema valida el formato.<br>3. El sistema crea la cuenta y autentica.</td></tr>
@@ -428,9 +441,35 @@
             
             <div id="stack-tecnologico" class="ancla-top sangria-1">
                 <h3>3.1. Stack Tecnológico</h3>
-                <p><strong>Frontend (Interfaz de usuario):</strong><br> Se empleará <strong>React (versión 18 o superior)</strong> junto con Tailwind CSS. Se elige esta librería frente a un enfoque tradicional con PHP nativo para evitar interfaces estáticas. React permite desarrollar una aplicación web dinámica, fluida y con una experiencia de usuario muy superior, al comportarse como una Single Page Application (SPA).</p>
-                <p><strong>Backend (Lógica y Servidor):</strong><br> Se utilizará <strong>PHP (versión 8.2)</strong>. Se encargará de gestionar la lógica de negocio, la seguridad, la autenticación y la creación de una API REST que se comunicará de forma asíncrona con el Frontend mediante formato JSON.</p>
-                <p><strong>Base de Datos:</strong><br> Se implementará <strong>MySQL (versión 8.0)</strong> para garantizar la persistencia de los datos estructurados y mantener la integridad relacional de los usuarios y las fichas.</p>
+                <p>Para el desarrollo de Ianuarius se ha seleccionado una arquitectura moderna separando el cliente del servidor, garantizando así una experiencia de usuario fluida y un mantenimiento seguro. Las tecnologías elegidas son las siguientes:</p>
+                
+                <div class="sangria-2" style="margin-top: 1.5rem;">
+                    
+                    <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+                        <img src="img/logoReact.png" alt="Logo React" style="width: 50px; flex-shrink: 0;">
+                        <div>
+                            <p style="margin: 0;"><strong>Frontend (Interfaz de usuario): React 18 y Tailwind CSS</strong></p>
+                            <p style="margin-top: 0.25rem;">Se empleará React (versión 18) junto con el framework de estilos Tailwind CSS. Se elige esta librería frente a un enfoque tradicional con PHP nativo para evitar interfaces estáticas. React permite desarrollar una aplicación web dinámica, fluida y con una experiencia de usuario superior, comportándose como una "Single Page Application" (SPA).</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+                        <img src="img/logoPhp.png" alt="Logo PHP" style="width: 50px; flex-shrink: 0;">
+                        <div>
+                            <p style="margin: 0;"><strong>Backend (Lógica y Servidor): PHP 8.2</strong></p>
+                            <p style="margin-top: 0.25rem;">Se utilizará PHP en su versión 8.2. Se encargará de gestionar la lógica de negocio, la seguridad (protección de directorios), la autenticación y la creación de una API REST que se comunicará de forma asíncrona con el Frontend mediante formato JSON.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
+                        <img src="img/logoMysql.png" alt="Logo MySQL" style="width: 50px; flex-shrink: 0;">
+                        <div>
+                            <p style="margin: 0;"><strong>Base de Datos: MySQL 8.0</strong></p>
+                            <p style="margin-top: 0.25rem;">Se implementará MySQL (versión 8.0) para garantizar la persistencia de los datos estructurados y mantener la integridad relacional estricta entre los usuarios (atletas/entrenadores) y sus fichas médicas e inscripciones.</p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             <div id="arquitectura-software" class="ancla-top sangria-1">
@@ -488,7 +527,39 @@
 
             <div id="guion-trabajo" class="ancla-top sangria-1">
                 <h3>4.3. Guion de Trabajo</h3>
-                <p class="nota-gris"><em>(Pendiente: Roadmap de hitos clave para el Entregable 1).</em></p>
+                <p>A continuación se detalla el "Roadmap" del proyecto, desglosando las fases de la planificación temporal en tareas técnicas específicas y asignadas por semanas, para garantizar un seguimiento exhaustivo del desarrollo:</p>
+                
+                <div class="sangria-2">
+                    <h4>Fase 1: Análisis y Diseño (Semanas 1 - 4)</h4>
+                    <ul>
+                        <li><p><strong>Semana 1-2:</strong> Toma de requisitos, análisis de competencia y elaboración de diagramas de Casos de Uso.</p></li>
+                        <li><p><strong>Semana 3:</strong> Diseño del modelo Entidad-Relación y creación de los esquemas relacionales (MySQL).</p></li>
+                        <li><p><strong>Semana 4:</strong> Elaboración de wireframes y maquetado visual de la interfaz de usuario en Figma.</p></li>
+                    </ul>
+
+                    <h4>Fase 2: Backend y Base de Datos (Semanas 5 - 8)</h4>
+                    <ul>
+                        <li><p><strong>Semana 5:</strong> Configuración del entorno (XAMPP), despliegue de la BBDD e implementación de la librería FPDF/TCPDF para la futura generación de documentos.</p></li>
+                        <li><p><strong>Semana 6:</strong> Desarrollo de la API REST (PHP 8.2) y creación de los endpoints básicos (Registro, Login) con cifrado de contraseñas.</p></li>
+                        <li><p><strong>Semana 7:</strong> Programación de la lógica de filtros de marcas deportivas y categorías por edades en el servidor.</p></li>
+                        <li><p><strong>Semana 8:</strong> Desarrollo del módulo de control de acceso y protección de directorios para los archivos PDF de los atletas (cumplimiento RGPD).</p></li>
+                    </ul>
+
+                    <h4>Fase 3: Frontend e Integración (Semanas 9 - 12)</h4>
+                    <ul>
+                        <li><p><strong>Semana 9:</strong> Inicialización del proyecto en React 18, configuración del enrutamiento y aplicación de Tailwind CSS.</p></li>
+                        <li><p><strong>Semana 10:</strong> Maquetación de los paneles de control (dashboard del Entrenador y vista del Atleta).</p></li>
+                        <li><p><strong>Semana 11:</strong> Conexión asíncrona (Fetch/Axios) entre el Frontend y la API REST para el intercambio de datos JSON.</p></li>
+                        <li><p><strong>Semana 12:</strong> Integración del formulario dinámico de inscripciones con el generador de PDF del backend.</p></li>
+                    </ul>
+
+                    <h4>Fase 4: Pruebas y Despliegue (Semanas 13 - 15)</h4>
+                    <ul>
+                        <li><p><strong>Semana 13:</strong> Ejecución de pruebas unitarias en formularios y validación de seguridad en la subida de archivos (DNI/Fotos).</p></li>
+                        <li><p><strong>Semana 14:</strong> Resolución de errores (testing continuo) y auditoría de accesibilidad web.</p></li>
+                        <li><p><strong>Semana 15:</strong> Despliegue en el servidor de producción (hosting), redacción final de los manuales y preparación de la defensa.</p></li>
+                    </ul>
+                </div>
             </div>
 
             <a id="desarrollo-implementacion" class="ancla-top zona-apagada"></a>
