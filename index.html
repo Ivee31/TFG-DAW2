@@ -181,7 +181,7 @@
                     <p>Es una plataforma centrada fundamentalmente en la gestión de competiciones. Permite a los usuarios inscribirse en eventos deportivos, hacer un seguimiento de los mismos y, a nivel de administración, crear y organizar dichos torneos. Sin embargo, no está diseñada para cubrir la gestión burocrática interna del día a día de un club modesto. Carece de herramientas para la gestión de un club de atletismo (independientemente de sus dimensiones)</p>
                     <a id="figura5-clupik" class="ancla-top"></a>
                     <figure class="figura-logo">
-                        <img src="img/clupikInterface.png" alt="Interfaz de competiciones de Clupik" class="img-diagrama">
+                        <img src="img/clupikInterface.png" alt="Interfaz de competiciones de Clupik" class="img-diagrama img-zoomable">
                         <figcaption class="pie-foto">Figura 5. Interfaz de competiciones de Clupik</figcaption>
                     </figure>
 
@@ -189,12 +189,12 @@
                     <p>Es uno de los sistemas más potentes y consolidados. Permite la gestión de recibos y remesas bancarias con gran eficacia. El problema radica en que es una herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, generando una curva de aprendizaje muy pronunciada para los entrenadores y padres y aumentando inecesariamente el precio del servicio al estar pagando funciones no utiles para el caso de un club pequeño de atletismo.</p>
                     <a id="figura6-playoff1" class="ancla-top"></a>
                     <figure class="figura-logo">
-                        <img src="img/playOffInterface1.png" alt="Interfaz de gestión de Playoff Informática" class="img-diagrama">
+                        <img src="img/playOffInterface1.png" alt="Interfaz de gestión de Playoff Informática" class="img-diagrama img-zoomable">
                         <figcaption class="pie-foto">Figura 6. Interfaz de gestión de Playoff Informática</figcaption>
                     </figure>
                     <a id="figura7-playoff2" class="ancla-top"></a>
                     <figure class="figura-logo">
-                        <img src="img/playOffFunctions.png" alt="Funcionalidades de Playoff Informática" class="img-diagrama">
+                        <img src="img/playOffFunctions.png" alt="Funcionalidades de Playoff Informática" class="img-diagrama img-zoomable">
                         <figcaption class="pie-foto">Figura 7. Funcionalidades de Playoff Informática</figcaption>
                     </figure>
 
@@ -356,10 +356,10 @@
                 <h3>2.3. Especificación Funcional</h3>
                 <div class="sangria-2">
                     <h4>2.3.1. Diagrama de Casos de Uso</h4>
-                    <a id="figura3-uml"></a>
+                    <a id="figura6-uml" class="ancla-top"></a>
                     <figure class="figura-logo">
-                        <img src="img/diagrama_uml.png" class="img-diagrama" style="width: 800px; max-width: 100%;" alt="Diagrama de Casos de Uso">
-                        <figcaption class="pie-foto">Figura 3. Diagrama de Casos de Uso del Sistema</figcaption>
+                        <img src="img/casosUsoIanuarius.png" class="img-diagrama svg-fondo-dinamico img-zoomable" style="width: 800px; max-width: 100%;" alt="Diagrama de Casos de Uso">
+                        <figcaption class="pie-foto">Figura 6. Diagrama de Casos de Uso del Sistema</figcaption>
                     </figure>
 
                     <h4>2.3.2. Especificación de Casos de Uso</h4>
@@ -556,7 +556,7 @@
                     <h4>Fase 4: Pruebas y Despliegue (Semanas 13 - 15)</h4>
                     <ul>
                         <li><p><strong>Semana 13:</strong> Ejecución de pruebas unitarias en formularios y validación de seguridad en la subida de archivos (DNI/Fotos).</p></li>
-                        <li><p><strong>Semana 14:</strong> Resolución de errores (testing continuo) y auditoría de accesibilidad web.</p></li>
+                        <li><p><strong>Semana 14:</strong> Resolución de errores (testing continuo).</p></li>
                         <li><p><strong>Semana 15:</strong> Despliegue en el servidor de producción (hosting), redacción final de los manuales y preparación de la defensa.</p></li>
                     </ul>
                 </div>
@@ -597,8 +597,14 @@
                 <p class="nota-gris">(Próximos Entregables)</p>
             </div>
 
-            <a id="referencias" class="ancla-top zona-apagada"></a>
-            <h2 class="zona-apagada">8. Referencias y bibliografía</h2>
+            <a id="referencias" class="ancla-top"></a>
+            <h2>8. Referencias y bibliografía</h2>
+            <div class="sangria-1">
+                <p>A continuación se detallan las herramientas, recursos y fuentes de información utilizadas para el desarrollo y documentación de este proyecto:</p>
+                <ul>
+                    <li><p><strong>Mermaid Live Editor:</strong> Herramienta web utilizada para la generación del Diagrama de Clases UML mediante renderizado de código. Disponible en: <a href="https://mermaid.live/" target="_blank" class="enlace-azul">https://mermaid.live/</a></p></li>
+                </ul>
+            </div>
 
             <a id="glosario" class="ancla-top"></a>
             <h2>9. Glosario de Términos y Acrónimos</h2>
@@ -622,7 +628,11 @@
             </div>
 
         </div> 
-    </div> 
+    </div>
+
+    <div id="zoomModal" class="zoom-modal">
+        <img class="zoom-modal-content" id="imgModal">
+    </div>
 
     <script>
         const toggleInput = document.getElementById('toggle-tema');
@@ -638,6 +648,38 @@
                 body.setAttribute('data-theme', 'dark');
             } else {
                 body.removeAttribute('data-theme');
+            }
+        });
+
+        // Init dom elements
+        const modal = document.getElementById("zoomModal");
+        const modalImg = document.getElementById("imgModal");
+        
+        // Get imgs with zoomable class
+        const images = document.querySelectorAll(".img-zoomable");
+        
+        // Add click event loop
+        images.forEach(img => {
+            img.addEventListener("click", function() {
+                modal.classList.add("show");
+                modalImg.src = this.src;
+                modalImg.alt = this.alt;
+            });
+        });
+        
+        // Add click event close modal
+        modal.addEventListener("click", function(event) {
+            // check click on background
+            if (event.target === modal || event.target === modalImg) {
+                modal.classList.remove("show");
+            }
+        });
+        
+        // Add keydown event esc key
+        document.addEventListener("keydown", function(event) {
+            // close if esc pressed
+            if (event.key === "Escape" && modal.classList.contains("show")) {
+                modal.classList.remove("show");
             }
         });
     </script>

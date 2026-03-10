@@ -460,3 +460,62 @@ body {
         min-width: 130px; 
     }
 }
+
+/* Contenedor modal */
+.zoom-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+    cursor: zoom-out;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+/* Img del modal */
+.zoom-modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transform: scale(0.7);
+    transition: transform 0.3s ease;
+}
+
+/* Mostrar modal */
+.zoom-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+/* Animacion img final */
+.zoom-modal.show .zoom-modal-content {
+    transform: scale(1);
+}
+
+/* Img ampliable */
+.img-zoomable {
+    cursor: zoom-in;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efecto hover img */
+.img-zoomable:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Modo oscuro modal */
+body[data-theme="dark"] .zoom-modal {
+    background-color: rgba(15, 23, 42, 0.96);
+}
