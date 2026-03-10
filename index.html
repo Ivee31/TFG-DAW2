@@ -363,26 +363,64 @@
                     </figure>
 
                     <h4>2.3.2. Especificación de Casos de Uso</h4>
+                    
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">UC-01</th><th style="width: 80%;">Registro y Autenticación</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>Actor</strong></td><td>Visitante (pasa a ser Atleta/Entrenador)</td></tr>
-                            <tr><td><strong>Interés</strong></td><td>Crear una cuenta segura, para acceder a un catálogo de funciones del club más extenso .</td></tr>
-                            <tr><td><strong>Precondición</strong></td><td>No tener una cuenta previamente registrada con el email aportado.</td></tr>
-                            <tr><td><strong>Garantía</strong></td><td>Datos almacenados (contraseñas cifradas) y sesión iniciada.</td></tr>
-                            <tr><td><strong>Flujo Básico</strong></td><td>1. El sistema solicita datos.<br>2. El sistema valida el formato.<br>3. El sistema crea la cuenta y autentica.</td></tr>
-                            <tr><td><strong>Excepciones</strong></td><td>2.a Email existente: El sistema avisa y ofrece recuperar contraseña.</td></tr>
+                            <tr><td><strong>Actor</strong></td><td>Visitante / Atleta / Entrenador</td></tr>
+                            <tr><td><strong>Interés</strong></td><td>Crear una cuenta o acceder de forma segura al sistema.</td></tr>
+                            <tr><td><strong>Precondición</strong></td><td>Para registro: No tener cuenta. Para login: Tener cuenta verificada.</td></tr>
+                            <tr><td><strong>Garantía</strong></td><td>Sesión iniciada correctamente y acceso al panel.</td></tr>
+                            <tr><td><strong>Flujo Básico</strong></td><td>1. El usuario introduce credenciales o datos de registro.<br>2. El sistema valida la información en la BBDD.<br>3. El sistema concede acceso y redirige a la vista correspondiente.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>2.a Credenciales inválidas: El sistema muestra error.<br>2.b Olvido de clave: Se ejecuta la extensión <em>Recuperar contraseña</em>.</td></tr>
                         </tbody>
                     </table>
+
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 20%;">UC-02</th><th style="width: 80%;">Generar Inscripción Online</th></tr></thead>
+                        <thead><tr><th style="width: 20%;">UC-02</th><th style="width: 80%;">Realizar Inscripción Online</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Actor</strong></td><td>Atleta (o Entrenador)</td></tr>
+                            <tr><td><strong>Interés</strong></td><td>Completar la ficha digitalmente y generar el documento oficial.</td></tr>
+                            <tr><td><strong>Precondición</strong></td><td>Haber iniciado sesión previamente (UC-01).</td></tr>
+                            <tr><td><strong>Garantía</strong></td><td>Datos guardados e inclusión automática de <em>Generar PDF Oficial</em>.</td></tr>
+                            <tr><td><strong>Flujo Básico</strong></td><td>1. El usuario accede al formulario de nueva temporada.<br>2. Rellena o actualiza sus datos médicos y de contacto.<br>3. El sistema compila la información y genera el PDF automáticamente.<br>4. Se envía una copia al email del usuario.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>2.a Falta documento anexo: Se requiere ejecutar la extensión <em>UC-03 (Subir archivo físico/DNI)</em>.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">UC-03</th><th style="width: 80%;">Subir Archivo Físico / DNI</th></tr></thead>
                         <tbody>
                             <tr><td><strong>Actor</strong></td><td>Atleta / Entrenador</td></tr>
-                            <tr><td><strong>Interés</strong></td><td>Completar la ficha digitalmente y generar el documento oficial.</td></tr>
+                            <tr><td><strong>Interés</strong></td><td>Adjuntar documentación obligatoria (DNI) o fichas antiguas escaneadas al sistema.</td></tr>
+                            <tr><td><strong>Precondición</strong></td><td>Haber iniciado sesión y estar en el proceso de inscripción (UC-02) o edición de perfil.</td></tr>
+                            <tr><td><strong>Garantía</strong></td><td>El archivo se sube al servidor protegido y se vincula a la ficha del usuario.</td></tr>
+                            <tr><td><strong>Flujo Básico</strong></td><td>1. El usuario selecciona la opción de adjuntar documento.<br>2. El sistema solicita el archivo desde el dispositivo.<br>3. El usuario sube un archivo en formato JPG o PDF.<br>4. El sistema valida la extensión y el peso máximo.<br>5. El archivo se almacena de forma segura.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>4.a Formato o peso inválido: El sistema rechaza la subida y avisa de los requisitos.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">UC-04</th><th style="width: 80%;">Filtrar Fichas Globales</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Actor</strong></td><td>Entrenador (Admin)</td></tr>
+                            <tr><td><strong>Interés</strong></td><td>Buscar y listar atletas según criterios deportivos o de edad.</td></tr>
+                            <tr><td><strong>Precondición</strong></td><td>Haber iniciado sesión con rol de Administrador.</td></tr>
+                            <tr><td><strong>Garantía</strong></td><td>Listado de atletas actualizado según el criterio de búsqueda.</td></tr>
+                            <tr><td><strong>Flujo Básico</strong></td><td>1. El entrenador accede al panel global de gestión.<br>2. Selecciona los filtros deseados (ej. Categoría Sub-16).<br>3. El sistema consulta a la BBDD y devuelve los resultados ordenados.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>3.a Ningún resultado: El sistema avisa de que no hay atletas en esa categoría.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">UC-05</th><th style="width: 80%;">Registrar Feedback Entrenos</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Actor</strong></td><td>Atleta</td></tr>
+                            <tr><td><strong>Interés</strong></td><td>Anotar sensaciones y estado físico tras una sesión en pista.</td></tr>
                             <tr><td><strong>Precondición</strong></td><td>Haber iniciado sesión (UC-01).</td></tr>
-                            <tr><td><strong>Garantía</strong></td><td>PDF generado, guardado en el perfil y enviado por correo.</td></tr>
-                            <tr><td><strong>Flujo Básico</strong></td><td>1. Usuario accede al formulario.<br>2. Sistema solicita datos y subida de imágenes (DNI).<br>3. Sistema compila datos y genera el PDF.<br>4. Sistema envía el PDF al email.</td></tr>
-                            <tr><td><strong>Excepciones</strong></td><td>2.a Archivo no soportado: El sistema rechaza la imagen e indica formatos válidos (JPG/PNG).</td></tr>
+                            <tr><td><strong>Garantía</strong></td><td>El registro queda guardado en el historial deportivo del atleta.</td></tr>
+                            <tr><td><strong>Flujo Básico</strong></td><td>1. El atleta entra en su área personal (<em>Gestionar perfil e historial</em>).<br>2. Accede al apartado de feedback.<br>3. Rellena el formulario de sensaciones.<br>4. El sistema guarda la entrada en la base de datos.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>3.a Formulario incompleto: El sistema pide rellenar los campos obligatorios.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -479,7 +517,71 @@
 
             <div id="diseno-datos" class="ancla-top sangria-1">
                 <h3>3.3. Diseño de Datos</h3>
-                <p class="nota-gris"><em>(Pendiente: Modelo Entidad-Relación y Tablas).</em></p>
+                <p>Para estructurar la persistencia de la información en la base de datos MySQL, se ha diseñado un Modelo Entidad-Relación que garantiza la integridad referencial. El sistema se compone de tres tablas principales:</p>
+                
+                <div class="sangria-2">
+                    <h4>Tabla: usuarios</h4>
+                    <p>Almacena las credenciales de acceso y datos personales básicos. Es la entidad fuerte del sistema.</p>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Campo</th>
+                                <th style="width: 20%;">Tipo</th>
+                                <th style="width: 25%;">Restricciones</th>
+                                <th style="width: 35%;">Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Identificador único del registro.</td></tr>
+                            <tr><td><strong>nombre</strong></td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Nombre de pila.</td></tr>
+                            <tr><td><strong>apellidos</strong></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Apellidos del usuario.</td></tr>
+                            <tr><td><strong>dni</strong></td><td>VARCHAR(9)</td><td>UNIQUE</td><td>Documento de identidad (DNI/NIE).</td></tr>
+                            <tr><td><strong>email</strong></td><td>VARCHAR(100)</td><td>UNIQUE, NOT NULL</td><td>Correo electrónico para el login.</td></tr>
+                            <tr><td><strong>password_hash</strong></td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Contraseña cifrada.</td></tr>
+                            <tr><td><strong>rol</strong></td><td>ENUM</td><td>DEFAULT 'atleta'</td><td>Valores permitidos: 'atleta' o 'admin'.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Tabla: fichas_inscripcion</h4>
+                    <p>Almacena los documentos de los atletas. Relación 1:1 con la tabla usuarios.</p>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Campo</th>
+                                <th style="width: 20%;">Tipo</th>
+                                <th style="width: 25%;">Restricciones</th>
+                                <th style="width: 35%;">Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>id_ficha</strong></td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Identificador de la ficha.</td></tr>
+                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>FOREIGN KEY, UNIQUE</td><td>Enlace al usuario propietario.</td></tr>
+                            <tr><td><strong>ruta_pdf</strong></td><td>VARCHAR(255)</td><td>NULL</td><td>Ruta en el servidor del PDF generado.</td></tr>
+                            <tr><td><strong>ruta_dni</strong></td><td>VARCHAR(255)</td><td>NULL</td><td>Ruta del escaneo del documento de identidad.</td></tr>
+                            <tr><td><strong>fecha_creacion</strong></td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Fecha de generación o subida.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Tabla: feedback_entrenamientos</h4>
+                    <p>Registra las sensaciones diarias. Relación 1:N con la tabla usuarios.</p>
+                    <table class="tabla-smart">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Campo</th>
+                                <th style="width: 20%;">Tipo</th>
+                                <th style="width: 25%;">Restricciones</th>
+                                <th style="width: 35%;">Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>id_feedback</strong></td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Identificador del registro.</td></tr>
+                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>FOREIGN KEY</td><td>Atleta que registra el entreno.</td></tr>
+                            <tr><td><strong>fecha</strong></td><td>DATE</td><td>NOT NULL</td><td>Día de la sesión de entrenamiento.</td></tr>
+                            <tr><td><strong>prueba</strong></td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Especialidad (ej. 100m lisos, Salto longitud).</td></tr>
+                            <tr><td><strong>sensaciones</strong></td><td>TEXT</td><td>NULL</td><td>Comentarios del atleta sobre su rendimiento.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div id="diseno-interfaz" class="ancla-top sangria-1">
