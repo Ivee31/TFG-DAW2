@@ -528,3 +528,14 @@ body[data-theme="dark"] .zoom-modal {
     border-radius: 4px;
     font-family: monospace;
 }
+
+/* Control del scroll al hacer clic en enlaces del índice */
+.ancla-top {
+    scroll-margin-top: 3rem; /* Títulos: se quedan arriba con un pequeño margen */
+    display: block;
+}
+
+.ancla-centro {
+    scroll-margin-top: 35vh; /* Tablas/Imágenes: se quedan en el centro de la pantalla */
+    display: block;
+}
