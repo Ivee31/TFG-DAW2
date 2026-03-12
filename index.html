@@ -357,7 +357,7 @@
                 <div class="sangria-2">
                     <h4>2.3.1. Diagrama de Casos de Uso</h4>
                     <a id="figura6-uml" class="ancla-top"></a>
-                    <figure class="figura-logo">
+                    <figure class="figura6-logo">
                         <img src="img/casosUsoIanuarius.png" class="img-diagrama svg-fondo-dinamico img-zoomable" style="width: 800px; max-width: 100%;" alt="Diagrama de Casos de Uso">
                         <figcaption class="pie-foto">Figura 6. Diagrama de Casos de Uso del Sistema</figcaption>
                     </figure>
@@ -532,68 +532,93 @@
 
             <div id="diseno-datos" class="ancla-top sangria-1">
                 <h3>3.3. Diseño de Datos</h3>
-                <p>Para estructurar la persistencia de la información en la base de datos MySQL, se ha diseñado un Modelo Entidad-Relación que garantiza la integridad referencial. El sistema se compone de tres tablas principales:</p>
+                <p>Para estructurar la persistencia de la información en la base de datos MySQL, se ha diseñado un Modelo Entidad-Relación altamente normalizado. Para gestionar la complejidad de las especialidades del atletismo (donde las alturas o pesos varían según la edad y el género), se ha implementado una tabla intermedia de detalle. El sistema se compone de seis tablas principales:</p>
                 
+                <a id="figura3-"></a>
+                <figure class="figura-logo">
+                    <img src="img/entidadRelacionIanuarius-transparente.png" class="img-diagrama img-zoomable" alt="Diagrama Entidad-Relación">
+                    <figcaption class="pie-foto">Figura 7. Diagrama de Entidad-Relación de la DB del proyecto.</figcaption>
+                </figure>
+
                 <div class="sangria-2">
-                    <h4>Tabla: usuarios</h4>
-                    <p>Almacena las credenciales de acceso y datos personales básicos. Es la entidad fuerte del sistema.</p>
+                    
+                    <h4>Tabla: categorias</h4>
+                    <p>Catálogo maestro que define los rangos de edad (ej. Sub-16, Sub-18).</p>
                     <table class="tabla-smart">
-                        <thead>
-                            <tr>
-                                <th style="width: 20%;">Campo</th>
-                                <th style="width: 20%;">Tipo</th>
-                                <th style="width: 25%;">Restricciones</th>
-                                <th style="width: 35%;">Descripción</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Identificador único del registro.</td></tr>
+                            <tr><td><strong>id_categoria</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador único.</td></tr>
+                            <tr><td><strong>nombre</strong></td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Nombre (ej. 'Sub-16').</td></tr>
+                            <tr><td><strong>edad_min</strong></td><td>INT</td><td>NOT NULL</td><td>Edad mínima para pertenecer.</td></tr>
+                            <tr><td><strong>edad_max</strong></td><td>INT</td><td>NOT NULL</td><td>Edad máxima para pertenecer.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Tabla: pruebas</h4>
+                    <p>Catálogo maestro de las disciplinas generales de atletismo.</p>
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>id_prueba</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador único.</td></tr>
+                            <tr><td><strong>nombre_prueba</strong></td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Ej: '100m', 'Lanzamiento Peso'.</td></tr>
+                            <tr><td><strong>tipo</strong></td><td>ENUM</td><td>NOT NULL</td><td>'Carrera', 'Salto' o 'Lanzamiento'.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Tabla: pruebas_variantes</h4>
+                    <p>Tabla de detalle que resuelve la relación N:M entre Pruebas y Categorías, añadiendo especificaciones técnicas.</p>
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>id_variante</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador único.</td></tr>
+                            <tr><td><strong>id_prueba</strong></td><td>INT</td><td>FK</td><td>Prueba base asociada.</td></tr>
+                            <tr><td><strong>id_categoria</strong></td><td>INT</td><td>FK</td><td>Categoría a la que aplica.</td></tr>
+                            <tr><td><strong>genero_aplicable</strong></td><td>ENUM</td><td>NOT NULL</td><td>'M', 'F' o 'Ambos'.</td></tr>
+                            <tr><td><strong>especificaciones</strong></td><td>VARCHAR(100)</td><td>NULL</td><td>Ej: '0.84m', '4kg', etc.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Tabla: usuarios</h4>
+                    <p>Almacena las credenciales de acceso y datos personales, perfilando al atleta.</p>
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador único.</td></tr>
+                            <tr><td><strong>id_categoria</strong></td><td>INT</td><td>FK</td><td>Categoría actual del atleta.</td></tr>
                             <tr><td><strong>nombre</strong></td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Nombre de pila.</td></tr>
                             <tr><td><strong>apellidos</strong></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Apellidos del usuario.</td></tr>
-                            <tr><td><strong>dni</strong></td><td>VARCHAR(9)</td><td>UNIQUE</td><td>Documento de identidad (DNI/NIE).</td></tr>
-                            <tr><td><strong>email</strong></td><td>VARCHAR(100)</td><td>UNIQUE, NOT NULL</td><td>Correo electrónico para el login.</td></tr>
+                            <tr><td><strong>dni</strong></td><td>VARCHAR(9)</td><td>UNIQUE</td><td>Documento de identidad.</td></tr>
+                            <tr><td><strong>email</strong></td><td>VARCHAR(100)</td><td>UNIQUE, NOT NULL</td><td>Correo electrónico.</td></tr>
                             <tr><td><strong>password_hash</strong></td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Contraseña cifrada.</td></tr>
-                            <tr><td><strong>rol</strong></td><td>ENUM</td><td>DEFAULT 'atleta'</td><td>Valores permitidos: 'atleta' o 'admin'.</td></tr>
+                            <tr><td><strong>rol</strong></td><td>ENUM</td><td>DEFAULT 'atleta'</td><td>'Admin' o 'Atleta'.</td></tr>
+                            <tr><td><strong>fecha_nacimiento</strong></td><td>DATE</td><td>NOT NULL</td><td>Para cálculo de categoría.</td></tr>
+                            <tr><td><strong>genero</strong></td><td>ENUM</td><td>NOT NULL</td><td>'M' o 'F'.</td></tr>
                         </tbody>
                     </table>
 
                     <h4>Tabla: fichas_inscripcion</h4>
-                    <p>Almacena los documentos de los atletas. Relación 1:1 con la tabla usuarios.</p>
+                    <p>Almacena los documentos. Relación 1:1 con la tabla usuarios.</p>
                     <table class="tabla-smart">
-                        <thead>
-                            <tr>
-                                <th style="width: 20%;">Campo</th>
-                                <th style="width: 20%;">Tipo</th>
-                                <th style="width: 25%;">Restricciones</th>
-                                <th style="width: 35%;">Descripción</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>id_ficha</strong></td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Identificador de la ficha.</td></tr>
-                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>FOREIGN KEY, UNIQUE</td><td>Enlace al usuario propietario.</td></tr>
-                            <tr><td><strong>ruta_pdf</strong></td><td>VARCHAR(255)</td><td>NULL</td><td>Ruta en el servidor del PDF generado.</td></tr>
-                            <tr><td><strong>ruta_dni</strong></td><td>VARCHAR(255)</td><td>NULL</td><td>Ruta del escaneo del documento de identidad.</td></tr>
-                            <tr><td><strong>fecha_creacion</strong></td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Fecha de generación o subida.</td></tr>
+                            <tr><td><strong>id_ficha</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador de la ficha.</td></tr>
+                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>FK, UNIQUE</td><td>Enlace al usuario propietario.</td></tr>
+                            <tr><td><strong>ruta_pdf</strong></td><td>VARCHAR(255)</td><td>NULL</td><td>Ruta del PDF generado.</td></tr>
+                            <tr><td><strong>ruta_dni</strong></td><td>VARCHAR(255)</td><td>NULL</td><td>Ruta del DNI escaneado.</td></tr>
+                            <tr><td><strong>fecha_creacion</strong></td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Fecha de generación.</td></tr>
                         </tbody>
                     </table>
 
                     <h4>Tabla: feedback_entrenamientos</h4>
-                    <p>Registra las sensaciones diarias. Relación 1:N con la tabla usuarios.</p>
+                    <p>Registra las sensaciones diarias. Relación 1:N con la tabla usuarios y pruebas_variantes.</p>
                     <table class="tabla-smart">
-                        <thead>
-                            <tr>
-                                <th style="width: 20%;">Campo</th>
-                                <th style="width: 20%;">Tipo</th>
-                                <th style="width: 25%;">Restricciones</th>
-                                <th style="width: 35%;">Descripción</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>id_feedback</strong></td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Identificador del registro.</td></tr>
-                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>FOREIGN KEY</td><td>Atleta que registra el entreno.</td></tr>
-                            <tr><td><strong>fecha</strong></td><td>DATE</td><td>NOT NULL</td><td>Día de la sesión de entrenamiento.</td></tr>
-                            <tr><td><strong>prueba</strong></td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Especialidad (ej. 100m lisos, Salto longitud).</td></tr>
-                            <tr><td><strong>sensaciones</strong></td><td>TEXT</td><td>NULL</td><td>Comentarios del atleta sobre su rendimiento.</td></tr>
+                            <tr><td><strong>id_feedback</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador del registro.</td></tr>
+                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>FK</td><td>Atleta que entrena.</td></tr>
+                            <tr><td><strong>id_variante</strong></td><td>INT</td><td>FK</td><td>Prueba específica entrenada.</td></tr>
+                            <tr><td><strong>fecha</strong></td><td>DATE</td><td>NOT NULL</td><td>Día de la sesión.</td></tr>
+                            <tr><td><strong>sensaciones</strong></td><td>TEXT</td><td>NULL</td><td>Comentarios del rendimiento.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -616,7 +641,7 @@
                     <p>Se emplea la familia tipográfica <strong>Inter</strong>, nativa en entornos web modernos e incluida a través de Tailwind CSS. Destaca por su legibilidad en pantallas pequeñas y su aspecto limpio y profesional, ideal para la lectura densa de tablas de marcas deportivas y listados de atletas.</p>
 
                     <h4>Prototipado y Experiencia de Usuario (UX)</h4>
-                    <p>Previo al desarrollo de los componentes en React, se elaboran prototipos interactivos (Wireframes) utilizando la herramienta <strong>Figma</strong>. Esto permite validar los flujos de navegación, especialmente en el proceso crítico de inscripción y subida del DNI (UC-02 y UC-03). El objetivo es reducir la fricción cognitiva mediante formularios guiados paso a paso, asegurando que la plataforma sea intuitiva tanto para jóvenes atletas como para sus tutores legales.</p>
+                    <p>El diseño de las vistas principales (Wireframes) se plantea utilizando la herramienta <strong>Figma</strong>, con el objetivo de estructurar visualmente la interfaz y definir los flujos de navegación de cara a la codificación final de los componentes. Esta conceptualización se centra especialmente en procesos críticos como la inscripción o la subida documental, buscando reducir la fricción cognitiva mediante formularios guiados paso a paso y asegurando que la plataforma resulte intuitiva tanto para jóvenes atletas como para sus tutores legales.</p>
                 </div>
             </div>
 
@@ -641,7 +666,7 @@
                 <a id="figura4-gantt"></a>
                 <figure class="figura-logo">
                     <img src="img/gantt.png" class="img-diagrama" alt="Diagrama de Gantt">
-                    <figcaption class="pie-foto">Figura 4. Diagrama de Gantt con la previsión del proyecto.</figcaption>
+                    <figcaption class="pie-foto">Figura 8. Diagrama de Gantt con la previsión del proyecto.</figcaption>
                 </figure>
 
                 <table class="tabla-smart">
