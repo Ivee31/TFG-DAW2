@@ -182,7 +182,7 @@
                     <a id="figura5-clupik" class="ancla-top"></a>
                     <figure class="figura-logo">
                         <img src="img/clupikInterface.png" alt="Interfaz de competiciones de Clupik" class="img-diagrama img-zoomable">
-                        <figcaption class="pie-foto">Figura 5. Interfaz de competiciones de Clupik</figcaption>
+                        <figcaption class="pie-foto">Figura 3. Interfaz de competiciones de Clupik</figcaption>
                     </figure>
 
                     <h4>1.4.2. Playoff Informática</h4>
@@ -190,12 +190,12 @@
                     <a id="figura6-playoff1" class="ancla-top"></a>
                     <figure class="figura-logo">
                         <img src="img/playOffInterface1.png" alt="Interfaz de gestión de Playoff Informática" class="img-diagrama img-zoomable">
-                        <figcaption class="pie-foto">Figura 6. Interfaz de gestión de Playoff Informática</figcaption>
+                        <figcaption class="pie-foto">Figura 4. Interfaz de gestión de Playoff Informática</figcaption>
                     </figure>
                     <a id="figura7-playoff2" class="ancla-top"></a>
                     <figure class="figura-logo">
                         <img src="img/playOffFunctions.png" alt="Funcionalidades de Playoff Informática" class="img-diagrama img-zoomable">
-                        <figcaption class="pie-foto">Figura 7. Funcionalidades de Playoff Informática</figcaption>
+                        <figcaption class="pie-foto">Figura 5. Funcionalidades de Playoff Informática</figcaption>
                     </figure>
 
                     <h4>1.4.3. Necesidades reales no cubiertas (El hueco de Ianuarius)</h4>
@@ -467,10 +467,10 @@
                 <h3>2.5. Normativa y Legislación</h3>
                 <p>Debido a que el sistema gestiona inscripciones de atletas (en su mayoría menores) y realiza un seguimiento de sus entrenamientos, el cumplimiento normativo es estricto:</p>
                 <ul>
-                    <li><p>- **RGPD y LOPDGDD:** Los datos se alojarán en servidores del EEE. Se requerirá consentimiento verificable de tutores legales para menores de 14 años.</p></li>
-                    <li><p>- **Derecho al olvido:** Se podrá solicitar la eliminación de datos una vez el atleta inscrito abandone el club.</p></li>
-                    <li><p>- **LSSI-CE y Accesibilidad:** Se incluirá un Aviso Legal con los datos del club. Se buscará cumplir con el nivel AA de las directrices WCAG 2.1.</p></li>
-                    <li><p>- **Licencias:** Tecnologías libres (HTML, CSS, PHP, MySQL), Tailwind CSS (MIT) y librerías de generación de PDF (MIT/GPL).</p></li>
+                    <li><p><strong>- RGPD y LOPDGDD:</strong> Los datos se alojarán en servidores del EEE. Se requerirá consentimiento verificable de tutores legales para menores de 14 años.</p></li>
+                    <li><p><strong>- Derecho al olvido:</strong> Se podrá solicitar la eliminación de datos una vez el atleta inscrito abandone el club.</p></li>
+                    <li><p><strong>- LSSI-CE y Accesibilidad:</strong> Se incluirá un Aviso Legal con los datos del club. Se buscará cumplir con el nivel AA de las directrices WCAG 2.1.</p></li>
+                    <li><p><strong>- Licencias:</strong> Tecnologías libres (HTML, CSS, PHP, MySQL), Tailwind CSS (MIT) y librerías de generación de PDF (MIT/GPL).</p></li>
                 </ul>
             </div>
 
@@ -512,7 +512,22 @@
 
             <div id="arquitectura-software" class="ancla-top sangria-1">
                 <h3>3.2. Arquitectura del Software</h3>
-                <p class="nota-gris"><em>(Pendiente: Aquí explicaremos cómo se comunica React con PHP mediante la API REST).</em></p>
+                <p>El sistema Ianuarius se ha diseñado bajo un modelo de arquitectura Cliente-Servidor estructurado en dos capas totalmente desacopladas. Esta separación de responsabilidades permite un mantenimiento más ágil, una mayor seguridad y una mejor escalabilidad del proyecto a futuro.</p>
+                
+                <div class="sangria-2">
+                    <h4>Modelo de Comunicación y API REST</h4>
+                    <p>La interacción entre la interfaz de usuario y el servidor se realiza mediante una <strong>API REST</strong> (Application Programming Interface), desarrollada íntegramente en PHP. El ciclo de vida de una petición típica en la aplicación sigue estos cuatro pasos fundamentales:</p>
+                    
+                    <ul>
+                        <li><p><strong>1º. Interacción (Frontend):</strong> La aplicación interactiva construida en React captura las acciones del usuario (por ejemplo, enviar el formulario de una nueva inscripción o solicitar el listado de atletas).</p></li>
+                        <li><p><strong>2º. Petición Asíncrona:</strong> React utiliza la API nativa "fetch" (o la librería Axios) para enviar una petición HTTP (GET, POST, PUT o DELETE) al servidor. Al ser una SPA (Single Page Application), esto ocurre en segundo plano sin necesidad de recargar la página del navegador.</p></li>
+                        <li><p><strong>3º. Procesamiento (Backend):</strong> El servidor PHP recibe la petición HTTP, valida los permisos de seguridad y el rol del usuario, ejecuta la lógica de negocio correspondiente y realiza las consultas necesarias a la base de datos MySQL.</p></li>
+                        <li><p><strong>4º. Respuesta (JSON):</strong> PHP devuelve al cliente la información solicitada empaquetada en un objeto de formato <strong>JSON</strong>. React intercepta esta respuesta y actualiza el DOM (la pantalla) de forma reactiva para mostrar los resultados al usuario.</p></li>
+                    </ul>
+
+                    <h4>Seguridad en la Arquitectura</h4>
+                    <p>Para garantizar el cumplimiento de la normativa de protección de datos (RGPD), la arquitectura se blinda en el lado del servidor. Las rutas de la API en PHP comprueban activamente las credenciales mediante el uso de sesiones o tokens de autenticación antes de servir cualquier archivo o dato sensible (como los PDF oficiales generados o las marcas deportivas), impidiendo el acceso no autorizado mediante la manipulación de las URL en el Frontend.</p>
+                </div>
             </div>
 
             <div id="diseno-datos" class="ancla-top sangria-1">
@@ -586,7 +601,23 @@
 
             <div id="diseno-interfaz" class="ancla-top sangria-1">
                 <h3>3.4. Diseño de Interfaz (UI/UX)</h3>
-                <p class="nota-gris"><em>(Pendiente: Wireframes y colores).</em></p>
+                <p>El diseño de la interfaz se ha planteado bajo el paradigma <strong>Mobile First</strong>, garantizando que la aplicación web sea plenamente funcional y accesible desde dispositivos móviles, dado que los atletas y entrenadores la utilizarán frecuentemente a pie de pista durante los entrenamientos.</p>
+                
+                <div class="sangria-2">
+                    <h4>Paleta de Colores</h4>
+                    <p>Se definirá una paleta cromática basada en la identidad corporativa del Club de Atletismo Ianuarius, priorizando el contraste y la legibilidad para entornos con mucha luz (exteriores):</p>
+                    <ul>
+                        <li><p><strong>Color Principal (Identidad Club):</strong> Rojo Ianuarius (#E63946) - Se reserva para los botones de acción principal (como enviar inscripciones), enlaces destacados y elementos de marca.</p></li>
+                        <li><p><strong>Colores Neutros:</strong> Escala de grises (desde #F8F9FA para fondos hasta #212529 para textos principales) para estructurar el contenido sin fatigar la vista.</p></li>
+                        <li><p><strong>Colores de Estado:</strong> Verde (#2A9D8F) para alertas de éxito (feedback guardado, PDF generado) y Naranja (#F4A261) para advertencias o campos incompletos.</p></li>
+                    </ul>
+
+                    <h4>Tipografía</h4>
+                    <p>Se emplea la familia tipográfica <strong>Inter</strong>, nativa en entornos web modernos e incluida a través de Tailwind CSS. Destaca por su legibilidad en pantallas pequeñas y su aspecto limpio y profesional, ideal para la lectura densa de tablas de marcas deportivas y listados de atletas.</p>
+
+                    <h4>Prototipado y Experiencia de Usuario (UX)</h4>
+                    <p>Previo al desarrollo de los componentes en React, se elaboran prototipos interactivos (Wireframes) utilizando la herramienta <strong>Figma</strong>. Esto permite validar los flujos de navegación, especialmente en el proceso crítico de inscripción y subida del DNI (UC-02 y UC-03). El objetivo es reducir la fricción cognitiva mediante formularios guiados paso a paso, asegurando que la plataforma sea intuitiva tanto para jóvenes atletas como para sus tutores legales.</p>
+                </div>
             </div>
 
             <a id="planif-metodo" class="ancla-top"></a>
@@ -667,12 +698,20 @@
             <a id="desarrollo-implementacion" class="ancla-top zona-apagada"></a>
             <h2 class="zona-apagada">5. Desarrollo e Implementación</h2>
             <div class="zona-apagada sangria-1">
+                
+                <a id="organizacion-real" class="ancla-top"></a>
                 <h3>5.1. Organización real del trabajo</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
+                <p class="nota-gris">(Pendiente de redactar durante la fase de programación)</p>
+                
+                <a id="estructura-proyecto" class="ancla-top"></a>
                 <h3>5.2. Estructura del Proyecto</h3>
                 <p class="nota-gris">(Próximos Entregables)</p>
+                
+                <a id="aspectos-codigo" class="ancla-top"></a>
                 <h3>5.3. Aspectos relevantes de la codificación</h3>
                 <p class="nota-gris">(Próximos Entregables)</p>
+                
+                <a id="despliegue" class="ancla-top"></a>
                 <h3>5.4. Despliegue</h3>
                 <p class="nota-gris">(Próximos Entregables)</p>
             </div>
