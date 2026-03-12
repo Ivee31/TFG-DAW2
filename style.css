@@ -519,3 +519,12 @@ body {
 body[data-theme="dark"] .zoom-modal {
     background-color: rgba(15, 23, 42, 0.96);
 }
+
+/* Fix contraste etiquetas code en modo oscuro */
+[data-theme="dark"] .prose code {
+    background-color: #374151;
+    color: #fca5a5;
+    padding: 0.15rem 0.3rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
