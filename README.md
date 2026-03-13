@@ -1,6 +1,6 @@
 # MEMORIA DEL PROYECTO - IANUARIUS
 
-<a name="figura1"></a>
+<a name="figura1-logo"></a>
 <p align="center">
   <img src="img/logoIanuarius.png" alt="Logotipo Ianuarius" width="300">
   <br>
@@ -12,11 +12,15 @@
 - **Tutor:** Serafina Martín Marcos
 - **Ciclo:** Desarrollo de Aplicaciones Web (I.E.S. Venancio Blanco)
 
+<a name="figura2-venancio"></a>
+<p align="center">
+  <img src="img/logoVenancio.png" alt="Logotipo Venancio" width="150">
+</p>
+
 <p align="right">
 	<a href="https://ivee31.github.io/TFG-DAW2/" target="_blank">🌐 Ver Documentación Online</a>
 	<p align="right">(pinchar con 'ctrl' para abrir en otra pestaña)</p>
 </p>
-
 
 ---
 
@@ -30,286 +34,309 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 - [Índice de Figuras](#índice-de-figuras)
 - [Índice de Tablas](#índice-de-tablas)
 
-1. [Estudio del problema y análisis del sistema](#1-estudio-del-problema-y-análisis-del-sistema)
-	- 1.1. [Introducción](#11-introducción)
-	- 1.2. [Objetivos y alcance](#12-objetivos-y-alcance)
-	- 1.3. [Requisitos del sistema (SRS)](#13-requisitos-del-sistema-srs)
-2. [Recursos necesarios](#2-recursos-necesarios)
-	- 2.1. [Recursos humanos, hardware y software](#21-recursos-humanos-hardware-y-software)
-	- 2.2. [Estimación de costes y presupuesto](#22-estimación-de-costes-y-presupuesto)
-3. [Planificación y metodología](#3-planificación-y-metodología)
-	- 3.1. [Metodología de desarrollo](#31-metodología-de-desarrollo)
-	- 3.2. [Diseño técnico del sistema](#32-diseño-técnico-del-sistema)
-	- 3.3. [Planificación temporal](#33-planificación-temporal)
-4. [Desarrollo del proyecto](#4-desarrollo-del-proyecto)
-	- 4.1. [Organización real del trabajo](#41-organización-real-del-trabajo)
-	- 4.2. [Modelo de datos](#42-modelo-de-datos)
-	- 4.3. [Implementación y despliegue](#43-implementación-y-despliegue)
-5. [Fase de pruebas y control de calidad](#5-fase-de-pruebas-y-control-de-calidad)
-	- 5.1. [Plan de pruebas](#51-plan-de-pruebas)
-	- 5.2. [Registro de incidencias](#52-registro-de-incidencias)
-	- 5.3. [Validación final](#53-validación-final)
-6. [Conclusiones](#6-conclusiones)
-	- 6.1. [Reflexión personal sobre el proyecto](#61-reflexión-personal-sobre-el-proyecto)
-	- 6.2. [Dificultades encontradas y resolución](#62-dificultades-encontradas-y-resolución)
-	- 6.3. [Grado de cumplimiento de objetivos](#63-grado-de-cumplimiento-de-objetivos)
-	- 6.4. [Propuestas de mejora y evolución futura](#64-propuestas-de-mejora-y-evolución-futura)
-7. [Referencias y bibliografía](#7-referencias-y-bibliografía)
-8. [Anexos](#8-anexos)
-	- 8.1. [Manual de instalación](#81-manual-de-instalación)
-	- 8.2. [Manual de usuario](#82-manual-de-usuario)
-	- 8.3. [Documentación complementaria digital](#83-documentación-complementaria-digital)
-	- 8.4. [Anexos Técnicos y Documentales](#84-anexos-técnicos-y-documentales)
+1. [Introducción y Justificación](#1-introducción-y-justificación)
+2. [Definición del Sistema](#2-definición-del-sistema)
+3. [Diseño Tecnológico y Arquitectura](#3-diseño-tecnológico-y-arquitectura)
+4. [Planificación y Metodología](#4-planificación-y-metodología)
+5. [Desarrollo e Implementación](#5-desarrollo-e-implementación)
+6. [Pruebas y Control de Calidad](#6-pruebas-y-control-de-calidad)
+7. [Conclusiones y Futuro](#7-conclusiones-y-futuro)
+8. [Referencias y bibliografía](#8-referencias-y-bibliografía)
+9. [Glosario de Términos y Acrónimos](#9-glosario-de-términos-y-acrónimos)
+10. [Anexos](#10-anexos)
 
 ---
 
 ## Índice de Figuras
-- [Figura 1. Logo Ianuarius](#figura1)
-
+- [Figura 1. Logo Ianuarius](#figura1-logo)
+- [Figura 2. Logo Venancio Blanco](#figura2-venancio)
+- [Figura 3. Interfaz de competiciones de Clupik](#figura3-clupik)
+- [Figura 4. Interfaz de gestión de Playoff Informática](#figura4-playoff1)
+- [Figura 5. Funcionalidades de Playoff Informática](#figura5-playoff2)
+- [Figura 6. Diagrama de Casos de Uso del Sistema](#figura6-uml)
+- [Figura 7. Diagrama Entidad-Relación de la DB](#figura7-db)
+- [Figura 8. Diagrama de Gantt con la previsión del proyecto](#figura8-gantt)
 
 ## Índice de Tablas
-- (Aquí irán tus tablas)
+- [Tabla 1. Costes de Hardware y Software](#tabla-hardware)
+- [Tabla 2. Costes de Personal (Desarrollo)](#tabla-personal)
+- [Tabla 3. Costes de Mantenimiento Anual](#tabla-mantenimiento)
+- [Tabla 4. Análisis SMART: Objetivo General](#tabla-smart-gen)
+- [Tabla 5. Análisis SMART: Objetivos Funcionales](#tabla-smart-func)
+- [Tabla 6. Definición de Actores](#tabla-actores)
+- [Tabla 7. Especificación de Casos de Uso](#tabla-cu)
+- [Tabla 8. Requisitos Funcionales y No Funcionales](#tabla-rf)
+- [Tabla 9. Requisitos de Información (IRQ)](#tabla-irq)
+- [Tabla 10. Stack Tecnológico](#tabla-stack)
+- [Tabla 11. Diccionario de datos: categorias](#tabla-categorias)
+- [Tabla 12. Diccionario de datos: pruebas](#tabla-pruebas)
+- [Tabla 13. Diccionario de datos: pruebas_variantes](#tabla-variantes)
+- [Tabla 14. Diccionario de datos: usuarios](#tabla-usuarios)
+- [Tabla 15. Diccionario de datos: fichas_inscripcion](#tabla-fichas)
+- [Tabla 16. Diccionario de datos: feedback_entrenamientos](#tabla-feedback)
+- [Tabla 17. Fases de Planificación (Gantt)](#tabla-gantt)
+- [Tabla 18. Glosario de Términos](#tabla-glosario)
 
 ---
 
-# 1. Estudio del problema y análisis del sistema
+# 1. Introducción y Justificación
 
-## 1.1. Introducción
+## 1.1. Memoria Inicial
 Aplicación web centrada en la gestión del club de atletismo Ianuarius, de forma que se digitalice su gestión.
-
-Por otra parte, gracias a esta transición al mundo digital, permitirá añadir funcionalidades que, en un entorno físico, sin esta aplicación, serían muy costosos, complicados o incluso, imposibles de llevar a cabo, sobre todo teniendo en cuenta el gran número de atletas pertenecientes al club, de los cuales, su gran mayoría son menores, o lo suficientemente pequeños como para no estar capacitados para manejarse por sí mismos.
-
-En cuanto a una oportunidad de negocio, este proyecto está inspirado desde la experiencia personal, de este modo, se ha podido observar que los clubes de atletismo, por lo general, no disponen de ningún sistema para gestionar y administrar a sus atletas de forma medianamente automatizada, por lo que este proyecto en sí, aporta algo totalmente nuevo al sector.
-
 En cualquiera de los casos, cabe destacar que el proyecto ha sido ampliamente pensado para el club homónimo al título de este, por lo que, para otros clubes, cabría la posibilidad de que haya funciones insuficientes o que, por el contrario, haya un exceso de estas.
 
-## 1.2. Objetivos y alcance
-Siguiendo los criterios SMART (Específico, Medible, Alcanzable, Relevante y Temporal), se definen a continuación los objetivos del proyecto.
+## 1.2. Justificación
+Por otra parte, gracias a esta transición al mundo digital, permitirá añadir funcionalidades que, en un entorno físico, sin esta aplicación, serían muy costosos, complicados o incluso imposibles de llevar a cabo, sobre todo teniendo en cuenta el gran número de atletas pertenecientes al club, de los cuales, su gran mayoría son menores, o lo suficientemente pequeños como para no estar capacitados para manejarse por sí mismos.
 
-### 1.2.2. Objetivo General
+## 1.3. Oportunidad de Negocio
+Este proyecto nace de la observación directa de una carencia tecnológica en el ámbito deportivo local. Los clubes de atletismo modestos no disponen de presupuestos holgados para contratar plataformas de gestión genéricas de alto coste. 
 
-| Concepto | Descripción | Análisis SMART |
-| :--- | :--- | :--- |
-| **Propósito Principal** | Desarrollar una plataforma web integral para la digitalización de la gestión del Club Atletismo Ianuarius (inscripciones, fichas y seguimiento). | **S:** Web de gestión de fichas y atletas.<br>**M:** Gestión de licencias por vías digitales.<br>**A:** Stack LAMP (Linux, Apache, MySQL, PHP).<br>**R:** Elimina el uso de papel físico.<br>**T:** Funcional para la temporada 2026 - 2027 (Utilizable de ahí en adelante). |
+Ianuarius se presenta como un software vertical, específico para atletismo, de bajo coste y centrado en resolver el "cuello de botella" burocrático de las inscripciones de menores de edad.
 
-### 1.2.3. Objetivos Funcionales
-Desglose de las funcionalidades principales ("Qué hace" el sistema):
+## 1.4. Estudio del Sector
+Tras analizar soluciones existentes en el mercado actual:
 
-| ID | Módulo | Descripción | Justificación SMART | Prioridad |
-| :--- | :--- | :--- | :--- | :--- |
-| **OBJ-01** | Usuarios | Registro, Login y distinción de roles (Admin, Entrenador, Atleta). | **S:** Acceso seguro por credenciales.<br>**M:** 3 roles diferenciados.<br>**T:** Fase 1 (Base de datos). | **Alta** |
-| **OBJ-02** | Fichas | Subida de archivos escaneados para inscripciones físicas (legacy). | **S:** Upload de PDF/JPG.<br>**R:** Soporte a inscripciones manuales.<br>**T:** Fase 2. | **Alta** |
-| **OBJ-03** | Fichas | Inscripción online con generación automática de PDF y envío por email. | **S:** Formulario a PDF automático.<br>**M:** 0 errores de transcripción.<br>**T:** Fase 2 (Lógica de negocio). | **Media** |
-| **OBJ-04** | Gestión | Filtros de búsqueda avanzada (Categoría, edad, prueba, marcas). | **S:** Filtrado SQL dinámico.<br>**M:** Respuesta en < 1 seg.<br>**T:** Fase 3 (Panel Admin). | **Media** |
-| **OBJ-05** | Atletas | Calendario de eventos y feedback de entrenamientos (sensaciones). | **S:** Calendario visual interactivo.<br>**R:** Seguimiento deportivo.<br>**T:** Fase Final. | **Baja** |
+**1.4.1. Clupik**
+Centrada en la gestión de competiciones, pero carece de herramientas para la burocracia de un club de atletismo.
+<a name="figura3-clupik"></a>
+<img src="img/clupikInterface.png" alt="Interfaz de Clupik">
+*Figura 3. Interfaz de competiciones de Clupik*
 
-### 1.2.4. Objetivos No Funcionales
-* Diseño Responsive (Mobile First).
-* Interfaz limpia y accesible según estándares web.
+**1.4.2. Playoff Informática**
+Herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, encareciendo el servicio.
+<a name="figura4-playoff1"></a>
+<img src="img/playOffInterface1.png" alt="Interfaz de Playoff">
+*Figura 4. Interfaz de gestión de Playoff Informática*
 
-## 1.3. Requisitos del sistema (SRS)
-En este apartado se detallan las especificaciones técnicas, normativas y requisitos necesarios para el funcionamiento de la plataforma Ianuarius.
+<a name="figura5-playoff2"></a>
+<img src="img/playOffFunctions.png" alt="Funcionalidades de Playoff">
+*Figura 5. Funcionalidades de Playoff Informática*
 
-### 1.3.1. Normativa y Legislación
-Debido a que el sistema gestiona inscripciones de atletas (en su mayoría menores) y realiza un seguimiento de sus entrenamientos, el cumplimiento normativo es estricto:
-* **RGPD y LOPDGDD:** Los datos (identificativos, documentos de salud e imágenes) se alojarán en servidores del Espacio Económico Europeo (EEE). Se requerirá consentimiento verificable de tutores legales para menores de 14 años.
-* **Derecho al olvido:** Debido a la necesidad de los datos personales aportados por cada individuo a la hora de federarse, se podrá solicitar la eliminación de dichos datos una vez el atleta inscrito abandone el club (de lo contrario, no podría pertenecer al club, ya que no tendría seguro medico aportado por la federación).
-* **LSSI-CE y Accesibilidad:** Se incluirá un Aviso Legal con los datos del club. Se buscará cumplir con el nivel AA de las directrices WCAG 2.1 (contraste 4.5:1, etiquetas `alt` y navegación por teclado).
-* **Licencias:** Tecnologías libres (HTML, CSS, PHP, MySQL), Tailwind CSS (MIT) y librerías de generación de PDF (MIT/GPL) compatibles con el proyecto.
+## 1.5. Análisis de Viabilidad
+El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando el estricto cumplimiento del RGPD.
 
-### 1.3.2. Definición de Actores
-| ID: ACT-01 | Visitante |
-| :--- | :--- |
-| **Descripción** | Usuario no registrado que accede a la parte pública (portfolio informativo). |
-| **Permisos** | Visualizar información basica del club (plazos de fichas, horarios, periodos de entreno, etc.). |
-
-<br>
-
-| ID: ACT-02 | Atleta |
-| :--- | :--- |
-| **Descripción** | Integrante del club registrado de forma oficial. |
-| **Permisos** | Iniciar sesión, realizar inscripciones (formulario o subida de PDF), acceder a su historial, editar inscripciones en plazo y registrar feedback de entrenamientos. |
-
-<br>
-
-| ID: ACT-03 | Entrenador (Administrador) |
-| :--- | :--- |
-| **Descripción** | Miembro del cuerpo técnico encargado de la gestión del club. |
-| **Permisos** | Permisos de Atleta + visualizar todas las fichas, filtrar atletas (edad, categoría) y consultar el calendario global. |
-
-### 1.3.3. Requisitos Funcionales (RF)
-| ID | Función | Descripción Detallada | Actor | CU | Prioridad |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **RF-01** | Registro | El sistema permitirá crear una cuenta mediante formulario validando el email. | Visitante | UC-01 | **Alta** |
-| **RF-02** | Login | El sistema verificará credenciales contra la BBDD y asignará la sesión. | Atleta/Admin | UC-01 | **Alta** |
-| **RF-03** | Inscripción | El sistema generará un PDF automático a partir de los datos del formulario. | Atleta | UC-02 | **Alta** |
-| **RF-04** | Subida PDF | El sistema permitirá adjuntar archivos físicos escaneados (JPG/PDF). | Atleta | UC-03 | **Media** |
-| **RF-05** | Filtros | El sistema ordenará las fichas por categoría, fecha o edad. | Admin | UC-04 | **Media** |
-| **RF-06** | Generación PDF | El sistema generará ficha de inscripción en PDF en base a los datos aportados en el formulario de inscripción. | Atleta | UC-03 | **Baja** |
-
-### 1.3.4. Requisitos No Funcionales (RNF)
-| ID | Tipo | Descripción y Métrica |
-| :--- | :--- | :--- |
-| **RNF-01** | Seguridad | Las contraseñas se almacenarán cifradas mediante hash en la BBDD. |
-| **RNF-02** | Rendimiento | La generación del PDF de inscripción habría de tardar menos de 5000ms. |
-| **RNF-03** | Disponibilidad | El sistema será responsivo (Mobile First) para uso en pistas de atletismo. |
-
-### 1.3.5. Requisitos de Información (IRQ)
-| ID: IRQ-01 | Información de Usuarios y Fichas |
-| :--- | :--- |
-| **Descripción** | El sistema debe almacenar permanentemente los datos de registro e inscripción. |
-| **Datos concretos** | • ID Usuario (PK)<br>• Nombre, Apellidos, DNI, Email (Único), Contraseña (Hash)<br> • Rol (Atleta o Entrenador/Admin)<br> • Ruta del PDF de inscripción generado |
-| **Comentarios** | Los campos DNI y Email son obligatorios y únicos. |
-
----
-
-# 2. Recursos necesarios
-
-## 2.1. Recursos humanos, hardware y software
-* **Lenguajes:** HTML, CSS, JS, PHP, SQL.
-* **Herramientas:** VS Code, XAMPP, Obsidian.
-* **Librerías/Frameworks:** Node, React, Tailwind CSS, librería de generación de PDFs.
-* **Diseño:** Figma (mockup).
-
-## 2.2. Estimación de costes y presupuesto
-Aunque el proyecto se desarrolla en un ámbito académico, a continuación se presenta una estimación del presupuesto como si se tratase de un encargo profesional para el Club Atletismo Ianuarius.
-
-### 2.2.1. Costes de Hardware y Software**
-Se ha optado por un entorno de desarrollo basado en software libre y herramientas de código abierto (Open Source), reduciendo drásticamente los costes de licencias.
-
+<a name="tabla-hardware"></a>
+**Tabla 1. Costes de Hardware y Software**
 | Concepto | Descripción | Coste Estimado |
 | :--- | :--- | :--- |
-| **Hardware** | Amortización de equipo informático (Portátil desarrollo). | 250,00 € |
+| **Hardware** | Amortización de equipo informático. | 250,00 € |
 | **Software IDE** | Visual Studio Code, Obsidian. | 0,00 € (Free) |
 | **Entorno Servidor** | XAMPP (Apache, MySQL, PHP). | 0,00 € (Free) |
 | **Diseño / UI** | Figma (Plan gratuito), Tailwind CSS. | 0,00 € (Free) |
-| **Despliegue (Fase 1)** | GitHub Pages (Frontend) / Servidor local. | 0,00 € (Free) |
-| **Total Recursos** | | **250,00 €** |
 
-**2. Costes de Personal (Desarrollo)**
-Estimación basada en la tarifa horaria de un perfil *Junior Web Developer* (aprox. 18 €/hora) para una carga de trabajo de unas 150 horas a lo largo del proyecto.
-
+<a name="tabla-personal"></a>
+**Tabla 2. Costes de Personal (Desarrollo)**
 | Fase | Horas Estimadas | Coste (18 € / h) |
 | :--- | :--- | :--- |
 | Análisis y Diseño | 40 h | 720,00 € |
 | Desarrollo Backend y BBDD | 50 h | 900,00 € |
 | Desarrollo Frontend y Vistas | 40 h | 720,00 € |
 | Pruebas y Documentación | 20 h | 360,00 € |
-| **Total Desarrollo** | **150 h** | **2.700,00 €** |
+| **Total** | **150 h** | **2.700,00 €** |
 
-**Presupuesto Total Estimado: 2.950,00 €** (Impuestos no incluidos).
+<a name="tabla-mantenimiento"></a>
+**Tabla 3. Costes de Mantenimiento Anual**
+| Concepto | Descripción | Coste Anual |
+| :--- | :--- | :--- |
+| **Dominio** | Registro y renovación (ej. ianuarius.es). | 12,00 € / año |
+| **Hosting EEE** | Servidor compartido / VPS en Europa. | 75,00 € / año |
+| **SSL** | Let's Encrypt (HTTPS). | 0,00 € |
 
 ---
 
-# 3. Planificación y metodología
+# 2. Definición del Sistema
 
-## 3.1. Metodología de desarrollo
-Para la ejecución de la plataforma Ianuarius, se ha optado por una **Metodología Ágil basada en un modelo Scrum adaptado** a un único desarrollador. 
+## 2.1. Objetivos del Proyecto
 
-Las razones de esta elección son:
-1. **Desarrollo iterativo e incremental:** Permite tener versiones funcionales (prototipos) desde las primeras semanas, añadiendo módulos (login, PDF, filtros) de forma progresiva.
-2. **Flexibilidad ante cambios:** Al interactuar con el tutor/cliente, es posible ajustar los requisitos sobre la marcha (por ejemplo, añadir campos nuevos a la ficha médica) sin romper la estructura de trabajo.
+<a name="tabla-smart-gen"></a>
+**Tabla 4. Análisis SMART: Objetivo General**
+| Concepto | Descripción | Análisis SMART |
+| :--- | :--- | :--- |
+| **General** | Desarrollar una plataforma web integral para digitalizar Ianuarius. | **S:** 100% inscripciones digitales.<br>**M:** Reducir tiempo a < 3 min.<br>**A:** React + PHP.<br>**R:** Elimina papel físico.<br>**T:** Temporada 26/27. |
 
-**Herramientas de gestión:**
-Se utilizará un tablero tipo Kanban (GitHub Projects) dividido en las columnas básicas: *Backlog* (Tareas pendientes), *In Progress* (En desarrollo), *Testing* (Pruebas) y *Done* (Completado).
+<a name="tabla-smart-func"></a>
+**Tabla 5. Análisis SMART: Objetivos Funcionales**
+| ID | Módulo | Descripción | Prio. |
+| :--- | :--- | :--- | :--- |
+| **OBJ-01** | Usuarios | Registro, Login y roles (Admin, Entrenador, Atleta). | Alta |
+| **OBJ-02** | Fichas | Subida de archivos escaneados (legacy). | Alta |
+| **OBJ-03** | Fichas | Inscripción online y generación automática PDF. | Media |
+| **OBJ-04** | Gestión | Filtros avanzados (Categoría, edad, marcas). | Media |
+| **OBJ-05** | Atletas | Feedback de entrenamientos (sensaciones). | Baja |
 
-## 3.2. Diseño técnico del sistema
+## 2.2. Definición de Actores
 
-En esta fase se modelan las interacciones de los usuarios con el sistema para definir la arquitectura lógica de la aplicación.
+<a name="tabla-actores"></a>
+**Tabla 6. Definición de Actores**
+| Rol | Descripción y Permisos |
+| :--- | :--- |
+| **Visitante** | Accede a portfolio público, información básica, plazos y horarios. |
+| **Atleta** | Iniciar sesión, realizar inscripciones, acceder a historial y registrar feedback. |
+| **Entrenador** | Permisos de Atleta + visualizar fichas, filtrar atletas y consultar calendario global. |
 
-### 3.2.1. Diagrama de Casos de Uso
-*(A continuación se insertará el diagrama UML mostrando los límites del sistema y las relaciones entre Visitante, Atleta y Administrador).*
+## 2.3. Especificación Funcional
 
+<a name="figura6-uml"></a>
 <p align="center">
-  <img src="img/diagrama_uml.png" alt="Diagrama de Casos de Uso" width="800">
-  <br>
-  <em>Figura 3. Diagrama de Casos de Uso del Sistema</em>
+  <img src="img/casosUsoIanuarius.png" alt="Diagrama de Casos de Uso" width="800">
+  <br><em>Figura 6. Diagrama de Casos de Uso del Sistema</em>
 </p>
 
-### 3.2.2. Especificación de Casos de Uso
+<a name="tabla-cu"></a>
+**Tabla 7. Especificación de Casos de Uso (Principales)**
+| ID | Caso de Uso | Actor | Descripción Básica |
+| :--- | :--- | :--- | :--- |
+| **UC-01** | Autenticación | Todos | Registro y Login en el sistema validando credenciales. |
+| **UC-02** | Inscripción Online | Atleta | Completar formulario y generación de PDF oficial. |
+| **UC-03** | Subir Archivo | Atleta | Adjuntar DNI o fichas físicas escaneadas (JPG/PDF). |
+| **UC-04** | Filtrar Fichas | Entrenador | Búsqueda y listado de atletas por categoría/edad. |
+| **UC-05** | Feedback Entrenos | Atleta | Anotar sensaciones y estado físico post-entrenamiento. |
 
-| UC-01 | Registro y Autenticación |
+## 2.4. Requisitos del Sistema (SRS)
+
+<a name="tabla-rf"></a>
+**Tabla 8. Requisitos Funcionales y No Funcionales**
+| ID | Tipo | Descripción |
+| :--- | :--- | :--- |
+| **RF-01** | Funcional | Permitir crear cuenta y login verificando BBDD. |
+| **RF-02** | Funcional | Generar PDF automático desde el formulario. |
+| **RF-03** | Funcional | Permitir adjuntar DNI (Subida de archivos). |
+| **RNF-01** | Seguridad | Contraseñas cifradas mediante hash. |
+| **RNF-02** | Rend. | Generación de PDF en menos de 5000ms. |
+
+<a name="tabla-irq"></a>
+**Tabla 9. Requisitos de Información (IRQ)**
+| ID: IRQ-01 | Info. de Usuarios y Fichas |
 | :--- | :--- |
-| **Actor** | Visitante (pasa a ser Atleta/Entrenador) |
-| **Interés** | Crear una cuenta segura, para acceder a un más amplio registro de funciones del club. |
-| **Precondición** | No tener una cuenta previamente registrada con el email aportado. |
-| **Garantía** | Datos almacenados (contraseñas cifradas) y sesión iniciada. |
-| **Flujo Básico** | 1. El sistema solicita datos (Nombre, Email, Pass).<br>2. El sistema valida el formato.<br>3. El sistema crea la cuenta y autentica. |
-| **Excepciones** | 2.a Email existente: El sistema avisa y ofrece recuperar contraseña. |
+| **Datos** | ID, Nombre, Apellidos, DNI, Email, Password, Rol, Ruta PDF. |
 
-<br>
+---
 
-| UC-02 | Generar Inscripción Online |
+# 3. Diseño Tecnológico y Arquitectura
+
+<a name="tabla-stack"></a>
+**Tabla 10. Stack Tecnológico**
+| Capa | Tecnología | Descripción |
+| :--- | :--- | :--- |
+| **Frontend** | React 18 + Tailwind | Interfaz dinámica Single Page Application (SPA). |
+| **Backend** | PHP 8.2 | Lógica de negocio, API REST y protección directorios. |
+| **BBDD** | MySQL 8.0 | Persistencia de datos e integridad relacional. |
+
+## 3.2. Arquitectura
+Modelo Cliente-Servidor. El Frontend (React) captura acciones y realiza peticiones asíncronas (fetch) a la API REST (PHP).
+
+## 3.3. Diseño de Datos
+
+Para gestionar las especialidades del atletismo se ha implementado una tabla intermedia de variantes.
+
+<a name="figura7-db"></a>
+<p align="center">
+  <img src="img/entidadRelacionIanuarius-transparente.png" alt="Diagrama Entidad-Relación" width="800">
+  <br><em>Figura 7. Diagrama de Entidad-Relación de la DB</em>
+</p>
+
+<a name="tabla-categorias"></a>
+**Tabla 11. Diccionario: categorias**
+| Campo | Tipo | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- |
+| **id_categoria** | INT | PK, AI | Identificador único. |
+| **nombre** | VARCHAR(50) | NOT NULL | Nombre (ej. 'Sub-16'). |
+| **edad_min / max**| INT | NOT NULL | Rango de edad. |
+
+<a name="tabla-pruebas"></a>
+**Tabla 12. Diccionario: pruebas**
+| Campo | Tipo | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- |
+| **id_prueba** | INT | PK, AI | Identificador único. |
+| **nombre_prueba** | VARCHAR(50) | NOT NULL | Ej: '100m'. |
+| **tipo** | ENUM | NOT NULL | 'Carrera', 'Salto', 'Lanz'. |
+
+<a name="tabla-variantes"></a>
+**Tabla 13. Diccionario: pruebas_variantes**
+| Campo | Tipo | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- |
+| **id_variante** | INT | PK, AI | Identificador único. |
+| **id_prueba** | INT | FK | Prueba base. |
+| **id_categoria** | INT | FK | Categoría a la que aplica. |
+| **especificaciones**| VARCHAR(100)| NULL | Ej: '0.84m', '4kg'. |
+
+<a name="tabla-usuarios"></a>
+**Tabla 14. Diccionario: usuarios**
+| Campo | Tipo | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- |
+| **id_usuario** | INT | PK, AI | Identificador. |
+| **nombre / apel.** | VARCHAR | NOT NULL | Datos personales. |
+| **dni / email** | VARCHAR | UNIQUE | Identificación. |
+| **rol** | ENUM | DEFAULT 'atleta'| 'Admin' o 'Atleta'. |
+| **fecha_nac / gen.**| DATE / ENUM | NOT NULL | Cálculo categorías. |
+
+<a name="tabla-fichas"></a>
+**Tabla 15. Diccionario: fichas_inscripcion**
+| Campo | Tipo | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- |
+| **id_ficha** | INT | PK, AI | Identificador. |
+| **id_usuario** | INT | FK, UNIQUE | Propietario (1:1). |
+| **ruta_pdf / dni** | VARCHAR(255)| NULL | Rutas de archivos. |
+
+<a name="tabla-feedback"></a>
+**Tabla 16. Diccionario: feedback_entrenamientos**
+| Campo | Tipo | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- |
+| **id_feedback** | INT | PK, AI | Identificador. |
+| **id_usuario** | INT | FK | Atleta. |
+| **id_variante** | INT | FK | Prueba entrenada. |
+| **sensaciones** | TEXT | NULL | Comentarios. |
+
+## 3.4. Diseño de Interfaz (UI/UX)
+Diseño **Mobile First** usando Tailwind CSS. Paleta corporativa (Rojo Ianuarius) y tipografía **Inter**. Prototipado previo en **Figma** para validar flujos de navegación.
+
+---
+
+# 4. Planificación y Metodología
+
+Metodología Ágil basada en Scrum adaptado usando GitHub Projects (Kanban).
+
+<a name="figura8-gantt"></a>
+<p align="center">
+  <img src="img/gantt.png" alt="Diagrama de Gantt" width="800">
+  <br><em>Figura 8. Diagrama de Gantt con la previsión del proyecto.</em>
+</p>
+
+<a name="tabla-gantt"></a>
+**Tabla 17. Fases de Planificación (Gantt)**
+| Fase | Tarea Principal | Semanas |
+| :--- | :--- | :--- |
+| **1. Análisis** | Definición de actores, Casos de Uso y Requisitos. | 1 – 2 |
+| **2. Diseño** | Diseño de BBDD, arquitectura y prototipos visuales. | 3 – 4 |
+| **3. Backend** | Desarrollo MySQL, PHP 8.2, API REST. | 5 – 8 |
+| **4. Frontend** | Maquetación responsiva con React y Tailwind. | 6 – 9 |
+| **5. Integración** | Unificación API y Vistas Front. | 10 – 12 |
+| **6. Pruebas** | Tests de validación y corrección de bugs. | 13 – 14 |
+| **7. Entrega** | Redacción de memoria final y defensa. | 15 |
+
+---
+
+# 5. Desarrollo e Implementación
+*(Contenido pendiente de próximos entregables)*
+
+# 6. Pruebas y Control de Calidad
+*(Contenido pendiente de próximos entregables)*
+
+# 7. Conclusiones y Futuro
+*(Contenido pendiente de próximos entregables)*
+
+# 8. Referencias y bibliografía
+* **Mermaid Live Editor:** Herramienta para diagramas UML. Disponible en: [https://mermaid.live/](https://mermaid.live/)
+
+# 9. Glosario de Términos y Acrónimos
+
+<a name="tabla-glosario"></a>
+**Tabla 18. Glosario de Términos**
+| Término | Definición |
 | :--- | :--- |
-| **Actor** | Atleta / Entrenador |
-| **Interés** | Completar la ficha digitalmente y generar el documento oficial. |
-| **Precondición** | Haber iniciado sesión (UC-01). |
-| **Garantía** | PDF generado, guardado en el perfil y enviado por correo. |
-| **Flujo Básico** | 1. Usuario accede al formulario.<br>2. Sistema solicita datos y subida de imágenes (DNI).<br>3. Sistema compila datos y genera el PDF.<br>4. Sistema envía el PDF al email. |
-| **Excepciones** | 2.a Archivo no soportado: El sistema rechaza la imagen e indica formatos válidos (JPG/PNG). |
+| **API** | Interfaz que permite que dos aplicaciones se comuniquen entre sí. |
+| **Backend** | Parte de la aplicación que se ejecuta en el servidor. |
+| **CRUD** | Acrónimo de las funciones básicas (Create, Read, Update, Delete). |
 
-## 3.3. Planificación temporal
-*(Contenido pendiente)*
-
----
-
-# 4. Desarrollo del proyecto
-
-## 4.1. Organización real del trabajo
-*(Contenido pendiente)*
-
-## 4.2. Modelo de datos
-*(Contenido pendiente)*
-
-## 4.3. Implementación y despliegue
-*(Contenido pendiente)*
-
----
-
-# 5. Fase de pruebas y control de calidad
-
-## 5.1. Plan de pruebas
-*(Contenido pendiente)*
-
-## 5.2. Registro de incidencias
-*(Contenido pendiente)*
-
-## 5.3. Validación final
-*(Contenido pendiente)*
-
----
-
-# 6. Conclusiones
-
-## 6.1. Reflexión personal sobre el proyecto
-*(Contenido pendiente)*
-
-## 6.2. Dificultades encontradas y resolución
-*(Contenido pendiente)*
-
-## 6.3. Grado de cumplimiento de objetivos
-*(Contenido pendiente)*
-
-## 6.4. Propuestas de mejora y evolución futura
-*(Contenido pendiente)*
-
----
-
-# 7. Referencias y bibliografía
-*(Contenido pendiente)*
-
----
-
-# 8. Anexos
-
-## 8.1. Manual de instalación
-*(Contenido pendiente)*
-
-## 8.2. Manual de usuario
-*(Contenido pendiente)*
-
-## 8.3. Documentación complementaria digital
-*(Contenido pendiente)*
-
-## 8.4. Anexos Técnicos y Documentales
-*(Contenido pendiente)*
+# 10. Anexos
+*(Contenido pendiente de próximos entregables)*
