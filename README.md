@@ -79,28 +79,34 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 - [Tabla 18. Glosario de Términos](#tabla-glosario)
 
 ---
-<br><br>
+<br><br><br>
 
 # 1. Introducción y Justificación
-<br>
+
+<br><br>
 
 ## 1.1. Memoria Inicial
 Aplicación web centrada en la gestión del club de atletismo Ianuarius, de forma que se digitalice su gestión.
 En cualquiera de los casos, cabe destacar que el proyecto ha sido ampliamente pensado para el club homónimo al título de este, por lo que, para otros clubes, cabría la posibilidad de que haya funciones insuficientes o que, por el contrario, haya un exceso de estas.
-<br>
+
+<br><br>
 
 ## 1.2. Justificación
 Por otra parte, gracias a esta transición al mundo digital, permitirá añadir funcionalidades que, en un entorno físico, sin esta aplicación, serían muy costosos, complicados o incluso imposibles de llevar a cabo, sobre todo teniendo en cuenta el gran número de atletas pertenecientes al club, de los cuales, su gran mayoría son menores, o lo suficientemente pequeños como para no estar capacitados para manejarse por sí mismos.
-<br>
+
+<br><br>
 
 ## 1.3. Oportunidad de Negocio
 Este proyecto nace de la observación directa de una carencia tecnológica en el ámbito deportivo local. Los clubes de atletismo modestos no disponen de presupuestos holgados para contratar plataformas de gestión genéricas de alto coste. 
 
 Ianuarius se presenta como un software vertical, específico para atletismo, de bajo coste y centrado en resolver el "cuello de botella" burocrático de las inscripciones de menores de edad.
-<br>
+
+<br><br>
 
 ## 1.4. Estudio del Sector
 Tras analizar soluciones existentes en el mercado actual:
+
+<br>
 
 **1.4.1. Clupik**
 Centrada en la gestión de competiciones, pero carece de herramientas para la burocracia de un club de atletismo.
@@ -109,6 +115,8 @@ Centrada en la gestión de competiciones, pero carece de herramientas para la bu
 <img src="img/clupikInterface.png" alt="Interfaz de Clupik">
 *Figura 3. Interfaz de competiciones de Clupik*
 
+<br>
+
 **1.4.2. Playoff Informática**
 Herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, encareciendo el servicio.
 
@@ -116,13 +124,18 @@ Herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades qu
 <img src="img/playOffInterface1.png" alt="Interfaz de Playoff">
 *Figura 4. Interfaz de gestión de Playoff Informática*
 
+<br>
+
 <a name="figura5-playoff2"></a>
 <img src="img/playOffFunctions.png" alt="Funcionalidades de Playoff">
 *Figura 5. Funcionalidades de Playoff Informática*
-<br>
+
+<br><br>
 
 ## 1.5. Análisis de Viabilidad
 El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando el estricto cumplimiento del RGPD.
+
+<br>
 
 <a name="tabla-hardware"></a>
 **Costes de Hardware y Software**
@@ -133,6 +146,7 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | **Software IDE** | Visual Studio Code, Obsidian. | 0,00 € (Free) |
 | **Entorno Servidor** | XAMPP (Apache, MySQL, PHP). | 0,00 € (Free) |
 | **Diseño / UI** | Figma (Plan gratuito), Tailwind CSS. | 0,00 € (Free) |
+
 <br>
 
 <a name="tabla-personal"></a>
@@ -145,6 +159,7 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | Desarrollo Frontend y Vistas | 40 h | 720,00 € |
 | Pruebas y Documentación | 20 h | 360,00 € |
 | **Total** | **150 h** | **2.700,00 €** |
+
 <br>
 
 <a name="tabla-mantenimiento"></a>
@@ -157,12 +172,15 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | **SSL** | Let's Encrypt (HTTPS). | 0,00 € |
 
 ---
-<br><br>
+<br><br><br>
 
 # 2. Definición del Sistema
-<br>
+
+<br><br>
 
 ## 2.1. Objetivos del Proyecto
+
+<br>
 
 <a name="tabla-smart-gen"></a>
 **Análisis SMART: Objetivo General**
@@ -170,6 +188,7 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | Concepto | Descripción | Análisis SMART |
 | :--- | :--- | :--- |
 | **General** | Desarrollar una plataforma web integral para digitalizar Ianuarius. | **S:** 100% inscripciones digitales.<br>**M:** Reducir tiempo a < 3 min.<br>**A:** React + PHP.<br>**R:** Elimina papel físico.<br>**T:** Temporada 26/27. |
+
 <br>
 
 <a name="tabla-smart-func"></a>
@@ -182,9 +201,12 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | **OBJ-03** | Fichas | Inscripción online y generación automática PDF. | Media |
 | **OBJ-04** | Gestión | Filtros avanzados (Categoría, edad, marcas). | Media |
 | **OBJ-05** | Atletas | Feedback de entrenamientos (sensaciones). | Baja |
-<br>
+
+<br><br>
 
 ## 2.2. Definición de Actores
+
+<br>
 
 <a name="tabla-actores"></a>
 **Definición de Actores**
@@ -194,15 +216,20 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | **Visitante** | Accede a portfolio público, información básica, plazos y horarios. |
 | **Atleta** | Iniciar sesión, realizar inscripciones, acceder a historial y registrar feedback. |
 | **Entrenador** | Permisos de Atleta + visualizar fichas, filtrar atletas y consultar calendario global. |
-<br>
+
+<br><br>
 
 ## 2.3. Especificación Funcional
+
+<br>
 
 <a name="figura6-uml"></a>
 <p align="center">
   <img src="img/casosUsoIanuarius.png" alt="Diagrama de Casos de Uso" width="800">
   <br><em>Figura 6. Diagrama de Casos de Uso del Sistema</em>
 </p>
+
+<br>
 
 <a name="tabla-cu"></a>
 **Especificación de Casos de Uso (Principales)**
@@ -214,9 +241,12 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | **UC-03** | Subir Archivo | Atleta | Adjuntar DNI o fichas físicas escaneadas (JPG/PDF). |
 | **UC-04** | Filtrar Fichas | Entrenador | Búsqueda y listado de atletas por categoría/edad. |
 | **UC-05** | Feedback Entrenos | Atleta | Anotar sensaciones y estado físico post-entrenamiento. |
-<br>
+
+<br><br>
 
 ## 2.4. Requisitos del Sistema (SRS)
+
+<br>
 
 <a name="tabla-rf"></a>
 **Requisitos Funcionales y No Funcionales**
@@ -228,6 +258,7 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | **RF-03** | Funcional | Permitir adjuntar DNI (Subida de archivos). |
 | **RNF-01** | Seguridad | Contraseñas cifradas mediante hash. |
 | **RNF-02** | Rend. | Generación de PDF en menos de 5000ms. |
+
 <br>
 
 <a name="tabla-irq"></a>
@@ -238,9 +269,11 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | **Datos** | ID, Nombre, Apellidos, DNI, Email, Password, Rol, Ruta PDF. |
 
 ---
-<br><br>
+<br><br><br>
 
 # 3. Diseño Tecnológico y Arquitectura
+
+<br>
 
 <a name="tabla-stack"></a>
 **Stack Tecnológico**
@@ -250,21 +283,27 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 | **Frontend** | React 18 + Tailwind | Interfaz dinámica Single Page Application (SPA). |
 | **Backend** | PHP 8.2 | Lógica de negocio, API REST y protección directorios. |
 | **BBDD** | MySQL 8.0 | Persistencia de datos e integridad relacional. |
-<br>
+
+<br><br>
 
 ## 3.2. Arquitectura
 Modelo Cliente-Servidor. El Frontend (React) captura acciones y realiza peticiones asíncronas (fetch) a la API REST (PHP).
-<br>
+
+<br><br>
 
 ## 3.3. Diseño de Datos
 
 Para gestionar las especialidades del atletismo se ha implementado una tabla intermedia de variantes.
+
+<br>
 
 <a name="figura7-db"></a>
 <p align="center">
   <img src="img/entidadRelacionIanuarius-transparente.png" alt="Diagrama Entidad-Relación" width="800">
   <br><em>Figura 7. Diagrama de Entidad-Relación de la DB</em>
 </p>
+
+<br>
 
 <a name="tabla-categorias"></a>
 **Diccionario: categorias**
@@ -276,6 +315,7 @@ Para gestionar las especialidades del atletismo se ha implementado una tabla int
 | **edad_min / max**| INT | NOT NULL | Rango de edad. |
 
 <br>
+
 <a name="tabla-pruebas"></a>
 **Diccionario: pruebas**
 
@@ -286,6 +326,7 @@ Para gestionar las especialidades del atletismo se ha implementado una tabla int
 | **tipo** | ENUM | NOT NULL | 'Carrera', 'Salto', 'Lanz'. |
 
 <br>
+
 <a name="tabla-variantes"></a>
 **Diccionario: pruebas_variantes**
 
@@ -297,6 +338,7 @@ Para gestionar las especialidades del atletismo se ha implementado una tabla int
 | **especificaciones**| VARCHAR(100)| NULL | Ej: '0.84m', '4kg'. |
 
 <br>
+
 <a name="tabla-usuarios"></a>
 **Diccionario: usuarios**
 
@@ -309,6 +351,7 @@ Para gestionar las especialidades del atletismo se ha implementado una tabla int
 | **fecha_nac / gen.**| DATE / ENUM | NOT NULL | Cálculo categorías. |
 
 <br>
+
 <a name="tabla-fichas"></a>
 **Diccionario: fichas_inscripcion**
 
@@ -319,6 +362,7 @@ Para gestionar las especialidades del atletismo se ha implementado una tabla int
 | **ruta_pdf / dni** | VARCHAR(255)| NULL | Rutas de archivos. |
 
 <br>
+
 <a name="tabla-feedback"></a>
 **Diccionario: feedback_entrenamientos**
 
@@ -328,23 +372,28 @@ Para gestionar las especialidades del atletismo se ha implementado una tabla int
 | **id_usuario** | INT | FK | Atleta. |
 | **id_variante** | INT | FK | Prueba entrenada. |
 | **sensaciones** | TEXT | NULL | Comentarios. |
-<br>
+
+<br><br>
 
 ## 3.4. Diseño de Interfaz (UI/UX)
 Diseño **Mobile First** usando Tailwind CSS. Paleta corporativa (Rojo Ianuarius) y tipografía **Inter**. Prototipado previo en **Figma** para validar flujos de navegación.
 
 ---
-<br><br>
+<br><br><br>
 
 # 4. Planificación y Metodología
 
 Metodología Ágil basada en Scrum adaptado usando GitHub Projects (Kanban).
 
+<br>
+
 <a name="figura8-gantt"></a>
 <p align="center">
-  <img src="img/gantt.png" alt="Diagrama de Gantt" width="800">
+  <img src="img/ganttDiagram.svg" alt="Diagrama de Gantt" width="800">
   <br><em>Figura 8. Diagrama de Gantt con la previsión del proyecto.</em>
 </p>
+
+<br>
 
 <a name="tabla-gantt"></a>
 **Fases de Planificación (Gantt)**
@@ -360,32 +409,34 @@ Metodología Ágil basada en Scrum adaptado usando GitHub Projects (Kanban).
 | **7. Entrega** | Redacción de memoria final y defensa. | 15 |
 
 ---
-<br><br>
+<br><br><br>
 
 # 5. Desarrollo e Implementación
 *(Contenido pendiente de próximos entregables)*
 
-<br><br>
+<br><br><br>
 
 # 6. Pruebas y Control de Calidad
 *(Contenido pendiente de próximos entregables)*
 
-<br><br>
+<br><br><br>
 
 # 7. Conclusiones y Futuro
 *(Contenido pendiente de próximos entregables)*
 
-<br><br>
+<br><br><br>
 
 # 8. Referencias y bibliografía
 * **Mermaid Live Editor:** Herramienta para diagramas UML. Disponible en: [https://mermaid.live/](https://mermaid.live/)
 
-<br><br>
+<br><br><br>
 
 # 9. Glosario de Términos y Acrónimos
 
+<br>
+
 <a name="tabla-glosario"></a>
-**Tabla 18. Glosario de Términos**
+**Glosario de Términos**
 
 | Término | Definición |
 | :--- | :--- |
@@ -393,7 +444,7 @@ Metodología Ágil basada en Scrum adaptado usando GitHub Projects (Kanban).
 | **Backend** | Parte de la aplicación que se ejecuta en el servidor. |
 | **CRUD** | Acrónimo de las funciones básicas (Create, Read, Update, Delete). |
 
-<br><br>
+<br><br><br>
 
 # 10. Anexos
 *(Contenido pendiente de próximos entregables)*
