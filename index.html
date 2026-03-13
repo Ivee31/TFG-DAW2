@@ -131,24 +131,31 @@
                 <li><a href="#figura4-playoff1">Figura 4. Interfaz de gestión de Playoff Informática</a></li>
                 <li><a href="#figura5-playoff2">Figura 5. Funcionalidades de Playoff Informática</a></li>
                 <li><a href="#figura6-uml">Figura 6. Diagrama de Casos de Uso del Sistema</a></li>
-                <li><a href="#figura7-gantt">Figura 7. Diagrama de Gantt con la previsión del proyecto</a></li>
+                <li><a href="#figura7-db">Figura 7. Diagrama Entidad-Relación de la DB</a></li>
+                <li><a href="#figura8-gantt">Figura 8. Diagrama de Gantt con la previsión del proyecto</a></li>
             </ul>
 
             <a id="indice-tablas" class="ancla-top"></a>
             <h2>Índice de Tablas</h2>
             <ul style="list-style-type: none; padding-left: 0;">
-                <li><a href="#analisis-viabilidad">Tabla 1. Costes de Hardware y Software</a></li>
-                <li><a href="#analisis-viabilidad">Tabla 2. Costes de Personal (Desarrollo)</a></li>
-                <li><a href="#analisis-viabilidad">Tabla 3. Costes de Mantenimiento Anual</a></li>
-                <li><a href="#objetivos-proyecto">Tabla 4. Análisis SMART: Objetivo General</a></li>
-                <li><a href="#objetivos-proyecto">Tabla 5. Análisis SMART: Objetivos Funcionales</a></li>
-                <li><a href="#definicion-actores">Tabla 6. Definición de Actores</a></li>
-                <li><a href="#especificacion-funcional">Tabla 7. Especificación de Casos de Uso</a></li>
-                <li><a href="#requisitos-srs">Tabla 8. Requisitos Funcionales y No Funcionales</a></li>
-                <li><a href="#requisitos-srs">Tabla 9. Requisitos de Información (IRQ)</a></li>
-                <li><a href="#stack-tecnologico">Tabla 10. Stack Tecnológico</a></li>
-                <li><a href="#planificacion-temporal">Tabla 11. Fases de Planificación (Gantt)</a></li>
-                <li><a href="#glosario">Tabla 12. Glosario de Términos</a></li>
+                <li><a href="#tabla-hardware">Tabla 1. Costes de Hardware y Software</a></li>
+                <li><a href="#tabla-personal">Tabla 2. Costes de Personal (Desarrollo)</a></li>
+                <li><a href="#tabla-mantenimiento">Tabla 3. Costes de Mantenimiento Anual</a></li>
+                <li><a href="#tabla-smart-gen">Tabla 4. Análisis SMART: Objetivo General</a></li>
+                <li><a href="#tabla-smart-func">Tabla 5. Análisis SMART: Objetivos Funcionales</a></li>
+                <li><a href="#tabla-actores">Tabla 6. Definición de Actores</a></li>
+                <li><a href="#tabla-cu">Tabla 7. Especificación de Casos de Uso</a></li>
+                <li><a href="#tabla-rf">Tabla 8. Requisitos Funcionales y No Funcionales</a></li>
+                <li><a href="#tabla-irq">Tabla 9. Requisitos de Información (IRQ)</a></li>
+                <li><a href="#tabla-stack">Tabla 10. Stack Tecnológico</a></li>
+                <li><a href="#tabla-categorias">Tabla 11. Diccionario de datos: categorias</a></li>
+                <li><a href="#tabla-pruebas">Tabla 12. Diccionario de datos: pruebas</a></li>
+                <li><a href="#tabla-variantes">Tabla 13. Diccionario de datos: pruebas_variantes</a></li>
+                <li><a href="#tabla-usuarios">Tabla 14. Diccionario de datos: usuarios</a></li>
+                <li><a href="#tabla-fichas">Tabla 15. Diccionario de datos: fichas_inscripcion</a></li>
+                <li><a href="#tabla-feedback">Tabla 16. Diccionario de datos: feedback_entrenamientos</a></li>
+                <li><a href="#tabla-gantt">Tabla 17. Fases de Planificación (Gantt)</a></li>
+                <li><a href="#tabla-glosario">Tabla 18. Glosario de Términos</a></li>
             </ul>
 
 
@@ -187,12 +194,12 @@
 
                     <h4>1.4.2. Playoff Informática</h4>
                     <p>Es uno de los sistemas más potentes y consolidados. Permite la gestión de recibos y remesas bancarias con gran eficacia. El problema radica en que es una herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, generando una curva de aprendizaje muy pronunciada para los entrenadores y padres y aumentando inecesariamente el precio del servicio al estar pagando funciones no utiles para el caso de un club pequeño de atletismo.</p>
-                    <a id="figura6-playoff1" class="ancla-top"></a>
+                    <a id="figura4-playoff1" class="ancla-top"></a>
                     <figure class="figura-logo">
                         <img src="img/playOffInterface1.png" alt="Interfaz de gestión de Playoff Informática" class="img-diagrama img-zoomable">
                         <figcaption class="pie-foto">Figura 4. Interfaz de gestión de Playoff Informática</figcaption>
                     </figure>
-                    <a id="figura7-playoff2" class="ancla-top"></a>
+                    <a id="figura5-playoff2" class="ancla-top"></a>
                     <figure class="figura-logo">
                         <img src="img/playOffFunctions.png" alt="Funcionalidades de Playoff Informática" class="img-diagrama img-zoomable">
                         <figcaption class="pie-foto">Figura 5. Funcionalidades de Playoff Informática</figcaption>
@@ -221,6 +228,7 @@
                     
                     <div class="sangria-3">
                         <h5>1.5.2.1. Costes de Hardware y Software</h5>
+                        <a id="tabla-hardware" class="ancla-centro"></a>
                         <table class="tabla-smart">
                             <thead>
                                 <tr>
@@ -239,6 +247,7 @@
                         </table>
 
                         <h5>1.5.2.2. Costes de Personal (Desarrollo)</h5>
+                        <a id="tabla-personal" class="ancla-centro"></a>
                         <table class="tabla-smart">
                             <thead>
                                 <tr>
@@ -257,6 +266,7 @@
                         </table>
 
                         <h5>1.5.2.3. Costes de Mantenimiento Anual (Post-Desarrollo)</h5>
+                        <a id="tabla-mantenimiento" class="ancla-centro"></a>
                         <table class="tabla-smart">
                             <thead>
                                 <tr>
@@ -286,6 +296,7 @@
                 
                 <div class="sangria-2">
                     <h4>2.1.1. Objetivo General</h4>
+                    <a id="tabla-smart-gen" class="ancla-centro"></a>
                     <table class="tabla-smart">
                         <thead>
                             <tr>
@@ -310,6 +321,7 @@
                     </table>
 
                     <h4>2.1.2. Objetivos Funcionales</h4>
+                    <a id="tabla-smart-func" class="ancla-centro"></a>
                     <table class="tabla-smart">
                         <thead>
                             <tr><th style="width: 10%;">ID</th><th style="width: 15%;">Módulo</th><th style="width: 35%;">Descripción</th><th style="width: 30%;">Justificación SMART</th><th style="width: 10%;">Prio.</th></tr>
@@ -327,6 +339,7 @@
 
             <div id="definicion-actores" class="ancla-top sangria-1">
                 <h3>2.2. Definición de Actores</h3>
+                <a id="tabla-actores" class="ancla-centro"></a>
                 <div class="sangria-2">
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">ID: ACT-01</th><th style="width: 80%;">Visitante</th></tr></thead>
@@ -364,6 +377,7 @@
 
                     <h4>2.3.2. Especificación de Casos de Uso</h4>
                     
+                    <a id="tabla-cu" class="ancla-centro"></a>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">UC-01</th><th style="width: 80%;">Registro y Autenticación</th></tr></thead>
                         <tbody>
@@ -430,6 +444,7 @@
                 <h3>2.4. Requisitos del Sistema (SRS)</h3>
                 <div class="sangria-2">
                     <h4>2.4.1. Requisitos Funcionales (RF)</h4>
+                    <a id="tabla-rf" class="ancla-centro"></a>
                     <table class="tabla-smart">
                         <thead><tr><th>ID</th><th>Función</th><th>Descripción Detallada</th><th>Actor</th><th>CU</th><th>Prio.</th></tr></thead>
                         <tbody>
@@ -453,6 +468,7 @@
                     </table>
 
                     <h4>2.4.3. Requisitos de Información (IRQ)</h4>
+                    <a id="tabla-irq" class="ancla-centro"></a>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">ID: IRQ-01</th><th style="width: 80%;">Información de Usuarios y Fichas</th></tr></thead>
                         <tbody>
@@ -481,6 +497,7 @@
                 <h3>3.1. Stack Tecnológico</h3>
                 <p>Para el desarrollo de Ianuarius se ha seleccionado una arquitectura moderna separando el cliente del servidor, garantizando así una experiencia de usuario fluida y un mantenimiento seguro. Las tecnologías elegidas son las siguientes:</p>
                 
+                <a id="tabla-stack" class="ancla-centro"></a>
                 <div class="sangria-2" style="margin-top: 1.5rem;">
                     
                     <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;">
@@ -534,7 +551,7 @@
                 <h3>3.3. Diseño de Datos</h3>
                 <p>Para estructurar la persistencia de la información en la base de datos MySQL, se ha diseñado un Modelo Entidad-Relación altamente normalizado. Para gestionar la complejidad de las especialidades del atletismo (donde las alturas o pesos varían según la edad y el género), se ha implementado una tabla intermedia de detalle. El sistema se compone de seis tablas principales:</p>
                 
-                <a id="figura3-"></a>
+                <a id="figura7-db"></a>
                 <figure class="figura-logo">
                     <img src="img/entidadRelacionIanuarius-transparente.png" class="img-diagrama img-zoomable" alt="Diagrama Entidad-Relación">
                     <figcaption class="pie-foto">Figura 7. Diagrama de Entidad-Relación de la DB del proyecto.</figcaption>
@@ -542,7 +559,8 @@
 
                 <div class="sangria-2">
                     
-                    <h4>Tabla: categorias</h4>
+                    <a id="tabla-categorias" class="ancla-centro"></a>
+                    <h4>3.3.1. Tabla: categorias</h4>
                     <p>Catálogo maestro que define los rangos de edad (ej. Sub-16, Sub-18).</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -554,7 +572,8 @@
                         </tbody>
                     </table>
 
-                    <h4>Tabla: pruebas</h4>
+                    <a id="tabla-pruebas" class="ancla-centro"></a>
+                    <h4>3.3.2. Tabla: pruebas</h4>
                     <p>Catálogo maestro de las disciplinas generales de atletismo.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -565,7 +584,8 @@
                         </tbody>
                     </table>
 
-                    <h4>Tabla: pruebas_variantes</h4>
+                    <a id="tabla-variantes" class="ancla-centro"></a>
+                    <h4>3.3.3. Tabla: pruebas_variantes</h4>
                     <p>Tabla de detalle que resuelve la relación N:M entre Pruebas y Categorías, añadiendo especificaciones técnicas.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -578,7 +598,8 @@
                         </tbody>
                     </table>
 
-                    <h4>Tabla: usuarios</h4>
+                    <a id="tabla-usuarios" class="ancla-centro"></a>
+                    <h4>3.3.4. Tabla: usuarios</h4>
                     <p>Almacena las credenciales de acceso y datos personales, perfilando al atleta.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -596,7 +617,8 @@
                         </tbody>
                     </table>
 
-                    <h4>Tabla: fichas_inscripcion</h4>
+                    <a id="tabla-fichas" class="ancla-centro"></a>
+                    <h4>3.3.5. Tabla: fichas_inscripcion</h4>
                     <p>Almacena los documentos. Relación 1:1 con la tabla usuarios.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -609,7 +631,8 @@
                         </tbody>
                     </table>
 
-                    <h4>Tabla: feedback_entrenamientos</h4>
+                    <a id="tabla-feedback" class="ancla-centro"></a>
+                    <h4>3.3.6. Tabla: feedback_entrenamientos</h4>
                     <p>Registra las sensaciones diarias. Relación 1:N con la tabla usuarios y pruebas_variantes.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -629,18 +652,18 @@
                 <p>El diseño de la interfaz se ha planteado bajo el paradigma <strong>Mobile First</strong>, garantizando que la aplicación web sea plenamente funcional y accesible desde dispositivos móviles, dado que los atletas y entrenadores la utilizarán frecuentemente a pie de pista durante los entrenamientos.</p>
                 
                 <div class="sangria-2">
-                    <h4>Paleta de Colores</h4>
+                    <h4>3.4.1. Paleta de Colores</h4>
                     <p>Se definirá una paleta cromática basada en la identidad corporativa del Club de Atletismo Ianuarius, priorizando el contraste y la legibilidad para entornos con mucha luz (exteriores):</p>
                     <ul>
-                        <li><p><strong>Color Principal (Identidad Club):</strong> Rojo Ianuarius (#E63946) - Se reserva para los botones de acción principal (como enviar inscripciones), enlaces destacados y elementos de marca.</p></li>
-                        <li><p><strong>Colores Neutros:</strong> Escala de grises (desde #F8F9FA para fondos hasta #212529 para textos principales) para estructurar el contenido sin fatigar la vista.</p></li>
-                        <li><p><strong>Colores de Estado:</strong> Verde (#2A9D8F) para alertas de éxito (feedback guardado, PDF generado) y Naranja (#F4A261) para advertencias o campos incompletos.</p></li>
+                        <li><p><strong>- Color Principal (Identidad Club):</strong> Rojo Ianuarius (#E63946) - Se reserva para los botones de acción principal (como enviar inscripciones), enlaces destacados y elementos de marca.</p></li>
+                        <li><p><strong>- Colores Neutros:</strong> Escala de grises (desde #F8F9FA para fondos hasta #212529 para textos principales) para estructurar el contenido sin fatigar la vista.</p></li>
+                        <li><p><strong>- Colores de Estado:</strong> Verde (#2A9D8F) para alertas de éxito (feedback guardado, PDF generado) y Naranja (#F4A261) para advertencias o campos incompletos.</p></li>
                     </ul>
 
-                    <h4>Tipografía</h4>
+                    <h4>3.4.2. Tipografía</h4>
                     <p>Se emplea la familia tipográfica <strong>Inter</strong>, nativa en entornos web modernos e incluida a través de Tailwind CSS. Destaca por su legibilidad en pantallas pequeñas y su aspecto limpio y profesional, ideal para la lectura densa de tablas de marcas deportivas y listados de atletas.</p>
 
-                    <h4>Prototipado y Experiencia de Usuario (UX)</h4>
+                    <h4>3.4.3. Prototipado y Experiencia de Usuario (UX)</h4>
                     <p>El diseño de las vistas principales (Wireframes) se plantea utilizando la herramienta <strong>Figma</strong>, con el objetivo de estructurar visualmente la interfaz y definir los flujos de navegación de cara a la codificación final de los componentes. Esta conceptualización se centra especialmente en procesos críticos como la inscripción o la subida documental, buscando reducir la fricción cognitiva mediante formularios guiados paso a paso y asegurando que la plataforma resulte intuitiva tanto para jóvenes atletas como para sus tutores legales.</p>
                 </div>
             </div>
@@ -663,12 +686,13 @@
                 <h3>4.2. Planificación Temporal (Gantt)</h3>
                 <p>El desarrollo se ha planificado en un bloque temporal de 15 semanas. Se ha optado por solapar parcialmente las fases de Backend y Frontend para optimizar el tiempo de integración.</p>
                 
-                <a id="figura4-gantt"></a>
+                <a id="figura8-gantt"></a>
                 <figure class="figura-logo">
-                    <img src="img/gantt.png" class="img-diagrama" alt="Diagrama de Gantt">
+                    <img src="img/ganttDiagram.svg" class="img-diagrama img-zoomable" alt="Diagrama de Gantt">
                     <figcaption class="pie-foto">Figura 8. Diagrama de Gantt con la previsión del proyecto.</figcaption>
                 </figure>
 
+                <a id="tabla-gantt" class="ancla-centro"></a>
                 <table class="tabla-smart">
                     <thead><tr><th style="width: 15%;">Fase</th><th style="width: 55%;">Tarea Principal</th><th style="width: 15%;">Duración</th><th style="width: 15%;">Semanas</th></tr></thead>
                     <tbody>
@@ -775,6 +799,7 @@
             <a id="glosario" class="ancla-top"></a>
             <h2>9. Glosario de Términos y Acrónimos</h2>
             <p>Este apartado define los conceptos técnicos y las siglas utilizadas a lo largo de la memoria para garantizar su correcta interpretación.</p>
+            <a id="tabla-glosario" class="ancla-centro"></a>
             <table class="tabla-smart">
                 <thead><tr><th style="width: 25%;">Término / Acrónimo</th><th style="width: 75%;">Definición</th></tr></thead>
                 <tbody>
