@@ -213,9 +213,10 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 
 | Rol | Descripción y Permisos |
 | :--- | :--- |
-| **Visitante** | Accede a portfolio público, información básica, plazos y horarios. |
-| **Atleta** | Iniciar sesión, realizar inscripciones, acceder a historial y registrar feedback. |
-| **Entrenador** | Permisos de Atleta + visualizar fichas, filtrar atletas y consultar calendario global. |
+| **Visitante** | Accede a portfolio público. Puede registrarse y recuperar contraseña. |
+| **Atleta** | Iniciar sesión, realizar inscripciones, acceder a historial, cerrar sesión y registrar feedback de entrenamientos. |
+| **Entrenador** | Permisos de Atleta + visualizar todas las fichas, aplicar filtros avanzados y consultar calendario global. |
+| **Sistema (PDF/Correo)** | Actor automático. Recibe datos para compilar el documento oficial y realiza el envío de notificaciones. |
 
 <br><br>
 
@@ -236,11 +237,12 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 
 | ID | Caso de Uso | Actor | Descripción Básica |
 | :--- | :--- | :--- | :--- |
-| **UC-01** | Autenticación | Todos | Registro y Login en el sistema validando credenciales. |
-| **UC-02** | Inscripción Online | Atleta | Completar formulario y generación de PDF oficial. |
-| **UC-03** | Subir Archivo | Atleta | Adjuntar DNI o fichas físicas escaneadas (JPG/PDF). |
-| **UC-04** | Filtrar Fichas | Entrenador | Búsqueda y listado de atletas por categoría/edad. |
-| **UC-05** | Feedback Entrenos | Atleta | Anotar sensaciones y estado físico post-entrenamiento. |
+| **UC-01** | Registro y Autenticación (Login/Logout) | Visitante / Atleta / Entrenador | Registro y acceso/cierre de sesión seguro destruyendo tokens. |
+| **UC-02** | Recuperar Contraseña | Visitante | Solicitud de link de recuperación por correo electrónico. |
+| **UC-03** | Realizar Inscripción Online | Atleta / Sistema | Completar formulario médico, generación de PDF y envío. |
+| **UC-04** | Subir Archivo Físico / DNI | Atleta | Adjuntar DNI o fichas escaneadas con validación de peso/formato. |
+| **UC-05** | Registrar Feedback de Entrenamientos | Atleta | Anotar sensaciones y estado físico tras una sesión deportiva. |
+| **UC-06** | Filtrar Fichas Globales | Entrenador | Búsqueda y listado mediante consulta SQL dinámica (edad, prueba). |
 
 <br><br>
 
@@ -249,15 +251,37 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 <br>
 
 <a name="tabla-rf"></a>
-**Requisitos Funcionales y No Funcionales**
+**Requisitos Funcionales**
 
-| ID | Tipo | Descripción |
+| ID | Descripción Detallada | Actor | Prio. |
+| :--- | :--- | :--- | :--- |
+| **RF-01** | Registro de nuevos usuarios en el sistema. | Visitante | Alta |
+| **RF-02** | Autenticación y Control de Acceso (Login). | Todos | Alta |
+| **RF-03** | Recuperación de credenciales (Password Reset). | Visitante | Alta |
+| **RF-04** | Cierre de sesión seguro (Logout) para destrucción de tokens. | Atleta/Entren. | Alta |
+| **RF-05** | Gestión de Inscripciones Online a nueva temporada. | Atleta | Alta |
+| **RF-06** | Edición controlada de datos de inscripción. | Atleta | Media |
+| **RF-07** | Carga y almacenamiento de documentación digital (DNI). | Atleta | Alta |
+| **RF-08** | Registro de Feedback de entrenamientos. | Atleta | Media |
+| **RF-09** | Generación automatizada de comprobantes en PDF. | Sistema | Alta |
+| **RF-10** | Envío automatizado de notificaciones por Email. | Sistema | Media |
+| **RF-11** | Consulta personal del historial de marcas y entrenamientos. | Atleta | Baja |
+| **RF-12** | Filtrado y búsqueda global de fichas por edad o categoría. | Entrenador | Media |
+| **RF-13** | Visualización de calendario y planificación grupal. | Entrenador | Baja |
+
+<br>
+
+**Requisitos No Funcionales**
+
+| ID | Categoría | Descripción y Métrica Verificable |
 | :--- | :--- | :--- |
-| **RF-01** | Funcional | Permitir crear cuenta y login verificando BBDD. |
-| **RF-02** | Funcional | Generar PDF automático desde el formulario. |
-| **RF-03** | Funcional | Permitir adjuntar DNI (Subida de archivos). |
-| **RNF-01** | Seguridad | Contraseñas cifradas mediante hash. |
-| **RNF-02** | Rend. | Generación de PDF en menos de 5000ms. |
+| **RNF-01** | Seguridad | Las contraseñas se cifrarán utilizando el algoritmo de hashing Bcrypt. |
+| **RNF-02** | Seguridad | Las sesiones se invalidarán tras 30 minutos de inactividad. |
+| **RNF-03** | Rendimiento | Generación y envío del PDF oficial en menos de 5 segundos. |
+| **RNF-04** | Rendimiento | Las consultas de filtrado global se resolverán en menos de 2 segundos. |
+| **RNF-05** | Usabilidad | Diseño Mobile First para uso táctil a pie de pista. |
+| **RNF-06** | Usabilidad | Cumplimiento del estándar de accesibilidad web WCAG 2.1 (Nivel AA). |
+| **RNF-07** | Disponibilidad | Uptime (tiempo en línea) garantizado del 99.9% anual mediante hosting. |
 
 <br>
 
@@ -266,7 +290,12 @@ El proyecto es viable técnicamente utilizando React, PHP y MySQL garantizando e
 
 | ID: IRQ-01 | Info. de Usuarios y Fichas |
 | :--- | :--- |
-| **Datos** | ID, Nombre, Apellidos, DNI, Email, Password, Rol, Ruta PDF. |
+| **Datos Clave** | • Credenciales: Email (Unique), Password (Hash).<br>• Perfil: DNI (Unique), Fecha Nacimiento.<br>• Fichas: Rutas absolutas a los archivos físicos. |
+
+<br><br>
+
+## 2.5. Normativa y Legislación
+El sistema cumple estrictamente con el **RGPD y LOPDGDD** (alojamiento en Europa, derecho al olvido, minimización de datos), la **LSSI-CE** (Aviso Legal público y uso de cookies técnicas exentas de consentimiento), pautas de accesibilidad **WCAG 2.1 AA** (contraste, navegación semántica) y utiliza tecnologías y librerías bajo licencias aptas para uso privativo (MIT, GPL).
 
 ---
 <br><br><br>
@@ -383,14 +412,21 @@ Diseño **Mobile First** usando Tailwind CSS. Paleta corporativa (Rojo Ianuarius
 
 # 4. Planificación y Metodología
 
-Metodología Ágil basada en Scrum adaptado usando GitHub Projects (Kanban).
+<br><br>
+
+## 4.1. Metodología de Trabajo
+Se ha optado por una **Metodología Ágil basada en un modelo Scrum adaptado**. Se utilizará un tablero Kanban (GitHub Projects) y un flujo de trabajo basado en **Feature Branches (Ramas)** en Git, requiriendo *Pull Requests* para la revisión de código antes de la integración a la rama principal.
+
+<br><br>
+
+## 4.2. Planificación Temporal (Gantt)
 
 <br>
 
 <a name="figura8-gantt"></a>
 <p align="center">
   <img src="img/ganttDiagram.svg" alt="Diagrama de Gantt" width="800">
-  <br><em>Figura 8. Diagrama de Gantt con la previsión del proyecto.</em>
+  <br><em>Figura 8. Diagrama de Gantt con la previsión del proyecto e hitos clave.</em>
 </p>
 
 <br>
@@ -401,11 +437,11 @@ Metodología Ágil basada en Scrum adaptado usando GitHub Projects (Kanban).
 | Fase | Tarea Principal | Semanas |
 | :--- | :--- | :--- |
 | **1. Análisis** | Definición de actores, Casos de Uso y Requisitos. | 1 – 2 |
-| **2. Diseño** | Diseño de BBDD, arquitectura y prototipos visuales. | 3 – 4 |
+| **2. Diseño** | Diseño de BBDD y prototipos. *(Hito: BBDD Diseñada)* | 3 – 4 |
 | **3. Backend** | Desarrollo MySQL, PHP 8.2, API REST. | 5 – 8 |
 | **4. Frontend** | Maquetación responsiva con React y Tailwind. | 6 – 9 |
-| **5. Integración** | Unificación API y Vistas Front. | 10 – 12 |
-| **6. Pruebas** | Tests de validación y corrección de bugs. | 13 – 14 |
+| **5. Integración** | Unificación API y Vistas. *(Hito: 1º PDF Generado)* | 10 – 12 |
+| **6. Pruebas** | Tests de validación, resolución bugs y revisión Git. | 13 – 14 |
 | **7. Entrega** | Redacción de memoria final y defensa. | 15 |
 
 ---
