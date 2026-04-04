@@ -425,7 +425,7 @@ Se ha optado por una **Metodología Ágil basada en un modelo Scrum adaptado**. 
 
 <a name="figura8-gantt"></a>
 <p align="center">
-  <img src="img/ganttDiagram.svg" alt="Diagrama de Gantt" width="800">
+  <img src="img/ganttDiagram.png" alt="Diagrama de Gantt" width="800">
   <br><em>Figura 8. Diagrama de Gantt con la previsión del proyecto e hitos clave.</em>
 </p>
 
