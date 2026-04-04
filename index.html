@@ -345,21 +345,28 @@
                         <thead><tr><th style="width: 20%;">ID: ACT-01</th><th style="width: 80%;">Visitante</th></tr></thead>
                         <tbody>
                             <tr><td><strong>Descripción</strong></td><td>Usuario no registrado que accede a la parte pública (portfolio informativo).</td></tr>
-                            <tr><td><strong>Permisos</strong></td><td>Visualizar información básica del club (plazos de fichas, horarios, periodos de entreno, etc.).</td></tr>
+                            <tr><td><strong>Permisos</strong></td><td>Visualizar información básica, plazos y horarios. Ejecutar el registro y la recuperación de credenciales.</td></tr>
                         </tbody>
                     </table>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">ID: ACT-02</th><th style="width: 80%;">Atleta</th></tr></thead>
                         <tbody>
                             <tr><td><strong>Descripción</strong></td><td>Integrante del club registrado de forma oficial.</td></tr>
-                            <tr><td><strong>Permisos</strong></td><td>Iniciar sesión, realizar inscripciones, acceder a su historial, editar inscripciones y registrar feedback de entrenamientos.</td></tr>
+                            <tr><td><strong>Permisos</strong></td><td>Acceder a su historial y registrar feedback. Realizar inscripciones y editar datos personales (limitado a validación administrativa o fin de plazo legal).</td></tr>
                         </tbody>
                     </table>
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 20%;">ID: ACT-03</th><th style="width: 80%;">Entrenador (Administrador)</th></tr></thead>
+                        <thead><tr><th style="width: 20%;">ID: ACT-03</th><th style="width: 80%;">Entrenador</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>Descripción</strong></td><td>Miembro del cuerpo técnico encargado de la gestión del club.</td></tr>
-                            <tr><td><strong>Permisos</strong></td><td>Permisos de Atleta + visualizar todas las fichas, filtrar atletas (edad, categoría) y consultar el calendario global.</td></tr>
+                            <tr><td><strong>Descripción</strong></td><td>Personal técnico encargado de la gestión deportiva. Hereda los permisos del Atleta.</td></tr>
+                            <tr><td><strong>Permisos</strong></td><td>Visualizar todas las fichas, aplicar filtros avanzados (edad, marca, prueba) y gestionar el calendario global.</td></tr>
+                        </tbody>
+                    </table>
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">ID: ACT-04</th><th style="width: 80%;">Sistema de Correo / Generador PDF</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Descripción</strong></td><td>Actor de sistema (externo/automático) que interactúa con la aplicación.</td></tr>
+                            <tr><td><strong>Permisos</strong></td><td>Recibir datos del backend para compilar el documento oficial y realizar el envío automatizado de notificaciones.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -444,36 +451,50 @@
                 <h3>2.4. Requisitos del Sistema (SRS)</h3>
                 <div class="sangria-2">
                     <h4>2.4.1. Requisitos Funcionales (RF)</h4>
+                    <p>Definen de forma atómica y clara las acciones que el sistema debe permitir realizar a los diferentes actores, garantizando la trazabilidad con los Casos de Uso.</p>
                     <a id="tabla-rf" class="ancla-centro"></a>
                     <table class="tabla-smart">
-                        <thead><tr><th>ID</th><th>Función</th><th>Descripción Detallada</th><th>Actor</th><th>CU</th><th>Prio.</th></tr></thead>
+                        <thead><tr><th style="width: 10%;">ID</th><th style="width: 55%;">Descripción Detallada</th><th style="width: 20%;">Actor Principal</th><th style="width: 15%;">Prioridad</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>RF-01</strong></td><td>Registro</td><td>El sistema permitirá crear una cuenta validando el email.</td><td>Visitante</td><td>UC-01</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
-                            <tr><td><strong>RF-02</strong></td><td>Login</td><td>El sistema verificará credenciales contra la BBDD y asignará la sesión.</td><td>Atleta/Admin</td><td>UC-01</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
-                            <tr><td><strong>RF-03</strong></td><td>Inscripción</td><td>El sistema generará un PDF automático a partir de los datos.</td><td>Atleta</td><td>UC-02</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
-                            <tr><td><strong>RF-04</strong></td><td>Subida PDF</td><td>El sistema permitirá adjuntar archivos físicos escaneados (JPG/PDF).</td><td>Atleta</td><td>UC-03</td><td><span class="etiqueta prio-media">Media</span></td></tr>
-                            <tr><td><strong>RF-05</strong></td><td>Filtros</td><td>El sistema ordenará las fichas por categoría, fecha o edad.</td><td>Admin</td><td>UC-04</td><td><span class="etiqueta prio-media">Media</span></td></tr>
-                            <tr><td><strong>RF-06</strong></td><td>Generación PDF</td><td>El sistema generará ficha de inscripción en PDF en base a los datos aportados.</td><td>Atleta</td><td>UC-03</td><td><span class="etiqueta prio-baja">Baja</span></td></tr>
+                            <tr><td><strong>RF-01</strong></td><td>Registro de nuevos usuarios en el sistema.</td><td>Visitante</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-02</strong></td><td>Autenticación y Control de Acceso (Login).</td><td>Todos</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-03</strong></td><td>Recuperación de credenciales (Password Reset).</td><td>Visitante</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-04</strong></td><td>Cierre de sesión seguro (Logout) para destrucción de tokens.</td><td>Atleta / Entrenador</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-05</strong></td><td>Gestión de Inscripciones Online a nueva temporada.</td><td>Atleta</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-06</strong></td><td>Edición controlada de datos de inscripción (restringida a plazos legales o validación administrativa).</td><td>Atleta</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>RF-07</strong></td><td>Carga y almacenamiento de documentación digital (DNI, seguros).</td><td>Atleta</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-08</strong></td><td>Registro de Feedback de entrenamientos por el Atleta.</td><td>Atleta</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>RF-09</strong></td><td>Generación automatizada de comprobantes de inscripción en PDF.</td><td>Sistema (PDF)</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-10</strong></td><td>Envío automatizado de notificaciones por Email.</td><td>Sistema (Correo)</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>RF-11</strong></td><td>Consulta personal del historial de marcas y entrenamientos.</td><td>Atleta</td><td><span class="etiqueta prio-baja">Baja</span></td></tr>
+                            <tr><td><strong>RF-12</strong></td><td>Filtrado y búsqueda global de fichas por edad o categoría.</td><td>Entrenador</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>RF-13</strong></td><td>Visualización de calendario y planificación grupal.</td><td>Entrenador</td><td><span class="etiqueta prio-baja">Baja</span></td></tr>
                         </tbody>
                     </table>
 
                     <h4>2.4.2. Requisitos No Funcionales (RNF)</h4>
+                    <p>Establecen las restricciones técnicas, métricas de calidad y normativas que el sistema debe cumplir obligatoriamente.</p>
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 15%;">ID</th><th style="width: 25%;">Tipo</th><th style="width: 60%;">Descripción y Métrica</th></tr></thead>
+                        <thead><tr><th style="width: 15%;">ID</th><th style="width: 20%;">Categoría</th><th style="width: 65%;">Descripción y Métrica Verificable</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>RNF-01</strong></td><td>Seguridad</td><td>Las contraseñas se almacenarán cifradas mediante hash en la BBDD.</td></tr>
-                            <tr><td><strong>RNF-02</strong></td><td>Rendimiento</td><td>La generación del PDF de inscripción habría de tardar menos de 5000ms.</td></tr>
-                            <tr><td><strong>RNF-03</strong></td><td>Disponibilidad</td><td>El sistema será responsivo (Mobile First) para uso en pistas de atletismo.</td></tr>
+                            <tr><td><strong>RNF-01</strong></td><td>Seguridad</td><td>Las contraseñas no se guardarán en texto plano; se cifrarán utilizando el algoritmo de hashing <strong>Bcrypt</strong>.</td></tr>
+                            <tr><td><strong>RNF-02</strong></td><td>Seguridad</td><td>Las sesiones se invalidarán automáticamente tras <strong>30 minutos</strong> de inactividad.</td></tr>
+                            <tr><td><strong>RNF-03</strong></td><td>Rendimiento</td><td>El tiempo de respuesta del servidor para la generación y envío del PDF oficial será <strong>inferior a 5 segundos</strong>.</td></tr>
+                            <tr><td><strong>RNF-04</strong></td><td>Rendimiento</td><td>Las consultas de filtrado global (RF-12) deben devolver resultados en la interfaz en <strong>menos de 2 segundos</strong>.</td></tr>
+                            <tr><td><strong>RNF-05</strong></td><td>Usabilidad</td><td>La interfaz se diseñará bajo el estándar <strong>Mobile First</strong>, garantizando su uso en pantallas táctiles a pie de pista.</td></tr>
+                            <tr><td><strong>RNF-06</strong></td><td>Usabilidad</td><td>El sistema cumplirá con el estándar de accesibilidad web <strong>WCAG 2.1 (Nivel AA)</strong>.</td></tr>
+                            <tr><td><strong>RNF-07</strong></td><td>Disponibilidad</td><td>El sistema garantizará un <em>uptime</em> (tiempo en línea) del <strong>99.9%</strong> anual mediante el uso de hosting profesional.</td></tr>
                         </tbody>
                     </table>
 
                     <h4>2.4.3. Requisitos de Información (IRQ)</h4>
                     <a id="tabla-irq" class="ancla-centro"></a>
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 20%;">ID: IRQ-01</th><th style="width: 80%;">Información de Usuarios y Fichas</th></tr></thead>
+                        <thead><tr><th style="width: 20%;">ID: IRQ-01</th><th style="width: 80%;">Persistencia de Datos (Base de Datos)</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>Descripción</strong></td><td>El sistema debe almacenar permanentemente los datos de registro e inscripción.</td></tr>
-                            <tr><td><strong>Datos</strong></td><td>• ID Usuario (PK)<br>• Nombre, Apellidos, DNI, Email (Único), Contraseña (Hash)<br>• Rol (Atleta o Entrenador/Admin)<br>• Ruta del PDF generado</td></tr>
+                            <tr><td><strong>Descripción</strong></td><td>El sistema debe almacenar permanentemente los datos críticos para el funcionamiento del club.</td></tr>
+                            <tr><td><strong>Obligatoriedad</strong></td><td>Campos NOT NULL estrictos en MySQL para mantener la integridad referencial.</td></tr>
+                            <tr><td><strong>Datos Clave</strong></td><td>• Credenciales: Email (VARCHAR Unique), Password (Hash).<br>• Perfil: Nombre, Apellidos, DNI (VARCHAR Unique), Fecha Nacimiento (DATE).<br>• Fichas: Rutas absolutas a los archivos físicos (VARCHAR).</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -481,13 +502,42 @@
 
             <div id="normativa-legislacion" class="ancla-top sangria-1">
                 <h3>2.5. Normativa y Legislación</h3>
-                <p>Debido a que el sistema gestiona inscripciones de atletas (en su mayoría menores) y realiza un seguimiento de sus entrenamientos, el cumplimiento normativo es estricto:</p>
-                <ul>
-                    <li><p><strong>- RGPD y LOPDGDD:</strong> Los datos se alojarán en servidores del EEE. Se requerirá consentimiento verificable de tutores legales para menores de 14 años.</p></li>
-                    <li><p><strong>- Derecho al olvido:</strong> Se podrá solicitar la eliminación de datos una vez el atleta inscrito abandone el club.</p></li>
-                    <li><p><strong>- LSSI-CE y Accesibilidad:</strong> Se incluirá un Aviso Legal con los datos del club. Se buscará cumplir con el nivel AA de las directrices WCAG 2.1.</p></li>
-                    <li><p><strong>- Licencias:</strong> Tecnologías libres (HTML, CSS, PHP, MySQL), Tailwind CSS (MIT) y librerías de generación de PDF (MIT/GPL).</p></li>
-                </ul>
+                <p>Debido a que el sistema gestiona inscripciones de atletas (en su gran mayoría menores de edad) y realiza un seguimiento de sus entrenamientos, el cumplimiento normativo se aborda desde múltiples frentes legales y técnicos:</p>
+                
+                <div class="sangria-2">
+                    <h4>2.5.1. RGPD y LOPDGDD (Protección de Datos)</h4>
+                    <ul>
+                        <li><p><strong>- Inventario de datos:</strong> El sistema recaba y procesa: nombre, apellidos, DNI, fecha de nacimiento, género, correo electrónico, contraseña (cifrada), marcas de tiempo y datos de salud básicos (sensaciones post-entreno). Para menores de 14 años, se recaban los datos del tutor legal (nombre, DNI y correo) para el consentimiento verificable.</p></li>
+                        <li><p><strong>- Alojamiento (Hosting):</strong> La base de datos y los archivos se alojarán en servidores del Espacio Económico Europeo (EEE), concretamente utilizando los servicios de Hostinger con centro de datos en la Unión Europea, garantizando que no se producen transferencias internacionales de datos.</p></li>
+                        <li><p><strong>- Derecho al olvido proactivo:</strong> Se implementará un mecanismo directo y automatizado (un botón de "Eliminar cuenta y datos asociados" en el perfil del usuario) que permita revocar el consentimiento y purgar sus datos de la base de datos sin fricción burocrática.</p></li>
+                    </ul>
+
+                    <h4>2.5.2. Política de Cookies</h4>
+                    <ul>
+                        <li><p>El sistema utilizará exclusivamente <strong>cookies de sesión</strong> (primera parte), estrictamente necesarias para mantener la autenticación del usuario (login) y <em>localStorage</em> para guardar preferencias básicas de la interfaz. Al ser técnicas y de sesión, están exentas del deber de consentimiento previo según el Art. 22.2 de la LSSI, aunque se informará de su uso por transparencia.</p></li>
+                    </ul>
+
+                    <h4>2.5.3. LSSI-CE (Comercio Electrónico y Transparencia)</h4>
+                    <ul>
+                        <li><p>Se habilitará un <strong>Aviso Legal</strong> accesible públicamente que contendrá la información obligatoria del club responsable: Denominación social (C.D. Atletismo Salamanca Ianuarius), NIF, domicilio social completo, datos de inscripción en el Registro de Entidades Deportivas de España y Castilla y León, y un correo electrónico de contacto.</p></li>
+                    </ul>
+
+                    <h4>2.5.4. Accesibilidad (WCAG 2.1)</h4>
+                    <ul>
+                        <li><p>Para alcanzar el nivel de conformidad <strong>AA</strong>, se implementarán las siguientes medidas técnicas:</p></li>
+                        <li><p><strong>- Contraste:</strong> El color corporativo Rojo Ianuarius (#E63946) sobre fondos blancos (#FFFFFF) cumple con el ratio mínimo exigido de 4.5:1 para la legibilidad de textos.</p></li>
+                        <li><p><strong>- Navegación por teclado:</strong> La plataforma será operable mediante tabulación.</p></li>
+                        <li><p><strong>- Semántica:</strong> Uso de etiquetas ARIA y atributos <em>alt</em> descriptivos en los elementos multimedia.</p></li>
+                    </ul>
+
+                    <h4>2.5.5. Licencias de Software</h4>
+                    <ul>
+                        <li><p>Se garantiza la compatibilidad de todas las librerías con el uso privativo del sistema:</p></li>
+                        <li><p><strong>- React y Tailwind CSS:</strong> Licencia MIT (permite uso comercial y modificación libre).</p></li>
+                        <li><p><strong>- PHP y MySQL:</strong> Licencias PHP License y GPL, aptas para uso en servidores.</p></li>
+                        <li><p><strong>- FPDF / TCPDF (Generación PDF):</strong> Publicadas bajo licencias permisivas de libre uso sin restricciones que obliguen a liberar el código fuente de Ianuarius.</p></li>
+                    </ul>
+                </div>
             </div>
 
             <a id="diseno-arquitectura" class="ancla-top"></a>
@@ -677,19 +727,19 @@
                 <div class="sangria-2">
                     <h4>4.1.1. Desarrollo iterativo e incremental:</h4>
                     <p>Permite tener versiones funcionales desde las primeras semanas, añadiendo módulos de forma progresiva.</p>
-                    <h4>4.1.2. Herramientas de gestión:</h4>
-                    <p>Se utilizará un tablero tipo Kanban (GitHub Projects) dividido en las columnas básicas: Backlog, In Progress, Testing y Done.</p>
+                    <h4>4.1.2. Herramientas de gestión y Control de Versiones:</h4>
+                    <p>Se utilizará un tablero tipo Kanban (GitHub Projects) dividido en las columnas básicas: Backlog, In Progress, Testing y Done. Además, para garantizar la calidad del código, se implementará un flujo de trabajo basado en <strong>Feature Branches (Ramas por funcionalidad)</strong> en Git, realizando <em>Pull Requests</em> y auto-revisiones de código antes de integrar cualquier cambio a la rama principal (<em>main</em>).</p>
                 </div>
             </div>
             
             <div id="planificacion-temporal" class="ancla-top sangria-1">
                 <h3>4.2. Planificación Temporal (Gantt)</h3>
-                <p>El desarrollo se ha planificado en un bloque temporal de 15 semanas. Se ha optado por solapar parcialmente las fases de Backend y Frontend para optimizar el tiempo de integración.</p>
+                <p>El desarrollo se ha planificado en un bloque temporal de 15 semanas. Se ha optado por solapar parcialmente las fases de Backend y Frontend para optimizar el tiempo de integración, marcando hitos críticos como la finalización de la BBDD y la generación del primer PDF oficial.</p>
                 
                 <a id="figura8-gantt"></a>
                 <figure class="figura-logo">
-                    <img src="img/ganttDiagram.svg" class="img-diagrama img-zoomable" alt="Diagrama de Gantt">
-                    <figcaption class="pie-foto">Figura 8. Diagrama de Gantt con la previsión del proyecto.</figcaption>
+                    <img src="img/ganttDiagram.png" class="img-diagrama img-zoomable" alt="Diagrama de Gantt">
+                    <figcaption class="pie-foto">Figura 8. Diagrama de Gantt con la previsión del proyecto e hitos clave.</figcaption>
                 </figure>
 
                 <a id="tabla-gantt" class="ancla-centro"></a>
@@ -697,11 +747,11 @@
                     <thead><tr><th style="width: 15%;">Fase</th><th style="width: 55%;">Tarea Principal</th><th style="width: 15%;">Duración</th><th style="width: 15%;">Semanas</th></tr></thead>
                     <tbody>
                         <tr><td><strong>1. Análisis</strong></td><td>Definición de actores, Casos de Uso y Requisitos.</td><td>2 semanas</td><td>1 – 2</td></tr>
-                        <tr><td><strong>2. Diseño</strong></td><td>Diseño de BBDD, arquitectura y prototipos visuales.</td><td>2 semanas</td><td>3 – 4</td></tr>
+                        <tr><td><strong>2. Diseño</strong></td><td>Diseño de BBDD, arquitectura y prototipos visuales. <em>(Hito: BBDD Diseñada)</em></td><td>2 semanas</td><td>3 – 4</td></tr>
                         <tr><td><strong>3. Backend</strong></td><td>Desarrollo MySQL, PHP 8.2, API REST.</td><td>4 semanas</td><td>5 – 8</td></tr>
                         <tr><td><strong>4. Frontend</strong></td><td>Maquetación responsiva con React y Tailwind.</td><td>4 semanas</td><td>6 – 9</td></tr>
-                        <tr><td><strong>5. Integración</strong></td><td>Unificación API y Vistas Front.</td><td>3 semanas</td><td>10 – 12</td></tr>
-                        <tr><td><strong>6. Pruebas</strong></td><td>Tests de validación y corrección de bugs.</td><td>2 semanas</td><td>13 – 14</td></tr>
+                        <tr><td><strong>5. Integración</strong></td><td>Unificación API y Vistas. <em>(Hito: 1º PDF Generado)</em></td><td>3 semanas</td><td>10 – 12</td></tr>
+                        <tr><td><strong>6. Pruebas</strong></td><td>Tests de validación, resolución de bugs y revisión Git.</td><td>2 semanas</td><td>13 – 14</td></tr>
                         <tr><td><strong>7. Entrega</strong></td><td>Redacción de memoria final y defensa.</td><td>1 semana</td><td>15</td></tr>
                     </tbody>
                 </table>
@@ -715,29 +765,29 @@
                     <h4>Fase 1: Análisis y Diseño (Semanas 1 - 4)</h4>
                     <ul>
                         <li><p><strong>Semana 1-2:</strong> Toma de requisitos, análisis de competencia y elaboración de diagramas de Casos de Uso.</p></li>
-                        <li><p><strong>Semana 3:</strong> Diseño del modelo Entidad-Relación y creación de los esquemas relacionales (MySQL).</p></li>
+                        <li><p><strong>Semana 3:</strong> Diseño del modelo Entidad-Relación y creación de los esquemas relacionales (MySQL). <strong>(Hito 1: Estructura de BBDD finalizada)</strong>.</p></li>
                         <li><p><strong>Semana 4:</strong> Elaboración de wireframes y maquetado visual de la interfaz de usuario en Figma.</p></li>
                     </ul>
 
                     <h4>Fase 2: Backend y Base de Datos (Semanas 5 - 8)</h4>
                     <ul>
-                        <li><p><strong>Semana 5:</strong> Configuración del entorno (XAMPP), despliegue de la BBDD e implementación de la librería FPDF/TCPDF para la futura generación de documentos.</p></li>
+                        <li><p><strong>Semana 5:</strong> Configuración del entorno (XAMPP), despliegue de la BBDD e implementación de la librería FPDF/TCPDF.</p></li>
                         <li><p><strong>Semana 6:</strong> Desarrollo de la API REST (PHP 8.2) y creación de los endpoints básicos (Registro, Login) con cifrado de contraseñas.</p></li>
                         <li><p><strong>Semana 7:</strong> Programación de la lógica de filtros de marcas deportivas y categorías por edades en el servidor.</p></li>
-                        <li><p><strong>Semana 8:</strong> Desarrollo del módulo de control de acceso y protección de directorios para los archivos PDF de los atletas (cumplimiento RGPD).</p></li>
+                        <li><p><strong>Semana 8:</strong> Desarrollo del módulo de control de acceso y protección de directorios para los archivos PDF de los atletas.</p></li>
                     </ul>
 
                     <h4>Fase 3: Frontend e Integración (Semanas 9 - 12)</h4>
                     <ul>
                         <li><p><strong>Semana 9:</strong> Inicialización del proyecto en React 18, configuración del enrutamiento y aplicación de Tailwind CSS.</p></li>
-                        <li><p><strong>Semana 10:</strong> Maquetación de los paneles de control (dashboard del Entrenador y vista del Atleta).</p></li>
+                        <li><p><strong>Semana 10:</strong> Maquetación de los paneles de control y dashboard del Entrenador.</p></li>
                         <li><p><strong>Semana 11:</strong> Conexión asíncrona (Fetch/Axios) entre el Frontend y la API REST para el intercambio de datos JSON.</p></li>
-                        <li><p><strong>Semana 12:</strong> Integración del formulario dinámico de inscripciones con el generador de PDF del backend.</p></li>
+                        <li><p><strong>Semana 12:</strong> Integración compleja del formulario de inscripciones con el generador de PDF del backend. <strong>(Hito 2: Primer PDF Oficial Generado con éxito)</strong>.</p></li>
                     </ul>
 
                     <h4>Fase 4: Pruebas y Despliegue (Semanas 13 - 15)</h4>
                     <ul>
-                        <li><p><strong>Semana 13:</strong> Ejecución de pruebas unitarias en formularios y validación de seguridad en la subida de archivos (DNI/Fotos).</p></li>
+                        <li><p><strong>Semana 13:</strong> Ejecución de pruebas unitarias en formularios y revisión de ramas (Pull Requests) de Git.</p></li>
                         <li><p><strong>Semana 14:</strong> Resolución de errores (testing continuo).</p></li>
                         <li><p><strong>Semana 15:</strong> Despliegue en el servidor de producción (hosting), redacción final de los manuales y preparación de la defensa.</p></li>
                     </ul>
