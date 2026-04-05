@@ -6,6 +6,13 @@
     <title>Memoria TFG - Iván Martín Nieto</title>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Regla añadida para ensanchar el "folio" de la web y evitar el apelmazamiento */
+        .contenedor-pag {
+            max-width: 1100px !important;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
 
@@ -84,8 +91,9 @@
                     <ul>
                         <li><a href="#stack-tecnologico">3.1. Stack Tecnológico</a></li>
                         <li><a href="#arquitectura-software">3.2. Arquitectura del Software</a></li>
-                        <li><a href="#diseno-datos">3.3. Diseño de Datos</a></li>
-                        <li><a href="#diseno-interfaz">3.4. Diseño de Interfaz (UI/UX)</a></li>
+                        <li><a href="#diagrama-clases">3.3. Diagrama de Clases (UML)</a></li>
+                        <li><a href="#diseno-datos">3.4. Diseño de Datos</a></li>
+                        <li><a href="#diseno-interfaz">3.5. Diseño de Interfaz (UI/UX)</a></li>
                     </ul>
                 </li>
                 <li><a href="#planif-metodo">Planificación y Metodología</a>
@@ -131,8 +139,12 @@
                 <li><a href="#figura4-playoff1">Figura 4. Interfaz de gestión de Playoff Informática</a></li>
                 <li><a href="#figura5-playoff2">Figura 5. Funcionalidades de Playoff Informática</a></li>
                 <li><a href="#figura6-uml">Figura 6. Diagrama de Casos de Uso del Sistema</a></li>
-                <li><a href="#figura7-db">Figura 7. Diagrama Entidad-Relación de la DB</a></li>
-                <li><a href="#figura8-gantt">Figura 8. Diagrama de Gantt con la previsión del proyecto</a></li>
+                <li><a href="#figura7-clases">Figura 7. Diagrama UML</a></li>
+                <li><a href="#figura8-er">Figura 8. Diagrama Entidad-Relación de la DB</a></li>
+                <li><a href="#figura9-relacional">Figura 9. Modelo Relacional de la DB</a></li>
+                <li><a href="#figura10-wireframe">Figura 10. Wireframe estructural de la página “Home”</a></li>
+                <li><a href="#figura11-mockup">Figura 11. Mockup final aplicando la paleta de colores y tipografía definida</a></li>
+                <li><a href="#figura12-gantt">Figura 12. Diagrama de Gantt con la previsión del proyecto</a></li>
             </ul>
 
             <a id="indice-tablas" class="ancla-top"></a>
@@ -157,7 +169,6 @@
                 <li><a href="#tabla-gantt">Tabla 17. Fases de Planificación (Gantt)</a></li>
                 <li><a href="#tabla-glosario">Tabla 18. Glosario de Términos</a></li>
             </ul>
-
 
             <a id="intro-justificacion" class="ancla-top"></a>
             <h2>1. Introducción y Justificación</h2>
@@ -186,7 +197,7 @@
                 <div class="sangria-2">
                     <h4>1.4.1. Clupik</h4>
                     <p>Es una plataforma centrada fundamentalmente en la gestión de competiciones. Permite a los usuarios inscribirse en eventos deportivos, hacer un seguimiento de los mismos y, a nivel de administración, crear y organizar dichos torneos. Sin embargo, no está diseñada para cubrir la gestión burocrática interna del día a día de un club modesto. Carece de herramientas para la gestión de un club de atletismo (independientemente de sus dimensiones)</p>
-                    <a id="figura5-clupik" class="ancla-top"></a>
+                    <a id="figura3-clupik" class="ancla-top"></a>
                     <figure class="figura-logo">
                         <img src="img/clupikInterface.png" alt="Interfaz de competiciones de Clupik" class="img-diagrama img-zoomable">
                         <figcaption class="pie-foto">Figura 3. Interfaz de competiciones de Clupik</figcaption>
@@ -345,21 +356,28 @@
                         <thead><tr><th style="width: 20%;">ID: ACT-01</th><th style="width: 80%;">Visitante</th></tr></thead>
                         <tbody>
                             <tr><td><strong>Descripción</strong></td><td>Usuario no registrado que accede a la parte pública (portfolio informativo).</td></tr>
-                            <tr><td><strong>Permisos</strong></td><td>Visualizar información básica del club (plazos de fichas, horarios, periodos de entreno, etc.).</td></tr>
+                            <tr><td><strong>Permisos</strong></td><td>Visualizar información básica del club. Ejecutar el registro y la recuperación de credenciales.</td></tr>
                         </tbody>
                     </table>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">ID: ACT-02</th><th style="width: 80%;">Atleta</th></tr></thead>
                         <tbody>
                             <tr><td><strong>Descripción</strong></td><td>Integrante del club registrado de forma oficial.</td></tr>
-                            <tr><td><strong>Permisos</strong></td><td>Iniciar sesión, realizar inscripciones, acceder a su historial, editar inscripciones y registrar feedback de entrenamientos.</td></tr>
+                            <tr><td><strong>Permisos</strong></td><td>Iniciar sesión, realizar inscripciones, acceder a su historial, cerrar sesión y registrar feedback de entrenamientos. Edición de datos limitada a validación administrativa.</td></tr>
                         </tbody>
                     </table>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">ID: ACT-03</th><th style="width: 80%;">Entrenador (Administrador)</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>Descripción</strong></td><td>Miembro del cuerpo técnico encargado de la gestión del club.</td></tr>
-                            <tr><td><strong>Permisos</strong></td><td>Permisos de Atleta + visualizar todas las fichas, filtrar atletas (edad, categoría) y consultar el calendario global.</td></tr>
+                            <tr><td><strong>Descripción</strong></td><td>Miembro del cuerpo técnico encargado de la gestión del club. Hereda los permisos del Atleta.</td></tr>
+                            <tr><td><strong>Permisos</strong></td><td>Visualizar todas las fichas, aplicar filtros avanzados (edad, marca, prueba) y consultar el calendario global.</td></tr>
+                        </tbody>
+                    </table>
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">ID: ACT-04</th><th style="width: 80%;">Sistema (PDF / Correo)</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Descripción</strong></td><td>Actor de sistema (automático) que interactúa con la aplicación.</td></tr>
+                            <tr><td><strong>Permisos</strong></td><td>Compilación de documentos oficiales PDF y envío automatizado de notificaciones por email.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -376,65 +394,59 @@
                     </figure>
 
                     <h4>2.3.2. Especificación de Casos de Uso</h4>
-                    
                     <a id="tabla-cu" class="ancla-centro"></a>
+                    
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 20%;">UC-01</th><th style="width: 80%;">Registro y Autenticación</th></tr></thead>
+                        <thead><tr><th style="width: 20%;">UC-01</th><th style="width: 80%;">Registro y Autenticación (Login/Logout)</th></tr></thead>
                         <tbody>
                             <tr><td><strong>Actor</strong></td><td>Visitante / Atleta / Entrenador</td></tr>
-                            <tr><td><strong>Interés</strong></td><td>Crear una cuenta o acceder de forma segura al sistema.</td></tr>
-                            <tr><td><strong>Precondición</strong></td><td>Para registro: No tener cuenta. Para login: Tener cuenta verificada.</td></tr>
-                            <tr><td><strong>Garantía</strong></td><td>Sesión iniciada correctamente y acceso al panel.</td></tr>
-                            <tr><td><strong>Flujo Básico</strong></td><td>1. El usuario introduce credenciales o datos de registro.<br>2. El sistema valida la información en la BBDD.<br>3. El sistema concede acceso y redirige a la vista correspondiente.</td></tr>
-                            <tr><td><strong>Excepciones</strong></td><td>2.a Credenciales inválidas: El sistema muestra error.<br>2.b Olvido de clave: Se ejecuta la extensión <em>Recuperar contraseña</em>.</td></tr>
+                            <tr><td><strong>Flujo Principal</strong></td><td>1. El usuario introduce credenciales.<br>2. El sistema valida contra la BBDD.<br>3. El sistema inicia sesión y redirige al panel.<br>4. El usuario puede finalizar la sesión (Logout) destruyendo el token.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>Datos incorrectos: El sistema deniega el acceso y bloquea tras 5 intentos fallidos.</td></tr>
                         </tbody>
                     </table>
 
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 20%;">UC-02</th><th style="width: 80%;">Realizar Inscripción Online</th></tr></thead>
+                        <thead><tr><th style="width: 20%;">UC-02</th><th style="width: 80%;">Recuperar Contraseña</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>Actor</strong></td><td>Atleta (o Entrenador)</td></tr>
-                            <tr><td><strong>Interés</strong></td><td>Completar la ficha digitalmente y generar el documento oficial.</td></tr>
-                            <tr><td><strong>Precondición</strong></td><td>Haber iniciado sesión previamente (UC-01).</td></tr>
-                            <tr><td><strong>Garantía</strong></td><td>Datos guardados e inclusión automática de <em>Generar PDF Oficial</em>.</td></tr>
-                            <tr><td><strong>Flujo Básico</strong></td><td>1. El usuario accede al formulario de nueva temporada.<br>2. Rellena o actualiza sus datos médicos y de contacto.<br>3. El sistema compila la información y genera el PDF automáticamente.<br>4. Se envía una copia al email del usuario.</td></tr>
-                            <tr><td><strong>Excepciones</strong></td><td>2.a Falta documento anexo: Se requiere ejecutar la extensión <em>UC-03 (Subir archivo físico/DNI)</em>.</td></tr>
+                            <tr><td><strong>Actor</strong></td><td>Visitante</td></tr>
+                            <tr><td><strong>Flujo Principal</strong></td><td>1. El usuario solicita reset por email.<br>2. El sistema genera un link temporal único.<br>3. El usuario cambia la clave y el sistema actualiza el hash Bcrypt en la BBDD.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>Email no registrado: El sistema informa que se ha enviado el proceso (sin confirmar existencia del correo).</td></tr>
                         </tbody>
                     </table>
 
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 20%;">UC-03</th><th style="width: 80%;">Subir Archivo Físico / DNI</th></tr></thead>
+                        <thead><tr><th style="width: 20%;">UC-03</th><th style="width: 80%;">Realizar Inscripción Online</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>Actor</strong></td><td>Atleta / Entrenador</td></tr>
-                            <tr><td><strong>Interés</strong></td><td>Adjuntar documentación obligatoria (DNI) o fichas antiguas escaneadas al sistema.</td></tr>
-                            <tr><td><strong>Precondición</strong></td><td>Haber iniciado sesión y estar en el proceso de inscripción (UC-02) o edición de perfil.</td></tr>
-                            <tr><td><strong>Garantía</strong></td><td>El archivo se sube al servidor protegido y se vincula a la ficha del usuario.</td></tr>
-                            <tr><td><strong>Flujo Básico</strong></td><td>1. El usuario selecciona la opción de adjuntar documento.<br>2. El sistema solicita el archivo desde el dispositivo.<br>3. El usuario sube un archivo en formato JPG o PDF.<br>4. El sistema valida la extensión y el peso máximo.<br>5. El archivo se almacena de forma segura.</td></tr>
-                            <tr><td><strong>Excepciones</strong></td><td>4.a Formato o peso inválido: El sistema rechaza la subida y avisa de los requisitos.</td></tr>
+                            <tr><td><strong>Actor</strong></td><td>Atleta / Sistema</td></tr>
+                            <tr><td><strong>Flujo Principal</strong></td><td>1. El usuario completa el formulario médico.<br>2. El <strong>Generador PDF</strong> crea el documento oficial.<br>3. El <strong>Sistema de Correo</strong> envía la copia al usuario.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>Falta de documentos anexos (DNI): La inscripción queda en estado "Pendiente de validación".</td></tr>
                         </tbody>
                     </table>
 
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 20%;">UC-04</th><th style="width: 80%;">Filtrar Fichas Globales</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Actor</strong></td><td>Entrenador (Admin)</td></tr>
-                            <tr><td><strong>Interés</strong></td><td>Buscar y listar atletas según criterios deportivos o de edad.</td></tr>
-                            <tr><td><strong>Precondición</strong></td><td>Haber iniciado sesión con rol de Administrador.</td></tr>
-                            <tr><td><strong>Garantía</strong></td><td>Listado de atletas actualizado según el criterio de búsqueda.</td></tr>
-                            <tr><td><strong>Flujo Básico</strong></td><td>1. El entrenador accede al panel global de gestión.<br>2. Selecciona los filtros deseados (ej. Categoría Sub-16).<br>3. El sistema consulta a la BBDD y devuelve los resultados ordenados.</td></tr>
-                            <tr><td><strong>Excepciones</strong></td><td>3.a Ningún resultado: El sistema avisa de que no hay atletas en esa categoría.</td></tr>
-                        </tbody>
-                    </table>
-
-                    <table class="tabla-smart">
-                        <thead><tr><th style="width: 20%;">UC-05</th><th style="width: 80%;">Registrar Feedback Entrenos</th></tr></thead>
+                        <thead><tr><th style="width: 20%;">UC-04</th><th style="width: 80%;">Subir Archivo Físico / DNI</th></tr></thead>
                         <tbody>
                             <tr><td><strong>Actor</strong></td><td>Atleta</td></tr>
-                            <tr><td><strong>Interés</strong></td><td>Anotar sensaciones y estado físico tras una sesión en pista.</td></tr>
-                            <tr><td><strong>Precondición</strong></td><td>Haber iniciado sesión (UC-01).</td></tr>
-                            <tr><td><strong>Garantía</strong></td><td>El registro queda guardado en el historial deportivo del atleta.</td></tr>
-                            <tr><td><strong>Flujo Básico</strong></td><td>1. El atleta entra en su área personal (<em>Gestionar perfil e historial</em>).<br>2. Accede al apartado de feedback.<br>3. Rellena el formulario de sensaciones.<br>4. El sistema guarda la entrada en la base de datos.</td></tr>
-                            <tr><td><strong>Excepciones</strong></td><td>3.a Formulario incompleto: El sistema pide rellenar los campos obligatorios.</td></tr>
+                            <tr><td><strong>Flujo Principal</strong></td><td>1. El usuario selecciona archivo (JPG/PDF).<br>2. El sistema verifica peso (< 2MB).<br>3. El archivo se almacena en directorio protegido vinculado al ID de usuario.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>Formato no válido: El sistema rechaza la subida.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">UC-05</th><th style="width: 80%;">Registrar Feedback de Entrenamientos</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Actor</strong></td><td>Atleta</td></tr>
+                            <tr><td><strong>Flujo Principal</strong></td><td>1. El atleta accede a su sesión deportiva.<br>2. Anota marcas y sensaciones post-entreno.<br>3. El sistema actualiza el historial de rendimiento deportivo.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>Formulario incompleto: El sistema impide el guardado de la sesión.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">UC-06</th><th style="width: 80%;">Filtrar Fichas y Consultar Calendario</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Actor</strong></td><td>Entrenador</td></tr>
+                            <tr><td><strong>Flujo Principal</strong></td><td>1. El entrenador aplica filtros (edad, marca, categoría).<br>2. El sistema realiza consulta SQL dinámica.<br>3. Se muestra el listado y la planificación grupal.</td></tr>
+                            <tr><td><strong>Excepciones</strong></td><td>Sin resultados: El sistema muestra aviso de "No hay atletas para ese criterio".</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -446,34 +458,45 @@
                     <h4>2.4.1. Requisitos Funcionales (RF)</h4>
                     <a id="tabla-rf" class="ancla-centro"></a>
                     <table class="tabla-smart">
-                        <thead><tr><th>ID</th><th>Función</th><th>Descripción Detallada</th><th>Actor</th><th>CU</th><th>Prio.</th></tr></thead>
+                        <thead><tr><th style="width: 10%;">ID</th><th style="width: 60%;">Función</th><th style="width: 15%;">Actor</th><th style="width: 15%;">Prio.</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>RF-01</strong></td><td>Registro</td><td>El sistema permitirá crear una cuenta validando el email.</td><td>Visitante</td><td>UC-01</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
-                            <tr><td><strong>RF-02</strong></td><td>Login</td><td>El sistema verificará credenciales contra la BBDD y asignará la sesión.</td><td>Atleta/Admin</td><td>UC-01</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
-                            <tr><td><strong>RF-03</strong></td><td>Inscripción</td><td>El sistema generará un PDF automático a partir de los datos.</td><td>Atleta</td><td>UC-02</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
-                            <tr><td><strong>RF-04</strong></td><td>Subida PDF</td><td>El sistema permitirá adjuntar archivos físicos escaneados (JPG/PDF).</td><td>Atleta</td><td>UC-03</td><td><span class="etiqueta prio-media">Media</span></td></tr>
-                            <tr><td><strong>RF-05</strong></td><td>Filtros</td><td>El sistema ordenará las fichas por categoría, fecha o edad.</td><td>Admin</td><td>UC-04</td><td><span class="etiqueta prio-media">Media</span></td></tr>
-                            <tr><td><strong>RF-06</strong></td><td>Generación PDF</td><td>El sistema generará ficha de inscripción en PDF en base a los datos aportados.</td><td>Atleta</td><td>UC-03</td><td><span class="etiqueta prio-baja">Baja</span></td></tr>
+                            <tr><td><strong>RF-01</strong></td><td>Registro de nuevos usuarios.</td><td>Visitante</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-02</strong></td><td>Autenticación y Control de Acceso (Login).</td><td>Todos</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-03</strong></td><td>Recuperación de credenciales (Password Reset).</td><td>Visitante</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-04</strong></td><td>Cierre de sesión seguro (Logout).</td><td>Atleta/Entren.</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-05</strong></td><td>Gestión de Inscripciones Online.</td><td>Atleta</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-06</strong></td><td>Edición de datos (restringida a plazos legales).</td><td>Atleta</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>RF-07</strong></td><td>Carga de documentación digital (DNI, seguros).</td><td>Atleta</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-08</strong></td><td>Registrar Feedback de entrenamientos.</td><td>Atleta</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>RF-09</strong></td><td>Generación automatizada de PDF de inscripción.</td><td>Sistema</td><td><span class="etiqueta prio-alta">Alta</span></td></tr>
+                            <tr><td><strong>RF-10</strong></td><td>Envío automatizado de notificaciones por Email.</td><td>Sistema</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>RF-11</strong></td><td>Consulta de historial de marcas personales.</td><td>Atleta</td><td><span class="etiqueta prio-baja">Baja</span></td></tr>
+                            <tr><td><strong>RF-12</strong></td><td>Filtrado global de fichas por edad o categoría.</td><td>Entrenador</td><td><span class="etiqueta prio-media">Media</span></td></tr>
+                            <tr><td><strong>RF-13</strong></td><td>Visualización de calendario y planificación grupal.</td><td>Entrenador</td><td><span class="etiqueta prio-baja">Baja</span></td></tr>
                         </tbody>
                     </table>
 
                     <h4>2.4.2. Requisitos No Funcionales (RNF)</h4>
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 15%;">ID</th><th style="width: 25%;">Tipo</th><th style="width: 60%;">Descripción y Métrica</th></tr></thead>
+                        <thead><tr><th style="width: 15%;">ID</th><th style="width: 25%;">Categoría</th><th style="width: 60%;">Métrica Verificable</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>RNF-01</strong></td><td>Seguridad</td><td>Las contraseñas se almacenarán cifradas mediante hash en la BBDD.</td></tr>
-                            <tr><td><strong>RNF-02</strong></td><td>Rendimiento</td><td>La generación del PDF de inscripción habría de tardar menos de 5000ms.</td></tr>
-                            <tr><td><strong>RNF-03</strong></td><td>Disponibilidad</td><td>El sistema será responsivo (Mobile First) para uso en pistas de atletismo.</td></tr>
+                            <tr><td><strong>RNF-01</strong></td><td>Seguridad</td><td>Cifrado de contraseñas mediante algoritmo <strong>Bcrypt</strong>.</td></tr>
+                            <tr><td><strong>RNF-02</strong></td><td>Seguridad</td><td>Invalidación de sesión tras <strong>30 minutos</strong> de inactividad.</td></tr>
+                            <tr><td><strong>RNF-03</strong></td><td>Rendimiento</td><td>Generación y envío del PDF en menos de <strong>5 segundos</strong>.</td></tr>
+                            <tr><td><strong>RNF-04</strong></td><td>Rendimiento</td><td>Consultas de filtrado global en menos de <strong>2 segundos</strong>.</td></tr>
+                            <tr><td><strong>RNF-05</strong></td><td>Usabilidad</td><td>Diseño bajo estándar <strong>Mobile First</strong> para uso en pista.</td></tr>
+                            <tr><td><strong>RNF-06</strong></td><td>Usabilidad</td><td>Cumplimiento de accesibilidad <strong>WCAG 2.1 (Nivel AA)</strong>.</td></tr>
+                            <tr><td><strong>RNF-07</strong></td><td>Disponibilidad</td><td>Uptime (tiempo en línea) garantizado del <strong>99.9%</strong> anual.</td></tr>
                         </tbody>
                     </table>
 
                     <h4>2.4.3. Requisitos de Información (IRQ)</h4>
                     <a id="tabla-irq" class="ancla-centro"></a>
                     <table class="tabla-smart">
-                        <thead><tr><th style="width: 20%;">ID: IRQ-01</th><th style="width: 80%;">Información de Usuarios y Fichas</th></tr></thead>
+                        <thead><tr><th style="width: 20%;">ID: IRQ-01</th><th style="width: 80%;">Información Persistente (MySQL)</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>Descripción</strong></td><td>El sistema debe almacenar permanentemente los datos de registro e inscripción.</td></tr>
-                            <tr><td><strong>Datos</strong></td><td>• ID Usuario (PK)<br>• Nombre, Apellidos, DNI, Email (Único), Contraseña (Hash)<br>• Rol (Atleta o Entrenador/Admin)<br>• Ruta del PDF generado</td></tr>
+                            <tr><td><strong>Obligatoriedad</strong></td><td>Campos NOT NULL estrictos para mantener integridad referencial.</td></tr>
+                            <tr><td><strong>Datos</strong></td><td>• Credenciales: Email (Unique), Password (Hash).<br>• Perfil: DNI (Unique), Fecha Nacimiento.<br>• Fichas: Rutas absolutas a archivos físicos.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -481,13 +504,24 @@
 
             <div id="normativa-legislacion" class="ancla-top sangria-1">
                 <h3>2.5. Normativa y Legislación</h3>
-                <p>Debido a que el sistema gestiona inscripciones de atletas (en su mayoría menores) y realiza un seguimiento de sus entrenamientos, el cumplimiento normativo es estricto:</p>
-                <ul>
-                    <li><p><strong>- RGPD y LOPDGDD:</strong> Los datos se alojarán en servidores del EEE. Se requerirá consentimiento verificable de tutores legales para menores de 14 años.</p></li>
-                    <li><p><strong>- Derecho al olvido:</strong> Se podrá solicitar la eliminación de datos una vez el atleta inscrito abandone el club.</p></li>
-                    <li><p><strong>- LSSI-CE y Accesibilidad:</strong> Se incluirá un Aviso Legal con los datos del club. Se buscará cumplir con el nivel AA de las directrices WCAG 2.1.</p></li>
-                    <li><p><strong>- Licencias:</strong> Tecnologías libres (HTML, CSS, PHP, MySQL), Tailwind CSS (MIT) y librerías de generación de PDF (MIT/GPL).</p></li>
-                </ul>
+                <div class="sangria-2">
+                    <h4>2.5.1. Protección de Datos (RGPD)</h4>
+                    <ul>
+                        <li><p><strong>- Datos:</strong> Tratamiento de nombre, DNI, datos médicos básicos y del tutor legal para menores de 14 años.</p></li>
+                        <li><p><strong>- Alojamiento:</strong> Servidores de Hostinger ubicados en el Espacio Económico Europeo (UE).</p></li>
+                        <li><p><strong>- Olvido:</strong> Botón directo de "Eliminar cuenta y datos" en el perfil de usuario.</p></li>
+                    </ul>
+                    <h4>2.5.2. LSSI-CE y Cookies</h4>
+                    <ul>
+                        <li><p><strong>- Cookies:</strong> Uso exclusivo de cookies técnicas de sesión y <em>localStorage</em> para autenticación.</p></li>
+                        <li><p><strong>- Aviso Legal:</strong> Contendrá NIF, domicilio social y datos de registro deportivo del C.D. Salamanca Ianuarius.</p></li>
+                    </ul>
+                    <h4>2.5.3. Accesibilidad y Licencias</h4>
+                    <ul>
+                        <li><p><strong>- WCAG 2.1:</strong> Contraste 4.5:1 garantizado (Rojo Ianuarius #E63946) y navegación semántica ARIA.</p></li>
+                        <li><p><strong>- Licencias:</strong> Uso de React y Tailwind (MIT), PHP/MySQL (GPL) y FPDF (Licencia permisiva).</p></li>
+                    </ul>
+                </div>
             </div>
 
             <a id="diseno-arquitectura" class="ancla-top"></a>
@@ -547,20 +581,38 @@
                 </div>
             </div>
 
+            <div id="diagrama-clases" class="ancla-top sangria-1">
+                <h3>3.3. Diagrama de Clases (UML)</h3>
+                <a id="figura7-clases"></a>
+                <figure class="figura-logo">
+                    <img src="img/diagramaClasesIanuarius.png" class="img-diagrama img-zoomable" alt="Diagrama de Clases UML">
+                    <figcaption class="pie-foto">Figura 7. Diagrama UML.</figcaption>
+                </figure>
+            </div>
+
             <div id="diseno-datos" class="ancla-top sangria-1">
-                <h3>3.3. Diseño de Datos</h3>
+                <h3>3.4. Diseño de Datos</h3>
                 <p>Para estructurar la persistencia de la información en la base de datos MySQL, se ha diseñado un Modelo Entidad-Relación altamente normalizado. Para gestionar la complejidad de las especialidades del atletismo (donde las alturas o pesos varían según la edad y el género), se ha implementado una tabla intermedia de detalle. El sistema se compone de seis tablas principales:</p>
                 
-                <a id="figura7-db"></a>
+                <h4>3.4.1. Entidad Relación</h4>
+                <a id="figura8-er"></a>
                 <figure class="figura-logo">
                     <img src="img/entidadRelacionIanuarius-transparente.png" class="img-diagrama img-zoomable" alt="Diagrama Entidad-Relación">
-                    <figcaption class="pie-foto">Figura 7. Diagrama de Entidad-Relación de la DB del proyecto.</figcaption>
+                    <figcaption class="pie-foto">Figura 8. Diagrama Entidad-Relación de la DB.</figcaption>
+                </figure>
+
+                <h4>3.4.2. Modelo Relacional</h4>
+                <p>Para garantizar la integridad y escalabilidad de los datos de Ianuarius, se ha optado por un Modelo Relacional implementado en MySQL. Este modelo responde a la necesidad de mantener relaciones estrictas entre los usuarios (atletas) y sus registros deportivos (fichas, tiempos, categorías).</p>
+                <a id="figura9-relacional"></a>
+                <figure class="figura-logo">
+                    <img src="img/modeloRelacional.png" class="img-diagrama img-zoomable" alt="Modelo Relacional">
+                    <figcaption class="pie-foto">Figura 9. Modelo Relacional de la DB.</figcaption>
                 </figure>
 
                 <div class="sangria-2">
                     
                     <a id="tabla-categorias" class="ancla-centro"></a>
-                    <h4>3.3.1. Tabla: categorias</h4>
+                    <h4>3.4.3. Tabla: categorias</h4>
                     <p>Catálogo maestro que define los rangos de edad (ej. Sub-16, Sub-18).</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -573,7 +625,7 @@
                     </table>
 
                     <a id="tabla-pruebas" class="ancla-centro"></a>
-                    <h4>3.3.2. Tabla: pruebas</h4>
+                    <h4>3.4.4. Tabla: pruebas</h4>
                     <p>Catálogo maestro de las disciplinas generales de atletismo.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -585,7 +637,7 @@
                     </table>
 
                     <a id="tabla-variantes" class="ancla-centro"></a>
-                    <h4>3.3.3. Tabla: pruebas_variantes</h4>
+                    <h4>3.4.5. Tabla: pruebas_variantes</h4>
                     <p>Tabla de detalle que resuelve la relación N:M entre Pruebas y Categorías, añadiendo especificaciones técnicas.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -599,7 +651,7 @@
                     </table>
 
                     <a id="tabla-usuarios" class="ancla-centro"></a>
-                    <h4>3.3.4. Tabla: usuarios</h4>
+                    <h4>3.4.6. Tabla: usuarios</h4>
                     <p>Almacena las credenciales de acceso y datos personales, perfilando al atleta.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -618,7 +670,7 @@
                     </table>
 
                     <a id="tabla-fichas" class="ancla-centro"></a>
-                    <h4>3.3.5. Tabla: fichas_inscripcion</h4>
+                    <h4>3.4.7. Tabla: fichas_inscripcion</h4>
                     <p>Almacena los documentos. Relación 1:1 con la tabla usuarios.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -632,7 +684,7 @@
                     </table>
 
                     <a id="tabla-feedback" class="ancla-centro"></a>
-                    <h4>3.3.6. Tabla: feedback_entrenamientos</h4>
+                    <h4>3.4.8. Tabla: feedback_entrenamientos</h4>
                     <p>Registra las sensaciones diarias. Relación 1:N con la tabla usuarios y pruebas_variantes.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -648,11 +700,11 @@
             </div>
 
             <div id="diseno-interfaz" class="ancla-top sangria-1">
-                <h3>3.4. Diseño de Interfaz (UI/UX)</h3>
-                <p>El diseño de la interfaz se ha planteado bajo el paradigma <strong>Mobile First</strong>, garantizando que la aplicación web sea plenamente funcional y accesible desde dispositivos móviles, dado que los atletas y entrenadores la utilizarán frecuentemente a pie de pista durante los entrenamientos.</p>
+                <h3>3.5. Diseño de Interfaz (UI/UX)</h3>
+                <p>En esta fase se define la experiencia de usuario centrada exclusivamente en la <strong>Página Principal (Landing/Home)</strong>, siguiendo un proceso de diseño iterativo que evoluciona desde la estructura básica hasta el aspecto visual corporativo final.</p>
                 
                 <div class="sangria-2">
-                    <h4>3.4.1. Paleta de Colores</h4>
+                    <h4>3.5.1. Paleta de Colores</h4>
                     <p>Se definirá una paleta cromática basada en la identidad corporativa del Club de Atletismo Ianuarius, priorizando el contraste y la legibilidad para entornos con mucha luz (exteriores):</p>
                     <ul>
                         <li><p><strong>- Color Principal (Identidad Club):</strong> Rojo Ianuarius (#E63946) - Se reserva para los botones de acción principal (como enviar inscripciones), enlaces destacados y elementos de marca.</p></li>
@@ -660,11 +712,31 @@
                         <li><p><strong>- Colores de Estado:</strong> Verde (#2A9D8F) para alertas de éxito (feedback guardado, PDF generado) y Naranja (#F4A261) para advertencias o campos incompletos.</p></li>
                     </ul>
 
-                    <h4>3.4.2. Tipografía</h4>
+                    <h4>3.5.2. Tipografía</h4>
                     <p>Se emplea la familia tipográfica <strong>Inter</strong>, nativa en entornos web modernos e incluida a través de Tailwind CSS. Destaca por su legibilidad en pantallas pequeñas y su aspecto limpio y profesional, ideal para la lectura densa de tablas de marcas deportivas y listados de atletas.</p>
 
-                    <h4>3.4.3. Prototipado y Experiencia de Usuario (UX)</h4>
-                    <p>El diseño de las vistas principales (Wireframes) se plantea utilizando la herramienta <strong>Figma</strong>, con el objetivo de estructurar visualmente la interfaz y definir los flujos de navegación de cara a la codificación final de los componentes. Esta conceptualización se centra especialmente en procesos críticos como la inscripción o la subida documental, buscando reducir la fricción cognitiva mediante formularios guiados paso a paso y asegurando que la plataforma resulte intuitiva tanto para jóvenes atletas como para sus tutores legales.</p>
+                    <h4>3.5.3. Prototipado y Experiencia de Usuario (UX)</h4>
+                    <p>El diseño se ha planteado utilizando la herramienta Figma, partiendo de un esquema estructural (Wireframe) hasta alcanzar el diseño final de alta fidelidad (Mockup) para la página principal:</p>
+                    
+                    <a id="figura10-wireframe"></a>
+                    <figure class="figura-logo mt-6">
+                        <img src="img/viewWireframeHome.png" class="img-diagrama img-zoomable" alt="Wireframe estructural Home">
+                        <figcaption class="pie-foto">Figura 10. Wireframe estructural de la página “Home”.</figcaption>
+                    </figure>
+
+                    <a id="figura11-mockup"></a>
+                    <figure class="figura-logo mt-6">
+                        <img src="img/viewMockupHome.png" class="img-diagrama img-zoomable" alt="Mockup final Home">
+                        <figcaption class="pie-foto">Figura 11. Mockup final aplicando la paleta de colores y tipografía definida.</figcaption>
+                    </figure>
+
+                    <h4>3.5.4. Justificación de decisiones de diseño (UX)</h4>
+                    <p>Las decisiones aplicadas a la página principal buscan reducir la fricción cognitiva y asegurar que la plataforma resulte intuitiva:</p>
+                    <ul>
+                        <li><p><strong>- Jerarquía Visual:</strong> El diseño emplea el "Rojo Ianuarius" estratégicamente en el botón principal (CTA) del área Hero para guiar inmediatamente al usuario hacia la acción principal (inscripción/acceso).</p></li>
+                        <li><p><strong>- Flujo de Lectura:</strong> La estructura respeta el patrón "Z", facilitando la localización rápida del logo, la navegación y el contenido clave.</p></li>
+                        <li><p><strong>- Accesibilidad:</strong> Los fondos neutros (#F8F9FA) aseguran que el texto oscuro (#212529) cumpla con los estándares de contraste, mientras que el espaciado generoso ayuda a estructurar visualmente la interfaz de cara a su codificación final en componentes.</p></li>
+                    </ul>
                 </div>
             </div>
 
@@ -677,19 +749,19 @@
                 <div class="sangria-2">
                     <h4>4.1.1. Desarrollo iterativo e incremental:</h4>
                     <p>Permite tener versiones funcionales desde las primeras semanas, añadiendo módulos de forma progresiva.</p>
-                    <h4>4.1.2. Herramientas de gestión:</h4>
-                    <p>Se utilizará un tablero tipo Kanban (GitHub Projects) dividido en las columnas básicas: Backlog, In Progress, Testing y Done.</p>
+                    <h4>4.1.2. Herramientas de gestión y Control de Versiones:</h4>
+                    <p>Se utilizará un tablero tipo Kanban (GitHub Projects) dividido en las columnas básicas: Backlog, In Progress, Testing y Done. Además, para garantizar la calidad del código, se implementará un flujo de trabajo basado en <strong>Feature Branches (Ramas por funcionalidad)</strong> en Git, realizando <em>Pull Requests</em> y auto-revisiones de código antes de integrar cualquier cambio a la rama principal (<em>main</em>).</p>
                 </div>
             </div>
             
             <div id="planificacion-temporal" class="ancla-top sangria-1">
                 <h3>4.2. Planificación Temporal (Gantt)</h3>
-                <p>El desarrollo se ha planificado en un bloque temporal de 15 semanas. Se ha optado por solapar parcialmente las fases de Backend y Frontend para optimizar el tiempo de integración.</p>
+                <p>El desarrollo se ha planificado en un bloque temporal de 15 semanas. Se ha optado por solapar parcialmente las fases de Backend y Frontend para optimizar el tiempo de integración, marcando hitos críticos como la finalización de la BBDD y la generación del primer PDF oficial.</p>
                 
-                <a id="figura8-gantt"></a>
+                <a id="figura12-gantt"></a>
                 <figure class="figura-logo">
-                    <img src="img/ganttDiagram.svg" class="img-diagrama img-zoomable" alt="Diagrama de Gantt">
-                    <figcaption class="pie-foto">Figura 8. Diagrama de Gantt con la previsión del proyecto.</figcaption>
+                    <img src="img/ganttDiagram.png" class="img-diagrama img-zoomable" alt="Diagrama de Gantt">
+                    <figcaption class="pie-foto">Figura 12. Diagrama de Gantt con la previsión del proyecto.</figcaption>
                 </figure>
 
                 <a id="tabla-gantt" class="ancla-centro"></a>
@@ -697,11 +769,11 @@
                     <thead><tr><th style="width: 15%;">Fase</th><th style="width: 55%;">Tarea Principal</th><th style="width: 15%;">Duración</th><th style="width: 15%;">Semanas</th></tr></thead>
                     <tbody>
                         <tr><td><strong>1. Análisis</strong></td><td>Definición de actores, Casos de Uso y Requisitos.</td><td>2 semanas</td><td>1 – 2</td></tr>
-                        <tr><td><strong>2. Diseño</strong></td><td>Diseño de BBDD, arquitectura y prototipos visuales.</td><td>2 semanas</td><td>3 – 4</td></tr>
+                        <tr><td><strong>2. Diseño</strong></td><td>Diseño de BBDD, arquitectura y prototipos visuales. <em>(Hito: BBDD Diseñada)</em></td><td>2 semanas</td><td>3 – 4</td></tr>
                         <tr><td><strong>3. Backend</strong></td><td>Desarrollo MySQL, PHP 8.2, API REST.</td><td>4 semanas</td><td>5 – 8</td></tr>
                         <tr><td><strong>4. Frontend</strong></td><td>Maquetación responsiva con React y Tailwind.</td><td>4 semanas</td><td>6 – 9</td></tr>
-                        <tr><td><strong>5. Integración</strong></td><td>Unificación API y Vistas Front.</td><td>3 semanas</td><td>10 – 12</td></tr>
-                        <tr><td><strong>6. Pruebas</strong></td><td>Tests de validación y corrección de bugs.</td><td>2 semanas</td><td>13 – 14</td></tr>
+                        <tr><td><strong>5. Integración</strong></td><td>Unificación API y Vistas. <em>(Hito: 1º PDF Generado)</em></td><td>3 semanas</td><td>10 – 12</td></tr>
+                        <tr><td><strong>6. Pruebas</strong></td><td>Tests de validación, resolución de bugs y revisión Git.</td><td>2 semanas</td><td>13 – 14</td></tr>
                         <tr><td><strong>7. Entrega</strong></td><td>Redacción de memoria final y defensa.</td><td>1 semana</td><td>15</td></tr>
                     </tbody>
                 </table>
@@ -715,29 +787,29 @@
                     <h4>Fase 1: Análisis y Diseño (Semanas 1 - 4)</h4>
                     <ul>
                         <li><p><strong>Semana 1-2:</strong> Toma de requisitos, análisis de competencia y elaboración de diagramas de Casos de Uso.</p></li>
-                        <li><p><strong>Semana 3:</strong> Diseño del modelo Entidad-Relación y creación de los esquemas relacionales (MySQL).</p></li>
+                        <li><p><strong>Semana 3:</strong> Diseño del modelo Entidad-Relación y creación de los esquemas relacionales (MySQL). <strong>(Hito 1: Estructura de BBDD finalizada)</strong>.</p></li>
                         <li><p><strong>Semana 4:</strong> Elaboración de wireframes y maquetado visual de la interfaz de usuario en Figma.</p></li>
                     </ul>
 
                     <h4>Fase 2: Backend y Base de Datos (Semanas 5 - 8)</h4>
                     <ul>
-                        <li><p><strong>Semana 5:</strong> Configuración del entorno (XAMPP), despliegue de la BBDD e implementación de la librería FPDF/TCPDF para la futura generación de documentos.</p></li>
+                        <li><p><strong>Semana 5:</strong> Configuración del entorno (XAMPP), despliegue de la BBDD e implementación de la librería FPDF/TCPDF.</p></li>
                         <li><p><strong>Semana 6:</strong> Desarrollo de la API REST (PHP 8.2) y creación de los endpoints básicos (Registro, Login) con cifrado de contraseñas.</p></li>
                         <li><p><strong>Semana 7:</strong> Programación de la lógica de filtros de marcas deportivas y categorías por edades en el servidor.</p></li>
-                        <li><p><strong>Semana 8:</strong> Desarrollo del módulo de control de acceso y protección de directorios para los archivos PDF de los atletas (cumplimiento RGPD).</p></li>
+                        <li><p><strong>Semana 8:</strong> Desarrollo del módulo de control de acceso y protección de directorios para los archivos PDF de los atletas.</p></li>
                     </ul>
 
                     <h4>Fase 3: Frontend e Integración (Semanas 9 - 12)</h4>
                     <ul>
                         <li><p><strong>Semana 9:</strong> Inicialización del proyecto en React 18, configuración del enrutamiento y aplicación de Tailwind CSS.</p></li>
-                        <li><p><strong>Semana 10:</strong> Maquetación de los paneles de control (dashboard del Entrenador y vista del Atleta).</p></li>
+                        <li><p><strong>Semana 10:</strong> Maquetación de los paneles de control y dashboard del Entrenador.</p></li>
                         <li><p><strong>Semana 11:</strong> Conexión asíncrona (Fetch/Axios) entre el Frontend y la API REST para el intercambio de datos JSON.</p></li>
-                        <li><p><strong>Semana 12:</strong> Integración del formulario dinámico de inscripciones con el generador de PDF del backend.</p></li>
+                        <li><p><strong>Semana 12:</strong> Integración compleja del formulario de inscripciones con el generador de PDF del backend. <strong>(Hito 2: Primer PDF Oficial Generado con éxito)</strong>.</p></li>
                     </ul>
 
                     <h4>Fase 4: Pruebas y Despliegue (Semanas 13 - 15)</h4>
                     <ul>
-                        <li><p><strong>Semana 13:</strong> Ejecución de pruebas unitarias en formularios y validación de seguridad en la subida de archivos (DNI/Fotos).</p></li>
+                        <li><p><strong>Semana 13:</strong> Ejecución de pruebas unitarias en formularios y revisión de ramas (Pull Requests) de Git.</p></li>
                         <li><p><strong>Semana 14:</strong> Resolución de errores (testing continuo).</p></li>
                         <li><p><strong>Semana 15:</strong> Despliegue en el servidor de producción (hosting), redacción final de los manuales y preparación de la defensa.</p></li>
                     </ul>
