@@ -6,6 +6,13 @@
     <title>Memoria TFG - Iván Martín Nieto</title>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Regla añadida para ensanchar el "folio" de la web y evitar el apelmazamiento */
+        .contenedor-pag {
+            max-width: 1100px !important;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
 
@@ -84,8 +91,9 @@
                     <ul>
                         <li><a href="#stack-tecnologico">3.1. Stack Tecnológico</a></li>
                         <li><a href="#arquitectura-software">3.2. Arquitectura del Software</a></li>
-                        <li><a href="#diseno-datos">3.3. Diseño de Datos</a></li>
-                        <li><a href="#diseno-interfaz">3.4. Diseño de Interfaz (UI/UX)</a></li>
+                        <li><a href="#diagrama-clases">3.3. Diagrama de Clases (UML)</a></li>
+                        <li><a href="#diseno-datos">3.4. Diseño de Datos</a></li>
+                        <li><a href="#diseno-interfaz">3.5. Diseño de Interfaz (UI/UX)</a></li>
                     </ul>
                 </li>
                 <li><a href="#planif-metodo">Planificación y Metodología</a>
@@ -131,8 +139,12 @@
                 <li><a href="#figura4-playoff1">Figura 4. Interfaz de gestión de Playoff Informática</a></li>
                 <li><a href="#figura5-playoff2">Figura 5. Funcionalidades de Playoff Informática</a></li>
                 <li><a href="#figura6-uml">Figura 6. Diagrama de Casos de Uso del Sistema</a></li>
-                <li><a href="#figura7-db">Figura 7. Diagrama Entidad-Relación de la DB</a></li>
-                <li><a href="#figura8-gantt">Figura 8. Diagrama de Gantt con la previsión del proyecto</a></li>
+                <li><a href="#figura7-clases">Figura 7. Diagrama UML</a></li>
+                <li><a href="#figura8-er">Figura 8. Diagrama Entidad-Relación de la DB</a></li>
+                <li><a href="#figura9-relacional">Figura 9. Modelo Relacional de la DB</a></li>
+                <li><a href="#figura10-wireframe">Figura 10. Wireframe estructural de la página “Home”</a></li>
+                <li><a href="#figura11-mockup">Figura 11. Mockup final aplicando la paleta de colores y tipografía definida</a></li>
+                <li><a href="#figura12-gantt">Figura 12. Diagrama de Gantt con la previsión del proyecto</a></li>
             </ul>
 
             <a id="indice-tablas" class="ancla-top"></a>
@@ -157,7 +169,6 @@
                 <li><a href="#tabla-gantt">Tabla 17. Fases de Planificación (Gantt)</a></li>
                 <li><a href="#tabla-glosario">Tabla 18. Glosario de Términos</a></li>
             </ul>
-
 
             <a id="intro-justificacion" class="ancla-top"></a>
             <h2>1. Introducción y Justificación</h2>
@@ -186,7 +197,7 @@
                 <div class="sangria-2">
                     <h4>1.4.1. Clupik</h4>
                     <p>Es una plataforma centrada fundamentalmente en la gestión de competiciones. Permite a los usuarios inscribirse en eventos deportivos, hacer un seguimiento de los mismos y, a nivel de administración, crear y organizar dichos torneos. Sin embargo, no está diseñada para cubrir la gestión burocrática interna del día a día de un club modesto. Carece de herramientas para la gestión de un club de atletismo (independientemente de sus dimensiones)</p>
-                    <a id="figura5-clupik" class="ancla-top"></a>
+                    <a id="figura3-clupik" class="ancla-top"></a>
                     <figure class="figura-logo">
                         <img src="img/clupikInterface.png" alt="Interfaz de competiciones de Clupik" class="img-diagrama img-zoomable">
                         <figcaption class="pie-foto">Figura 3. Interfaz de competiciones de Clupik</figcaption>
@@ -379,7 +390,7 @@
                     <a id="figura6-uml" class="ancla-top"></a>
                     <figure class="figura-logo">
                         <img src="img/casosUsoIanuarius.png" class="img-diagrama svg-fondo-dinamico img-zoomable" style="width: 800px; max-width: 100%;" alt="Diagrama de Casos de Uso">
-                        <figcaption class="pie-foto">Figura 6. Diagrama de Casos de Uso del Sistema (Versión Corregida)</figcaption>
+                        <figcaption class="pie-foto">Figura 6. Diagrama de Casos de Uso del Sistema</figcaption>
                     </figure>
 
                     <h4>2.3.2. Especificación de Casos de Uso</h4>
@@ -570,20 +581,38 @@
                 </div>
             </div>
 
+            <div id="diagrama-clases" class="ancla-top sangria-1">
+                <h3>3.3. Diagrama de Clases (UML)</h3>
+                <a id="figura7-clases"></a>
+                <figure class="figura-logo">
+                    <img src="img/diagramaClasesIanuarius.png" class="img-diagrama img-zoomable" alt="Diagrama de Clases UML">
+                    <figcaption class="pie-foto">Figura 7. Diagrama UML.</figcaption>
+                </figure>
+            </div>
+
             <div id="diseno-datos" class="ancla-top sangria-1">
-                <h3>3.3. Diseño de Datos</h3>
+                <h3>3.4. Diseño de Datos</h3>
                 <p>Para estructurar la persistencia de la información en la base de datos MySQL, se ha diseñado un Modelo Entidad-Relación altamente normalizado. Para gestionar la complejidad de las especialidades del atletismo (donde las alturas o pesos varían según la edad y el género), se ha implementado una tabla intermedia de detalle. El sistema se compone de seis tablas principales:</p>
                 
-                <a id="figura7-db"></a>
+                <h4>3.4.1. Entidad Relación</h4>
+                <a id="figura8-er"></a>
                 <figure class="figura-logo">
                     <img src="img/entidadRelacionIanuarius-transparente.png" class="img-diagrama img-zoomable" alt="Diagrama Entidad-Relación">
-                    <figcaption class="pie-foto">Figura 7. Diagrama de Entidad-Relación de la DB del proyecto.</figcaption>
+                    <figcaption class="pie-foto">Figura 8. Diagrama Entidad-Relación de la DB.</figcaption>
+                </figure>
+
+                <h4>3.4.2. Modelo Relacional</h4>
+                <p>Para garantizar la integridad y escalabilidad de los datos de Ianuarius, se ha optado por un Modelo Relacional implementado en MySQL. Este modelo responde a la necesidad de mantener relaciones estrictas entre los usuarios (atletas) y sus registros deportivos (fichas, tiempos, categorías).</p>
+                <a id="figura9-relacional"></a>
+                <figure class="figura-logo">
+                    <img src="img/modeloRelacional.png" class="img-diagrama img-zoomable" alt="Modelo Relacional">
+                    <figcaption class="pie-foto">Figura 9. Modelo Relacional de la DB.</figcaption>
                 </figure>
 
                 <div class="sangria-2">
                     
                     <a id="tabla-categorias" class="ancla-centro"></a>
-                    <h4>3.3.1. Tabla: categorias</h4>
+                    <h4>3.4.3. Tabla: categorias</h4>
                     <p>Catálogo maestro que define los rangos de edad (ej. Sub-16, Sub-18).</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -596,7 +625,7 @@
                     </table>
 
                     <a id="tabla-pruebas" class="ancla-centro"></a>
-                    <h4>3.3.2. Tabla: pruebas</h4>
+                    <h4>3.4.4. Tabla: pruebas</h4>
                     <p>Catálogo maestro de las disciplinas generales de atletismo.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -608,7 +637,7 @@
                     </table>
 
                     <a id="tabla-variantes" class="ancla-centro"></a>
-                    <h4>3.3.3. Tabla: pruebas_variantes</h4>
+                    <h4>3.4.5. Tabla: pruebas_variantes</h4>
                     <p>Tabla de detalle que resuelve la relación N:M entre Pruebas y Categorías, añadiendo especificaciones técnicas.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -622,7 +651,7 @@
                     </table>
 
                     <a id="tabla-usuarios" class="ancla-centro"></a>
-                    <h4>3.3.4. Tabla: usuarios</h4>
+                    <h4>3.4.6. Tabla: usuarios</h4>
                     <p>Almacena las credenciales de acceso y datos personales, perfilando al atleta.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -641,7 +670,7 @@
                     </table>
 
                     <a id="tabla-fichas" class="ancla-centro"></a>
-                    <h4>3.3.5. Tabla: fichas_inscripcion</h4>
+                    <h4>3.4.7. Tabla: fichas_inscripcion</h4>
                     <p>Almacena los documentos. Relación 1:1 con la tabla usuarios.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -655,7 +684,7 @@
                     </table>
 
                     <a id="tabla-feedback" class="ancla-centro"></a>
-                    <h4>3.3.6. Tabla: feedback_entrenamientos</h4>
+                    <h4>3.4.8. Tabla: feedback_entrenamientos</h4>
                     <p>Registra las sensaciones diarias. Relación 1:N con la tabla usuarios y pruebas_variantes.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
@@ -671,11 +700,11 @@
             </div>
 
             <div id="diseno-interfaz" class="ancla-top sangria-1">
-                <h3>3.4. Diseño de Interfaz (UI/UX)</h3>
-                <p>El diseño de la interfaz se ha planteado bajo el paradigma <strong>Mobile First</strong>, garantizando que la aplicación web sea plenamente funcional y accesible desde dispositivos móviles, dado que los atletas y entrenadores la utilizarán frecuentemente a pie de pista durante los entrenamientos.</p>
+                <h3>3.5. Diseño de Interfaz (UI/UX)</h3>
+                <p>En esta fase se define la experiencia de usuario centrada exclusivamente en la <strong>Página Principal (Landing/Home)</strong>, siguiendo un proceso de diseño iterativo que evoluciona desde la estructura básica hasta el aspecto visual corporativo final.</p>
                 
                 <div class="sangria-2">
-                    <h4>3.4.1. Paleta de Colores</h4>
+                    <h4>3.5.1. Paleta de Colores</h4>
                     <p>Se definirá una paleta cromática basada en la identidad corporativa del Club de Atletismo Ianuarius, priorizando el contraste y la legibilidad para entornos con mucha luz (exteriores):</p>
                     <ul>
                         <li><p><strong>- Color Principal (Identidad Club):</strong> Rojo Ianuarius (#E63946) - Se reserva para los botones de acción principal (como enviar inscripciones), enlaces destacados y elementos de marca.</p></li>
@@ -683,11 +712,31 @@
                         <li><p><strong>- Colores de Estado:</strong> Verde (#2A9D8F) para alertas de éxito (feedback guardado, PDF generado) y Naranja (#F4A261) para advertencias o campos incompletos.</p></li>
                     </ul>
 
-                    <h4>3.4.2. Tipografía</h4>
+                    <h4>3.5.2. Tipografía</h4>
                     <p>Se emplea la familia tipográfica <strong>Inter</strong>, nativa en entornos web modernos e incluida a través de Tailwind CSS. Destaca por su legibilidad en pantallas pequeñas y su aspecto limpio y profesional, ideal para la lectura densa de tablas de marcas deportivas y listados de atletas.</p>
 
-                    <h4>3.4.3. Prototipado y Experiencia de Usuario (UX)</h4>
-                    <p>El diseño de las vistas principales (Wireframes) se plantea utilizando la herramienta <strong>Figma</strong>, con el objetivo de estructurar visualmente la interfaz y definir los flujos de navegación de cara a la codificación final de los componentes. Esta conceptualización se centra especialmente en procesos críticos como la inscripción o la subida documental, buscando reducir la fricción cognitiva mediante formularios guiados paso a paso y asegurando que la plataforma resulte intuitiva tanto para jóvenes atletas como para sus tutores legales.</p>
+                    <h4>3.5.3. Prototipado y Experiencia de Usuario (UX)</h4>
+                    <p>El diseño se ha planteado utilizando la herramienta Figma, partiendo de un esquema estructural (Wireframe) hasta alcanzar el diseño final de alta fidelidad (Mockup) para la página principal:</p>
+                    
+                    <a id="figura10-wireframe"></a>
+                    <figure class="figura-logo mt-6">
+                        <img src="img/viewWireframeHome.png" class="img-diagrama img-zoomable" alt="Wireframe estructural Home">
+                        <figcaption class="pie-foto">Figura 10. Wireframe estructural de la página “Home”.</figcaption>
+                    </figure>
+
+                    <a id="figura11-mockup"></a>
+                    <figure class="figura-logo mt-6">
+                        <img src="img/viewMockupHome.png" class="img-diagrama img-zoomable" alt="Mockup final Home">
+                        <figcaption class="pie-foto">Figura 11. Mockup final aplicando la paleta de colores y tipografía definida.</figcaption>
+                    </figure>
+
+                    <h4>3.5.4. Justificación de decisiones de diseño (UX)</h4>
+                    <p>Las decisiones aplicadas a la página principal buscan reducir la fricción cognitiva y asegurar que la plataforma resulte intuitiva:</p>
+                    <ul>
+                        <li><p><strong>- Jerarquía Visual:</strong> El diseño emplea el "Rojo Ianuarius" estratégicamente en el botón principal (CTA) del área Hero para guiar inmediatamente al usuario hacia la acción principal (inscripción/acceso).</p></li>
+                        <li><p><strong>- Flujo de Lectura:</strong> La estructura respeta el patrón "Z", facilitando la localización rápida del logo, la navegación y el contenido clave.</p></li>
+                        <li><p><strong>- Accesibilidad:</strong> Los fondos neutros (#F8F9FA) aseguran que el texto oscuro (#212529) cumpla con los estándares de contraste, mientras que el espaciado generoso ayuda a estructurar visualmente la interfaz de cara a su codificación final en componentes.</p></li>
+                    </ul>
                 </div>
             </div>
 
@@ -709,10 +758,10 @@
                 <h3>4.2. Planificación Temporal (Gantt)</h3>
                 <p>El desarrollo se ha planificado en un bloque temporal de 15 semanas. Se ha optado por solapar parcialmente las fases de Backend y Frontend para optimizar el tiempo de integración, marcando hitos críticos como la finalización de la BBDD y la generación del primer PDF oficial.</p>
                 
-                <a id="figura8-gantt"></a>
+                <a id="figura12-gantt"></a>
                 <figure class="figura-logo">
                     <img src="img/ganttDiagram.png" class="img-diagrama img-zoomable" alt="Diagrama de Gantt">
-                    <figcaption class="pie-foto">Figura 8. Diagrama de Gantt con la previsión del proyecto e hitos clave.</figcaption>
+                    <figcaption class="pie-foto">Figura 12. Diagrama de Gantt con la previsión del proyecto.</figcaption>
                 </figure>
 
                 <a id="tabla-gantt" class="ancla-centro"></a>
