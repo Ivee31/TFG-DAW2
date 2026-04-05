@@ -53,8 +53,12 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 - [Figura 4. Interfaz de gestión de Playoff Informática](#figura4-playoff1)
 - [Figura 5. Funcionalidades de Playoff Informática](#figura5-playoff2)
 - [Figura 6. Diagrama de Casos de Uso del Sistema](#figura6-uml)
-- [Figura 7. Diagrama Entidad-Relación de la DB](#figura7-db)
-- [Figura 8. Diagrama de Gantt con la previsión del proyecto](#figura8-gantt)
+- [Figura 7. Diagrama UML](#figura7-clases)
+- [Figura 8. Diagrama Entidad-Relación de la DB](#figura8-er)
+- [Figura 9. Modelo Relacional de la DB](#figura9-relacional)
+- [Figura 10. Wireframe estructural de la página "Home"](#figura10-wireframe)
+- [Figura 11. Mockup final aplicando la paleta de colores](#figura11-mockup)
+- [Figura 12. Diagrama de Gantt con la previsión del proyecto](#figura12-gantt)
 
 <br><br>
 
@@ -320,16 +324,33 @@ Modelo Cliente-Servidor. El Frontend (React) captura acciones y realiza peticion
 
 <br><br>
 
-## 3.3. Diseño de Datos
+<a name="figura7-clases"></a>
+## 3.3. Diagrama de Clases (UML)
+<p align="center">
+  <img src="img/modeloUML.png" alt="Diagrama de Clases UML" width="800">
+  <br><em>Figura 7. Diagrama UML</em>
+</p>
+
+<br><br>
+
+## 3.4. Diseño de Datos
 
 Para gestionar las especialidades del atletismo se ha implementado una tabla intermedia de variantes.
 
 <br>
 
-<a name="figura7-db"></a>
+<a name="figura8-er"></a>
 <p align="center">
   <img src="img/entidadRelacionIanuarius-transparente.png" alt="Diagrama Entidad-Relación" width="800">
-  <br><em>Figura 7. Diagrama de Entidad-Relación de la DB</em>
+  <br><em>Figura 8. Diagrama de Entidad-Relación de la DB</em>
+</p>
+
+<br>
+
+<a name="figura9-relacional"></a>
+<p align="center">
+  <img src="img/modeloRelacional.png" alt="Modelo Relacional" width="800">
+  <br><em>Figura 9. Modelo Relacional de la DB</em>
 </p>
 
 <br>
@@ -404,8 +425,20 @@ Para gestionar las especialidades del atletismo se ha implementado una tabla int
 
 <br><br>
 
-## 3.4. Diseño de Interfaz (UI/UX)
-Diseño **Mobile First** usando Tailwind CSS. Paleta corporativa (Rojo Ianuarius) y tipografía **Inter**. Prototipado previo en **Figma** para validar flujos de navegación.
+## 3.5. Diseño de Interfaz (UI/UX)
+Diseño **Mobile First** usando Tailwind CSS. Paleta corporativa (Rojo Ianuarius) y tipografía **Inter** (junto con la fuente deportiva *Graduate*). Prototipado previo en **Figma** para validar flujos de navegación.
+
+<a name="figura10-wireframe"></a>
+<p align="center">
+  <img src="img/viewWireframeHome.png" alt="Wireframe estructural" width="800">
+  <br><em>Figura 10. Wireframe estructural de la página "Home"</em>
+</p>
+
+<a name="figura11-mockup"></a>
+<p align="center">
+  <img src="img/viewMockupHome.png" alt="Mockup final" width="800">
+  <br><em>Figura 11. Mockup final aplicando la paleta de colores y tipografía definida</em>
+</p>
 
 ---
 <br><br><br>
@@ -423,10 +456,10 @@ Se ha optado por una **Metodología Ágil basada en un modelo Scrum adaptado**. 
 
 <br>
 
-<a name="figura8-gantt"></a>
+<a name="figura12-gantt"></a>
 <p align="center">
   <img src="img/ganttDiagram.png" alt="Diagrama de Gantt" width="800">
-  <br><em>Figura 8. Diagrama de Gantt con la previsión del proyecto e hitos clave.</em>
+  <br><em>Figura 12. Diagrama de Gantt con la previsión del proyecto e hitos clave.</em>
 </p>
 
 <br>
