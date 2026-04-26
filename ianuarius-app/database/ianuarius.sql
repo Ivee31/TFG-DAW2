@@ -103,8 +103,8 @@ INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable, especi
 
 -- Insertar usuarios de prueba (Contraseñas sin cifrar por ahora para que puedas probar el login más fácil en desarrollo)
 INSERT INTO usuarios (id_categoria, nombre, apellidos, dni, email, password_hash, rol, fecha_nacimiento, genero, estado_cuenta) VALUES 
-(NULL, 'Serafina', 'Admin', '00000000A', 'admin@ianuarius.com', 'admin123', 'Admin', '1980-01-01', 'F', TRUE),
-(3, 'Iván', 'Martín Nieto', '12345678B', 'ivan@ianuarius.com', 'atleta123', 'Atleta', '2004-04-15', 'M', TRUE);
+(NULL, 'Ivan', 'Admin', '00000000A', 'admin@ianuarius.com', 'admin123', 'Admin', '2004-10-31', 'M', TRUE),
+(3, 'Iván', 'Martín Nieto', '70910314A', 'ivan@ianuarius.com', 'atleta123', 'Atleta', '2004-04-15', 'M', TRUE);
 
 -- Insertar una inscripción de prueba
 INSERT INTO fichas_inscripcion (id_usuario, temporada, estado_validacion, estado_pago) VALUES

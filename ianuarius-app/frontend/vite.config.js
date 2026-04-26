@@ -7,7 +7,8 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/api': {
-				target: 'http://localhost/diurno/TFG-DAW2/ianuarius-app/backend/api/test.php',
+				target: 'http://localhost:8080/ianuarius-app/backend',
+				changeOrigin: true,
 			}
 		}
 	}
