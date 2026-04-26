@@ -7,9 +7,9 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/api': {
-				target: 'http://localhost:8080/ianuarius-app/backend',
+				target: 'http://localhost:8080/ianuarius-app/backend/api',
 				changeOrigin: true,
-				rewrite: (path) => path.replace(/^\/api/, 'api')
+				rewrite: (path) => path.replace(/^\/api/, '')
 			}
 		}
 	}
