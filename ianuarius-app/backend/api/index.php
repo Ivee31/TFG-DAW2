@@ -3,10 +3,14 @@
 require_once '../autoload.php';
 
 // CABECERAS CORS PARA PRODUCCION
-$origen_permitido = "https://tu-proyecto.vercel.app";
+$origenes_permitidos = [
+    "https://tfg-daw-2.vercel.app",
+    "https://tfg-daw-2-abiiq44z0-ivee31s-projects.vercel.app",
+    "http://localhost:5173"
+];
 $origen_peticion = $_SERVER['HTTP_ORIGIN'] ?? '';
 
-if ($origen_peticion === $origen_permitido || $origen_peticion === "http://localhost:5173") {
+if (in_array($origen_peticion, $origenes_permitidos)) {
     header("Access-Control-Allow-Origin: $origen_peticion");
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
