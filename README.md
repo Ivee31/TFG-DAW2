@@ -20,7 +20,7 @@
 </p>
 
 ---
-<br><br>
+<br>
 
 ## Licencia
 Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. Para ver una copia de la licencia, visite [Creative Commons](http://creativecommons.org/licenses/by-sa/3.0/es/) o envíe una carta a Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
@@ -38,10 +38,10 @@ Este apartado detalla los pasos tecnicos necesarios para poner en marcha la plat
 ### 1.1 Requisitos Previos
 
 // software necesario para ejecucion
-* **Servidor Web:** XAMPP o WAMP (Apache, PHP 8.x, MySQL).
+* **Virtualizador:** Docker desktop instalado.
 * **Entorno JS:** Node.js (v18+) y gestor npm.
 * **Control Versiones:** Git instalado.
-* **Virtualizador:** Docker desktop instalado.
+
 
 
 ### 1.2 Configuracion de la Base de Datos
