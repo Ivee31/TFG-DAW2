@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* fuente graduate local - sin necesidad de google fonts */
+@font-face {
+    font-family: 'Graduate';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./assets/fonts/Graduate-Regular.woff2') format('woff2');
+}
+
+@theme {
+    --color-ianuarius: #FE0000;
+    --color-oscuro: #171717;
+    --color-gris: #262626;
+    --font-sans: "Inter", sans-serif;
+    --font-graduate: "Graduate", serif;
+}
