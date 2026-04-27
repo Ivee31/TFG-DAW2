@@ -1,4 +1,0 @@
-Fichero: /var/www/html/config/Connect.php
-Línea: 8
-Mensaje: SQLSTATE[HY000] [1049] Unknown database 'ianuarius_db'
-------------------------

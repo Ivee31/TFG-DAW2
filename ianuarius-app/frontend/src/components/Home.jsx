@@ -1,11 +1,9 @@
-/**
- * vista Home
- */
+// vista Home
 import { useState } from "react";
 import Login from './Login';
 import logoIanuarius from '../assets/logoIanuarius.png';
 
-export default function Home() {
+export default function Home({onLoginSuccess}) {
     const [showLogin, setShowLogin] = useState(false);
 
     return (
@@ -32,7 +30,7 @@ export default function Home() {
                     {/*Mostrar form login*/}
                     {showLogin && (
                         <div className="absolute left-0 top-full mt-4 w-72 md:w-80 z-50 origin-top-left">
-                            <Login></Login>
+                            <Login onLoginSuccess={onLoginSuccess} />
                         </div>
                     )}
 
@@ -97,6 +95,8 @@ export default function Home() {
                     </a>
                 </div>
             </section>
+            
+
         </div>
     );
 }

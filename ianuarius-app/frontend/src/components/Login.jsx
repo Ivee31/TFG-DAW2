@@ -1,18 +1,14 @@
 import { useState } from 'react';
 
-/**
- * componente para el formulario de acceso
- */
-export default function Login() {
+// componente para form de acceso
+export default function Login({onLoginSuccess}) {
     // memoria campos
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [loading, setLoading] = useState(false);
 
-    /**
-     * enviar datos al backend
-     */
+    // enviar datos al backend
     const handleLogin = (e) => {
         e.preventDefault();
         setErrorMsg('');
@@ -27,8 +23,12 @@ export default function Login() {
         })
         .then(response => response.json())
         .then(data => {
+            setLoading(false);
+            
             if (data.status === 'success') {
-                alert(`Bienvenido, ${data.user.nombre}`);
+                // envio datos a App.jsx
+                onLoginSuccess(data.user);
+
             } else {
                 setErrorMsg(data.error);
             }
