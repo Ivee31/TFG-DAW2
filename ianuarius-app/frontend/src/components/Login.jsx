@@ -4,13 +4,13 @@ import { useState } from 'react';
  * componente para el formulario de acceso
  */
 export default function Login() {
-    // memoria de campos
+    // memoria campos
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
     /**
-     * envia datos al backend
+     * enviar datos al backend
      */
     const handleLogin = (e) => {
         e.preventDefault();
@@ -51,32 +51,27 @@ export default function Login() {
             <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                     <label className="block text-gray-400 mb-1 text-xs">Email</label>
-                    <input
-                        type="email"
-                        className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm"
-                        placeholder="atleta@ianuarius.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+                    <input type="email"
+                           className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm"
+                           placeholder="atleta@ianuarius.com"
+                           value={email}
+                           onChange={(e) => setEmail(e.target.value)}
+                           required />
                 </div>
 
                 <div>
                     <label className="block text-gray-400 mb-1 text-xs">Password</label>
-                    <input
-                        type="password"
-                        className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm"
-                        placeholder="••••••••"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                    <input type="password"
+                           className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm"
+                           placeholder="••••••••"
+                           value={password}
+                           onChange={(e) => setPassword(e.target.value)}
+                           required />
                 </div>
 
                 <button
                     type="submit"
-                    className="w-full bg-ianuarius text-white font-bold py-2 rounded hover:bg-red-700 transition duration-300 text-sm"
-                >
+                    className="w-full bg-ianuarius text-white font-bold py-2 rounded hover:bg-red-700 transition duration-300 text-sm">
                     ENTRAR
                 </button>
             </form>

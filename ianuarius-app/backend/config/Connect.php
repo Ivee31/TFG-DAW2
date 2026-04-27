@@ -6,13 +6,13 @@ class Connect {
 
         try {
             $connection = new PDO(
-                'mysql:host=' . Config::HOST .
-                ';dbname=' . Config::DATABASE . 
-                ';port=' . Config::PORT . 
+                'mysql:host=' . Config::get('DB_HOST') .
+                ';dbname=' . Config::get('DB_NAME') . 
+                ';port=' . Config::get('DB_PORT') . 
                 ';charset=' . Config::CHARSET,
 
-                Config::USERNAME,
-                Config::PASSWORD
+                Config::get('DB_USER'),
+                Config::get('DB_PASS')
             );
 
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

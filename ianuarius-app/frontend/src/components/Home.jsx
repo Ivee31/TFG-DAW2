@@ -7,11 +7,11 @@ import logoIanuarius from '../assets/logoIanuarius.png';
 
 export default function Home() {
     const [showLogin, setShowLogin] = useState(false);
-    
+
     return (
         <div className="bg-oscuro text-gray-200 font-sans antialiased overflow-x-hidden">
-            <style>{`
-                .bg-hero {
+            <style>{
+                `.bg-hero {
                     background: linear-gradient(to bottom, rgba(23, 23, 23, 0.7), rgba(23, 23, 23, 1)), url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center;
                     background-size: cover;
                 }
@@ -20,14 +20,22 @@ export default function Home() {
                     font-family: 'Graduate', sans-serif;
                     color: transparent; 
                     -webkit-text-stroke: 3px #FFFFFF; 
-                }
-            `}</style>
+                }`
+            }</style>
 
             <nav className="absolute top-0 w-full z-50 px-4 md:px-8 py-5 flex justify-between items-center text-[10px] md:text-xs tracking-widest uppercase">
-                <div className="flex items-center gap-5">
-                    <button className="bg-ianuarius text-white font-bold px-5 py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300 flex items-center gap-2">
-                        Inscribirse <span className="text-base leading-none">&rarr;</span>
+                {/* nav Izq. */}
+                <div className="flex items-center gap-5 relative">
+                    <button onClick={() => setShowLogin(!showLogin)} className="bg-ianuarius text-white font-bold px-5 py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300 flex items-center gap-2">
+                        LogIn/ Registrarse <span className="text-base leading-none">&rarr;</span>
                     </button>
+                    {/*Mostrar form login*/}
+                    {showLogin && (
+                        <div className="absolute left-0 top-full mt-4 w-72 md:w-80 z-50 origin-top-left">
+                            <Login></Login>
+                        </div>
+                    )}
+
                     <div className="hidden lg:flex gap-4 text-white/60">
                         <a href="#" className="hover:text-ianuarius transition">IG</a>
                         <a href="#" className="hover:text-ianuarius transition">FB</a>
@@ -84,7 +92,7 @@ export default function Home() {
                         <span className="text-white font-medium border-b border-ianuarius pb-1">Ianuarius</span> es la respuesta a este desafío. Desplegamos la pista de tartán para todos aquellos que contribuyen a hacer posible un deporte más fuerte y competitivo en el futuro.
                     </p>
                     <a href="#" className="text-white hover:text-ianuarius text-sm font-semibold tracking-wide flex items-center gap-2 mt-2 transition w-fit group">
-                        Descubre más sobre el club 
+                        Descubre más sobre el club
                         <span className="text-ianuarius text-xl transform group-hover:translate-x-2 transition">&rarr;</span>
                     </a>
                 </div>

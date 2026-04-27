@@ -2,7 +2,7 @@
 RewriteEngine On
 
 # definimos ruta base desde raiz de localhost
-RewriteBase /ianuarius-app/backend/api/
+RewriteBase /api/
 
 # reglas exclusion: 
 # para si usuario pide archivo que existe realmente, no haga nada
