@@ -2,6 +2,23 @@
 
 require_once '../autoload.php';
 
+// CABECERAS CORS PARA PRODUCCION
+$origen_permitido = "https://tu-proyecto.vercel.app";
+$origen_peticion = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+if ($origen_peticion === $origen_permitido || $origen_peticion === "http://localhost:5173") {
+    header("Access-Control-Allow-Origin: $origen_peticion");
+    header("Access-Control-Allow-Credentials: true");
+    header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+}
+
+// gestion de peticion preflight
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['PATH_INFO'] ?? '/';
 $path = trim($path, '/');

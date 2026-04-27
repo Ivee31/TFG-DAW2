@@ -33,7 +33,7 @@ export default function Dashboard() {
 
     const cargarMarcas = () => {
         setCargando(true);
-        fetch('/api/marcas', { credentials: 'include' })
+        fetch('https://ianuarius-back.infinityfreeapp.com/api/marcas', { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') {
@@ -66,7 +66,7 @@ export default function Dashboard() {
         setFormatoError(false);
         setGuardando(true);
 
-        fetch('/api/marcas', {
+        fetch('https://ianuarius-back.infinityfreeapp.com/api/marcas', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({
@@ -95,7 +95,7 @@ export default function Dashboard() {
 
     const handleEliminarMarca = (id_marca) => {
         setEliminando(true);
-        fetch(`/api/marcas/${id_marca}`, { method: 'DELETE', credentials: 'include' })
+        fetch(`https://ianuarius-back.infinityfreeapp.com/api/marcas/${id_marca}`, { method: 'DELETE', credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 setEliminando(false);

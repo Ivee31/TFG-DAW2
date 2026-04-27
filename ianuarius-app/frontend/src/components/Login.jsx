@@ -14,7 +14,7 @@ export default function Login({onLoginSuccess}) {
         setErrorMsg('');
         setLoading(true);
 
-        fetch('/api/login', {
+        fetch('https://ianuarius-back.infinityfreeapp.com/api/login', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({
