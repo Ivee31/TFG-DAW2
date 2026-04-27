@@ -16,6 +16,7 @@ export default function Login({onLoginSuccess}) {
 
         fetch('/api/login', {
             method: 'POST',
+            credentials: 'include',
             body: JSON.stringify({
                 email: email,
                 password: password

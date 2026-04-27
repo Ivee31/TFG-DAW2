@@ -3,7 +3,16 @@
 class AuthController {
 
     public static function login() {
-        header('Content-Type: application/json');
+        // configurar cookie de sesion antes de iniciarla
+        session_set_cookie_params([
+            'lifetime' => 86400,
+            'path'     => '/',
+            'domain'   => '',
+            'secure'   => false,
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ]);
+        session_start();
         
         // obtenemos el contenido del json
         $input = json_decode(file_get_contents('php://input'), true);
@@ -26,19 +35,19 @@ class AuthController {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user) {
-                // contraseñas sin cifrar temporalmente
-                // si se usa password_hash() (cuando acabe las pruebas), cambiar if a:
-                // if (password_verify($password, $user['password_hash'])) {
-                if ($password === $user['password_hash']) {
+                if (password_verify($password, $user['password_hash'])) {
                     
-                    // contraseña correcta = quitamos hash de los datos a enviar
+                    // guardar datos clave en sesion
+                    $_SESSION['id_usuario'] = $user['id_usuario'];
+                    $_SESSION['rol']        = $user['rol'];
+
+                    // quitamos hash de los datos publicos a enviar
                     unset($user['password_hash']);
 
-                    // respuesta con exito
                     http_response_code(200);
                     echo json_encode([
                         "status" => "success",
-                        "user" => $user
+                        "user"   => $user
                     ]);
                     return;
                 }
@@ -51,6 +60,49 @@ class AuthController {
         } catch (PDOException $e) {
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno del servidor"]);
+        }
+    }
+
+    // destruye la sesion del servidor
+    public static function logout() {
+        session_start();
+        session_destroy();
+
+        http_response_code(200);
+        echo json_encode(["status" => "success", "message" => "Sesion cerrada"]);
+    }
+
+    // comprueba si hay sesion activa y devuelve datos del usuario
+    public static function sesion() {
+        session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare(
+                "SELECT id_usuario, nombre, apellidos, email, rol FROM usuarios WHERE id_usuario = :id"
+            );
+            $stmt->bindParam(':id', $_SESSION['id_usuario'], PDO::PARAM_INT);
+            $stmt->execute();
+
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user) {
+                http_response_code(200);
+                echo json_encode(["status" => "success", "user" => $user]);
+            } else {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "error" => "Usuario no encontrado"]);
+            }
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
     }
 }

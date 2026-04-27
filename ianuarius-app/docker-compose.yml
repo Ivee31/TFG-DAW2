@@ -1,5 +1,4 @@
 # archivo de composicion docker
-version: '3.8'
 
 services:
     # servicio web apache php

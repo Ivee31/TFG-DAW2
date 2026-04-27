@@ -1,43 +1,170 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+
+// tiempo de inactividad antes de mostrar el aviso (15 min)
+const INACTIVIDAD_MS  =  15 * 60 * 1000;
+// cuenta atras al aparecer el aviso (2 min)
+const COUNTDOWN_SEGS  = 2 * 60;
 
 // plantilla principal para vistas autenticadas
-export default function Layout({ children, user }) {
+export default function Layout({ children, user, onLogout }) {
     // control estados menu lateral
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isPinned, setIsPinned] = useState(false);
+    const [isPinned, setIsPinned]     = useState(false);
     const menuRef = useRef(null);
-    const btnRef = useRef(null);
+    const btnRef  = useRef(null);
+
+    // estados banner de inactividad
+    const [mostrarAviso, setMostrarAviso] = useState(false);
+    const [countdown, setCountdown]       = useState(COUNTDOWN_SEGS);
+    const inactividadTimer  = useRef(null);
+    const countdownTimer    = useRef(null);
+    const onLogoutRef       = useRef(onLogout);
+    // ref para que los event listeners no tengan stale closure de mostrarAviso
+    const mostrarAvisoRef   = useRef(false);
+
+    // mantener refs actualizadas
+    useEffect(() => { onLogoutRef.current = onLogout; }, [onLogout]);
+    useEffect(() => { mostrarAvisoRef.current = mostrarAviso; }, [mostrarAviso]);
+
+    // llama al backend para destruir la sesion y limpia el estado de React
+    const handleLogout = useCallback(() => {
+        clearTimeout(inactividadTimer.current);
+        clearInterval(countdownTimer.current);
+        fetch('/api/logout', { method: 'POST', credentials: 'include' })
+        .finally(() => onLogoutRef.current());
+
+    }, []);
+
+    // inicia el countdown cuando aparece el aviso
+    const iniciarCountdown = useCallback(() => {
+        setMostrarAviso(true);
+        setCountdown(COUNTDOWN_SEGS);
+        let segs = COUNTDOWN_SEGS;
+        clearInterval(countdownTimer.current);
+
+        countdownTimer.current = setInterval(() => {
+            segs -= 1;
+            setCountdown(segs);
+            if (segs <= 0) {
+                clearInterval(countdownTimer.current);
+                handleLogout();
+            }
+
+        }, 1000);
+        
+    }, [handleLogout]);
+
+    // reinicia el timer de inactividad tras cualquier interaccion del DOM
+    // IMPORTANTE: si banner visible, ignora — solo continuarSesion() puede cerrarlo
+    const resetInactividad = useCallback(() => {
+        if (mostrarAvisoRef.current) return;
+        clearTimeout(inactividadTimer.current);
+        clearInterval(countdownTimer.current);
+        setMostrarAviso(false);
+        setCountdown(COUNTDOWN_SEGS);
+        inactividadTimer.current = setTimeout(iniciarCountdown, INACTIVIDAD_MS);
+
+    }, [iniciarCountdown]);
+
+    // llamado SOLO por el boton del banner — sin guard
+    const continuarSesion = useCallback(() => {
+        clearTimeout(inactividadTimer.current);
+        clearInterval(countdownTimer.current);
+        setMostrarAviso(false);
+        setCountdown(COUNTDOWN_SEGS);
+        inactividadTimer.current = setTimeout(iniciarCountdown, INACTIVIDAD_MS);
+
+    }, [iniciarCountdown]);
+
+    // registrar eventos de actividad del usuario
+    useEffect(() => {
+        const eventos = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+        eventos.forEach(e => document.addEventListener(e, resetInactividad));
+        resetInactividad(); // arrancar timer inicial
+
+        return () => {
+            eventos.forEach(e => document.removeEventListener(e, resetInactividad));
+            clearTimeout(inactividadTimer.current);
+            clearInterval(countdownTimer.current);
+        };
+
+    }, [resetInactividad]);
+
+    // formato MM:SS del countdown
+    const formatCountdown = (segs) => {
+        const m = String(Math.floor(segs / 60)).padStart(2, '0');
+        const s = String(segs % 60).padStart(2, '0');
+        return `${m}:${s}`;
+    };
 
     // maneja click fuera de menu para cerrarlo
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (isMenuOpen && 
-                !isPinned && 
-                menuRef.current && 
+            if (isMenuOpen &&
+                !isPinned &&
+                menuRef.current &&
                 !menuRef.current.contains(event.target) &&
                 btnRef.current &&
                 !btnRef.current.contains(event.target)) {
                 setIsMenuOpen(false);
             }
         };
-
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isMenuOpen, isPinned]);
 
     return (
         <div className="bg-oscuro font-sans antialiased text-gray-200 flex flex-col min-h-screen overflow-x-hidden">
-            
+
+            {/* overlay bloqueador — impide interactuar con la pagina mientras el banner esta visible */}
+            {mostrarAviso && (
+                <div className="fixed inset-0 z-199 bg-oscuro/60 backdrop-blur-[2px]" />
+            )}
+
+            {/* banner inactividad */}
+            <div className={`fixed top-0 left-0 right-0 z-200 transition-transform duration-500 ease-out ${mostrarAviso ? 'translate-y-0' : '-translate-y-full'}`}>
+                <div className="bg-gris border-b-2 border-ianuarius shadow-[0_4px_30px_rgba(254,0,0,0.3)] px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        {/* icono reloj */}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-ianuarius shrink-0">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+
+                        <div>
+                            <p className="text-white text-sm font-bold">¿Sigues ahí?</p>
+                            <p className="text-gray-400 text-xs">La sesion se cerrara automaticamente en
+                                <span className="text-ianuarius font-mono font-bold ml-1">{formatCountdown(countdown)}</span>
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div className="flex gap-3 shrink-0">
+                        <button onClick={continuarSesion}
+                                className="px-5 py-2 text-[10px] font-black uppercase tracking-widest bg-white text-oscuro rounded hover:bg-ianuarius hover:text-white transition duration-300" >
+                            Continuar sesion
+
+                        </button>
+
+                        <button onClick={handleLogout}
+                                className="px-5 py-2 text-[10px] font-black uppercase tracking-widest border border-ianuarius text-ianuarius rounded hover:bg-ianuarius hover:text-white transition duration-300" >
+                            Cerrar sesion
+
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
             {/* menu lateral */}
-            <aside 
+            <aside
                 ref={menuRef}
                 className={`fixed right-0 top-0 h-full w-64 bg-gris border-l border-white/10 transform transition-transform duration-300 z-50 p-6 flex flex-col shadow-2xl ${isMenuOpen || isPinned ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className="flex justify-between items-center mb-10 border-b border-white/10 pb-4">
                     <h3 className="font-bold tracking-widest uppercase text-sm">Navegacion</h3>
                     <div className="flex gap-3 items-center">
-                        <button 
-                            onClick={() => setIsPinned(!isPinned)} 
-                            className={`hidden lg:block transition ${isPinned ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
+                        <button onClick={() => setIsPinned(!isPinned)}
+                                className={`hidden lg:block transition ${isPinned ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h-6m3 12v6m-2.5-6h5l1.5-3v-2l-1.5-1V3h-5v6l-1.5 1v2l1.5 3z" />
                             </svg>
@@ -47,42 +174,43 @@ export default function Layout({ children, user }) {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
-
                         </button>
 
                     </div>
                 </div>
-                
-                <nav className="space-y-6 flex-grow">
+
+                <nav className="space-y-6 grow">
                     <a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-ianuarius font-bold hover:translate-x-2 transition transform">Dashboard</a>
                     <a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Mi Perfil</a>
                     <a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Historico</a>
                     <a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Estadisticas</a>
                 
                 </nav>
-
             </aside>
 
             {/* wrapper dinamico contenido */}
-            <div className={`flex-grow p-4 md:p-10 max-w-7xl mx-auto w-full transition-all duration-300 ${isPinned ? 'lg:pr-64' : ''}`}>
-                
+            <div className={`grow p-4 md:p-10 max-w-7xl mx-auto w-full transition-all duration-300 ${isPinned ? 'lg:pr-64' : ''}`}>
+
                 <header className="mb-8 md:mb-12 border-b-2 border-ianuarius pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                     <div className="space-y-2">
-                        <h1 
-                            className="text-4xl md:text-6xl font-black tracking-tighter uppercase font-collegiate" 
+                        <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase"
                             style={{ color: 'transparent', WebkitTextStroke: '1px #FFFFFF', fontFamily: "'Graduate', sans-serif" }}>
                             Panel de Atleta
+
                         </h1>
+
                         <div className="flex items-center gap-3">
                             <span className="w-3 h-3 bg-ianuarius rounded-full animate-pulse"></span>
                             <p className="text-ianuarius font-black tracking-[0.4em] text-xs md:text-sm uppercase">
                                 Sesion activa: {user?.nombre || 'Atleta Ianuarius'}
                             </p>
+
                         </div>
+
                     </div>
-                    
+
                     <div className="flex gap-3 md:gap-4 items-center w-full md:w-auto justify-end">
-                        <button className="bg-ianuarius px-4 py-3 md:px-4 md:py-2 rounded text-xs md:text-[10px] font-bold tracking-widest uppercase hover:bg-red-700 transition duration-300">
+                        <button onClick={handleLogout} className="bg-ianuarius px-4 py-3 md:px-4 md:py-2 rounded text-xs md:text-[10px] font-bold tracking-widest uppercase hover:bg-red-700 transition duration-300">
                             Cerrar Sesion
                         </button>
 
@@ -95,17 +223,14 @@ export default function Layout({ children, user }) {
 
                         </button>
 
-                        <button 
-                            ref={btnRef} 
-                            onClick={() => setIsMenuOpen(!isMenuOpen)} 
-                            className="text-white hover:text-ianuarius transition p-2 ml-1">
-
+                        <button ref={btnRef}
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                className="text-white hover:text-ianuarius transition p-2 ml-1">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-7 h-7 md:w-6 md:h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                             </svg>
 
                         </button>
-
                     </div>
                 </header>
 
@@ -123,8 +248,8 @@ export default function Layout({ children, user }) {
                     </p>
 
                 </div>
-
             </footer>
+
         </div>
     );
 }

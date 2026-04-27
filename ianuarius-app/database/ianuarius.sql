@@ -109,3 +109,16 @@ INSERT INTO usuarios (id_categoria, nombre, apellidos, dni, email, password_hash
 -- Insertar una inscripción de prueba
 INSERT INTO fichas_inscripcion (id_usuario, temporada, estado_validacion, estado_pago) VALUES
 (2, '2025/2026', 'validado', 'pagado');
+
+-- 8. Tabla marcas (tiempos registrados por los atletas)
+-- formato marca: MM'SS''ms  (ej: 00'49''15)
+CREATE TABLE IF NOT EXISTS marcas (
+    id_marca         INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario       INT NOT NULL,
+    prueba           VARCHAR(50) NOT NULL,
+    temporada        ENUM('short_track', 'outdoor') NOT NULL,
+    tipo_competicion ENUM('Nacional','Autonomico CyL','Provincial','Escolar','Control') NOT NULL DEFAULT 'Control',
+    marca            VARCHAR(20) NOT NULL,
+    fecha            DATE NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+);

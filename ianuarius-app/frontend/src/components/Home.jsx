@@ -52,15 +52,15 @@ export default function Home({onLoginSuccess}) {
                     <button className="flex items-center gap-2.5 text-white hover:text-ianuarius transition group">
                         MENU
                         <div className="space-y-1">
-                            <span className="block w-5 h-[1px] bg-white group-hover:bg-ianuarius transition"></span>
-                            <span className="block w-5 h-[1px] bg-white group-hover:bg-ianuarius transition"></span>
+                            <span className="block w-5 h-px bg-white group-hover:bg-ianuarius transition"></span>
+                            <span className="block w-5 h-px bg-white group-hover:bg-ianuarius transition"></span>
                         </div>
                     </button>
                 </div>
             </nav>
 
             <section className="h-[85vh] w-full bg-hero flex flex-col justify-center items-center relative">
-                <h1 className="titulo-collegiate text-5xl md:text-7xl lg:text-[8rem] tracking-[0.1em] md:tracking-[0.15em] z-10 select-none ml-4 md:ml-12 drop-shadow-[0_0_30px_rgba(254,0,0,0.2)]">
+                <h1 className="titulo-collegiate text-5xl md:text-7xl lg:text-[8rem] tracking-widest md:tracking-[0.15em] z-10 select-none ml-4 md:ml-12 drop-shadow-[0_0_30px_rgba(254,0,0,0.2)]">
                     IANUARIUS
                 </h1>
                 <p className="text-xs md:text-lg font-bold tracking-[0.4em] md:tracking-[0.8em] text-ianuarius mt-4 z-10 ml-2 md:ml-6 drop-shadow-md">
@@ -70,7 +70,7 @@ export default function Home({onLoginSuccess}) {
 
             <section className="bg-oscuro px-6 md:px-12 pb-24 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 relative z-20">
                 <div className="lg:col-span-6 bg-gris p-5 md:p-6 rounded-xl border-t-4 border-ianuarius transform -translate-y-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                    <div className="w-full h-48 bg-[#171717] rounded-lg mb-5 overflow-hidden relative group">
+                    <div className="w-full h-48 bg-oscuro rounded-lg mb-5 overflow-hidden relative group">
                         <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pista" className="object-cover w-full h-full opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-700 ease-in-out" />
                     </div>
                     <h3 className="text-xl md:text-2xl font-semibold text-white mb-3 leading-snug">Superar tus límites es posible, solo hay un paso...</h3>
