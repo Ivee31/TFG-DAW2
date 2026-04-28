@@ -4,7 +4,7 @@
 <p align="center">
 	<img src="img/logoIanuarius.png" alt="Logotipo Ianuarius" width="300">
 	<br>
-	<em>Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</em>
+	<em>"Atletismo Ianuarius Salamanca"</em>
 </p>
 <br><br>
 
@@ -15,7 +15,7 @@
 <br><br><br><br>
 
 <p align="right">
-	<a href="https://ivee31.github.io/TFG-DAW2/" target="_blank">🌐 Ver Documentación Online</a><br>
+	<a href="https://ivee31.github.io/TFG-DAW2/" target="_blank">🌐 Ver Documentación (Memoria) Online</a><br>
 	<span>(pinchar con 'ctrl' para abrir en otra pestaña)</span>
 </p>
 
