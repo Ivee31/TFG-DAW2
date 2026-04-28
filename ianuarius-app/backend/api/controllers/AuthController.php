@@ -4,16 +4,8 @@ class AuthController {
 
     public static function login() {
         // configurar cookie de sesion antes de iniciarla
-        session_set_cookie_params([
-            'lifetime' => 86400,
-            'path'     => '/',
-            'domain'   => '',
-            'secure'   => false,
-            'httponly' => true,
-            'samesite' => 'Lax'
-        ]);
-        session_start();
-        
+        self::iniciarSesion();
+
         // obtenemos el contenido del json
         $input = json_decode(file_get_contents('php://input'), true);
 
@@ -63,9 +55,21 @@ class AuthController {
         }
     }
 
+    private static function iniciarSesion() {
+        session_set_cookie_params([
+            'lifetime' => 86400,
+            'path'     => '/',
+            'domain'   => '',
+            'secure'   => true,
+            'httponly' => true,
+            'samesite' => 'None'
+        ]);
+        session_start();
+    }
+
     // destruye la sesion del servidor
     public static function logout() {
-        session_start();
+        self::iniciarSesion();
         session_destroy();
 
         http_response_code(200);
@@ -74,7 +78,7 @@ class AuthController {
 
     // comprueba si hay sesion activa y devuelve datos del usuario
     public static function sesion() {
-        session_start();
+        self::iniciarSesion();
 
         if (!isset($_SESSION['id_usuario'])) {
             http_response_code(401);

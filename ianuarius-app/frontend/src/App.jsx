@@ -13,7 +13,7 @@ export default function App() {
 
     // al arrancar, consulta si hay sesion activa (persiste tras refresco)
     useEffect(() => {
-        fetch('https://ianuarius-back.infinityfreeapp.com/api/session', { credentials: 'include' })
+        fetch('/api/session', { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') setUser(data.user);

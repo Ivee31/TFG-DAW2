@@ -30,7 +30,7 @@ export default function Layout({ children, user, onLogout }) {
     const handleLogout = useCallback(() => {
         clearTimeout(inactividadTimer.current);
         clearInterval(countdownTimer.current);
-        fetch('https://ianuarius-back.infinityfreeapp.com/api/logout', { method: 'POST', credentials: 'include' })
+        fetch('/api/logout', { method: 'POST', credentials: 'include' })
         .finally(() => onLogoutRef.current());
 
     }, []);
