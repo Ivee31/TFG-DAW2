@@ -32,6 +32,7 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 > **¡Atención!**
 > Para correr la aplicacion en local, actualmente se debe desplegar esta misma desde la rama `main-dev`
 
+<br>
 
 // MANUAL DE DESPLIEGUE E INSTALACION
 
