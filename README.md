@@ -18,6 +18,10 @@
 	<a href="https://ivee31.github.io/TFG-DAW2/" target="_blank">🌐 Ver Documentación (Memoria) Online</a><br>
 	<span>(pinchar con 'ctrl' para abrir en otra pestaña)</span>
 </p>
+<p align="right">
+	<a href="https://ianuarius-back.infinityfreeapp.com/" target="_blank">Aplicación desplegada Online</a><br>
+	<span>(pinchar con 'ctrl' para abrir en otra pestaña)</span>
+</p>
 
 ---
 <br>
