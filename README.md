@@ -26,11 +26,11 @@
 Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. Para ver una copia de la licencia, visite [Creative Commons](http://creativecommons.org/licenses/by-sa/3.0/es/) o envíe una carta a Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
 
 ---
-<br><br>
+<br>
 
 > [!WARNING]
 > **¡Atención!**
-> Para correr la aplicacion en local, actualmente se debe desplegar esta misma desde la rama `main-dev`
+> Para correr la aplicacion en local, actualmente se debe desplegar esta misma desde la rama `main-dev`, en caso contrario, el desarrollador deberá gestionar por su cuenta las posibles incompatibilidades
 
 <br>
 
