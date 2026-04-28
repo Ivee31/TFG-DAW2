@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Regla añadida para ensanchar el "folio" de la web y evitar el apelmazamiento */
         .contenedor-pag {
             max-width: 1100px !important;
             margin: 0 auto;
@@ -31,7 +30,7 @@
         <a id="figura1-logo" class="ancla-top"></a>
         <figure class="figura-logo">
             <img src="img/logoIanuarius.png" class="logo-ianuarius" alt="Logotipo Ianuarius">
-            <figcaption class="pie-foto">Figura 1. Logotipo "Atletismo Salamanca Ianuarius" </figcaption>
+            <figcaption class="pie-foto">Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</figcaption>
         </figure>
         <br><br><br><br>
         
@@ -50,6 +49,12 @@
                 <p>Serafina Martín Marcos</p>
                 <p class="txt-negrita">AUTOR</p>
                 <p>Iván Martín Nieto</p>
+            </div>
+
+            <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end;">
+                <a href="https://ivee31.github.io/TFG-DAW2/" target="_blank" class="enlace-azul">🌐 Ver Documentación en Formato Online</a>
+                <a href="https://github.com/ivee31/TFG-DAW2" target="_blank" class="enlace-azul">💻 Ver Repositorio en GitHub</a>
+                <a href="https://ianuarius-back.infinityfreeapp.com" target="_blank" class="enlace-azul">🌐 Aplicación Desplegada</a>
             </div>
         </div>
 
@@ -142,9 +147,13 @@
                 <li><a href="#figura7-clases">Figura 7. Diagrama UML</a></li>
                 <li><a href="#figura8-er">Figura 8. Diagrama Entidad-Relación de la DB</a></li>
                 <li><a href="#figura9-relacional">Figura 9. Modelo Relacional de la DB</a></li>
-                <li><a href="#figura10-wireframe">Figura 10. Wireframe estructural de la página “Home”</a></li>
-                <li><a href="#figura11-mockup">Figura 11. Mockup final aplicando la paleta de colores y tipografía definida</a></li>
-                <li><a href="#figura12-gantt">Figura 12. Diagrama de Gantt con la previsión del proyecto</a></li>
+                <li><a href="#figura10-wireframe">Figura 10. Wireframe estructural de la página "Home"</a></li>
+                <li><a href="#figura11-mockup">Figura 11. Mockup final de la página "Home"</a></li>
+                <li><a href="#figura12-panel-wf">Figura 12. Wireframe estructural del Panel Lateral</a></li>
+                <li><a href="#figura13-panel-mu">Figura 13. Mockup final del Panel Lateral</a></li>
+                <li><a href="#figura14-dash-wf">Figura 14. Wireframe estructural del Dashboard de Atleta</a></li>
+                <li><a href="#figura15-dash-mockup">Figura 15. Mockup final del Dashboard de Atleta</a></li>
+                <li><a href="#figura16-gantt">Figura 16. Diagrama de Gantt con la previsión del proyecto</a></li>
             </ul>
 
             <a id="indice-tablas" class="ancla-top"></a>
@@ -166,10 +175,12 @@
                 <li><a href="#tabla-usuarios">Tabla 14. Diccionario de datos: usuarios</a></li>
                 <li><a href="#tabla-fichas">Tabla 15. Diccionario de datos: fichas_inscripcion</a></li>
                 <li><a href="#tabla-feedback">Tabla 16. Diccionario de datos: feedback_entrenamientos</a></li>
-                <li><a href="#tabla-gantt">Tabla 17. Fases de Planificación (Gantt)</a></li>
-                <li><a href="#tabla-glosario">Tabla 18. Glosario de Términos</a></li>
+                <li><a href="#tabla-eventos">Tabla 17. Diccionario de datos: eventos_calendario</a></li>
+                <li><a href="#tabla-gantt">Tabla 18. Fases de Planificación (Gantt)</a></li>
+                <li><a href="#tabla-glosario">Tabla 19. Glosario de Términos</a></li>
             </ul>
 
+            <!-- ═══════════════════════════════════════════════════════ CAP 1 -->
             <a id="intro-justificacion" class="ancla-top"></a>
             <h2>1. Introducción y Justificación</h2>
             
@@ -186,8 +197,8 @@
 
             <div id="oportunidad-negocio" class="ancla-top sangria-1">
                 <h3>1.3. Oportunidad de Negocio</h3>
-                <p>En cuanto a la oportunidad de negocio, este proyecto nace de la observación directa de una carencia tecnológica en el ámbito deportivo local. Los clubes de atletismo modestos no disponen de presupuestos holgados para contratar plataformas de gestión genéricas de alto coste. Además, la gran mayoría de estas plataformas están orientadas a deportes de equipo (como el fútbol o el baloncesto), obviando las necesidades específicas del atletismo: gestión de grandes volumenes de inscripciones individuales, control de marcas personales, categorías por edades muy acotadas y la burocracia específica de las federaciones (seguros médicos e impresos oficiales).</p>
-                <p>Ianuarius se presenta como una oportunidad de negocio orientada a cubrir este nicho: un software vertical, específico para atletismo, de bajo coste, evitando sistemas de suscripción y, centrado en resolver el "cuello de botella" burocrático de las inscripciones de menores de edad.</p>
+                <p>En cuanto a la oportunidad de negocio, este proyecto nace de la observación directa de una carencia tecnológica en el ámbito deportivo local. Los clubes de atletismo modestos no disponen de presupuestos holgados para contratar plataformas de gestión genéricas de alto coste. Además, la gran mayoría de estas plataformas están orientadas a deportes de equipo (como el fútbol o el baloncesto), obviando las necesidades específicas del atletismo: gestión de grandes volúmenes de inscripciones individuales, control de marcas personales, categorías por edades muy acotadas y la burocracia específica de las federaciones (seguros médicos e impresos oficiales).</p>
+                <p>Ianuarius se presenta como una oportunidad de negocio orientada a cubrir este nicho: un software vertical, específico para atletismo, de bajo coste, evitando sistemas de suscripción y centrado en resolver el "cuello de botella" burocrático de las inscripciones de menores de edad.</p>
             </div>
 
             <div id="estudio-sector" class="ancla-top sangria-1">
@@ -204,7 +215,7 @@
                     </figure>
 
                     <h4>1.4.2. Playoff Informática</h4>
-                    <p>Es uno de los sistemas más potentes y consolidados. Permite la gestión de recibos y remesas bancarias con gran eficacia. El problema radica en que es una herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, generando una curva de aprendizaje muy pronunciada para los entrenadores y padres y aumentando inecesariamente el precio del servicio al estar pagando funciones no utiles para el caso de un club pequeño de atletismo.</p>
+                    <p>Es uno de los sistemas más potentes y consolidados. Permite la gestión de recibos y remesas bancarias con gran eficacia. El problema radica en que es una herramienta sobredimensionada ("overkill"); ofrece cientos de funcionalidades que un club modesto jamás usará, generando una curva de aprendizaje muy pronunciada para los entrenadores y padres y aumentando innecesariamente el precio del servicio al estar pagando funciones no útiles para el caso de un club pequeño de atletismo.</p>
                     <a id="figura4-playoff1" class="ancla-top"></a>
                     <figure class="figura-logo">
                         <img src="img/playOffInterface1.png" alt="Interfaz de gestión de Playoff Informática" class="img-diagrama img-zoomable">
@@ -235,7 +246,7 @@
                     <p>Para garantizar esta seguridad técnica, la aplicación se alojará en servidores ubicados dentro del Espacio Económico Europeo (EEE). Las contraseñas de los usuarios se almacenarán cifradas mediante funciones de <em>hash</em>. Respecto a los documentos altamente sensibles (como los PDF de las inscripciones generados y los escaneos de los DNI), se implementará un sistema de control de acceso en el <em>backend</em> (PHP). Los archivos se guardarán en directorios privados del servidor sin acceso público directo por URL, de forma que el sistema verificará primero el rol y la sesión del usuario antes de servir la descarga del documento.</p>
 
                     <h4>1.5.2. Viabilidad Económica (Estimación de Costes)</h4>
-                    <p>Aunque el proyecto se desarrolla en un ámbito académico, a continuación se presenta una estimación del presupuesto como si se tratase de un encargo profesional para el Club Atletismo Ianuarius. Adicionalmente, se han calculado los costes periodicos necesarios para mantener el sistema en producción una vez finalizado el proyecto.</p>
+                    <p>Aunque el proyecto se desarrolla en un ámbito académico, a continuación se presenta una estimación del presupuesto como si se tratase de un encargo profesional para el Club Atletismo Ianuarius. Adicionalmente, se han calculado los costes periódicos necesarios para mantener el sistema en producción una vez finalizado el proyecto.</p>
                     
                     <div class="sangria-3">
                         <h5>1.5.2.1. Costes de Hardware y Software</h5>
@@ -298,6 +309,7 @@
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════════════════════════ CAP 2 -->
             <a id="definicion-sistema" class="ancla-top"></a>
             <h2>2. Definición del Sistema</h2>
             
@@ -524,6 +536,7 @@
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════════════════════════ CAP 3 -->
             <a id="diseno-arquitectura" class="ancla-top"></a>
             <h2>3. Diseño Tecnológico y Arquitectura</h2>
             
@@ -592,7 +605,7 @@
 
             <div id="diseno-datos" class="ancla-top sangria-1">
                 <h3>3.4. Diseño de Datos</h3>
-                <p>Para estructurar la persistencia de la información en la base de datos MySQL, se ha diseñado un Modelo Entidad-Relación altamente normalizado. Para gestionar la complejidad de las especialidades del atletismo (donde las alturas o pesos varían según la edad y el género), se ha implementado una tabla intermedia de detalle. El sistema se compone de seis tablas principales:</p>
+                <p>Para estructurar la persistencia de la información en la base de datos MySQL, se ha diseñado un Modelo Entidad-Relación altamente normalizado. Para gestionar la complejidad de las especialidades del atletismo (donde las alturas o pesos varían según la edad y el género), se ha implementado una tabla intermedia de detalle. El sistema se compone de siete tablas principales:</p>
                 
                 <h4>3.4.1. Entidad Relación</h4>
                 <a id="figura8-er"></a>
@@ -662,10 +675,11 @@
                             <tr><td><strong>apellidos</strong></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Apellidos del usuario.</td></tr>
                             <tr><td><strong>dni</strong></td><td>VARCHAR(9)</td><td>UNIQUE</td><td>Documento de identidad.</td></tr>
                             <tr><td><strong>email</strong></td><td>VARCHAR(100)</td><td>UNIQUE, NOT NULL</td><td>Correo electrónico.</td></tr>
-                            <tr><td><strong>password_hash</strong></td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Contraseña cifrada.</td></tr>
-                            <tr><td><strong>rol</strong></td><td>ENUM</td><td>DEFAULT 'atleta'</td><td>'Admin' o 'Atleta'.</td></tr>
+                            <tr><td><strong>password_hash</strong></td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Contraseña cifrada con Bcrypt.</td></tr>
+                            <tr><td><strong>rol</strong></td><td>ENUM</td><td>DEFAULT 'Atleta'</td><td>'Admin', 'Entrenador' o 'Atleta'.</td></tr>
                             <tr><td><strong>fecha_nacimiento</strong></td><td>DATE</td><td>NOT NULL</td><td>Para cálculo de categoría.</td></tr>
                             <tr><td><strong>genero</strong></td><td>ENUM</td><td>NOT NULL</td><td>'M' o 'F'.</td></tr>
+                            <tr><td><strong>estado_cuenta</strong></td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Para bloquear acceso si es necesario.</td></tr>
                         </tbody>
                     </table>
 
@@ -677,6 +691,9 @@
                         <tbody>
                             <tr><td><strong>id_ficha</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador de la ficha.</td></tr>
                             <tr><td><strong>id_usuario</strong></td><td>INT</td><td>FK, UNIQUE</td><td>Enlace al usuario propietario.</td></tr>
+                            <tr><td><strong>temporada</strong></td><td>VARCHAR(20)</td><td>NOT NULL</td><td>Ej. '2026-2027'.</td></tr>
+                            <tr><td><strong>estado_validacion</strong></td><td>ENUM</td><td>DEFAULT 'pendiente'</td><td>'pendiente', 'validado' o 'error_dni'.</td></tr>
+                            <tr><td><strong>estado_pago</strong></td><td>ENUM</td><td>DEFAULT 'pendiente'</td><td>'pendiente', 'pagado'.</td></tr>
                             <tr><td><strong>ruta_pdf</strong></td><td>VARCHAR(255)</td><td>NULL</td><td>Ruta del PDF generado.</td></tr>
                             <tr><td><strong>ruta_dni</strong></td><td>VARCHAR(255)</td><td>NULL</td><td>Ruta del DNI escaneado.</td></tr>
                             <tr><td><strong>fecha_creacion</strong></td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Fecha de generación.</td></tr>
@@ -685,15 +702,32 @@
 
                     <a id="tabla-feedback" class="ancla-centro"></a>
                     <h4>3.4.8. Tabla: feedback_entrenamientos</h4>
-                    <p>Registra las sensaciones diarias. Relación 1:N con la tabla usuarios y pruebas_variantes.</p>
+                    <p>Registra las sensaciones diarias. Relación 1:N con la tabla usuarios.</p>
                     <table class="tabla-smart">
                         <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>id_feedback</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador del registro.</td></tr>
+                            <tr><td><strong>id_registro</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador del registro.</td></tr>
                             <tr><td><strong>id_usuario</strong></td><td>INT</td><td>FK</td><td>Atleta que entrena.</td></tr>
-                            <tr><td><strong>id_variante</strong></td><td>INT</td><td>FK</td><td>Prueba específica entrenada.</td></tr>
                             <tr><td><strong>fecha</strong></td><td>DATE</td><td>NOT NULL</td><td>Día de la sesión.</td></tr>
+                            <tr><td><strong>sesion_realizada</strong></td><td>TEXT</td><td>NOT NULL</td><td>Desglose libre de series, repeticiones, tiempos y recuperaciones.</td></tr>
                             <tr><td><strong>sensaciones</strong></td><td>TEXT</td><td>NULL</td><td>Comentarios del rendimiento.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <a id="tabla-eventos" class="ancla-centro"></a>
+                    <h4>3.4.9. Tabla: eventos_calendario</h4>
+                    <p>Da soporte al calendario de pista (RF-13).</p>
+                    <table class="tabla-smart">
+                        <thead><tr><th style="width: 20%;">Campo</th><th style="width: 20%;">Tipo</th><th style="width: 25%;">Restricciones</th><th style="width: 35%;">Descripción</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>id_evento</strong></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador único.</td></tr>
+                            <tr><td><strong>id_usuario</strong></td><td>INT</td><td>FK</td><td>Identificador del usuario participante.</td></tr>
+                            <tr><td><strong>id_categoria</strong></td><td>INT</td><td>FK</td><td>Prueba que el atleta realizará en el evento.</td></tr>
+                            <tr><td><strong>titulo</strong></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Nombre del evento.</td></tr>
+                            <tr><td><strong>descripcion</strong></td><td>TEXT</td><td>NULL</td><td>Detalles adicionales.</td></tr>
+                            <tr><td><strong>fecha_hora</strong></td><td>DATETIME</td><td>NOT NULL</td><td>Fecha y hora del evento.</td></tr>
+                            <tr><td><strong>tipo_evento</strong></td><td>ENUM</td><td>NOT NULL</td><td>'nacional', 'autonomico', 'provincial', 'control', 'escolares'.</td></tr>
+                            <tr><td><strong>tipo_pista</strong></td><td>ENUM</td><td>NOT NULL</td><td>'aire libre', 'pista cubierta', 'cross'.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -707,27 +741,57 @@
                     <h4>3.5.1. Paleta de Colores</h4>
                     <p>Se definirá una paleta cromática basada en la identidad corporativa del Club de Atletismo Ianuarius, priorizando el contraste y la legibilidad para entornos con mucha luz (exteriores):</p>
                     <ul>
-                        <li><p><strong>- Color Principal (Identidad Club):</strong> Rojo Ianuarius (#E63946) - Se reserva para los botones de acción principal (como enviar inscripciones), enlaces destacados y elementos de marca.</p></li>
-                        <li><p><strong>- Colores Neutros:</strong> Escala de grises (desde #F8F9FA para fondos hasta #212529 para textos principales) para estructurar el contenido sin fatigar la vista.</p></li>
-                        <li><p><strong>- Colores de Estado:</strong> Verde (#2A9D8F) para alertas de éxito (feedback guardado, PDF generado) y Naranja (#F4A261) para advertencias o campos incompletos.</p></li>
+                        <li><p><strong>- Color Principal (Identidad Club):</strong> Rojo Ianuarius (#FE0000) - Se reserva para los botones de acción principal (CTA), enlaces destacados y elementos de marca. Transmite la energía y velocidad del atletismo.</p></li>
+                        <li><p><strong>- Fondo Principal:</strong> #171717 (Oscuro) - Proporciona una estética moderna e inmersiva, haciendo que el rojo resalte de forma brutal.</p></li>
+                        <li><p><strong>- Fondo Secundario:</strong> #262626 (Gris) - Para tarjetas de contenido y menús superpuestos. Crea profundidad y jerarquía visual.</p></li>
+                        <li><p><strong>- Texto Principal:</strong> #FFFFFF (Blanco) - Máximo contraste contra los fondos oscuros, garantizando la legibilidad y el cumplimiento de accesibilidad.</p></li>
+                        <li><p><strong>- Texto Secundario:</strong> #9CA3AF (Gris Claro) - Para párrafos descriptivos y textos largos, suavizando la lectura sin fatigar la vista.</p></li>
                     </ul>
 
                     <h4>3.5.2. Tipografía</h4>
-                    <p>Se emplea la familia tipográfica <strong>Inter</strong>, nativa en entornos web modernos e incluida a través de Tailwind CSS. Destaca por su legibilidad en pantallas pequeñas y su aspecto limpio y profesional, ideal para la lectura densa de tablas de marcas deportivas y listados de atletas.</p>
+                    <p>Se emplea una combinación de dos familias tipográficas con roles diferenciados:</p>
+                    <ul>
+                        <li><p><strong>Graduate</strong> (Serif Collegiate): Para los títulos principales de marca y logotipos. Evoca la estética de los clubes deportivos tradicionales, transmitiendo espíritu de equipo.</p></li>
+                        <li><p><strong>Inter</strong> (Sans-serif Variable): Para textos de cuerpo, botones, menús y formularios. Diseñada específicamente para pantallas, garantiza alta legibilidad en tamaños pequeños, fundamental para la lectura de sesiones de entrenamiento en dispositivos móviles a pie de pista.</p></li>
+                    </ul>
 
                     <h4>3.5.3. Prototipado y Experiencia de Usuario (UX)</h4>
-                    <p>El diseño se ha planteado utilizando la herramienta Figma, partiendo de un esquema estructural (Wireframe) hasta alcanzar el diseño final de alta fidelidad (Mockup) para la página principal:</p>
+                    <p>El diseño se ha planteado utilizando la herramienta Figma, partiendo de un esquema estructural (Wireframe) hasta alcanzar el diseño final de alta fidelidad (Mockup):</p>
                     
                     <a id="figura10-wireframe"></a>
                     <figure class="figura-logo mt-6">
                         <img src="img/viewWireframeHome.png" class="img-diagrama img-zoomable" alt="Wireframe estructural Home">
-                        <figcaption class="pie-foto">Figura 10. Wireframe estructural de la página “Home”.</figcaption>
+                        <figcaption class="pie-foto">Figura 10. Wireframe estructural de la página "Home".</figcaption>
                     </figure>
 
                     <a id="figura11-mockup"></a>
                     <figure class="figura-logo mt-6">
                         <img src="img/viewMockupHome.png" class="img-diagrama img-zoomable" alt="Mockup final Home">
-                        <figcaption class="pie-foto">Figura 11. Mockup final aplicando la paleta de colores y tipografía definida.</figcaption>
+                        <figcaption class="pie-foto">Figura 11. Mockup final de la página "Home".</figcaption>
+                    </figure>
+
+                    <a id="figura12-panel-wf"></a>
+                    <figure class="figura-logo mt-6">
+                        <img src="img/viewWireframePanelLateral.png" class="img-diagrama img-zoomable" style="max-width: 300px;" alt="Wireframe estructural Panel Lateral">
+                        <figcaption class="pie-foto">Figura 12. Wireframe estructural del Panel Lateral.</figcaption>
+                    </figure>
+
+                    <a id="figura13-panel-mockup"></a>
+                    <figure class="figura-logo mt-6">
+                        <img src="img/viewMockupPanelLateral.png" class="img-diagrama img-zoomable" style="max-width: 300px;" alt="Mockup final Panel Lateral">
+                        <figcaption class="pie-foto">Figura 13. Mockup final del Panel Lateral.</figcaption>
+                    </figure>
+
+                    <a id="figura14-dash-wf"></a>
+                    <figure class="figura-logo mt-6">
+                        <img src="img/viewWireframeDashboard.png" class="img-diagrama img-zoomable" alt="Wireframe estructural Dashboard de Atleta">
+                        <figcaption class="pie-foto">Figura 14. Wireframe estructural del Dashboard de Atleta.</figcaption>
+                    </figure>
+
+                    <a id="figura15-dash-mockup"></a>
+                    <figure class="figura-logo mt-6">
+                        <img src="img/viewMockupDashboard.png" class="img-diagrama img-zoomable" alt="Mockup final Dashboard de Atleta">
+                        <figcaption class="pie-foto">Figura 15. Mockup final del Dashboard de Atleta.</figcaption>
                     </figure>
 
                     <h4>3.5.4. Justificación de decisiones de diseño (UX)</h4>
@@ -740,6 +804,7 @@
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════════════════════════ CAP 4 -->
             <a id="planif-metodo" class="ancla-top"></a>
             <h2>4. Planificación y Metodología</h2>
             
@@ -758,10 +823,10 @@
                 <h3>4.2. Planificación Temporal (Gantt)</h3>
                 <p>El desarrollo se ha planificado en un bloque temporal de 15 semanas. Se ha optado por solapar parcialmente las fases de Backend y Frontend para optimizar el tiempo de integración, marcando hitos críticos como la finalización de la BBDD y la generación del primer PDF oficial.</p>
                 
-                <a id="figura12-gantt"></a>
+                <a id="figura16-gantt"></a>
                 <figure class="figura-logo">
                     <img src="img/ganttDiagram.png" class="img-diagrama img-zoomable" alt="Diagrama de Gantt">
-                    <figcaption class="pie-foto">Figura 12. Diagrama de Gantt con la previsión del proyecto.</figcaption>
+                    <figcaption class="pie-foto">Figura 16. Diagrama de Gantt con la previsión del proyecto.</figcaption>
                 </figure>
 
                 <a id="tabla-gantt" class="ancla-centro"></a>
@@ -816,6 +881,7 @@
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════════════════════ CAPS 5-10 -->
             <a id="desarrollo-implementacion" class="ancla-top zona-apagada"></a>
             <h2 class="zona-apagada">5. Desarrollo e Implementación</h2>
             <div class="zona-apagada sangria-1">
@@ -914,14 +980,11 @@
             }
         });
 
-        // Init dom elements
         const modal = document.getElementById("zoomModal");
         const modalImg = document.getElementById("imgModal");
         
-        // Get imgs with zoomable class
         const images = document.querySelectorAll(".img-zoomable");
         
-        // Add click event loop
         images.forEach(img => {
             img.addEventListener("click", function() {
                 modal.classList.add("show");
@@ -930,17 +993,13 @@
             });
         });
         
-        // Add click event close modal
         modal.addEventListener("click", function(event) {
-            // check click on background
             if (event.target === modal || event.target === modalImg) {
                 modal.classList.remove("show");
             }
         });
         
-        // Add keydown event esc key
         document.addEventListener("keydown", function(event) {
-            // close if esc pressed
             if (event.key === "Escape" && modal.classList.contains("show")) {
                 modal.classList.remove("show");
             }
