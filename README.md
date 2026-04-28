@@ -28,6 +28,11 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 ---
 <br><br>
 
+> [!WARNING]
+> **¡Atención!**
+> Para correr la aplicacion en local, actualmente se debe desplegar esta misma desde la rama `main-dev`
+
+
 // MANUAL DE DESPLIEGUE E INSTALACION
 
 ## 1. Configuracion del Entorno
