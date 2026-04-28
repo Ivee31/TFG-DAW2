@@ -37,7 +37,7 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 > Para correr la aplicacion en local, actualmente se debe desplegar esta misma desde la rama `main-dev`, en caso contrario, el desarrollador deberá gestionar por su cuenta las posibles incompatibilidades
 
 > [!NOTE]
-> Se podrá encontrar el .docx con la memoria del proyecto (aun en desarrollo) en la rama `gh-pages` y `gh-pages-dev`.
+> Se podrá encontrar el .docx con la memoria del proyecto (aun en desarrollo) en la rama `gh-pages` y `gh-nueva-estructura` (rama de prueba antes de subir a la desplegada).
 
 <br>
 
