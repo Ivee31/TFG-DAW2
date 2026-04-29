@@ -103,6 +103,13 @@ npm install
 npm run dev
 ```
 
+4. Obtener versión para distribución del front:
+
+```bash
+# OBTENER LA CARPETA BUILD
+npm run buil
+```
+
 ### 1.5 Seguridad y CORS
 
 La aplicacion implementa sesiones seguras mediante **Cookies HttpOnly**. 
