@@ -82,7 +82,9 @@ DB_PORT=3306
 # COMPOSE DE LOS CONTENEDORES NECESARIOS
 docker compose up -d --build
  ```
-**¡¡ADVERTENCIA!! En caso de realizar cambios en la configuración q afecten al funcionamiento del docker, se deberá relanzar el compose up en la ruta pertinente**
+
+> [!WARNING]
+>  En caso de realizar cambios en la configuración que afecten al funcionamiento del docker, se deberá relanzar el compose up en la ruta pertinente
 
 ### 1.4 Despliegue del Frontend
 
