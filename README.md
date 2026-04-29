@@ -107,7 +107,7 @@ npm run dev
 
 ```bash
 # OBTENER LA CARPETA BUILD
-npm run buil
+npm run build
 ```
 
 ### 1.5 Seguridad y CORS
