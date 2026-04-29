@@ -1,4 +1,4 @@
-# MEMORIA DEL PROYECTO - IANUARIUS
+# README - IANUARIUS
 
 <a name="figura1-logo"></a>
 <p align="center">
