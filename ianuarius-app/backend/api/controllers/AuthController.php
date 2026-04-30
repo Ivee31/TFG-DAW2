@@ -4,8 +4,17 @@ class AuthController {
 
     public static function login() {
         // configurar cookie de sesion antes de iniciarla
-        self::iniciarSesion();
-
+        session_set_cookie_params([
+            'lifetime' => 86400,
+            'path'     => '/',
+            'domain'   => '',
+            'secure'   => false,
+            'httponly' => true,
+            'samesite' => 'Lax'
+            
+        ]);
+        session_start();
+        
         // obtenemos el contenido del json
         $input = json_decode(file_get_contents('php://input'), true);
 
