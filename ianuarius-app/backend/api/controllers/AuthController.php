@@ -63,6 +63,89 @@ class AuthController {
         }
     }
 
+    public static function register() {
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        $required = ['nombre', 'apellidos', 'email', 'password', 'fecha_nacimiento', 'genero'];
+        foreach ($required as $field) {
+            if (empty($input[$field])) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "error" => "Todos los campos son obligatorios"]);
+                return;
+            }
+        }
+
+        $nombre          = trim($input['nombre']);
+        $apellidos       = trim($input['apellidos']);
+        $email           = trim($input['email']);
+        $password        = $input['password'];
+        $fecha_nacimiento = trim($input['fecha_nacimiento']);
+        $genero          = trim($input['genero']);
+
+        if (!in_array($genero, ['M', 'F'])) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Género no válido"]);
+            return;
+        }
+
+        try {
+            $pdo = Connect::conexion();
+
+            $check = $pdo->prepare("SELECT id_usuario FROM usuarios WHERE email = :email");
+            $check->bindParam(':email', $email, PDO::PARAM_STR);
+            $check->execute();
+            if ($check->fetch()) {
+                http_response_code(409);
+                echo json_encode(["status" => "error", "error" => "El email ya está registrado"]);
+                return;
+            }
+
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $stmt = $pdo->prepare(
+                "INSERT INTO usuarios (nombre, apellidos, email, password_hash, fecha_nacimiento, genero, rol, estado_cuenta)
+                 VALUES (:nombre, :apellidos, :email, :hash, :fecha_nacimiento, :genero, 'Atleta', TRUE)"
+            );
+            $stmt->bindParam(':nombre',          $nombre,          PDO::PARAM_STR);
+            $stmt->bindParam(':apellidos',        $apellidos,       PDO::PARAM_STR);
+            $stmt->bindParam(':email',            $email,           PDO::PARAM_STR);
+            $stmt->bindParam(':hash',             $hash,            PDO::PARAM_STR);
+            $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento, PDO::PARAM_STR);
+            $stmt->bindParam(':genero',           $genero,          PDO::PARAM_STR);
+            $stmt->execute();
+
+            $id = $pdo->lastInsertId();
+
+            session_set_cookie_params([
+                'lifetime' => 86400,
+                'path'     => '/',
+                'domain'   => '',
+                'secure'   => false,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
+            session_start();
+            $_SESSION['id_usuario'] = $id;
+            $_SESSION['rol']        = 'Atleta';
+
+            http_response_code(201);
+            echo json_encode([
+                "status" => "success",
+                "user"   => [
+                    "id_usuario"      => $id,
+                    "nombre"          => $nombre,
+                    "apellidos"       => $apellidos,
+                    "email"           => $email,
+                    "rol"             => 'Atleta'
+                ]
+            ]);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno del servidor"]);
+        }
+    }
+
     // destruye la sesion del servidor
     public static function logout() {
         session_start();

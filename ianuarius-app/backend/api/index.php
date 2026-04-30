@@ -19,6 +19,15 @@ switch ($endpoint) {
         }
         break;
 
+    case 'register':
+        if ($method == 'POST') {
+            AuthController::register();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
     case 'session':
         if ($method == 'GET') {
             AuthController::sesion();

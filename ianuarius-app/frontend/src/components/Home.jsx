@@ -1,10 +1,16 @@
 // vista Home
 import { useState } from "react";
 import Login from './Login';
+import Register from './Register';
 import logoIanuarius from '../assets/logoIanuarius.png';
+import logoInstagram from '../assets/logoInstagram.png';
 
 export default function Home({onLoginSuccess}) {
     const [showLogin, setShowLogin] = useState(false);
+    const [showRegister, setShowRegister] = useState(false);
+
+    const toggleLogin = () => { setShowLogin(v => !v); setShowRegister(false); };
+    const toggleRegister = () => { setShowRegister(v => !v); setShowLogin(false); };
 
     return (
         <div className="bg-oscuro text-gray-200 font-sans antialiased overflow-x-hidden">
@@ -24,20 +30,27 @@ export default function Home({onLoginSuccess}) {
             <nav className="absolute top-0 w-full z-50 px-4 md:px-8 py-5 flex justify-between items-center text-[10px] md:text-xs tracking-widest uppercase">
                 {/* nav Izq. */}
                 <div className="flex items-center gap-5 relative">
-                    <button onClick={() => setShowLogin(!showLogin)} className="bg-ianuarius text-white font-bold px-5 py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300 flex items-center gap-2">
-                        LogIn/ Registrarse <span className="text-base leading-none">&rarr;</span>
+                    <button onClick={toggleRegister} className="bg-ianuarius text-white font-bold px-5 py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300 flex items-center gap-2">
+                        Registrarse <span className="text-base leading-none">&rarr;</span>
                     </button>
-                    {/*Mostrar form login*/}
+                    <button onClick={toggleLogin} className="text-white hover:text-ianuarius transition duration-300 font-bold">
+                        Login
+                    </button>
                     {showLogin && (
                         <div className="absolute left-0 top-full mt-4 w-72 md:w-80 z-50 origin-top-left">
                             <Login onLoginSuccess={onLoginSuccess} />
                         </div>
                     )}
+                    {showRegister && (
+                        <div className="absolute left-0 top-full mt-4 w-80 md:w-96 z-50 origin-top-left">
+                            <Register onRegisterSuccess={onLoginSuccess} />
+                        </div>
+                    )}
 
                     <div className="hidden lg:flex gap-4 text-white/60">
-                        <a href="#" className="hover:text-ianuarius transition">IG</a>
-                        <a href="#" className="hover:text-ianuarius transition">FB</a>
-                        <a href="#" className="hover:text-ianuarius transition">TW</a>
+                        <a href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5" target="_blank" rel="noopener noreferrer" className="hover:text-ianuarius transition">
+                            <img src={logoInstagram} alt="Instagram" className="w-12 h-12 object-contain" />
+                        </a>
                     </div>
                 </div>
 
