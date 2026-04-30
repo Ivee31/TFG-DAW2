@@ -7,7 +7,8 @@ CREATE TABLE categorias (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     edad_min INT NOT NULL,
-    edad_max INT NOT NULL
+    edad_max INT NOT NULL,
+    genero ENUM('M', 'F') DEFAULT NULL
 );
 
 -- 2. Tabla pruebas (Basada en apartado 3.4.2 de la memoria)
@@ -85,40 +86,59 @@ CREATE TABLE eventos_calendario (
 -- DATOS DE PRUEBA (SEED) - Para cumplir rúbrica
 -- ==========================================
 
--- Insertar categorías
-INSERT INTO categorias (nombre, edad_min, edad_max) VALUES 
-('Sub-18', 16, 17),
-('Sub-20', 18, 19),
-('Sub-23', 20, 22),
-('Absoluta', 23, 99);
+-- Insertar categorías (IDs 1-22)
+INSERT INTO categorias (nombre, edad_min, edad_max, genero) VALUES
+('Sub-10',   0,  9, NULL),
+('Sub-12',  10, 11, NULL),
+('Sub-14',  12, 13, NULL),
+('Sub-16',  14, 15, NULL),
+('Sub-18',  16, 17, NULL),
+('Sub-20',  18, 19, NULL),
+('Sub-23',  20, 22, NULL),
+('Absoluta',23, 34, NULL),
+('M35',     35, 39, 'M'),
+('F35',     35, 39, 'F'),
+('M40',     40, 44, 'M'),
+('F40',     40, 44, 'F'),
+('M45',     45, 49, 'M'),
+('F45',     45, 49, 'F'),
+('M50',     50, 54, 'M'),
+('F50',     50, 54, 'F'),
+('M55',     55, 59, 'M'),
+('F55',     55, 59, 'F'),
+('M60',     60, 64, 'M'),
+('F60',     60, 64, 'F'),
+('M65',     65,150, 'M'),
+('F65',     65,150, 'F');
 
 -- Insertar pruebas
 INSERT INTO pruebas (nombre_prueba, tipo) VALUES 
 ('400m lisos', 'Carrera'),
 ('400m vallas', 'Carrera');
 
--- Insertar variantes (Ej: Vallas a 0.91m para Sub-20 Masculino)
-INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable, especificaciones) VALUES 
-(2, 2, 'M', 'Altura valla: 0.91m');
+-- Insertar variantes (Vallas a 0.91m para Sub-20 Masculino — Sub-20 = id 6)
+INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable, especificaciones) VALUES
+(2, 6, 'M', 'Altura valla: 0.91m');
 
 -- Insertar usuarios de prueba (Contraseñas sin cifrar por ahora para que puedas probar el login más fácil en desarrollo)
 INSERT INTO usuarios (id_categoria, nombre, apellidos, dni, email, password_hash, rol, fecha_nacimiento, genero, estado_cuenta) VALUES 
-(NULL, 'Ivan', 'Admin', '00000000A', 'admin@ianuarius.com', 'admin123', 'Admin', '2004-10-31', 'M', TRUE),
-(3, 'Iván', 'Martín Nieto', '70910314A', 'ivan@ianuarius.com', 'atleta123', 'Atleta', '2004-04-15', 'M', TRUE);
+(NULL, 'Ivan', 'Admin', '00000000A', 'admin@ianuarius.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin', '2004-10-31', 'M', TRUE);
 
 -- Insertar una inscripción de prueba
 INSERT INTO fichas_inscripcion (id_usuario, temporada, estado_validacion, estado_pago) VALUES
-(2, '2025/2026', 'validado', 'pagado');
+(1, '2025/2026', 'validado', 'pagado');
 
 -- 8. Tabla marcas (tiempos registrados por los atletas)
--- formato marca: MM'SS''ms  (ej: 00'49''15)
+-- formato marca: MM'SS"ms  (ej: 00'49"15)
 CREATE TABLE IF NOT EXISTS marcas (
     id_marca         INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario       INT NOT NULL,
+    id_categoria     INT DEFAULT NULL,
     prueba           VARCHAR(50) NOT NULL,
     temporada        ENUM('short_track', 'outdoor') NOT NULL,
     tipo_competicion ENUM('Nacional','Autonomico CyL','Provincial','Escolar','Control') NOT NULL DEFAULT 'Control',
     marca            VARCHAR(20) NOT NULL,
     fecha            DATE NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
-);
+    FOREIGN KEY (id_usuario)   REFERENCES usuarios(id_usuario)     ON DELETE CASCADE,
+    FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
+);

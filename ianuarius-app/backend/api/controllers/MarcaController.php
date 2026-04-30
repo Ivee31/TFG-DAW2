@@ -46,24 +46,28 @@ class MarcaController {
             return;
         }
 
+        $id_categoria = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
+
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
-                "INSERT INTO marcas (id_usuario, prueba, temporada, tipo_competicion, marca, fecha)
-                 VALUES (:id_usuario, :prueba, :temporada, :tipo_competicion, :marca, CURDATE())"
+                "INSERT INTO marcas (id_usuario, id_categoria, prueba, temporada, tipo_competicion, marca, fecha)
+                 VALUES (:id_usuario, :id_categoria, :prueba, :temporada, :tipo_competicion, :marca, CURDATE())"
             );
-            
-            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-            $stmt->bindParam(':prueba', $prueba, PDO::PARAM_STR);
-            $stmt->bindParam(':temporada', $temporada, PDO::PARAM_STR);
-            $stmt->bindParam(':tipo_competicion', $tipo_competicion, PDO::PARAM_STR);
-            $stmt->bindParam(':marca', $marca, PDO::PARAM_STR);
+
+            $stmt->bindParam(':id_usuario',       $id_usuario,       PDO::PARAM_INT);
+            $stmt->bindParam(':id_categoria',      $id_categoria,     PDO::PARAM_INT);
+            $stmt->bindParam(':prueba',            $prueba,           PDO::PARAM_STR);
+            $stmt->bindParam(':temporada',         $temporada,        PDO::PARAM_STR);
+            $stmt->bindParam(':tipo_competicion',  $tipo_competicion, PDO::PARAM_STR);
+            $stmt->bindParam(':marca',             $marca,            PDO::PARAM_STR);
             $stmt->execute();
 
             http_response_code(201);
             echo json_encode(["status" => "success", "message" => "Marca guardada correctamente"]);
 
         } catch (PDOException $e) {
+            error_log("guardar() - " . $e->getMessage(), 3, Config::LOGFILE);
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno al guardar la marca"]);
         }
@@ -84,10 +88,12 @@ class MarcaController {
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
-                "SELECT id_marca, prueba, temporada, tipo_competicion, marca, fecha
-                 FROM marcas
-                 WHERE id_usuario = :id_usuario
-                 ORDER BY fecha DESC, id_marca DESC"
+                "SELECT m.id_marca, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
+                        c.nombre AS categoria_nombre
+                 FROM marcas m
+                 LEFT JOIN categorias c ON m.id_categoria = c.id_categoria
+                 WHERE m.id_usuario = :id_usuario
+                 ORDER BY m.fecha DESC, m.id_marca DESC"
             );
             $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
             $stmt->execute();
@@ -98,6 +104,7 @@ class MarcaController {
             echo json_encode(["status" => "success", "marcas" => $marcas]);
 
         } catch (PDOException $e) {
+            error_log("listar() - " . $e->getMessage(), 3, Config::LOGFILE);
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno al obtener marcas"]);
         }
