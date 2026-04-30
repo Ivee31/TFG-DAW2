@@ -2,18 +2,22 @@
 
 class AuthController {
 
+    private static function iniciarSesion() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_set_cookie_params([
+                'lifetime' => 86400,
+                'path'     => '/',
+                'domain'   => '',
+                'secure'   => false,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
+            session_start();
+        }
+    }
+
     public static function login() {
-        // configurar cookie de sesion antes de iniciarla
-        session_set_cookie_params([
-            'lifetime' => 86400,
-            'path'     => '/',
-            'domain'   => '',
-            'secure'   => false,
-            'httponly' => true,
-            'samesite' => 'Lax'
-            
-        ]);
-        session_start();
+        self::iniciarSesion();
         
         // obtenemos el contenido del json
         $input = json_decode(file_get_contents('php://input'), true);
@@ -151,15 +155,7 @@ class AuthController {
                 return;
             }
 
-            session_set_cookie_params([
-                'lifetime' => 86400,
-                'path'     => '/',
-                'domain'   => '',
-                'secure'   => false,
-                'httponly' => true,
-                'samesite' => 'Lax'
-            ]);
-            session_start();
+            self::iniciarSesion();
             $_SESSION['id_usuario'] = $id;
             $_SESSION['rol']        = 'Atleta';
 
