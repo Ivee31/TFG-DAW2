@@ -11,6 +11,7 @@ class AuthController {
             'secure'   => false,
             'httponly' => true,
             'samesite' => 'Lax'
+            
         ]);
         session_start();
         
