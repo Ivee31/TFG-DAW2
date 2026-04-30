@@ -19,6 +19,10 @@ export default function Dashboard() {
     const [feedbackMsg, setFeedbackMsg]         = useState(null);
     const [formatoError, setFormatoError]       = useState(false);
 
+    // categorias disponibles para el usuario
+    const [categorias,          setCategorias]          = useState([]);
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
+
     // listado marcas desde bd
     const [marcas, setMarcas]     = useState([]);
     const [cargando, setCargando] = useState(true);
@@ -44,7 +48,12 @@ export default function Dashboard() {
             .finally(() => setCargando(false));
     };
 
-    useEffect(() => { cargarMarcas(); }, []);
+    useEffect(() => {
+        cargarMarcas();
+        fetch('/api/categorias', { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => { if (data.status === 'success') setCategorias(data.categorias); });
+    }, []);
 
     const etiquetaTemporada = (t) =>
         t === 'short_track' ? 'Short Track / Pista Cubierta' : 'Outdoor / Aire Libre';
@@ -73,7 +82,8 @@ export default function Dashboard() {
                 prueba,
                 temporada:        temporada === 'shortTrack' ? 'short_track' : 'outdoor',
                 tipo_competicion: tipoCompeticion,
-                marca:            marcaTiempo
+                marca:            marcaTiempo,
+                id_categoria:     categoriaSeleccionada
             })
         })
         .then(res => res.json())
@@ -155,7 +165,9 @@ export default function Dashboard() {
                                     <div>
                                         <h3 className="text-white font-bold text-base md:text-lg">{m.prueba}</h3>
                                         <p className="text-xs text-gray-500 uppercase tracking-widest">{etiquetaTemporada(m.temporada)}</p>
-                                        <p className="text-xs text-gray-600 mt-0.5">{m.tipo_competicion}</p>
+                                        <p className="text-xs text-gray-600 mt-0.5">
+                                            {m.tipo_competicion}{m.categoria_nombre ? ` · ${m.categoria_nombre}` : ''}
+                                        </p>
                                     </div>
                                     <div className="sm:text-right">
                                         <p className="text-ianuarius text-3xl md:text-2xl tracking-tighter font-mono">{m.marca}</p>
@@ -285,6 +297,16 @@ export default function Dashboard() {
                                 <option>Provincial</option>
                                 <option>Escolar</option>
                                 <option>Control</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className={labelClasses}>Categoría</label>
+                            <select value={categoriaSeleccionada} onChange={(e) => setCategoriaSeleccionada(e.target.value)} className={selectClasses}>
+                                <option value="">Sin especificar</option>
+                                {categorias.map(c => (
+                                    <option key={c.id_categoria} value={c.id_categoria}>{c.nombre}</option>
+                                ))}
                             </select>
                         </div>
 

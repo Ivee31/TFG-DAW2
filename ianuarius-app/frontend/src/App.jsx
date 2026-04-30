@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import Layout from "./components/Layout";
 import Dashboard from "./components/Dashboard";
+import DashboardEntrenador from "./components/DashboardEntrenador";
+import AdminPanel from "./components/AdminPanel";
 import Home from './components/Home';
 
 export default function App() {
@@ -37,7 +39,9 @@ export default function App() {
         <>
             {user ? (
                 <Layout user={user} onLogout={() => setUser(null)}>
-                    <Dashboard />
+                    {user.rol === 'Admin'      && <AdminPanel />}
+                    {user.rol === 'Entrenador' && <DashboardEntrenador />}
+                    {user.rol === 'Atleta'     && <Dashboard />}
                 </Layout>
             ) : (
                 <Home onLoginSuccess={setUser} />

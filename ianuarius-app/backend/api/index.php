@@ -40,6 +40,24 @@ switch ($endpoint) {
         }
         break;
 
+    case 'register':
+        if ($method == 'POST') {
+            AuthController::register();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
+    case 'categorias':
+        if ($method == 'GET') {
+            CategoriaController::disponibles();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
     case 'session':
         if ($method == 'GET') {
             AuthController::sesion();
@@ -56,6 +74,29 @@ switch ($endpoint) {
         } else {
             http_response_code(405);
             echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
+    case 'usuarios':
+        $sub = $segments[1] ?? '';
+        if ($sub === 'atletas' && $method === 'GET') {
+            UsuarioController::listarAtletas();
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "Endpoint not found"]);
+        }
+        break;
+
+    case 'admin':
+        $sub = $segments[1] ?? '';
+        if ($sub === 'pendientes' && $method === 'GET') {
+            AdminController::pendientes();
+        } elseif ($sub === 'activar' && $method === 'POST') {
+            $id = (int)($segments[2] ?? 0);
+            AdminController::activar($id);
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "Endpoint not found"]);
         }
         break;
 

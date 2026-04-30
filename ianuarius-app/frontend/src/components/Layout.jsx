@@ -9,7 +9,7 @@ const COUNTDOWN_SEGS  = 2 * 60;
 export default function Layout({ children, user, onLogout }) {
     // control estados menu lateral
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isPinned, setIsPinned]     = useState(false);
+    const [isPinned, setIsPinned]     = useState(true);
     const menuRef = useRef(null);
     const btnRef  = useRef(null);
 
@@ -189,7 +189,7 @@ export default function Layout({ children, user, onLogout }) {
             </aside>
 
             {/* wrapper dinamico contenido */}
-            <div className={`grow p-4 md:p-10 max-w-7xl mx-auto w-full transition-all duration-300 ${isPinned ? 'lg:pr-64' : ''}`}>
+            <div className="grow p-4 md:p-10 max-w-7xl mx-auto w-full">
 
                 <header className="mb-8 md:mb-12 border-b-2 border-ianuarius pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                     <div className="space-y-2">
