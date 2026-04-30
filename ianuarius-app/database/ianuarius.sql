@@ -1,7 +1,3 @@
--- Creación de la base de datos
-CREATE DATABASE IF NOT EXISTS ianuarius_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE ianuarius_db;
-
 -- 1. Tabla categorias (Basada en apartado 3.4.1 de la memoria)
 CREATE TABLE categorias (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,

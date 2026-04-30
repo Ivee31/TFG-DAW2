@@ -1,10 +1,10 @@
-# MEMORIA DEL PROYECTO - IANUARIUS
+# README - IANUARIUS
 
 <a name="figura1-logo"></a>
 <p align="center">
 	<img src="img/logoIanuarius.png" alt="Logotipo Ianuarius" width="300">
 	<br>
-	<em>Figura 1. Logotipo "Atletismo Salamanca Ianuarius"</em>
+	<em>"Atletismo Ianuarius Salamanca"</em>
 </p>
 <br><br>
 
@@ -15,7 +15,11 @@
 <br><br><br><br>
 
 <p align="right">
-	<a href="https://ivee31.github.io/TFG-DAW2/" target="_blank">🌐 Ver Documentación Online</a><br>
+	<a href="https://ivee31.github.io/TFG-DAW2/" target="_blank">🌐 Ver Documentación (Memoria) Online</a><br>
+	<span>(pinchar con 'ctrl' para abrir en otra pestaña)</span>
+</p>
+<p align="right">
+	<a href="https://ianuarius-back.infinityfreeapp.com/" target="_blank">🌐 Aplicación desplegada Online</a><br>
 	<span>(pinchar con 'ctrl' para abrir en otra pestaña)</span>
 </p>
 
@@ -26,7 +30,16 @@
 Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. Para ver una copia de la licencia, visite [Creative Commons](http://creativecommons.org/licenses/by-sa/3.0/es/) o envíe una carta a Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
 
 ---
-<br><br>
+<br>
+
+> [!WARNING]
+> **¡Atención!**
+> Para correr la aplicacion en local, actualmente se debe desplegar esta misma desde la rama `main-dev`, en caso contrario, el desarrollador deberá gestionar por su cuenta las posibles incompatibilidades
+
+> [!NOTE]
+> Se podrá encontrar el .docx con la memoria del proyecto (aun en desarrollo) en la rama `gh-pages` y `gh-nueva-estructura` (rama de prueba antes de subir a la desplegada).
+
+<br>
 
 // MANUAL DE DESPLIEGUE E INSTALACION
 
@@ -69,7 +82,9 @@ DB_PORT=3306
 # COMPOSE DE LOS CONTENEDORES NECESARIOS
 docker compose up -d --build
  ```
-**¡¡ADVERTENCIA!! En caso de realizar cambios en la configuración q afecten al funcionamiento del docker, se deberá relanzar el compose up en la ruta pertinente**
+
+> [!WARNING]
+>  En caso de realizar cambios en la configuración que afecten al funcionamiento del docker, se deberá relanzar el compose up en la ruta pertinente
 
 ### 1.4 Despliegue del Frontend
 
@@ -86,6 +101,13 @@ npm install
 ```bash
 # INICIO ENTORNO LOCAL
 npm run dev
+```
+
+4. Obtener versión para distribución del front:
+
+```bash
+# OBTENER LA CARPETA BUILD
+npm run build
 ```
 
 ### 1.5 Seguridad y CORS

@@ -183,7 +183,7 @@ class AuthController {
 
     // destruye la sesion del servidor
     public static function logout() {
-        session_start();
+        self::iniciarSesion();
         session_destroy();
 
         http_response_code(200);
@@ -192,7 +192,7 @@ class AuthController {
 
     // comprueba si hay sesion activa y devuelve datos del usuario
     public static function sesion() {
-        session_start();
+        self::iniciarSesion();
 
         if (!isset($_SESSION['id_usuario'])) {
             http_response_code(401);
