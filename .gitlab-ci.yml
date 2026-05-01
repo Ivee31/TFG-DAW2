@@ -2,19 +2,18 @@ stages:
   - build
   - deploy
 
-# Compila el React
 build:
   stage: build
   image: node:18
   script:
-    - cd frontend  # cambia esto a la carpeta de tu React
+    - cd ianuarius-app/frontend
     - npm install
     - npm run build
   artifacts:
     paths:
-      - frontend/dist  # o build/ segun como lo genere vite/cra
+      - frontend/dist
 
-# Sube todo al servidor FTP
+
 deploy:
   stage: deploy
   image: alpine:latest
@@ -26,4 +25,4 @@ deploy:
         mirror -R backend/ /backend;
         bye"
   only:
-    - main  # o master, el que uses
+    - main
