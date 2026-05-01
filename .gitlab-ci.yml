@@ -5,8 +5,11 @@ stages:
 build:
   stage: build
   script:
-    - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-    - apt-get install -y nodejs
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    - export NVM_DIR="$HOME/.nvm"
+    - source "$NVM_DIR/nvm.sh"
+    - nvm install 20
+    - nvm use 20
     - cd ianuarius-app/frontend
     - npm install
     - npm run build
