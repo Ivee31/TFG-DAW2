@@ -1,0 +1,29 @@
+stages:
+  - build
+  - deploy
+
+# Compila el React
+build:
+  stage: build
+  image: node:18
+  script:
+    - cd frontend  # cambia esto a la carpeta de tu React
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/dist  # o build/ segun como lo genere vite/cra
+
+# Sube todo al servidor FTP
+deploy:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - apk add --no-cache lftp
+    - lftp -u $FTP_USER,$FTP_PASS ftps://handmadegames.org -e "
+        set ssl:verify-certificate no;
+        mirror -R frontend/dist/ /;
+        mirror -R backend/ /backend;
+        bye"
+  only:
+    - main  # o master, el que uses
