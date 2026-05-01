@@ -4,8 +4,9 @@ stages:
 
 build:
   stage: build
-  image: node:18
   script:
+    - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+    - apt-get install -y nodejs
     - cd ianuarius-app/frontend
     - npm install
     - npm run build
@@ -13,16 +14,22 @@ build:
     paths:
       - ianuarius-app/frontend/dist
 
-
 deploy:
   stage: deploy
-  image: alpine:latest
   script:
     - apk add --no-cache lftp
+    - |
+      cat > ianuarius-app/backend/.env << EOF
+      DB_HOST=$DB_HOST
+      DB_NAME=$DB_NAME
+      DB_USER=$DB_USER
+      DB_PASS=$DB_PASS
+      DB_PORT=$DB_PORT
+      EOF
     - lftp -u $FTP_USER,$FTP_PASS ftps://handmadegames.org -e "
         set ssl:verify-certificate no;
-        mirror -R frontend/dist/ /;
-        mirror -R backend/ /backend;
+        mirror -R ianuarius-app/frontend/dist/ /;
+        mirror -R ianuarius-app/backend/ /api;
         bye"
   only:
     - main
