@@ -5,11 +5,11 @@ require_once '../autoload.php';
 // CABECERAS CORS
 // Siempre enviamos CORS para el dominio de produccion.
 // No dependemos de que HTTP_ORIGIN llegue intacto (InfinityFree/Cloudflare puede eliminarlo).
-$vercel_url      = "https://tfg-daw-2.vercel.app";
+$produccion_url  = "https://apache.handmadegames.org/ivan2_daw2";
 $localhost_url   = "http://localhost:5173";
 $origen_peticion = $_SERVER['HTTP_ORIGIN'] ?? '';
 
-$cors_origin = ($origen_peticion === $localhost_url) ? $localhost_url : $vercel_url;
+$cors_origin = ($origen_peticion === $localhost_url) ? $localhost_url : $produccion_url;
 
 header("Access-Control-Allow-Origin: $cors_origin");
 header("Access-Control-Allow-Credentials: true");
