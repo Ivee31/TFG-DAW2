@@ -30,7 +30,7 @@ deploy:
       EOF
     - lftp -u $FTP_USER,$FTP_PASS ftp://handmadegames.org -e "
         mirror -R ianuarius-app/frontend/dist/ /;
-        mirror -R ianuarius-app/backend/ /api;
+        mirror -R ianuarius-app/backend/ /;
         bye"
   only:
     - main
