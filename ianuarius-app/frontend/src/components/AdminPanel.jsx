@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API } from '../api';
 
 const calcularCategoria = (fechaNacimiento, genero) => {
     const edad = new Date().getFullYear() - parseInt(fechaNacimiento?.split('-')[0] ?? 0);
@@ -23,7 +24,7 @@ export default function AdminPanel() {
 
     const cargarPendientes = () => {
         setCargandoP(true);
-        fetch('/api/admin/pendientes', { credentials: 'include' })
+        fetch(`${API}/admin/pendientes`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => { if (data.status === 'success') setPendientes(data.pendientes); })
             .finally(() => setCargandoP(false));
@@ -31,7 +32,7 @@ export default function AdminPanel() {
 
     useEffect(() => {
         cargarPendientes();
-        fetch('/api/usuarios/atletas', { credentials: 'include' })
+        fetch(`${API}/usuarios/atletas`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => { if (data.status === 'success') setAtletas(data.atletas); })
             .finally(() => setCargandoA(false));
@@ -39,7 +40,7 @@ export default function AdminPanel() {
 
     const handleActivar = (id) => {
         setActivando(id);
-        fetch(`/api/admin/activar/${id}`, { method: 'POST', credentials: 'include' })
+        fetch(`${API}/admin/activar/${id}`, { method: 'POST', credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') cargarPendientes();

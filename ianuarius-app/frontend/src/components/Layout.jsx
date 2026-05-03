@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { API } from '../api';
 
 // tiempo de inactividad antes de mostrar el aviso (15 min)
 const INACTIVIDAD_MS  =  15 * 60 * 1000;
@@ -30,7 +31,7 @@ export default function Layout({ children, user, onLogout }) {
     const handleLogout = useCallback(() => {
         clearTimeout(inactividadTimer.current);
         clearInterval(countdownTimer.current);
-        fetch('/api/logout', { method: 'POST', credentials: 'include' })
+        fetch(`${API}/logout`, { method: 'POST', credentials: 'include' })
         .finally(() => onLogoutRef.current());
 
     }, []);

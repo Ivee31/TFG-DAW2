@@ -1,5 +1,6 @@
 // frontend/src/App.jsx
 import { useState, useEffect } from "react";
+import { API } from "./api";
 import Layout from "./components/Layout";
 import Dashboard from "./components/Dashboard";
 import DashboardEntrenador from "./components/DashboardEntrenador";
@@ -15,7 +16,7 @@ export default function App() {
 
     // al arrancar, consulta si hay sesion activa (persiste tras refresco)
     useEffect(() => {
-        fetch('/api/session', { credentials: 'include' })
+        fetch(`${API}/session`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') setUser(data.user);

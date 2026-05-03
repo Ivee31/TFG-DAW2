@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API } from '../api';
 
 // regex formato MM'SS"ms (ej: 00'49"15)
 const REGEX_MARCA = /^\d{2}'\d{2}"\d{2}$/;
@@ -37,7 +38,7 @@ export default function Dashboard() {
 
     const cargarMarcas = () => {
         setCargando(true);
-        fetch('/api/marcas', { credentials: 'include' })
+        fetch(`${API}/marcas`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') {
@@ -50,7 +51,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         cargarMarcas();
-        fetch('/api/categorias', { credentials: 'include' })
+        fetch(`${API}/categorias`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => { if (data.status === 'success') setCategorias(data.categorias); });
     }, []);
@@ -75,7 +76,7 @@ export default function Dashboard() {
         setFormatoError(false);
         setGuardando(true);
 
-        fetch('/api/marcas', {
+        fetch(`${API}/marcas`, {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({
@@ -105,7 +106,7 @@ export default function Dashboard() {
 
     const handleEliminarMarca = (id_marca) => {
         setEliminando(true);
-        fetch(`/api/marcas/${id_marca}`, { method: 'DELETE', credentials: 'include' })
+        fetch(`${API}/marcas/${id_marca}`, { method: 'DELETE', credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 setEliminando(false);

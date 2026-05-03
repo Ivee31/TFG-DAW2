@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API } from '../api';
 
 const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
@@ -26,7 +27,7 @@ export default function Register({ onRegisterSuccess }) {
 
         setLoading(true);
 
-        fetch('/api/register', {
+        fetch(`${API}/register`, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },

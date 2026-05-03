@@ -2,7 +2,7 @@
 RewriteEngine On
 
 # definimos ruta base desde raiz de localhost
-RewriteBase /api/
+RewriteBase /ivan2_daw2/api/
 
 # reglas exclusion: 
 # para si usuario pide archivo que existe realmente, no haga nada
