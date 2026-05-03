@@ -24,9 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
-$path = $_SERVER['PATH_INFO'] ?? '/';
-$path = trim($path, '/');
-$segments = explode('/', $path);
+
+// extraemos el endpoint de REQUEST_URI para que funcione
+// tanto en local (/api/login) como en produccion (/ivan2_daw2/api/login)
+$uri      = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$base     = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
+$path     = trim(substr($uri, strlen($base)), '/');
+$segments = explode('/', $path ?: '');
 
 $endpoint = $segments[0] ?? '';
 

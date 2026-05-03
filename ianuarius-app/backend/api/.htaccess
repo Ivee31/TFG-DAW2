@@ -1,13 +1,10 @@
 # activamos motor reescritura
 RewriteEngine On
 
-# definimos ruta base desde raiz de localhost
-RewriteBase /ivan2_daw2/api/
-
-# reglas exclusion: 
+# reglas exclusion:
 # para si usuario pide archivo que existe realmente, no haga nada
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# demas se envia al index.php conservando ruta despues de la barra
-RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+# demas se envia al index.php
+RewriteRule ^ index.php [L,QSA]
