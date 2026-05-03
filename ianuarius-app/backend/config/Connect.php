@@ -31,7 +31,7 @@ class Connect {
         . "------------------------" . PHP_EOL;
 
         // Registrar en el log
-        error_log($information, 3, Config::LOGFILE);
+        @error_log($information, 3, Config::LOGFILE);
         
         http_response_code(500);
         exit(json_encode(["error" => "Error interno de base de datos. Consulte los logs."]));

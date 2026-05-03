@@ -31,6 +31,7 @@ deploy:
     - lftp -u $FTP_USER,$FTP_PASS ftp://handmadegames.org -e "
         mirror -R ianuarius-app/frontend/dist/ /;
         mirror -R ianuarius-app/backend/ /;
+        put ianuarius-app/backend/.env -o /.env;
         bye"
   only:
     - main

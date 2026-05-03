@@ -2,6 +2,8 @@
 
 require_once '../autoload.php';
 
+header('Content-Type: application/json; charset=utf-8');
+
 // CABECERAS CORS
 // Siempre enviamos CORS para el dominio de produccion.
 // No dependemos de que HTTP_ORIGIN llegue intacto (InfinityFree/Cloudflare puede eliminarlo).
