@@ -8,6 +8,8 @@ $user = Config::get('DB_USER');
 $port = Config::get('DB_PORT');
 
 echo "Host: $host | DB: $name | User: $user | Port: $port<br>";
+echo "PDO socket: " . ini_get('pdo_mysql.default_socket') . "<br>";
+echo "MySQLi socket: " . ini_get('mysqli.default_socket') . "<br>";
 
 try {
     $pdo = new PDO(
