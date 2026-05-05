@@ -28,7 +28,7 @@ deploy:
       DB_PASS=$DB_PASS
       DB_PORT=$DB_PORT
       EOF
-    - lftp -u $FTP_USER,$FTP_PASS ftp://handmadegames.org -e "
+    - lftp -u $FTP_USER,$FTP_PASS ftp://$FTP_SERVER -e "
         mirror -R ianuarius-app/frontend/dist/ /;
         mirror -R ianuarius-app/backend/ /;
         put ianuarius-app/backend/.env -o /.env;
