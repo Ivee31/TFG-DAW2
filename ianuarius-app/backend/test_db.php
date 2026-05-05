@@ -2,27 +2,25 @@
 // SCRIPT TEMPORAL DE DIAGNOSTICO - BORRAR DESPUES
 require_once __DIR__ . '/autoload.php';
 
-$host = Config::get('DB_HOST');
 $name = Config::get('DB_NAME');
 $user = Config::get('DB_USER');
-$port = Config::get('DB_PORT');
+$pass = Config::get('DB_PASS');
 
-echo "Host: $host | DB: $name | User: $user | Port: $port<br>";
-echo "PDO socket: " . ini_get('pdo_mysql.default_socket') . "<br>";
-echo "MySQLi socket: " . ini_get('mysqli.default_socket') . "<br>";
+$intentos = [
+    "host=localhost;port=3306"                          => "mysql:host=localhost;port=3306;dbname=$name;charset=utf8mb4",
+    "host=127.0.0.1;port=3306"                         => "mysql:host=127.0.0.1;port=3306;dbname=$name;charset=utf8mb4",
+    "host=handmadegames.org;port=3306"                  => "mysql:host=handmadegames.org;port=3306;dbname=$name;charset=utf8mb4",
+    "socket=/tmp/mysql.sock"                            => "mysql:unix_socket=/tmp/mysql.sock;dbname=$name;charset=utf8mb4",
+    "socket=/var/run/mysqld/mysqld.sock"                => "mysql:unix_socket=/var/run/mysqld/mysqld.sock;dbname=$name;charset=utf8mb4",
+    "socket=/var/lib/mysql/mysql.sock"                  => "mysql:unix_socket=/var/lib/mysql/mysql.sock;dbname=$name;charset=utf8mb4",
+];
 
-try {
-    $pdo = new PDO(
-        "mysql:host=$host;dbname=$name;port=$port;charset=utf8mb4",
-        $user,
-        Config::get('DB_PASS')
-    );
-    echo "Conexion OK<br>";
-
-    $stmt = $pdo->query("SHOW TABLES");
-    $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    echo "Tablas: " . implode(', ', $tables) . "<br>";
-
-} catch (PDOException $e) {
-    echo "Error PDO: " . $e->getMessage();
+foreach ($intentos as $label => $dsn) {
+    try {
+        $pdo = new PDO($dsn, $user, $pass);
+        echo "<b>OK: $label</b><br>";
+        break;
+    } catch (PDOException $e) {
+        echo "FAIL [$label]: " . $e->getMessage() . "<br>";
+    }
 }
