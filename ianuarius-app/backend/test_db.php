@@ -17,12 +17,11 @@ echo "Sockets encontrados: " . (empty($sockets) ? 'ninguno' : implode(', ', $soc
 echo "PHP default socket: " . ini_get('pdo_mysql.default_socket') . "<br><br>";
 
 $intentos = [
+    "host=db;port=3306"                  => "mysql:host=db;port=3306;dbname=$name;charset=utf8mb4",
+    "host=172.18.0.8;port=3306"          => "mysql:host=172.18.0.8;port=3306;dbname=$name;charset=utf8mb4",
     "host=localhost;port=3306"           => "mysql:host=localhost;port=3306;dbname=$name;charset=utf8mb4",
     "host=127.0.0.1;port=3306"          => "mysql:host=127.0.0.1;port=3306;dbname=$name;charset=utf8mb4",
-    "host=mysql.handmadegames.org"       => "mysql:host=mysql.handmadegames.org;port=3306;dbname=$name;charset=utf8mb4",
-    "host=db.handmadegames.org"          => "mysql:host=db.handmadegames.org;port=3306;dbname=$name;charset=utf8mb4",
     "host=handmadegames.org;port=3306"   => "mysql:host=handmadegames.org;port=3306;dbname=$name;charset=utf8mb4",
-    "host=handmadegames.org;port=3307"   => "mysql:host=handmadegames.org;port=3307;dbname=$name;charset=utf8mb4",
 ];
 
 foreach ($intentos as $label => $dsn) {
