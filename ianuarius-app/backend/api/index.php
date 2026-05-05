@@ -2,10 +2,34 @@
 
 require_once '../autoload.php';
 
+header('Content-Type: application/json; charset=utf-8');
+
+// CABECERAS CORS
+// Siempre enviamos CORS para el dominio de produccion.
+// No dependemos de que HTTP_ORIGIN llegue intacto (InfinityFree/Cloudflare puede eliminarlo).
+$produccion_url  = "https://apache.handmadegames.org/ivan2_daw2";
+$localhost_url   = "http://localhost:5173";
+$origen_peticion = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+$cors_origin = ($origen_peticion === $localhost_url) ? $localhost_url : $produccion_url;
+
+header("Access-Control-Allow-Origin: $cors_origin");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+header("Vary: Origin");
+
+// gestion de peticion preflight
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
-$path = $_SERVER['PATH_INFO'] ?? '/';
-$path = trim($path, '/');
-$segments = explode('/', $path);
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
+$path = trim(substr($uri, strlen($base)), '/');
+$segments = explode('/', $path ?: '');
 
 $endpoint = $segments[0] ?? '';
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API } from '../api';
 
 // componente para form de acceso
 export default function Login({onLoginSuccess}) {
@@ -14,7 +15,7 @@ export default function Login({onLoginSuccess}) {
         setErrorMsg('');
         setLoading(true);
 
-        fetch('/api/login', {
+        fetch(`${API}/login`, {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({

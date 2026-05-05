@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API } from '../api';
 
 const calcularCategoria = (fechaNacimiento, genero) => {
     const edad = new Date().getFullYear() - parseInt(fechaNacimiento?.split('-')[0] ?? 0);
@@ -20,7 +21,7 @@ export default function DashboardEntrenador() {
     const [error,    setError]    = useState(null);
 
     useEffect(() => {
-        fetch('/api/usuarios/atletas', { credentials: 'include' })
+        fetch(`${API}/usuarios/atletas`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') setAtletas(data.atletas);

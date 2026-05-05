@@ -1,0 +1,37 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    - export NVM_DIR="$HOME/.nvm"
+    - source "$NVM_DIR/nvm.sh"
+    - nvm install 20
+    - nvm use 20
+    - cd ianuarius-app/frontend
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - ianuarius-app/frontend/dist
+
+deploy:
+  stage: deploy
+  script:
+    - |
+      cat > ianuarius-app/backend/.env << EOF
+      DB_HOST=$DB_HOST
+      DB_NAME=$DB_NAME
+      DB_USER=$DB_USER
+      DB_PASS=$DB_PASS
+      DB_PORT=$DB_PORT
+      EOF
+    - lftp -u $FTP_USER,$FTP_PASS ftp://$FTP_SERVER -e "
+        mirror -R ianuarius-app/frontend/dist/ /;
+        mirror -R ianuarius-app/backend/ /;
+        put ianuarius-app/backend/.env -o /.env;
+        bye"
+  only:
+    - main
