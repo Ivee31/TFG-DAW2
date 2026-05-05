@@ -25,6 +25,13 @@ export default function Register({ onRegisterSuccess }) {
             return;
         }
 
+        const partes = form.fecha_nacimiento.split('/');
+        if (partes.length !== 3 || partes[2].length !== 4) {
+            setErrorMsg('Fecha inválida. Usa el formato DD/MM/YYYY');
+            return;
+        }
+        const fechaISO = `${partes[2]}-${partes[1]}-${partes[0]}`;
+
         setLoading(true);
 
         fetch(`${API}/register`, {
@@ -36,7 +43,7 @@ export default function Register({ onRegisterSuccess }) {
                 apellidos:        form.apellidos,
                 dni:              form.dni,
                 email:            form.email,
-                fecha_nacimiento: form.fecha_nacimiento,
+                fecha_nacimiento: fechaISO,
                 genero:           form.genero,
                 rol:              form.rol,
                 password:         form.password
@@ -123,7 +130,8 @@ export default function Register({ onRegisterSuccess }) {
                 <div className="grid grid-cols-2 gap-3">
                     <div>
                         <label className={labelClasses}>Fecha de nacimiento</label>
-                        <input type="date" name="fecha_nacimiento" className={inputClasses}
+                        <input type="text" name="fecha_nacimiento" className={inputClasses}
+                               placeholder="DD/MM/YYYY" maxLength={10}
                                value={form.fecha_nacimiento} onChange={handleChange} required />
                     </div>
                     <div>
