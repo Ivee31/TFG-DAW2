@@ -57,7 +57,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 						<input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Buscar prueba..." autoFocus className="w-full bg-gris text-white text-sm p-2 rounded outline-none placeholder-gray-600 focus:ring-1 ring-ianuarius" />
 					</div>
 
-					<div className="max-h-64 overflow-y-auto">
+					<div className="max-h-96 overflow-y-auto">
 						{gruposOrdenados.map(([tipo, items]) => (
 							<div key={tipo}>
 								<p className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-ianuarius bg-gris/30 sticky top-0">{tipo}</p>
