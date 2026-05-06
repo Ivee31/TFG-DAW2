@@ -86,6 +86,14 @@ function PruebaSelect({ pruebas, value, onChange }) {
 
 // regex formato MM'SS"ms (ej: 00'49"15)
 const REGEX_MARCA = /^\d{2}'\d{2}"\d{2}$/;
+
+const formatMarcaTiempo = (raw) => {
+	const digits = raw.replace(/\D/g, '').slice(0, 6);
+	let result = digits.slice(0, 2);
+	if (digits.length > 2) result += "'" + digits.slice(2, 4);
+	if (digits.length > 4) result += '"' + digits.slice(4, 6);
+	return result;
+};
 // marcas visibles en modo reducido
 const MARCAS_RECIENTES = 3;
 // marcas por pagina en modo completo
@@ -438,7 +446,7 @@ export default function Dashboard() {
 								type="text"
 								placeholder={`00'00"00`}
 								value={marcaTiempo}
-								onChange={(e) => { setMarcaTiempo(e.target.value); setFormatoError(false); }}
+								onChange={(e) => { setMarcaTiempo(formatMarcaTiempo(e.target.value)); setFormatoError(false); }}
 								onBlur={handleMarcaBlur}
 								required
 								className={`w-full bg-oscuro border p-5 md:p-4 rounded-lg text-2xl text-ianuarius outline-none transition font-mono ${formatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
