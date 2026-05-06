@@ -13,7 +13,8 @@ export default function Dashboard() {
 	const [temporada, setTemporada] = useState('shortTrack');
 
 	// campos del formulario
-	const [prueba, setPrueba] = useState('400m Lisos');
+	const [prueba, setPrueba] = useState('');
+	const [pruebas, setPruebas] = useState([]);
 	const [tipoCompeticion, setTipoCompeticion] = useState('Control');
 	const [marcaTiempo, setMarcaTiempo] = useState('');
 	const [guardando, setGuardando] = useState(false);
@@ -54,9 +55,19 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		cargarMarcas();
+
 		fetch(`${API}/categorias`, { credentials: 'include' })
 			.then(res => res.json())
 			.then(data => { if (data.status === 'success') setCategorias(data.categorias); });
+
+		fetch(`${API}/pruebas`, { credentials: 'include' })
+			.then(res => res.json())
+			.then(data => {
+				if (data.status === 'success') {
+					setPruebas(data.pruebas);
+					if (data.pruebas.length > 0) setPrueba(data.pruebas[0].nombre_prueba);
+				}
+			});
 
 	}, []);
 
@@ -300,9 +311,11 @@ export default function Dashboard() {
 						<div>
 							<label className={labelClasses}>Prueba</label>
 							<select value={prueba} onChange={(e) => setPrueba(e.target.value)} className={selectClasses}>
-								<option>400m Lisos</option>
-								<option>400m Vallas</option>
-								<option>200m Lisos</option>
+								{pruebas.map(p => (
+									<option key={p.id_prueba} value={p.nombre_prueba}>
+										{p.nombre_prueba}{p.especificaciones ? ` · ${p.especificaciones}` : ''}
+									</option>
+								))}
 							</select>
 						</div>
 

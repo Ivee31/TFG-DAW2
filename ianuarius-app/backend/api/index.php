@@ -103,6 +103,15 @@ switch ($endpoint) {
         }
         break;
 
+    case 'pruebas':
+        if ($method == 'GET') {
+            PruebaController::disponibles();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
     case 'marcas':
         if ($method == 'POST') {
             MarcaController::guardar();
