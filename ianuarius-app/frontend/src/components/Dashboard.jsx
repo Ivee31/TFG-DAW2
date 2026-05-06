@@ -101,7 +101,7 @@ const MARCAS_POR_PAGINA = 10;
 
 // vista interna de marcas y registro
 export default function Dashboard() {
-	const [temporada, setTemporada] = useState('shortTrack');
+	const [temporada, setTemporada] = useState('outdoor');
 
 	// campos del formulario
 	const [prueba, setPrueba] = useState('');
@@ -149,7 +149,12 @@ export default function Dashboard() {
 
 		fetch(`${API}/categorias`, { credentials: 'include' })
 			.then(res => res.json())
-			.then(data => { if (data.status === 'success') setCategorias(data.categorias); });
+			.then(data => {
+				if (data.status === 'success') {
+					setCategorias(data.categorias);
+					if (data.categorias.length > 0) setCategoriaSeleccionada(data.categorias[0].id_categoria);
+				}
+			});
 
 		fetch(`${API}/pruebas`, { credentials: 'include' })
 			.then(res => res.json())
