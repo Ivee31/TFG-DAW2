@@ -185,15 +185,41 @@ INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable, especi
 (19, 6, 'M', 'altura: 0.99m'),
 (19, 7, 'M', 'altura: 1.067m'),
 (19, 8, 'M', 'altura: 1.067m'),
--- 400m vallas (id 2)
+-- 400m vallas (id 2) — Sub-18 a Absoluta + Masters
 (2,  5, 'M', 'altura: 0.84m'),
 (2,  6, 'M', 'altura: 0.91m'),
 (2,  7, 'M', 'altura: 0.91m'),
 (2,  8, 'M', 'altura: 0.91m'),
+(2,  9, 'M', 'altura: 0.91m'),   -- M35
+(2, 11, 'M', 'altura: 0.91m'),   -- M40
+(2, 13, 'M', 'altura: 0.84m'),   -- M45
+(2, 15, 'M', 'altura: 0.76m'),   -- M50
+(2, 17, 'M', 'altura: 0.76m'),   -- M55
+(2, 19, 'M', 'altura: 0.686m'),  -- M60
+(2, 21, 'M', 'altura: 0.686m'),  -- M65
 (2,  5, 'F', 'altura: 0.76m'),
 (2,  6, 'F', 'altura: 0.76m'),
 (2,  7, 'F', 'altura: 0.76m'),
-(2,  8, 'F', 'altura: 0.76m');
+(2,  8, 'F', 'altura: 0.76m'),
+(2, 10, 'F', 'altura: 0.76m'),   -- F35
+(2, 12, 'F', 'altura: 0.76m'),   -- F40
+(2, 14, 'F', 'altura: 0.76m'),   -- F45
+(2, 16, 'F', 'altura: 0.686m'),  -- F50
+(2, 18, 'F', 'altura: 0.686m'),  -- F55
+(2, 20, 'F', 'altura: 0.686m'),  -- F60
+(2, 22, 'F', 'altura: 0.686m');  -- F65
+
+-- 50m lisos (id 3) — solo Sub-10 y Sub-12 (sin variantes numericas, solo restriccion de categoria)
+INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable) VALUES
+(3, 1, 'M'),
+(3, 1, 'F'),
+(3, 2, 'M'),
+(3, 2, 'F');
+
+-- 80m lisos (id 5) — solo Sub-12
+INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable) VALUES
+(5, 2, 'M'),
+(5, 2, 'F');
 
 -- Variantes de lanzamientos (peso varía por categoría y género)
 INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable, especificaciones) VALUES

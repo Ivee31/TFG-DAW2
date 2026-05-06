@@ -53,10 +53,15 @@ class PruebaController {
             $absRow  = $stmtAbs->fetch(PDO::FETCH_ASSOC);
             $id_absoluta = $absRow ? (int)$absRow['id_categoria'] : null;
 
+            // usuarios 23-34 no matchean ninguna categoria (Absoluta excluida arriba) → usar Absoluta
+            if ($id_categoria === null) {
+                $id_categoria = $id_absoluta;
+            }
+
             $is_absoluta = ($id_categoria !== null && $id_categoria === $id_absoluta);
 
-            if ($is_absoluta || $id_categoria === null) {
-                // Absoluta o sin categoria: variante propia + universales
+            if ($is_absoluta) {
+                // Absoluta: variante propia + universales
                 $stmtP = $pdo->prepare(
                     "SELECT p.id_prueba, p.nombre_prueba, p.tipo, pv.especificaciones
                      FROM pruebas p
@@ -69,9 +74,9 @@ class PruebaController {
                             SELECT 1 FROM pruebas_variantes pv2
                             WHERE pv2.id_prueba = p.id_prueba
                         )
-                     ORDER BY p.tipo ASC, p.nombre_prueba ASC"
+                     ORDER BY p.tipo ASC, CAST(p.nombre_prueba AS UNSIGNED) ASC, p.nombre_prueba ASC"
                 );
-                $stmtP->bindValue(':id_categoria', $id_categoria, $id_categoria !== null ? PDO::PARAM_INT : PDO::PARAM_NULL);
+                $stmtP->bindValue(':id_categoria', $id_categoria, PDO::PARAM_INT);
                 $stmtP->bindParam(':genero', $genero, PDO::PARAM_STR);
 
             } else {
@@ -110,7 +115,7 @@ class PruebaController {
                          WHERE pv2.id_prueba = p.id_prueba
                      )
 
-                     ORDER BY tipo ASC, nombre_prueba ASC"
+                     ORDER BY tipo ASC, CAST(nombre_prueba AS UNSIGNED) ASC, nombre_prueba ASC"
                 );
                 $stmtP->bindParam(':id_categoria',  $id_categoria, PDO::PARAM_INT);
                 $stmtP->bindParam(':genero',         $genero,       PDO::PARAM_STR);
