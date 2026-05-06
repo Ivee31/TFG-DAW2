@@ -28,19 +28,19 @@ export default function Home({ onLoginSuccess }) {
 			`}</style>
 
 			<section className="min-h-[85vh] w-full bg-hero flex flex-col">
-				<nav className="w-full px-4 md:px-8 py-4 grid grid-cols-3 items-center text-[10px] md:text-xs tracking-widest uppercase">
+				<nav className="w-full px-4 md:px-8 pt-8 pb-4 md:py-4 grid grid-cols-3 items-start md:items-center text-[10px] md:text-xs tracking-widest uppercase">
 					{/* nav Izq. */}
 					<div className="flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-4 relative">
-						<button onClick={toggleRegister} className="bg-ianuarius text-white font-bold px-3 md:px-5 py-1.5 md:py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300">
+						<button onClick={toggleRegister} className="bg-ianuarius text-white font-bold px-4 md:px-5 py-3 md:py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300">
 							Registrarse
 						</button>
 
-						<button onClick={toggleLogin} className="pl-2 text-white hover:text-ianuarius transition duration-300 font-bold">
+						<button onClick={toggleLogin} className="py-3 pl-4 md:py-0 text-white hover:text-ianuarius transition duration-300 font-bold">
 							Login
 						</button>
 
 						<a href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5" target="_blank" rel="noopener noreferrer" className="hover:text-ianuarius transition">
-							<img src={logoInstagram} alt="Instagram" className="w-8 h-8 md:w-10 md:h-10 object-contain" />
+							<img src={logoInstagram} alt="Instagram" className="w-10 h-10 object-contain" />
 						</a>
 
 						{showLogin && (
@@ -58,7 +58,7 @@ export default function Home({ onLoginSuccess }) {
 
 					{/* Logo centrado */}
 					<div className="flex justify-center self-center">
-						<div className="w-20 h-20 md:w-32 md:h-32 bg-oscuro/60 backdrop-blur-md rounded-full border-2 border-ianuarius/50 flex items-center justify-center p-2 md:p-3 hover:border-ianuarius shadow-[0_0_30px_rgba(254,0,0,0.4)] transition duration-300">
+						<div className="pt-5 w-20 h-20 md:w-32 md:h-32 bg-oscuro/60 backdrop-blur-md rounded-full border-2 border-ianuarius/50 flex items-center justify-center p-2 md:p-3 hover:border-ianuarius shadow-[0_0_30px_rgba(254,0,0,0.4)] transition duration-300">
 							<img src={logoIanuarius} alt="Escudo Ianuarius" className="w-full h-full object-contain" />
 						</div>
 					</div>
