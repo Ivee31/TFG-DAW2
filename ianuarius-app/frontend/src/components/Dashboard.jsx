@@ -1,5 +1,73 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
+
+function PruebaSelect({ pruebas, value, onChange }) {
+	const [open, setOpen] = useState(false);
+	const [query, setQuery] = useState('');
+	const ref = useRef(null);
+
+	useEffect(() => {
+		const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+		document.addEventListener('mousedown', handler);
+		return () => document.removeEventListener('mousedown', handler);
+	}, []);
+
+	const selected = pruebas.find(p => p.nombre_prueba === value);
+
+	const grupos = {};
+	pruebas
+		.filter(p => p.nombre_prueba.toLowerCase().includes(query.toLowerCase()))
+		.forEach(p => {
+			if (!grupos[p.tipo]) grupos[p.tipo] = [];
+			grupos[p.tipo].push(p);
+		});
+
+	return (
+		<div ref={ref} className="relative">
+			<div onClick={() => setOpen(v => !v)} className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm outline-none transition cursor-pointer flex items-center justify-between">
+				<span className={selected ? 'text-white' : 'text-gray-500'}>
+					{selected
+						? selected.nombre_prueba + (selected.especificaciones ? ` · ${selected.especificaciones}` : '')
+						: 'Seleccionar prueba'}
+				</span>
+
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
+					<path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+				</svg>
+			</div>
+
+			{open && (
+				<div className="absolute z-50 w-full mt-1 bg-oscuro border border-white/10 rounded-lg shadow-2xl overflow-hidden">
+					<div className="p-2 border-b border-white/5">
+						<input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Buscar prueba..." autoFocus className="w-full bg-gris text-white text-sm p-2 rounded outline-none placeholder-gray-600 focus:ring-1 ring-ianuarius" />
+					</div>
+
+					<div className="max-h-64 overflow-y-auto">
+						{Object.entries(grupos).map(([tipo, items]) => (
+							<div key={tipo}>
+								<p className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-ianuarius bg-gris/30 sticky top-0">{tipo}</p>
+
+								{items.map(p => (
+									<div key={p.id_prueba} onClick={() => { onChange(p.nombre_prueba); setOpen(false); setQuery(''); }} className={`px-3 py-2.5 text-sm cursor-pointer transition hover:bg-white/5 flex items-center justify-between ${value === p.nombre_prueba ? 'text-ianuarius' : 'text-gray-300'}`}>
+										<span>{p.nombre_prueba}</span>
+
+										{p.especificaciones && (
+											<span className="text-gray-600 text-xs">{p.especificaciones}</span>
+										)}
+									</div>
+								))}
+							</div>
+						))}
+
+						{Object.keys(grupos).length === 0 && (
+							<p className="text-gray-600 text-xs text-center py-4 uppercase tracking-widest">Sin resultados</p>
+						)}
+					</div>
+				</div>
+			)}
+		</div>
+	);
+}
 
 // regex formato MM'SS"ms (ej: 00'49"15)
 const REGEX_MARCA = /^\d{2}'\d{2}"\d{2}$/;
@@ -310,13 +378,7 @@ export default function Dashboard() {
 
 						<div>
 							<label className={labelClasses}>Prueba</label>
-							<select value={prueba} onChange={(e) => setPrueba(e.target.value)} className={selectClasses}>
-								{pruebas.map(p => (
-									<option key={p.id_prueba} value={p.nombre_prueba}>
-										{p.nombre_prueba}{p.especificaciones ? ` · ${p.especificaciones}` : ''}
-									</option>
-								))}
-							</select>
+							<PruebaSelect pruebas={pruebas} value={prueba} onChange={setPrueba} />
 						</div>
 
 						<div>
