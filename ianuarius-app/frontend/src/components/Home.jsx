@@ -28,29 +28,21 @@ export default function Home({ onLoginSuccess }) {
 			`}</style>
 
 			<section className="min-h-[85vh] w-full bg-hero flex flex-col">
-				<nav className="w-full px-4 md:px-8 py-4 grid grid-cols-3 items-start md:items-center text-[10px] md:text-xs tracking-widest uppercase">
+				<nav className="w-full px-4 md:px-8 py-4 grid grid-cols-3 items-center text-[10px] md:text-xs tracking-widest uppercase">
 					{/* nav Izq. */}
 					<div className="flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-4 relative">
-						<button
-							onClick={toggleRegister}
-							className="bg-ianuarius text-white font-bold px-3 md:px-5 py-1.5 md:py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300"
-						>
+						<button onClick={toggleRegister} className="bg-ianuarius text-white font-bold px-3 md:px-5 py-1.5 md:py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300">
 							Registrarse
 						</button>
-						<button
-							onClick={toggleLogin}
-							className="p-0 text-white hover:text-ianuarius transition duration-300 font-bold"
-						>
+
+						<button onClick={toggleLogin} className="pl-2 text-white hover:text-ianuarius transition duration-300 font-bold">
 							Login
 						</button>
-						<a
-							href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="hover:text-ianuarius transition"
-						>
+
+						<a href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5" target="_blank" rel="noopener noreferrer" className="hover:text-ianuarius transition">
 							<img src={logoInstagram} alt="Instagram" className="w-8 h-8 md:w-10 md:h-10 object-contain" />
 						</a>
+
 						{showLogin && (
 							<div className="absolute left-0 top-full mt-4 w-72 md:w-80 z-50 origin-top-left">
 								<Login onLoginSuccess={onLoginSuccess} />
@@ -61,6 +53,7 @@ export default function Home({ onLoginSuccess }) {
 								<Register onRegisterSuccess={onLoginSuccess} />
 							</div>
 						)}
+						
 					</div>
 
 					{/* Logo centrado */}
@@ -96,11 +89,7 @@ export default function Home({ onLoginSuccess }) {
 			<section className="bg-oscuro px-6 md:px-12 pb-24 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
 				<div className="lg:col-span-6 bg-gris p-5 md:p-6 rounded-xl border-t-4 border-ianuarius transform -translate-y-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 					<div className="w-full h-48 bg-oscuro rounded-lg mb-5 overflow-hidden relative group">
-						<img
-							src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-							alt="Pista"
-							className="object-cover w-full h-full opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-700 ease-in-out"
-						/>
+						<img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pista" className="object-cover w-full h-full opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-700 ease-in-out" />
 					</div>
 					<h3 className="text-xl md:text-2xl font-semibold text-white mb-3 leading-snug">Superar tus límites es posible, solo hay un paso...</h3>
 					<p className="text-gray-400 text-sm md:text-base mb-6 leading-relaxed">
