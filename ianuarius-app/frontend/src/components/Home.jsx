@@ -30,12 +30,12 @@ export default function Home({ onLoginSuccess }) {
 			<section className="min-h-[85vh] w-full bg-hero flex flex-col">
 				<nav className="w-full px-4 md:px-8 py-4 grid grid-cols-3 items-center text-[10px] md:text-xs tracking-widest uppercase">
 					{/* nav Izq. */}
-					<div className="flex items-center gap-2 md:gap-4 relative">
+					<div className="flex flex-col items-start gap-1 md:flex-row md:items-center md:gap-4 relative">
 						<button
 							onClick={toggleRegister}
-							className="hidden md:flex bg-ianuarius text-white font-bold px-5 py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300 items-center gap-2 whitespace-nowrap"
+							className="bg-ianuarius text-white font-bold px-3 md:px-5 py-1.5 md:py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300"
 						>
-							Registrarse <span className="text-base leading-none">&rarr;</span>
+							Registrarse
 						</button>
 						<button
 							onClick={toggleLogin}
@@ -71,13 +71,7 @@ export default function Home({ onLoginSuccess }) {
 					</div>
 
 					{/* nav Der. */}
-					<div className="flex items-center gap-2 md:gap-5 text-white/60 justify-end">
-						<button
-							onClick={toggleRegister}
-							className="md:hidden bg-ianuarius text-white font-bold px-3 py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300 flex items-center gap-1 whitespace-nowrap tracking-normal"
-						>
-							Reg <span className="text-sm leading-none">&rarr;</span>
-						</button>
+					<div className="flex items-center gap-3 md:gap-5 text-white/60 justify-end">
 						<span className="hidden md:block hover:text-white cursor-pointer transition">ES / EN</span>
 						<button className="flex items-center gap-2.5 text-white hover:text-ianuarius transition group">
 							MENU
