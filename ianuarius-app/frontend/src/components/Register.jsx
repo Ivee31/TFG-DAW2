@@ -165,7 +165,7 @@ export default function Register({ onRegisterSuccess }) {
 					/>
 				</div>
 
-				<div className="grid grid-cols-2 gap-3">
+				<div className="grid grid-cols-2 gap-3 items-end">
 					<div>
 						<label className={labelClasses}>Fecha de nacimiento</label>
 						<input

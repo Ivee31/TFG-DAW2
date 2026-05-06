@@ -33,13 +33,13 @@ export default function Home({ onLoginSuccess }) {
 					<div className="flex items-center gap-2 md:gap-4 relative">
 						<button
 							onClick={toggleRegister}
-							className="bg-ianuarius text-white font-bold px-3 md:px-5 py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300 flex items-center gap-1 md:gap-2 whitespace-nowrap"
+							className="hidden md:flex bg-ianuarius text-white font-bold px-5 py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300 items-center gap-2 whitespace-nowrap"
 						>
 							Registrarse <span className="text-base leading-none">&rarr;</span>
 						</button>
 						<button
 							onClick={toggleLogin}
-							className="hidden sm:block text-white hover:text-ianuarius transition duration-300 font-bold"
+							className="text-white hover:text-ianuarius transition duration-300 font-bold"
 						>
 							Login
 						</button>
@@ -71,7 +71,13 @@ export default function Home({ onLoginSuccess }) {
 					</div>
 
 					{/* nav Der. */}
-					<div className="flex items-center gap-3 md:gap-5 text-white/60 justify-end">
+					<div className="flex items-center gap-2 md:gap-5 text-white/60 justify-end">
+						<button
+							onClick={toggleRegister}
+							className="md:hidden bg-ianuarius text-white font-bold px-3 py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300 flex items-center gap-1 whitespace-nowrap tracking-normal"
+						>
+							Reg <span className="text-sm leading-none">&rarr;</span>
+						</button>
 						<span className="hidden md:block hover:text-white cursor-pointer transition">ES / EN</span>
 						<button className="flex items-center gap-2.5 text-white hover:text-ianuarius transition group">
 							MENU
