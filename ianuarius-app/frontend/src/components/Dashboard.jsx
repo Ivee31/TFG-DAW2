@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 
+// clave unica por item: cubre el caso de misma prueba con variante propia + variante Absoluta
+const pruebaKey = (p) => `${p.id_prueba}_${p.especificaciones ?? ''}`;
+
+const GRUPO_ORDEN = [
+	'Velocidad Corta', 'Velocidad Larga', 'Vallas',
+	'Medio Fondo', 'Fondo', 'Larga Distancia', 'Obstaculos',
+	'Salto', 'Lanzamiento', 'Marcha',
+];
+
 function PruebaSelect({ pruebas, value, onChange }) {
 	const [open, setOpen] = useState(false);
 	const [query, setQuery] = useState('');
@@ -12,7 +21,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 		return () => document.removeEventListener('mousedown', handler);
 	}, []);
 
-	const selected = pruebas.find(p => p.nombre_prueba === value);
+	const selected = pruebas.find(p => pruebaKey(p) === value);
 
 	const grupos = {};
 	pruebas
@@ -21,6 +30,12 @@ function PruebaSelect({ pruebas, value, onChange }) {
 			if (!grupos[p.tipo]) grupos[p.tipo] = [];
 			grupos[p.tipo].push(p);
 		});
+
+	const gruposOrdenados = Object.entries(grupos).sort(([a], [b]) => {
+		const ai = GRUPO_ORDEN.indexOf(a);
+		const bi = GRUPO_ORDEN.indexOf(b);
+		return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+	});
 
 	return (
 		<div ref={ref} className="relative">
@@ -43,12 +58,12 @@ function PruebaSelect({ pruebas, value, onChange }) {
 					</div>
 
 					<div className="max-h-64 overflow-y-auto">
-						{Object.entries(grupos).map(([tipo, items]) => (
+						{gruposOrdenados.map(([tipo, items]) => (
 							<div key={tipo}>
 								<p className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-ianuarius bg-gris/30 sticky top-0">{tipo}</p>
 
 								{items.map(p => (
-									<div key={p.id_prueba} onClick={() => { onChange(p.nombre_prueba); setOpen(false); setQuery(''); }} className={`px-3 py-2.5 text-sm cursor-pointer transition hover:bg-white/5 flex items-center justify-between ${value === p.nombre_prueba ? 'text-ianuarius' : 'text-gray-300'}`}>
+									<div key={pruebaKey(p)} onClick={() => { onChange(pruebaKey(p)); setOpen(false); setQuery(''); }} className={`px-3 py-2.5 text-sm cursor-pointer transition hover:bg-white/5 flex items-center justify-between ${value === pruebaKey(p) ? 'text-ianuarius' : 'text-gray-300'}`}>
 										<span>{p.nombre_prueba}</span>
 
 										{p.especificaciones && (
@@ -59,7 +74,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 							</div>
 						))}
 
-						{Object.keys(grupos).length === 0 && (
+						{gruposOrdenados.length === 0 && (
 							<p className="text-gray-600 text-xs text-center py-4 uppercase tracking-widest">Sin resultados</p>
 						)}
 					</div>
@@ -133,7 +148,7 @@ export default function Dashboard() {
 			.then(data => {
 				if (data.status === 'success') {
 					setPruebas(data.pruebas);
-					if (data.pruebas.length > 0) setPrueba(data.pruebas[0].nombre_prueba);
+					if (data.pruebas.length > 0) setPrueba(pruebaKey(data.pruebas[0]));
 				}
 			});
 
@@ -161,11 +176,12 @@ export default function Dashboard() {
 		setFormatoError(false);
 		setGuardando(true);
 
+		const selectedPrueba = pruebas.find(p => pruebaKey(p) === prueba);
 		fetch(`${API}/marcas`, {
 			method: 'POST',
 			credentials: 'include',
 			body: JSON.stringify({
-				prueba,
+				prueba: selectedPrueba?.nombre_prueba ?? prueba,
 				temporada: temporada === 'shortTrack' ? 'short_track' : 'outdoor',
 				tipo_competicion: tipoCompeticion,
 				marca: marcaTiempo,
