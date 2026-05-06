@@ -58,7 +58,7 @@ export default function Home({ onLoginSuccess }) {
 
 					{/* Logo centrado */}
 					<div className="flex justify-center self-center">
-						<div className="pt-5 w-20 h-20 md:w-32 md:h-32 bg-oscuro/60 backdrop-blur-md rounded-full border-2 border-ianuarius/50 flex items-center justify-center p-2 md:p-3 hover:border-ianuarius shadow-[0_0_30px_rgba(254,0,0,0.4)] transition duration-300">
+						<div className="w-20 h-20 md:w-32 md:h-32 bg-oscuro/60 backdrop-blur-md rounded-full border-2 border-ianuarius/50 flex items-center justify-center p-2 md:p-3 hover:border-ianuarius shadow-[0_0_30px_rgba(254,0,0,0.4)] transition duration-300">
 							<img src={logoIanuarius} alt="Escudo Ianuarius" className="w-full h-full object-contain" />
 						</div>
 					</div>
