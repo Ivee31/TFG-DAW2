@@ -34,9 +34,12 @@ export default function ForgotPassword({ onBack }) {
 		return (
 			<div className="bg-gris p-6 rounded-lg shadow-2xl border-t-4 border-ianuarius w-full text-center">
 				<p className="text-white font-black text-sm uppercase tracking-widest mb-3">Revisa tu email</p>
-				<p className="text-gray-400 text-xs leading-relaxed mb-5">
+				<p className="text-gray-400 text-xs leading-relaxed mb-4">
 					Si el email está registrado, recibirás un enlace para restablecer tu contraseña. Válido 1 hora.
 				</p>
+				<div className="bg-yellow-500/10 border border-yellow-500/40 rounded px-3 py-2 mb-5">
+					<p className="text-yellow-400 text-[10px] leading-relaxed">⚠ Si no aparece en bandeja de entrada, revisa la carpeta de <strong>spam o correo no deseado</strong>.</p>
+				</div>
 				<button onClick={onBack} className="text-gray-500 hover:text-white text-xs uppercase tracking-widest transition">
 					← Volver al login
 				</button>
@@ -47,7 +50,10 @@ export default function ForgotPassword({ onBack }) {
 	return (
 		<div className="bg-gris p-6 rounded-lg shadow-2xl border-t-4 border-ianuarius w-full">
 			<h2 className="text-xl font-black text-white mb-1 text-center tracking-widest">RECUPERAR</h2>
-			<p className="text-gray-500 text-[10px] text-center uppercase tracking-widest mb-5">Contraseña olvidada</p>
+			<p className="text-gray-500 text-[10px] text-center uppercase tracking-widest mb-4">Contraseña olvidada</p>
+			<div className="bg-yellow-500/10 border border-yellow-500/40 rounded px-3 py-2 mb-4">
+				<p className="text-yellow-400 text-[10px] leading-relaxed">⚠ El email puede llegar a <strong>spam</strong>. Revísalo si no aparece en bandeja de entrada.</p>
+			</div>
 			{errorMsg && (
 				<div className="bg-red-500/10 border border-red-500 text-red-500 p-2 rounded mb-4 text-xs text-center">
 					{errorMsg}
