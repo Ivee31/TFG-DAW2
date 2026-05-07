@@ -19,7 +19,7 @@
 	<span>(pinchar con 'ctrl' para abrir en otra pestaña)</span>
 </p>
 <p align="right">
-	<a href="https://ianuarius-back.infinityfreeapp.com/" target="_blank">🌐 Aplicación desplegada Online</a><br>
+	<a href="https://apache.handmadegames.org/ivan2_daw2/" target="_blank">🌐 Aplicación desplegada Online</a><br>
 	<span>(pinchar con 'ctrl' para abrir en otra pestaña)</span>
 </p>
 
