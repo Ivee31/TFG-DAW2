@@ -59,7 +59,7 @@ export default function App() {
 	return (
 		<>
 			{user ? (
-				<Layout user={user} onLogout={() => setUser(null)}>
+				<Layout user={user} onLogout={() => setUser(null)} onUserUpdate={setUser}>
 					{user.rol === 'Admin'      && <AdminPanel />}
 					{user.rol === 'Entrenador' && <DashboardEntrenador />}
 					{user.rol === 'Atleta'     && <Dashboard />}

@@ -7,13 +7,20 @@ const INACTIVIDAD_MS = 15 * 60 * 1000;
 const COUNTDOWN_SEGS = 2 * 60;
 
 // plantilla principal para vistas autenticadas
-export default function Layout({ children, user, onLogout }) {
+export default function Layout({ children, user, onLogout, onUserUpdate }) {
 	// control estados menu lateral
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isPinned, setIsPinned] = useState(false);
 	const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024);
 	const menuRef = useRef(null);
 	const btnRef = useRef(null);
+
+	// ajustes dropdown
+	const [showAjustes, setShowAjustes] = useState(false);
+	const [nuevoEmail, setNuevoEmail] = useState('');
+	const [emailMsg, setEmailMsg] = useState('');
+	const [emailLoading, setEmailLoading] = useState(false);
+	const ajustesRef = useRef(null);
 
 	// estados banner de inactividad
 	const [mostrarAviso, setMostrarAviso] = useState(false);
@@ -112,6 +119,42 @@ export default function Layout({ children, user, onLogout }) {
 		const s = String(segs % 60).padStart(2, '0');
 		return `${m}:${s}`;
 
+	};
+
+	// cierra ajustes al click fuera
+	useEffect(() => {
+		const handler = (e) => {
+			if (showAjustes && ajustesRef.current && !ajustesRef.current.contains(e.target)) {
+				setShowAjustes(false);
+				setEmailMsg('');
+				setNuevoEmail('');
+			}
+		};
+		document.addEventListener('mousedown', handler);
+		return () => document.removeEventListener('mousedown', handler);
+	}, [showAjustes]);
+
+	const handleCambiarEmail = (e) => {
+		e.preventDefault();
+		setEmailLoading(true);
+		setEmailMsg('');
+		fetch(`${API}/usuarios/email`, {
+			method: 'PUT',
+			credentials: 'include',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email: nuevoEmail })
+		})
+		.then(res => res.json())
+		.then(data => {
+			setEmailLoading(false);
+			if (data.status === 'success') {
+				setEmailMsg('Email actualizado');
+				if (onUserUpdate) onUserUpdate({ ...user, email: data.email });
+			} else {
+				setEmailMsg(data.error || 'Error');
+			}
+		})
+		.catch(() => { setEmailLoading(false); setEmailMsg('Error de conexión'); });
 	};
 
 	// maneja click fuera de menu para cerrarlo
@@ -241,13 +284,35 @@ export default function Layout({ children, user, onLogout }) {
 							Cerrar Sesion
 						</button>
 
-						<button className="bg-gris border border-white/10 p-3 md:px-4 md:py-2 rounded uppercase hover:bg-white hover:text-oscuro transition duration-300 flex items-center justify-center aspect-square md:aspect-auto">
-							<span className="hidden md:block text-[10px] tracking-widest font-bold">Ajustes</span>
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 md:hidden block">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
-								<path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-							</svg>
-						</button>
+						<div ref={ajustesRef} className="relative">
+							<button onClick={() => { setShowAjustes(v => !v); setEmailMsg(''); setNuevoEmail(''); }} className="bg-gris border border-white/10 p-3 md:px-4 md:py-2 rounded uppercase hover:bg-white hover:text-oscuro transition duration-300 flex items-center justify-center aspect-square md:aspect-auto">
+								<span className="hidden md:block text-[10px] tracking-widest font-bold">Ajustes</span>
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 md:hidden block">
+									<path strokeLinecap="round" strokeLinejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
+									<path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+								</svg>
+							</button>
+
+							{showAjustes && (
+								<div className="absolute right-0 top-full mt-2 w-72 bg-gris border border-white/10 rounded-lg shadow-2xl z-50 p-4">
+									<p className="text-[10px] uppercase tracking-widest text-gray-500 mb-3">Ajustes de cuenta</p>
+
+									<p className="text-xs text-gray-400 mb-3">Email actual: <span className="text-white">{user?.email}</span></p>
+
+									<form onSubmit={handleCambiarEmail} className="space-y-3">
+										<input type="email" value={nuevoEmail} onChange={e => setNuevoEmail(e.target.value)} placeholder="Nuevo email" required className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm" />
+
+										<button type="submit" disabled={emailLoading} className="w-full bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
+											{emailLoading ? 'Guardando...' : 'Cambiar email'}
+										</button>
+
+										{emailMsg && (
+											<p className={`text-xs text-center ${emailMsg === 'Email actualizado' ? 'text-green-400' : 'text-red-400'}`}>{emailMsg}</p>
+										)}
+									</form>
+								</div>
+							)}
+						</div>
 
 						<button
 							ref={btnRef}

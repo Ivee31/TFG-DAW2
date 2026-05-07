@@ -84,6 +84,8 @@ switch ($endpoint) {
         $sub = $segments[1] ?? '';
         if ($sub === 'atletas' && $method === 'GET') {
             UsuarioController::listarAtletas();
+        } elseif ($sub === 'email' && $method === 'PUT') {
+            UsuarioController::cambiarEmail();
         } else {
             http_response_code(404);
             echo json_encode(["error" => "Endpoint not found"]);
