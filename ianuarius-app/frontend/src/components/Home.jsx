@@ -122,6 +122,14 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				</div>
 			</section>
 
+		{/* footer */}
+		<footer className="w-full py-8 flex justify-center border-t border-white/5">
+			<p className="text-[9px] text-gray-600 uppercase tracking-[0.5em] text-center leading-relaxed">
+				Ianuarius Athletics Club &copy; 2026<br />
+				<a href="?page=aviso-legal" className="hover:text-gray-400 transition underline underline-offset-2">Aviso Legal</a>
+			</p>
+		</footer>
+
 		{/* banner cookies */}
 		{!cookiesAceptadas && (
 			<div className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6">

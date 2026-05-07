@@ -8,6 +8,7 @@ import AdminPanel from "./components/AdminPanel";
 import Home from './components/Home';
 import ResetPassword from './components/ResetPassword';
 import CompleteGoogleProfile from './components/CompleteGoogleProfile';
+import AvisoLegal from './components/AvisoLegal';
 
 export default function App() {
 	const [user, setUser] = useState(null);
@@ -32,6 +33,12 @@ export default function App() {
 				</span>
 			</div>
 		);
+	}
+
+	// aviso legal
+	const page = new URLSearchParams(window.location.search).get('page');
+	if (page === 'aviso-legal') {
+		return <AvisoLegal onBack={() => window.history.replaceState({}, '', '/')} />;
 	}
 
 	// enlace de recuperacion de contraseña en la URL
