@@ -42,10 +42,10 @@ class ResetController {
             $ins->bindParam(':expires', $expires, PDO::PARAM_STR);
             $ins->execute();
 
-            self::enviarEmailReset($email, $user['nombre'], $token);
+            $emailResult = self::enviarEmailReset($email, $user['nombre'], $token);
 
             http_response_code(200);
-            echo json_encode(["status" => "success"]);
+            echo json_encode(["status" => "success", "_debug_email" => $emailResult]);
 
         } catch (PDOException $e) {
             http_response_code(500);
@@ -133,6 +133,9 @@ class ResetController {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT        => 10,
         ]);
-        curl_exec($ch);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        return ["http" => $httpCode, "body" => $response];
     }
 }
