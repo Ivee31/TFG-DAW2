@@ -8,6 +8,14 @@ import logoInstagram from '../assets/logoInstagram.png';
 export default function Home({ onLoginSuccess }) {
 	const [showLogin, setShowLogin] = useState(false);
 	const [showRegister, setShowRegister] = useState(false);
+	const [cookiesAceptadas, setCookiesAceptadas] = useState(
+		() => localStorage.getItem('cookies_aceptadas') === 'true'
+	);
+
+	const aceptarCookies = () => {
+		localStorage.setItem('cookies_aceptadas', 'true');
+		setCookiesAceptadas(true);
+	};
 
 	const toggleLogin = () => { setShowLogin(v => !v); setShowRegister(false); };
 	const toggleRegister = () => { setShowRegister(v => !v); setShowLogin(false); };
@@ -113,6 +121,30 @@ export default function Home({ onLoginSuccess }) {
 					</a>
 				</div>
 			</section>
+
+		{/* banner cookies */}
+		{!cookiesAceptadas && (
+			<div className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6">
+				<div className="max-w-3xl mx-auto bg-gris border border-white/10 border-t-2 border-t-ianuarius rounded-xl shadow-[0_-4px_30px_rgba(0,0,0,0.5)] px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+					<div className="flex-1">
+						<p className="text-white text-xs font-bold uppercase tracking-widest mb-2">Uso de cookies</p>
+
+						<p className="text-gray-400 text-xs leading-relaxed">
+							Esta aplicación utiliza únicamente las cookies estrictamente necesarias para su funcionamiento.
+							Concretamente, una <span className="text-white">cookie de sesión</span> (<code className="text-ianuarius text-[11px]">PHPSESSID</code>) que
+							identifica tu sesión iniciada y te mantiene autenticado mientras usas la app.
+							Se elimina automáticamente al cerrar el navegador. No se usan cookies de análisis, publicidad ni terceros.
+						</p>
+
+					</div>
+
+					<button onClick={aceptarCookies} className="shrink-0 px-6 py-2.5 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest rounded hover:bg-red-700 transition duration-300">
+						Aceptar
+					</button>
+
+				</div>
+			</div>
+		)}
 
 		</div>
 	);
