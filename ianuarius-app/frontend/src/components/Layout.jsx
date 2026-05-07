@@ -11,6 +11,7 @@ export default function Layout({ children, user, onLogout }) {
 	// control estados menu lateral
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isPinned, setIsPinned] = useState(false);
+	const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024);
 	const menuRef = useRef(null);
 	const btnRef = useRef(null);
 
@@ -26,6 +27,18 @@ export default function Layout({ children, user, onLogout }) {
 	// mantener refs actualizadas
 	useEffect(() => { onLogoutRef.current = onLogout; }, [onLogout]);
 	useEffect(() => { mostrarAvisoRef.current = mostrarAviso; }, [mostrarAviso]);
+
+	// detectar cambio escritorio/movil — en movil nunca pinned
+	useEffect(() => {
+		const mql = window.matchMedia('(min-width: 1024px)');
+		const handler = (e) => {
+			const mobile = !e.matches;
+			setIsMobile(mobile);
+			if (mobile) setIsPinned(false);
+		};
+		mql.addEventListener('change', handler);
+		return () => mql.removeEventListener('change', handler);
+	}, []);
 
 	// llama al backend para destruir la sesion y limpia el estado de React
 	const handleLogout = useCallback(() => {
@@ -168,13 +181,13 @@ export default function Layout({ children, user, onLogout }) {
 			{/* menu lateral */}
 			<aside
 				ref={menuRef}
-				className={`fixed right-0 top-0 h-full w-64 bg-gris border-l border-white/10 transform transition-transform duration-300 z-50 p-6 flex flex-col shadow-2xl ${isMenuOpen || isPinned ? 'translate-x-0' : 'translate-x-full'}`}>
+				className={`fixed right-0 top-0 h-full w-64 bg-gris border-l border-white/10 transform transition-transform duration-300 z-50 p-6 flex flex-col shadow-2xl ${isMenuOpen || (isPinned && !isMobile) ? 'translate-x-0' : 'translate-x-full'}`}>
 				<div className="flex justify-between items-center mb-10 border-b border-white/10 pb-4">
 					<h3 className="font-bold tracking-widest uppercase text-sm">Navegacion</h3>
 					<div className="flex gap-3 items-center">
 						<button
 							onClick={() => setIsPinned(!isPinned)}
-							className={`hidden lg:block transition ${isPinned ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}
+							className={`transition ${isPinned ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M15 3h-6m3 12v6m-2.5-6h5l1.5-3v-2l-1.5-1V3h-5v6l-1.5 1v2l1.5 3z" />
