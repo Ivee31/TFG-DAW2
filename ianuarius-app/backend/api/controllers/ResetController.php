@@ -117,12 +117,28 @@ class ResetController {
             </div>
         ";
 
-        $headers  = "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "From: Ianuarius <noreply@apache.handmadegames.org>\r\n";
+        $api_key = Config::get('BREVO_KEY');
+        $payload = json_encode([
+            'sender'      => ['name' => 'Ianuarius', 'email' => 'noreply@apache.handmadegames.org'],
+            'to'          => [['email' => $email, 'name' => $nombre]],
+            'subject'     => $subject,
+            'htmlContent' => $html,
+        ]);
 
-        $ok = mail($email, $subject, $html, $headers);
+        $ch = curl_init('https://api.brevo.com/v3/smtp/email');
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_HTTPHEADER     => [
+                'api-key: ' . $api_key,
+                'Content-Type: application/json',
+            ],
+            CURLOPT_POSTFIELDS     => $payload,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 10,
+        ]);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        return ["method" => "mail()", "result" => $ok];
+        return ["http" => $httpCode, "body" => $response];
     }
 }
