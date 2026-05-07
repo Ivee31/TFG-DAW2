@@ -6,27 +6,24 @@ import Dashboard from "./components/Dashboard";
 import DashboardEntrenador from "./components/DashboardEntrenador";
 import AdminPanel from "./components/AdminPanel";
 import Home from './components/Home';
+import ResetPassword from './components/ResetPassword';
+import CompleteGoogleProfile from './components/CompleteGoogleProfile';
 
 export default function App() {
-	// estado de usuario logged
 	const [user, setUser] = useState(null);
-	// mientras se comprueba la sesion existente, no mostrar nada
 	const [cargandoSesion, setCargandoSesion] = useState(true);
+	const [googleCompleteData, setGoogleCompleteData] = useState(null);
 
-	// al arrancar, consulta si hay sesion activa (persiste tras refresco)
 	useEffect(() => {
 		fetch(`${API}/session`, { credentials: 'include' })
 			.then(res => res.json())
 			.then(data => {
 				if (data.status === 'success') setUser(data.user);
-
 			})
 			.catch(() => {})
 			.finally(() => setCargandoSesion(false));
-
 	}, []);
 
-	// pantalla de carga minima mientras se verifica la sesion
 	if (cargandoSesion) {
 		return (
 			<div className="bg-oscuro min-h-screen flex items-center justify-center">
@@ -35,21 +32,41 @@ export default function App() {
 				</span>
 			</div>
 		);
+	}
 
+	// enlace de recuperacion de contraseña en la URL
+	const resetToken = new URLSearchParams(window.location.search).get('reset_token');
+	if (resetToken) {
+		return (
+			<ResetPassword
+				token={resetToken}
+				onDone={() => window.history.replaceState({}, '', '/')}
+			/>
+		);
+	}
+
+	// completar perfil tras Google login (usuario nuevo)
+	if (googleCompleteData) {
+		return (
+			<CompleteGoogleProfile
+				data={googleCompleteData}
+				onSuccess={(u) => { setGoogleCompleteData(null); setUser(u); }}
+				onCancel={() => setGoogleCompleteData(null)}
+			/>
+		);
 	}
 
 	return (
 		<>
 			{user ? (
 				<Layout user={user} onLogout={() => setUser(null)}>
-					{user.rol === 'Admin' && <AdminPanel />}
+					{user.rol === 'Admin'      && <AdminPanel />}
 					{user.rol === 'Entrenador' && <DashboardEntrenador />}
-					{user.rol === 'Atleta' && <Dashboard />}
+					{user.rol === 'Atleta'     && <Dashboard />}
 				</Layout>
 			) : (
-				<Home onLoginSuccess={setUser} />
+				<Home onLoginSuccess={setUser} onGoogleNeedsCompletion={setGoogleCompleteData} />
 			)}
 		</>
 	);
-
 }

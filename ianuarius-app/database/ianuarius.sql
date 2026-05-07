@@ -44,7 +44,8 @@ CREATE TABLE usuarios (
     apellidos VARCHAR(100) NOT NULL,
     dni VARCHAR(9) UNIQUE DEFAULT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NULL,
+    google_id VARCHAR(255) NULL UNIQUE,
     rol ENUM('Admin', 'Entrenador', 'Atleta') DEFAULT 'Atleta',
     fecha_nacimiento DATE NOT NULL,
     genero ENUM('M', 'F') NOT NULL,
@@ -338,7 +339,17 @@ INSERT INTO usuarios (id_categoria, nombre, apellidos, dni, email, password_hash
 INSERT INTO fichas_inscripcion (id_usuario, temporada, estado_validacion, estado_pago) VALUES
 (1, '2025/2026', 'validado', 'pagado');
 
--- 8. Tabla marcas (tiempos registrados por los atletas)
+-- 8. Tabla password_resets (tokens para recuperacion de contraseña)
+CREATE TABLE password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    token VARCHAR(64) NOT NULL UNIQUE,
+    expires_at DATETIME NOT NULL,
+    usado TINYINT(1) NOT NULL DEFAULT 0,
+    creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 9. Tabla marcas (tiempos registrados por los atletas)
 -- formato marca: MM'SS"ms  (ej: 00'49"15)
 CREATE TABLE IF NOT EXISTS marcas (
     id_marca         INT AUTO_INCREMENT PRIMARY KEY,

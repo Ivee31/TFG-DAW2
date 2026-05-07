@@ -61,17 +61,24 @@ Este apartado detalla los pasos tecnicos necesarios para poner en marcha la plat
 
 // inicializacion de datos en mysql
 
-1. Iniciar servicios de Apache y MySQL.
-2. Importar el esquema localizado en `backend/database/ianuarius.sql`.
-3. Configurar el archivo `.env` en la raiz del backend con las credenciales:
+1. Iniciar servicios de Apache y MySQL (o lanzar Docker, ver 1.3).
+2. Importar el esquema localizado en `ianuarius-app/database/ianuarius.sql`.
+3. Configurar el archivo `.env` en `ianuarius-app/backend/` con las credenciales:
 
 ```env
 // CONFIGURACION CONEXION PDO
-DB_HOST=localhost
+DB_HOST=db
 DB_NAME=ianuarius_db
 DB_USER=root
-DB_PASS=
+DB_PASS=root
 DB_PORT=3306
+
+// URL del frontend (para enlaces en emails)
+APP_URL=http://localhost:5173
+
+// Clave API de Resend (servicio de envio de email transaccional)
+// Obtener en: https://resend.com → Dashboard → API Keys
+RESEND_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 ### 1.3 Montaje de los Contenedores
 
@@ -88,22 +95,29 @@ docker compose up -d --build
 
 ### 1.4 Despliegue del Frontend
 
-1. Acceder a la carpeta del cliente: `/ianuarius-app/frontend`.
-2. Instalar dependencias necesarias:
+1. Acceder a la carpeta del cliente: `ianuarius-app/frontend`.
+2. Crear archivo `.env` en esa carpeta con la clave de Google OAuth:
+
+```env
+// CLIENT ID obtenido en Google Cloud Console → APIs & Services → Credentials
+VITE_GOOGLE_CLIENT_ID=XXXXXXXXXXXXXXXX.apps.googleusercontent.com
+```
+
+3. Instalar dependencias necesarias:
 
 ```bash
 # DESCARGA DE MODULOS NODE
 npm install
 ```
 
-3. Arrancar el servidor de desarrollo:
+4. Arrancar el servidor de desarrollo:
 
 ```bash
 # INICIO ENTORNO LOCAL
 npm run dev
 ```
 
-4. Obtener versión para distribución del front:
+5. Obtener versión para distribución del front:
 
 ```bash
 # OBTENER LA CARPETA BUILD
@@ -116,8 +130,7 @@ La aplicacion implementa sesiones seguras mediante **Cookies HttpOnly**.
 
 * El archivo `vite.config.js` actua como proxy para redirigir peticiones `/api` al servidor PHP.
 
-
-### 1.5 Acceso al Sistema
+### 1.6 Acceso al Sistema
 
 * **URL:** `http://localhost:5173` (con `npm run dev` corriendo)
 * **phpMyAdmin:** `http://localhost:8082`

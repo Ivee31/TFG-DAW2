@@ -133,6 +133,42 @@ switch ($endpoint) {
         }
         break;
     
+    case 'google-login':
+        if ($method === 'POST') {
+            AuthController::loginGoogle();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
+    case 'google-complete':
+        if ($method === 'POST') {
+            AuthController::completeGoogleRegister();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
+    case 'forgot-password':
+        if ($method === 'POST') {
+            ResetController::solicitar();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
+    case 'reset-password':
+        if ($method === 'POST') {
+            ResetController::resetear();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
     default:
         http_response_code(404);
         echo json_encode(["error" => "Endpoint not found"]);

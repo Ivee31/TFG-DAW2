@@ -5,7 +5,7 @@ import Register from './Register';
 import logoIanuarius from '../assets/logoIanuarius.png';
 import logoInstagram from '../assets/logoInstagram.png';
 
-export default function Home({ onLoginSuccess }) {
+export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 	const [showLogin, setShowLogin] = useState(false);
 	const [showRegister, setShowRegister] = useState(false);
 	const [cookiesAceptadas, setCookiesAceptadas] = useState(
@@ -53,12 +53,12 @@ export default function Home({ onLoginSuccess }) {
 
 						{showLogin && (
 							<div className="absolute left-0 top-full mt-4 w-72 md:w-80 z-50 origin-top-left">
-								<Login onLoginSuccess={onLoginSuccess} />
+								<Login onLoginSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
 							</div>
 						)}
 						{showRegister && (
 							<div className="absolute left-0 top-full mt-4 w-80 md:w-96 z-50 origin-top-left">
-								<Register onRegisterSuccess={onLoginSuccess} />
+								<Register onRegisterSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
 							</div>
 						)}
 						
