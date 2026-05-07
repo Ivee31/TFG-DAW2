@@ -119,7 +119,7 @@ class ResetController {
 
         $api_key = Config::get('BREVO_KEY');
         $payload = json_encode([
-            'sender'      => ['name' => 'Ianuarius', 'email' => 'noreply@apache.handmadegames.org'],
+            'sender'      => ['name' => 'Ianuarius', 'email' => 'ivinmn31@gmail.com'],
             'to'          => [['email' => $email, 'name' => $nombre]],
             'subject'     => $subject,
             'htmlContent' => $html,
