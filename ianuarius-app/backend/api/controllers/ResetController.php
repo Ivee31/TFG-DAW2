@@ -134,6 +134,5 @@ class ResetController {
             CURLOPT_TIMEOUT        => 10,
         ]);
         curl_exec($ch);
-        curl_close($ch);
     }
 }
