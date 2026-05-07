@@ -128,6 +128,16 @@ export default function Dashboard() {
 	const [confirmandoId, setConfirmandoId] = useState(null);
 	const [eliminando, setEliminando] = useState(false);
 
+	// edicion
+	const [editandoId, setEditandoId] = useState(null);
+	const [editPrueba, setEditPrueba] = useState('');
+	const [editTemporada, setEditTemporada] = useState('outdoor');
+	const [editTipo, setEditTipo] = useState('Control');
+	const [editMarca, setEditMarca] = useState('');
+	const [editCategoria, setEditCategoria] = useState('');
+	const [editFormatoError, setEditFormatoError] = useState(false);
+	const [guardandoEdicion, setGuardandoEdicion] = useState(false);
+
 	const cargarMarcas = () => {
 		setCargando(true);
 		fetch(`${API}/marcas`, { credentials: 'include' })
@@ -241,6 +251,43 @@ export default function Dashboard() {
 
 	};
 
+	const handleAbrirEditar = (m) => {
+		if (editandoId === m.id_marca) { setEditandoId(null); return; }
+		const match = pruebas.find(p => p.nombre_prueba === m.prueba);
+		setEditPrueba(match ? pruebaKey(match) : '');
+		setEditTemporada(m.temporada === 'short_track' ? 'shortTrack' : 'outdoor');
+		setEditTipo(m.tipo_competicion);
+		setEditMarca(m.marca);
+		setEditCategoria(m.id_categoria ?? '');
+		setEditFormatoError(false);
+		setConfirmandoId(null);
+		setEditandoId(m.id_marca);
+	};
+
+	const handleGuardarEdicion = (id_marca) => {
+		if (!REGEX_MARCA.test(editMarca)) { setEditFormatoError(true); return; }
+		setEditFormatoError(false);
+		setGuardandoEdicion(true);
+		const sel = pruebas.find(p => pruebaKey(p) === editPrueba);
+		fetch(`${API}/marcas/${id_marca}`, {
+			method: 'PUT',
+			credentials: 'include',
+			body: JSON.stringify({
+				prueba: sel?.nombre_prueba ?? editPrueba,
+				temporada: editTemporada === 'shortTrack' ? 'short_track' : 'outdoor',
+				tipo_competicion: editTipo,
+				marca: editMarca,
+				id_categoria: editCategoria
+			})
+		})
+		.then(res => res.json())
+		.then(data => {
+			setGuardandoEdicion(false);
+			if (data.status === 'success') { setEditandoId(null); cargarMarcas(); }
+		})
+		.catch(() => setGuardandoEdicion(false));
+	};
+
 	const toggleVerTodas = () => {
 		setVerTodas(v => !v);
 		setPagina(1);
@@ -300,9 +347,19 @@ export default function Dashboard() {
 									</div>
 								</div>
 
-								<div className="flex justify-end mt-3 pt-3 border-t border-white/5">
+								<div className="flex justify-between mt-3 pt-3 border-t border-white/5">
 									<button
-										onClick={() => setConfirmandoId(confirmandoId === m.id_marca ? null : m.id_marca)}
+										onClick={() => handleAbrirEditar(m)}
+										className="text-gray-600 hover:text-white transition p-1"
+										title="Editar marca"
+									>
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+											<path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+										</svg>
+									</button>
+
+									<button
+										onClick={() => { setConfirmandoId(confirmandoId === m.id_marca ? null : m.id_marca); setEditandoId(null); }}
 										className="text-gray-600 hover:text-ianuarius transition p-1"
 										title="Eliminar marca"
 									>
@@ -330,6 +387,80 @@ export default function Dashboard() {
 												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest bg-ianuarius text-white rounded hover:bg-red-700 transition disabled:opacity-50"
 											>
 												{eliminando ? '...' : 'Eliminar'}
+											</button>
+										</div>
+									</div>
+								)}
+
+								{editandoId === m.id_marca && (
+									<div className="mt-3 pt-3 border-t border-white/20 bg-gris rounded-xl p-4 space-y-4">
+										<div>
+											<label className={labelClasses}>Prueba</label>
+											<PruebaSelect pruebas={pruebas} value={editPrueba} onChange={setEditPrueba} />
+										</div>
+
+										<div>
+											<label className={labelClasses}>Tipo de Competicion</label>
+											<select value={editTipo} onChange={(e) => setEditTipo(e.target.value)} className={selectClasses}>
+												<option>Nacional</option>
+												<option>Autonomico CyL</option>
+												<option>Provincial</option>
+												<option>Escolar</option>
+												<option>Control</option>
+											</select>
+										</div>
+
+										<div>
+											<label className={labelClasses}>Categoría</label>
+											<select value={editCategoria} onChange={(e) => setEditCategoria(e.target.value)} className={selectClasses}>
+												<option value="">Sin especificar</option>
+												{categorias.map(c => (
+													<option key={c.id_categoria} value={c.id_categoria}>{c.nombre}</option>
+												))}
+											</select>
+										</div>
+
+										<div>
+											<label className={labelClasses}>Temporada</label>
+											<div className="grid grid-cols-2 gap-3">
+												<button type="button" onClick={() => setEditTemporada('shortTrack')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'shortTrack' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
+													Short Track
+												</button>
+
+												<button type="button" onClick={() => setEditTemporada('outdoor')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'outdoor' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
+													Outdoor
+												</button>
+											</div>
+										</div>
+
+										<div>
+											<label className={labelClasses}>Marca (MM'SS"ms)</label>
+											<input
+												type="text"
+												value={editMarca}
+												onChange={(e) => { setEditMarca(formatMarcaTiempo(e.target.value)); setEditFormatoError(false); }}
+												onBlur={() => { if (editMarca && !REGEX_MARCA.test(editMarca)) setEditFormatoError(true); else setEditFormatoError(false); }}
+												className={`w-full bg-oscuro border p-3 rounded-lg text-xl text-ianuarius outline-none transition font-mono ${editFormatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
+											/>
+											{editFormatoError && (
+												<p className="text-red-400 text-[10px] mt-1 uppercase tracking-wider">Formato incorrecto — usa MM'SS"ms</p>
+											)}
+										</div>
+
+										<div className="flex gap-2">
+											<button
+												onClick={() => setEditandoId(null)}
+												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest border border-white/10 text-gray-400 rounded hover:bg-white/5 transition"
+											>
+												Cancelar
+											</button>
+
+											<button
+												onClick={() => handleGuardarEdicion(m.id_marca)}
+												disabled={guardandoEdicion}
+												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest bg-white text-oscuro rounded hover:bg-ianuarius hover:text-white transition disabled:opacity-50"
+											>
+												{guardandoEdicion ? '...' : 'Guardar'}
 											</button>
 										</div>
 									</div>

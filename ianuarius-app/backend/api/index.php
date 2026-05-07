@@ -15,7 +15,7 @@ $cors_origin = ($origen_peticion === $localhost_url) ? $localhost_url : $producc
 
 header("Access-Control-Allow-Origin: $cors_origin");
 header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Vary: Origin");
 
@@ -122,6 +122,10 @@ switch ($endpoint) {
         } elseif ($method == 'DELETE') {
             $id_marca = (int)($segments[1] ?? 0);
             MarcaController::eliminar($id_marca);
+
+        } elseif ($method == 'PUT') {
+            $id_marca = (int)($segments[1] ?? 0);
+            MarcaController::actualizar($id_marca);
 
         } else {
             http_response_code(405);

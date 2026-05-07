@@ -88,7 +88,7 @@ class MarcaController {
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
-                "SELECT m.id_marca, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
+                "SELECT m.id_marca, m.id_categoria, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
                         c.nombre AS categoria_nombre
                  FROM marcas m
                  LEFT JOIN categorias c ON m.id_categoria = c.id_categoria
@@ -107,6 +107,82 @@ class MarcaController {
             error_log("listar() - " . $e->getMessage(), 3, Config::LOGFILE);
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno al obtener marcas"]);
+        }
+    }
+
+    // actualiza una marca — solo si pertenece al usuario en sesion
+    public static function actualizar($id_marca) {
+        session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        if (!$id_marca || $id_marca < 1) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "ID de marca no valido"]);
+            return;
+        }
+
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($input['prueba']) || !isset($input['temporada']) || !isset($input['marca']) || !isset($input['tipo_competicion'])) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Datos incompletos"]);
+            return;
+        }
+
+        $id_usuario      = $_SESSION['id_usuario'];
+        $prueba          = trim($input['prueba']);
+        $temporada       = trim($input['temporada']);
+        $tipo_competicion = trim($input['tipo_competicion']);
+        $marca           = trim($input['marca']);
+
+        if (!preg_match(self::FORMATO_MARCA, $marca)) {
+            http_response_code(422);
+            echo json_encode(["status" => "error", "error" => "Formato incorrecto. Usa MM'SS\"ms (ej: 00'49\"15)"]);
+            return;
+        }
+
+        if (!in_array($tipo_competicion, self::TIPOS_COMPETICION)) {
+            http_response_code(422);
+            echo json_encode(["status" => "error", "error" => "Tipo de competicion no valido"]);
+            return;
+        }
+
+        $id_categoria = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare(
+                "UPDATE marcas
+                 SET prueba = :prueba, temporada = :temporada, tipo_competicion = :tipo_competicion,
+                     marca = :marca, id_categoria = :id_categoria
+                 WHERE id_marca = :id_marca AND id_usuario = :id_usuario"
+            );
+
+            $stmt->bindParam(':prueba',            $prueba,           PDO::PARAM_STR);
+            $stmt->bindParam(':temporada',         $temporada,        PDO::PARAM_STR);
+            $stmt->bindParam(':tipo_competicion',  $tipo_competicion, PDO::PARAM_STR);
+            $stmt->bindParam(':marca',             $marca,            PDO::PARAM_STR);
+            $stmt->bindParam(':id_categoria',      $id_categoria,     PDO::PARAM_INT);
+            $stmt->bindParam(':id_marca',          $id_marca,         PDO::PARAM_INT);
+            $stmt->bindParam(':id_usuario',        $id_usuario,       PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                http_response_code(200);
+                echo json_encode(["status" => "success", "message" => "Marca actualizada"]);
+            } else {
+                http_response_code(404);
+                echo json_encode(["status" => "error", "error" => "Marca no encontrada"]);
+            }
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno al actualizar la marca"]);
         }
     }
 
