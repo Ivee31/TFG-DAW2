@@ -103,39 +103,26 @@ class ResetController {
     private static function enviarEmailReset($email, $nombre, $token) {
         $app_url = Config::get('APP_URL', 'http://localhost:5173');
         $link    = "{$app_url}?reset_token={$token}";
-        $api_key = Config::get('RESEND_KEY');
 
-        $payload = json_encode([
-            'from'    => 'Ianuarius <onboarding@resend.dev>',
-            'to'      => [$email],
-            'subject' => 'Restablecer contraseña — Ianuarius',
-            'html'    => "
-                <div style='font-family:sans-serif;max-width:480px;margin:0 auto;background:#171717;padding:32px;border-radius:8px;'>
-                    <h2 style='color:#FE0000;letter-spacing:4px;font-size:13px;text-transform:uppercase;margin:0 0 24px;'>Ianuarius Athletics</h2>
-                    <p style='color:#e5e7eb;margin:0 0 12px;'>Hola, <strong>{$nombre}</strong>.</p>
-                    <p style='color:#9ca3af;font-size:14px;margin:0 0 24px;line-height:1.6;'>Recibimos una solicitud para restablecer tu contraseña. El enlace es válido durante <strong style='color:#fff;'>1 hora</strong>.</p>
-                    <a href='{$link}' style='display:inline-block;background:#FE0000;color:white;padding:12px 28px;border-radius:4px;text-decoration:none;font-weight:bold;font-size:12px;letter-spacing:3px;text-transform:uppercase;'>
-                        Restablecer contraseña
-                    </a>
-                    <p style='color:#4b5563;font-size:11px;margin-top:32px;'>Si no solicitaste este cambio, ignora este email.</p>
-                </div>
-            "
-        ]);
+        $subject = 'Restablecer contraseña — Ianuarius';
+        $html    = "
+            <div style='font-family:sans-serif;max-width:480px;margin:0 auto;background:#171717;padding:32px;border-radius:8px;'>
+                <h2 style='color:#FE0000;letter-spacing:4px;font-size:13px;text-transform:uppercase;margin:0 0 24px;'>Ianuarius Athletics</h2>
+                <p style='color:#e5e7eb;margin:0 0 12px;'>Hola, <strong>{$nombre}</strong>.</p>
+                <p style='color:#9ca3af;font-size:14px;margin:0 0 24px;line-height:1.6;'>Recibimos una solicitud para restablecer tu contraseña. El enlace es válido durante <strong style='color:#fff;'>1 hora</strong>.</p>
+                <a href='{$link}' style='display:inline-block;background:#FE0000;color:white;padding:12px 28px;border-radius:4px;text-decoration:none;font-weight:bold;font-size:12px;letter-spacing:3px;text-transform:uppercase;'>
+                    Restablecer contraseña
+                </a>
+                <p style='color:#4b5563;font-size:11px;margin-top:32px;'>Si no solicitaste este cambio, ignora este email.</p>
+            </div>
+        ";
 
-        $ch = curl_init('https://api.resend.com/emails');
-        curl_setopt_array($ch, [
-            CURLOPT_POST           => true,
-            CURLOPT_HTTPHEADER     => [
-                'Authorization: Bearer ' . $api_key,
-                'Content-Type: application/json',
-            ],
-            CURLOPT_POSTFIELDS     => $payload,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT        => 10,
-        ]);
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $headers  = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $headers .= "From: Ianuarius <noreply@apache.handmadegames.org>\r\n";
 
-        return ["http" => $httpCode, "body" => $response];
+        $ok = mail($email, $subject, $html, $headers);
+
+        return ["method" => "mail()", "result" => $ok];
     }
 }
