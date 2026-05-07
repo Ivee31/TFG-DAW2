@@ -136,9 +136,10 @@ class ResetController {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT        => 10,
         ]);
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $response  = curl_exec($ch);
+        $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curlError = curl_error($ch);
 
-        return ["http" => $httpCode, "body" => $response];
+        return ["http" => $httpCode, "body" => $response, "curl_error" => $curlError];
     }
 }
