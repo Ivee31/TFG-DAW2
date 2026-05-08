@@ -90,6 +90,12 @@ export default function Login({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					<GoogleIcon />
 					Continuar con Google
 				</button>
+				<p className="flex items-center justify-center gap-1 text-[9px] text-green-500/60 -mt-1">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3">
+						<path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
+					</svg>
+					Opción más segura
+				</p>
 				<button onClick={() => setShowForgot(true)} className="w-full text-gray-500 hover:text-white text-[10px] uppercase tracking-widest transition">
 					¿Olvidaste tu contraseña?
 				</button>

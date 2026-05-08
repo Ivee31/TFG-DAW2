@@ -89,10 +89,16 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 					{errorMsg}
 				</div>
 			)}
-			<button onClick={() => googleLogin()} className="w-full mb-4 border border-white/20 bg-white/5 text-white font-bold py-2 rounded hover:bg-white/10 transition duration-300 text-sm flex items-center justify-center gap-2">
+			<button onClick={() => googleLogin()} className="w-full mb-1 border border-white/20 bg-white/5 text-white font-bold py-2 rounded hover:bg-white/10 transition duration-300 text-sm flex items-center justify-center gap-2">
 				<GoogleIcon />
 				Registrarse con Google
 			</button>
+			<p className="flex items-center justify-center gap-1 text-[9px] text-green-500/60 mb-3">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3">
+					<path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
+				</svg>
+				Opción más segura
+			</p>
 			<div className="flex items-center gap-3 mb-4">
 				<div className="flex-1 h-px bg-white/10"></div>
 				<span className="text-gray-600 text-[10px] uppercase tracking-widest">o con email</span>
