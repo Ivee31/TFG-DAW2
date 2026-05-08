@@ -191,7 +191,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 				</div>
 
 				<nav className="space-y-6 grow">
-					<button onClick={() => onNavigate?.('dashboard')} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'dashboard' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Dashboard</button>
+					<button onClick={() => onNavigate?.('dashboard')} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'dashboard' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Inicio</button>
 					<button onClick={() => { onNavigate?.('perfil'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'perfil' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Mi Perfil</button>
 					<a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Historico</a>
 					<a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Estadisticas</a>
