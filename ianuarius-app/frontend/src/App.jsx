@@ -62,8 +62,10 @@ export default function App() {
 		<>
 			{user ? (
 				<Layout user={user} onLogout={() => { setUser(null); setCurrentView('dashboard'); }} onUserUpdate={setUser} currentView={currentView} onNavigate={setCurrentView}>
-					{user.rol === 'Admin'      && <AdminPanel />}
-					{user.rol === 'Entrenador' && <DashboardEntrenador />}
+					{user.rol === 'Admin'      && currentView === 'dashboard' && <AdminPanel />}
+					{user.rol === 'Admin'      && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} />}
+					{user.rol === 'Entrenador' && currentView === 'dashboard' && <DashboardEntrenador />}
+					{user.rol === 'Entrenador' && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} />}
 					{user.rol === 'Atleta'     && currentView === 'dashboard' && <Dashboard />}
 					{user.rol === 'Atleta'     && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} />}
 				</Layout>
