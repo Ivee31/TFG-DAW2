@@ -97,6 +97,12 @@ switch ($endpoint) {
         } elseif ($sub === 'password' && $method === 'PUT') {
             UsuarioController::cambiarPassword();
 
+        } elseif ($sub === 'dni' && $method === 'PUT') {
+            UsuarioController::subirDni();
+
+        } elseif ($sub === 'carnet' && $method === 'PUT') {
+            UsuarioController::subirCarnet();
+
         } else {
             http_response_code(404);
             echo json_encode(["error" => "Endpoint not found"]);

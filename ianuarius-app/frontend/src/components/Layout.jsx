@@ -193,6 +193,18 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 				<nav className="space-y-6 grow">
 					<button onClick={() => onNavigate?.('dashboard')} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'dashboard' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Inicio</button>
 					<button onClick={() => { onNavigate?.('perfil'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'perfil' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Mi Perfil</button>
+
+					{user?.rol === 'Atleta' && (
+						<button onClick={() => { onNavigate?.('inscripcion'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'inscripcion' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
+							Inscripción
+							{(!user?.inscripcion_pdf && !user?.inscripcion_formulario) && (
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-yellow-400 shrink-0">
+									<path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+								</svg>
+							)}
+						</button>
+					)}
+
 					<a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Historico</a>
 					<a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Estadisticas</a>
 				

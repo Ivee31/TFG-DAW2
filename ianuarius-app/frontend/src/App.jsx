@@ -10,6 +10,7 @@ import ResetPassword from './components/ResetPassword';
 import CompleteGoogleProfile from './components/CompleteGoogleProfile';
 import AvisoLegal from './components/AvisoLegal';
 import Perfil from './components/Perfil';
+import Inscripcion from './components/Inscripcion';
 
 export default function App() {
 	const [user, setUser] = useState(null);
@@ -63,11 +64,12 @@ export default function App() {
 			{user ? (
 				<Layout user={user} onLogout={() => { setUser(null); setCurrentView('dashboard'); }} onUserUpdate={setUser} currentView={currentView} onNavigate={setCurrentView}>
 					{user.rol === 'Admin'      && currentView === 'dashboard' && <AdminPanel />}
-					{user.rol === 'Admin'      && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} />}
+					{user.rol === 'Admin'      && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
 					{user.rol === 'Entrenador' && currentView === 'dashboard' && <DashboardEntrenador />}
-					{user.rol === 'Entrenador' && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} />}
+					{user.rol === 'Entrenador' && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
 					{user.rol === 'Atleta'     && currentView === 'dashboard' && <Dashboard />}
-					{user.rol === 'Atleta'     && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} />}
+					{user.rol === 'Atleta'     && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
+					{user.rol === 'Atleta'     && currentView === 'inscripcion' && <Inscripcion />}
 				</Layout>
 
 			) : (
