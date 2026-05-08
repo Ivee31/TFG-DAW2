@@ -135,7 +135,7 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 				<div className="grid grid-cols-2 gap-3 items-end">
 					<div>
 						<label className={labelClasses}>Fecha de nacimiento</label>
-						<input type="text" name="fecha_nacimiento" className={inputClasses} placeholder="DD/MM/YYYY" maxLength={10} value={form.fecha_nacimiento} onChange={handleChange} required />
+						<input type="date" name="fecha_nacimiento" className={inputClasses} placeholder="DD/MM/YYYY" maxLength={10} value={form.fecha_nacimiento} onChange={handleChange} required />
 					</div>
 					<div>
 						<label className={labelClasses}>Género</label>
