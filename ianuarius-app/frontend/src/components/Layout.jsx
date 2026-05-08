@@ -245,7 +245,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 						<div className="space-y-2">
 							<h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase"
 								style={{ color: 'transparent', WebkitTextStroke: '1px #FFFFFF', fontFamily: "'Graduate', sans-serif" }}>
-								Panel de Atleta
+								{{ Atleta: 'Panel de Atleta', Entrenador: 'Panel de Entrenador', Admin: 'Panel de Admin' }[user?.rol] ?? 'Panel de Atleta'}
 							</h1>
 
 							<div className="flex items-center gap-3">
