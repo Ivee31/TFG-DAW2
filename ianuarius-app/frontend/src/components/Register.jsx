@@ -30,9 +30,8 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 		e.preventDefault();
 		setErrorMsg('');
 		if (form.password !== form.confirm_password) { setErrorMsg('Las contraseñas no coinciden'); return; }
-		const partes = form.fecha_nacimiento.split('/');
-		if (partes.length !== 3 || partes[2].length !== 4) { setErrorMsg('Fecha inválida. Usa el formato DD/MM/YYYY'); return; }
-		const fechaISO = `${partes[2]}-${partes[1]}-${partes[0]}`;
+		if (!form.fecha_nacimiento) { setErrorMsg('Fecha de nacimiento requerida'); return; }
+		const fechaISO = form.fecha_nacimiento;
 		setLoading(true);
 		fetch(`${API}/register`, {
 			method: 'POST',
@@ -135,7 +134,7 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 				<div className="grid grid-cols-2 gap-3 items-end">
 					<div>
 						<label className={labelClasses}>Fecha de nacimiento</label>
-						<input type="date" name="fecha_nacimiento" className={inputClasses} placeholder="DD/MM/YYYY" maxLength={10} value={form.fecha_nacimiento} onChange={handleChange} required />
+						<input type="date" name="fecha_nacimiento" className={inputClasses + " [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-70"} value={form.fecha_nacimiento} onChange={handleChange} required />
 					</div>
 					<div>
 						<label className={labelClasses}>Género</label>
