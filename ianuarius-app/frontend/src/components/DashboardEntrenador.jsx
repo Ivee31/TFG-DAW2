@@ -16,6 +16,18 @@ const calcularCategoria = (fechaNacimiento, genero) => {
 
 };
 
+function UsuarioAvatar({ fotoPerfil, fotoCarnet, nombre, apellidos }) {
+	const src = fotoCarnet || fotoPerfil || null;
+	const initials = ((nombre?.[0] || '') + (apellidos?.[0] || '')).toUpperCase();
+	return src ? (
+		<img src={src} alt={`${nombre} ${apellidos}`} className="w-10 h-10 rounded-full object-cover shrink-0" />
+	) : (
+		<div className="w-10 h-10 rounded-full bg-ianuarius/15 border border-ianuarius/25 flex items-center justify-center shrink-0">
+			<span className="text-ianuarius text-xs font-black">{initials}</span>
+		</div>
+	);
+}
+
 export default function DashboardEntrenador() {
 	const [atletas, setAtletas] = useState([]);
 	const [cargando, setCargando] = useState(true);
@@ -40,7 +52,7 @@ export default function DashboardEntrenador() {
 				<div className="flex justify-between items-center mb-6 md:mb-8">
 					<div>
 						<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Atletas del Club</h2>
-						<p className="text-gray-500 text-xs mt-1 uppercase tracking-widest font-semibold">
+						<p className="text-gray-400 text-xs mt-1 uppercase tracking-widest font-semibold">
 							{cargando ? '...' : `${atletas.length} atletas activos`}
 						</p>
 					</div>
@@ -50,7 +62,7 @@ export default function DashboardEntrenador() {
 				</div>
 
 				{cargando && (
-					<p className="text-gray-500 text-xs uppercase tracking-widest text-center py-10">
+					<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10">
 						Cargando atletas...
 					</p>
 				)}
@@ -62,7 +74,7 @@ export default function DashboardEntrenador() {
 				)}
 
 				{!cargando && !error && atletas.length === 0 && (
-					<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
+					<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
 						No hay atletas registrados
 					</p>
 				)}
@@ -72,24 +84,29 @@ export default function DashboardEntrenador() {
 						{atletas.map(a => (
 							<div key={a.id_usuario}
 								className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300">
-								<div className="flex justify-between items-start gap-2">
-									<div className="min-w-0">
-										<h3 className="text-white font-bold text-sm truncate">
-											{a.apellidos}, {a.nombre}
-										</h3>
-										<p className="text-gray-500 text-[10px] truncate mt-0.5">{a.email}</p>
+								<div className="flex items-start gap-3">
+									<UsuarioAvatar fotoPerfil={a.foto_perfil} fotoCarnet={a.foto_carnet} nombre={a.nombre} apellidos={a.apellidos} />
+									<div className="flex-1 min-w-0">
+										<div className="flex justify-between items-start gap-2">
+											<div className="min-w-0">
+												<h3 className="text-white font-bold text-sm truncate">
+													{a.apellidos}, {a.nombre}
+												</h3>
+												<p className="text-gray-400 text-[10px] truncate mt-0.5">{a.email}</p>
+											</div>
+											<span className="shrink-0 text-[9px] font-bold uppercase tracking-wider bg-ianuarius/15 text-ianuarius px-2 py-0.5 rounded-full">
+												{calcularCategoria(a.fecha_nacimiento, a.genero)}
+											</span>
+										</div>
+										<div className="mt-2 pt-2 border-t border-white/5 flex justify-between items-center">
+											<span className="text-[10px] text-gray-400 uppercase tracking-widest">
+												{a.genero === 'M' ? 'Masculino' : 'Femenino'}
+											</span>
+											<span className="text-[10px] font-bold text-gray-400">
+												{a.total_marcas} {parseInt(a.total_marcas) === 1 ? 'marca' : 'marcas'}
+											</span>
+										</div>
 									</div>
-									<span className="shrink-0 text-[9px] font-bold uppercase tracking-wider bg-ianuarius/15 text-ianuarius px-2 py-0.5 rounded-full">
-										{calcularCategoria(a.fecha_nacimiento, a.genero)}
-									</span>
-								</div>
-								<div className="mt-3 pt-3 border-t border-white/5 flex justify-between items-center">
-									<span className="text-[10px] text-gray-600 uppercase tracking-widest">
-										{a.genero === 'M' ? 'Masculino' : 'Femenino'}
-									</span>
-									<span className="text-[10px] font-bold text-gray-400">
-										{a.total_marcas} {parseInt(a.total_marcas) === 1 ? 'marca' : 'marcas'}
-									</span>
 								</div>
 							</div>
 						))}

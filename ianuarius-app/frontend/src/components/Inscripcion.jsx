@@ -60,7 +60,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 			)}
 
 			<div className="bg-gris rounded-lg border border-white/10 p-6">
-				<p className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">Inscripción de Temporada</p>
+				<p className="text-[10px] uppercase tracking-widest text-gray-400 mb-1">Inscripción de Temporada</p>
 				<h2 className="text-2xl font-black tracking-tight text-white mb-3">Formaliza tu inscripción</h2>
 				<p className="text-gray-400 text-sm leading-relaxed">
 					Para participar en los entrenamientos y competiciones de la temporada debes completar tu inscripción.
@@ -72,7 +72,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 
 				<div className="bg-gris rounded-lg border border-white/10 p-6 space-y-4 relative overflow-hidden">
 					<div className="absolute inset-0 bg-oscuro/70 backdrop-blur-[1px] flex items-center justify-center z-10">
-						<span className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 border border-gray-700 px-3 py-1 rounded">Próximamente</span>
+						<span className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 border border-gray-700 px-3 py-1 rounded">Próximamente</span>
 					</div>
 
 					<div className="flex items-center gap-3">
@@ -83,11 +83,11 @@ export default function Inscripcion({ user, onUserUpdate }) {
 						</div>
 						<div>
 							<h3 className="text-sm font-black uppercase tracking-wide text-white">Formulario Online</h3>
-							<p className="text-gray-500 text-[10px] uppercase tracking-wider">Recomendado</p>
+							<p className="text-gray-400 text-[10px] uppercase tracking-wider">Recomendado</p>
 						</div>
 					</div>
 
-					<p className="text-gray-500 text-xs leading-relaxed">
+					<p className="text-gray-400 text-xs leading-relaxed">
 						Rellena el formulario médico y de inscripción directamente desde la plataforma. Proceso guiado paso a paso.
 					</p>
 
@@ -105,7 +105,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 						</div>
 						<div>
 							<h3 className="text-sm font-black uppercase tracking-wide text-white">Subir PDF</h3>
-							<p className="text-gray-500 text-[10px] uppercase tracking-wider">Firmado y escaneado</p>
+							<p className="text-gray-400 text-[10px] uppercase tracking-wider">Firmado y escaneado</p>
 						</div>
 					</div>
 
@@ -124,7 +124,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 							)}
 							<div>
 								<p className="text-xs text-green-500 font-bold uppercase tracking-wider">Adjuntado</p>
-								<p className="text-[10px] text-gray-500">{isPdf ? 'Documento PDF' : 'Imagen'}</p>
+								<p className="text-[10px] text-gray-400">{isPdf ? 'Documento PDF' : 'Imagen'}</p>
 							</div>
 						</div>
 					)}

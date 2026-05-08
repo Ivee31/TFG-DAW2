@@ -322,11 +322,11 @@ export default function Dashboard() {
 
 					<div className="space-y-4 grow">
 						{cargando && (
-							<p className="text-gray-500 text-xs uppercase tracking-widest text-center py-6">Cargando marcas...</p>
+							<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-6">Cargando marcas...</p>
 						)}
 
 						{!cargando && marcas.length === 0 && (
-							<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-6 border border-dashed border-gray-700 rounded-xl">
+							<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-6 border border-dashed border-gray-700 rounded-xl">
 								Aun no hay marcas registradas
 							</p>
 						)}
@@ -336,14 +336,14 @@ export default function Dashboard() {
 								<div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 sm:gap-0">
 									<div>
 										<h3 className="text-white font-bold text-base md:text-lg">{m.prueba}</h3>
-										<p className="text-xs text-gray-500 uppercase tracking-widest">{etiquetaTemporada(m.temporada)}</p>
-										<p className="text-xs text-gray-600 mt-0.5">
+										<p className="text-xs text-gray-400 uppercase tracking-widest">{etiquetaTemporada(m.temporada)}</p>
+										<p className="text-xs text-gray-400 mt-0.5">
 											{m.tipo_competicion}{m.categoria_nombre ? ` · ${m.categoria_nombre}` : ''}
 										</p>
 									</div>
 									<div className="sm:text-right">
 										<p className="text-ianuarius text-3xl md:text-2xl tracking-tighter font-mono">{m.marca}</p>
-										<p className="text-[10px] md:text-[9px] text-gray-600 uppercase">{formatearFecha(m.fecha)}</p>
+										<p className="text-[10px] md:text-[9px] text-gray-400 uppercase">{formatearFecha(m.fecha)}</p>
 									</div>
 								</div>
 
@@ -487,7 +487,7 @@ export default function Dashboard() {
 										Mas recientes
 									</button>
 
-									<span className="text-[10px] text-gray-600 font-mono">
+									<span className="text-[10px] text-gray-400 font-mono">
 										{pagina} / {totalPaginas}
 									</span>
 
@@ -508,7 +508,7 @@ export default function Dashboard() {
 							{hayMas && (
 								<button
 									onClick={toggleVerTodas}
-									className="w-full py-3 border border-dashed border-gray-700 text-gray-500 text-xs font-bold uppercase tracking-[0.3em] hover:text-white hover:border-white transition duration-300"
+									className="w-full py-3 border border-dashed border-gray-700 text-gray-400 text-xs font-bold uppercase tracking-[0.3em] hover:text-white hover:border-white transition duration-300"
 								>
 									{verTodas
 										? `Mostrar solo las últimas ${MARCAS_RECIENTES}`
@@ -525,7 +525,7 @@ export default function Dashboard() {
 				<div className="bg-gris p-6 md:p-8 rounded-2xl border-t-8 border-ianuarius shadow-2xl">
 					<div className="shrink-0">
 						<h2 className="text-xl md:text-2xl font-extrabold mb-2 tracking-tight">Nueva Marca</h2>
-						<p className="text-gray-500 text-xs mb-6 md:mb-8 uppercase tracking-widest font-semibold">Guardar tiempo en bd</p>
+						<p className="text-gray-400 text-xs mb-6 md:mb-8 uppercase tracking-widest font-semibold">Guardar tiempo en bd</p>
 
 						{feedbackMsg && (
 							<div className={`mb-5 p-3 rounded-lg text-xs font-bold uppercase tracking-widest text-center ${feedbackMsg.tipo === 'ok' ? 'bg-green-500/10 border border-green-500 text-green-400' : 'bg-red-500/10 border border-red-500 text-red-400'}`}>

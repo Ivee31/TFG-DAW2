@@ -85,6 +85,9 @@ switch ($endpoint) {
         if ($sub === 'atletas' && $method === 'GET') {
             UsuarioController::listarAtletas();
 
+        } elseif ($sub === 'entrenadores' && $method === 'GET') {
+            UsuarioController::listarEntrenadores();
+
         } elseif ($sub === 'email' && $method === 'PUT') {
             UsuarioController::cambiarEmail();
 

@@ -72,7 +72,7 @@ function Avatar({ src, nombre, apellidos, onEdit }) {
 function InfoRow({ label, value }) {
 	return (
 		<div className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
-			<span className="text-gray-500 text-xs uppercase tracking-wider">{label}</span>
+			<span className="text-gray-400 text-xs uppercase tracking-wider">{label}</span>
 			<span className="text-white text-sm">{value || '-'}</span>
 		</div>
 	);
@@ -81,7 +81,7 @@ function InfoRow({ label, value }) {
 function SectionHeader({ title, action }) {
 	return (
 		<div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-			<p className="text-[10px] uppercase tracking-widest text-gray-500">{title}</p>
+			<p className="text-[10px] uppercase tracking-widest text-gray-400">{title}</p>
 			{action}
 		</div>
 	);
@@ -563,7 +563,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 				/>
 
 				<div className="p-6">
-					<p className="text-gray-600 text-sm tracking-[0.3em]">••••••••••••</p>
+					<p className="text-gray-500 text-sm tracking-[0.3em]">••••••••••••</p>
 
 					{showPass && (
 						<form onSubmit={handlePassChange} className="mt-4 space-y-3">

@@ -16,11 +16,26 @@ const calcularCategoria = (fechaNacimiento, genero) => {
 
 };
 
+function UsuarioAvatar({ fotoPerfil, fotoCarnet, nombre, apellidos }) {
+	const src = fotoCarnet || fotoPerfil || null;
+	const initials = ((nombre?.[0] || '') + (apellidos?.[0] || '')).toUpperCase();
+	return src ? (
+		<img src={src} alt={`${nombre} ${apellidos}`} className="w-10 h-10 rounded-full object-cover shrink-0" />
+	) : (
+		<div className="w-10 h-10 rounded-full bg-ianuarius/15 border border-ianuarius/25 flex items-center justify-center shrink-0">
+			<span className="text-ianuarius text-xs font-black">{initials}</span>
+		</div>
+	);
+}
+
 export default function AdminPanel() {
+	const [tab, setTab] = useState('atletas');
 	const [pendientes, setPendientes] = useState([]);
 	const [atletas, setAtletas] = useState([]);
+	const [entrenadores, setEntrenadores] = useState([]);
 	const [cargandoP, setCargandoP] = useState(true);
 	const [cargandoA, setCargandoA] = useState(true);
+	const [cargandoE, setCargandoE] = useState(true);
 	const [activando, setActivando] = useState(null);
 
 	const cargarPendientes = () => {
@@ -38,6 +53,11 @@ export default function AdminPanel() {
 			.then(res => res.json())
 			.then(data => { if (data.status === 'success') setAtletas(data.atletas); })
 			.finally(() => setCargandoA(false));
+
+		fetch(`${API}/usuarios/entrenadores`, { credentials: 'include' })
+			.then(res => res.json())
+			.then(data => { if (data.status === 'success') setEntrenadores(data.entrenadores); })
+			.finally(() => setCargandoE(false));
 
 	}, []);
 
@@ -62,7 +82,7 @@ export default function AdminPanel() {
 					<div className="flex justify-between items-center mb-6">
 						<div>
 							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Cuentas Pendientes</h2>
-							<p className="text-gray-500 text-xs mt-1 uppercase tracking-widest font-semibold">
+							<p className="text-gray-400 text-xs mt-1 uppercase tracking-widest font-semibold">
 								Entrenadores en espera de activación
 							</p>
 						</div>
@@ -74,13 +94,13 @@ export default function AdminPanel() {
 					</div>
 
 					{cargandoP && (
-						<p className="text-gray-500 text-xs uppercase tracking-widest text-center py-6">
+						<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-6">
 							Cargando...
 						</p>
 					)}
 
 					{!cargandoP && pendientes.length === 0 && (
-						<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-6 border border-dashed border-gray-700 rounded-xl">
+						<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-6 border border-dashed border-gray-700 rounded-xl">
 							No hay cuentas pendientes de activación
 						</p>
 					)}
@@ -94,7 +114,7 @@ export default function AdminPanel() {
 										<p className="text-white font-bold text-sm">
 											{p.nombre} {p.apellidos}
 										</p>
-										<p className="text-gray-500 text-[10px] mt-0.5">{p.email}</p>
+										<p className="text-gray-400 text-[10px] mt-0.5">{p.email}</p>
 									</div>
 									<button
 										onClick={() => handleActivar(p.id_usuario)}
@@ -110,60 +130,124 @@ export default function AdminPanel() {
 				</div>
 			</section>
 
-			{/* listado de atletas — identico al panel de entrenador */}
+			{/* listado atletas / entrenadores */}
 			<section>
 				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
-					<div className="flex justify-between items-center mb-6 md:mb-8">
+					<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-8">
 						<div>
-							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Atletas del Club</h2>
-							<p className="text-gray-500 text-xs mt-1 uppercase tracking-widest font-semibold">
-								{cargandoA ? '...' : `${atletas.length} atletas activos`}
+							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Miembros del Club</h2>
+							<p className="text-gray-400 text-xs mt-1 uppercase tracking-widest font-semibold">
+								{tab === 'atletas'
+									? (cargandoA ? '...' : `${atletas.length} atletas activos`)
+									: (cargandoE ? '...' : `${entrenadores.length} entrenadores activos`)}
 							</p>
 						</div>
-						<span className="text-[10px] bg-ianuarius/20 text-ianuarius px-3 py-1 rounded-full font-bold uppercase tracking-widest hidden sm:inline-block">
-							Temporada 2026
-						</span>
+						<div className="flex items-center gap-1 bg-oscuro/60 border border-white/10 rounded-lg p-1">
+							<button
+								onClick={() => setTab('atletas')}
+								className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${tab === 'atletas' ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
+							>
+								Atletas
+							</button>
+							<button
+								onClick={() => setTab('entrenadores')}
+								className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${tab === 'entrenadores' ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
+							>
+								Entrenadores
+							</button>
+						</div>
 					</div>
 
-					{cargandoA && (
-						<p className="text-gray-500 text-xs uppercase tracking-widest text-center py-10">
-							Cargando atletas...
-						</p>
-					)}
+					{/* tab atletas */}
+					{tab === 'atletas' && (
+						<>
+							{cargandoA && (
+								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10">
+									Cargando atletas...
+								</p>
+							)}
 
-					{!cargandoA && atletas.length === 0 && (
-						<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
-							No hay atletas registrados
-						</p>
-					)}
+							{!cargandoA && atletas.length === 0 && (
+								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
+									No hay atletas registrados
+								</p>
+							)}
 
-					{!cargandoA && atletas.length > 0 && (
-						<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-							{atletas.map(a => (
-								<div key={a.id_usuario}
-									className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300">
-									<div className="flex justify-between items-start gap-2">
-										<div className="min-w-0">
-											<h3 className="text-white font-bold text-sm truncate">
-												{a.apellidos}, {a.nombre}
-											</h3>
-											<p className="text-gray-500 text-[10px] truncate mt-0.5">{a.email}</p>
+							{!cargandoA && atletas.length > 0 && (
+								<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+									{atletas.map(a => (
+										<div key={a.id_usuario}
+											className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300">
+											<div className="flex items-start gap-3">
+												<UsuarioAvatar fotoPerfil={a.foto_perfil} fotoCarnet={a.foto_carnet} nombre={a.nombre} apellidos={a.apellidos} />
+												<div className="flex-1 min-w-0">
+													<div className="flex justify-between items-start gap-2">
+														<div className="min-w-0">
+															<h3 className="text-white font-bold text-sm truncate">
+																{a.apellidos}, {a.nombre}
+															</h3>
+															<p className="text-gray-400 text-[10px] truncate mt-0.5">{a.email}</p>
+														</div>
+														<span className="shrink-0 text-[9px] font-bold uppercase tracking-wider bg-ianuarius/15 text-ianuarius px-2 py-0.5 rounded-full">
+															{calcularCategoria(a.fecha_nacimiento, a.genero)}
+														</span>
+													</div>
+													<div className="mt-2 pt-2 border-t border-white/5 flex justify-between items-center">
+														<span className="text-[10px] text-gray-400 uppercase tracking-widest">
+															{a.genero === 'M' ? 'Masculino' : 'Femenino'}
+														</span>
+														<span className="text-[10px] font-bold text-gray-400">
+															{a.total_marcas} {parseInt(a.total_marcas) === 1 ? 'marca' : 'marcas'}
+														</span>
+													</div>
+												</div>
+											</div>
 										</div>
-										<span className="shrink-0 text-[9px] font-bold uppercase tracking-wider bg-ianuarius/15 text-ianuarius px-2 py-0.5 rounded-full">
-											{calcularCategoria(a.fecha_nacimiento, a.genero)}
-										</span>
-									</div>
-									<div className="mt-3 pt-3 border-t border-white/5 flex justify-between items-center">
-										<span className="text-[10px] text-gray-600 uppercase tracking-widest">
-											{a.genero === 'M' ? 'Masculino' : 'Femenino'}
-										</span>
-										<span className="text-[10px] font-bold text-gray-400">
-											{a.total_marcas} {parseInt(a.total_marcas) === 1 ? 'marca' : 'marcas'}
-										</span>
-									</div>
+									))}
 								</div>
-							))}
-						</div>
+							)}
+						</>
+					)}
+
+					{/* tab entrenadores */}
+					{tab === 'entrenadores' && (
+						<>
+							{cargandoE && (
+								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10">
+									Cargando entrenadores...
+								</p>
+							)}
+
+							{!cargandoE && entrenadores.length === 0 && (
+								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
+									No hay entrenadores activos
+								</p>
+							)}
+
+							{!cargandoE && entrenadores.length > 0 && (
+								<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+									{entrenadores.map(e => (
+										<div key={e.id_usuario}
+											className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300">
+											<div className="flex items-start gap-3">
+												<UsuarioAvatar fotoPerfil={e.foto_perfil} fotoCarnet={e.foto_carnet} nombre={e.nombre} apellidos={e.apellidos} />
+												<div className="flex-1 min-w-0">
+													<h3 className="text-white font-bold text-sm truncate">
+														{e.apellidos}, {e.nombre}
+													</h3>
+													<p className="text-gray-400 text-[10px] truncate mt-0.5">{e.email}</p>
+													<div className="mt-2 pt-2 border-t border-white/5">
+														<span className="text-[10px] text-gray-400 uppercase tracking-widest">
+															{e.genero === 'M' ? 'Masculino' : 'Femenino'}
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+							)}
+						</>
 					)}
 				</div>
 			</section>

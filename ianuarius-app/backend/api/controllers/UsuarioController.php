@@ -323,6 +323,7 @@ class UsuarioController {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
                 "SELECT u.id_usuario, u.nombre, u.apellidos, u.email, u.genero, u.fecha_nacimiento,
+                        u.foto_perfil, u.foto_carnet,
                         COUNT(m.id_marca) AS total_marcas
                  FROM usuarios u
                  LEFT JOIN marcas m ON u.id_usuario = m.id_usuario
@@ -338,6 +339,41 @@ class UsuarioController {
 
         } catch (PDOException $e) {
             error_log("UsuarioController.listarAtletas() - " . $e->getMessage(), 3, Config::LOGFILE);
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
+
+    public static function listarEntrenadores() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        if ($_SESSION['rol'] !== 'Admin') {
+            http_response_code(403);
+            echo json_encode(["status" => "error", "error" => "Acceso denegado"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare(
+                "SELECT id_usuario, nombre, apellidos, email, genero, fecha_nacimiento, foto_perfil, foto_carnet
+                 FROM usuarios
+                 WHERE rol = 'Entrenador' AND estado_cuenta = 1
+                 ORDER BY apellidos, nombre"
+            );
+            $stmt->execute();
+            $entrenadores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            http_response_code(200);
+            echo json_encode(["status" => "success", "entrenadores" => $entrenadores]);
+
+        } catch (PDOException $e) {
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }

@@ -192,7 +192,14 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 
 				<nav className="space-y-6 grow">
 					<button onClick={() => onNavigate?.('dashboard')} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'dashboard' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Inicio</button>
-					<button onClick={() => { onNavigate?.('perfil'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'perfil' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Mi Perfil</button>
+					<button onClick={() => { onNavigate?.('perfil'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'perfil' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
+						Mi Perfil
+						{(!user?.foto_dni || !user?.foto_carnet) && (
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-yellow-400 shrink-0">
+								<path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+							</svg>
+						)}
+					</button>
 
 					<button onClick={() => { onNavigate?.('inscripcion'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'inscripcion' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
 						Inscripción
@@ -265,6 +272,37 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 						</button>
 					</div>
 				</header>
+
+				{/* banner pendientes en dashboard */}
+				{currentView === 'dashboard' && (() => {
+					const items = [
+						!user?.foto_dni            && { label: 'DNI escaneado',      nav: 'perfil'      },
+						!user?.foto_carnet         && { label: 'Foto de carnet',      nav: 'perfil'      },
+						(!user?.inscripcion_pdf && !user?.inscripcion_formulario) && { label: 'Ficha de inscripción', nav: 'inscripcion' },
+					].filter(Boolean);
+					if (!items.length) return null;
+					return (
+						<div className="mb-6 bg-yellow-400/5 border border-yellow-400/15 rounded-xl p-4 flex items-start gap-3">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5">
+								<path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+							</svg>
+							<div>
+								<p className="text-yellow-400 text-[10px] font-black uppercase tracking-widest mb-2">Completa tu perfil</p>
+								<div className="flex flex-wrap gap-2">
+									{items.map(item => (
+										<button
+											key={item.label}
+											onClick={() => onNavigate?.(item.nav)}
+											className="text-[10px] bg-yellow-400/10 border border-yellow-400/25 text-yellow-300 px-3 py-1 rounded-full font-bold uppercase tracking-wider hover:bg-yellow-400/20 transition"
+										>
+											{item.label} →
+										</button>
+									))}
+								</div>
+							</div>
+						</div>
+					);
+				})()}
 
 				{/* renderizado dinamico */}
 				{children}
