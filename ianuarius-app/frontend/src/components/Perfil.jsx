@@ -252,6 +252,8 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					esInscripcion
 					formularioRellenado={!!user.inscripcion_formulario}
 					previewSrc={user.inscripcion_pdf || null}
+					onUpload={f => subirArchivo('inscripcion-pdf', 'inscripcion_pdf', f)}
+					accept="application/pdf,image/jpeg,image/png,image/webp"
 					onGoToInscripcion={onGoToInscripcion}
 				/>
 				<FileCard

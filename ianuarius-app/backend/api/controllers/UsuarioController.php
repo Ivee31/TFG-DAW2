@@ -263,6 +263,46 @@ class UsuarioController {
         }
     }
 
+    public static function subirInscripcionPdf() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        $input = json_decode(file_get_contents('php://input'), true);
+        $foto  = trim($input['foto'] ?? '');
+
+        if (!$foto || (strpos($foto, 'data:image/') !== 0 && strpos($foto, 'data:application/pdf') !== 0)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Formato no válido (PDF o imagen)"]);
+            return;
+        }
+
+        if (strlen($foto) > 5000000) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Archivo demasiado grande (máx. ~3,7 MB)"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare("UPDATE usuarios SET inscripcion_pdf = :foto WHERE id_usuario = :id");
+            $stmt->bindParam(':foto', $foto, PDO::PARAM_STR);
+            $stmt->bindParam(':id',   $_SESSION['id_usuario'], PDO::PARAM_INT);
+            $stmt->execute();
+
+            http_response_code(200);
+            echo json_encode(["status" => "success"]);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
+
     public static function listarAtletas() {
         session_start();
 

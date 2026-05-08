@@ -103,6 +103,9 @@ switch ($endpoint) {
         } elseif ($sub === 'carnet' && $method === 'PUT') {
             UsuarioController::subirCarnet();
 
+        } elseif ($sub === 'inscripcion-pdf' && $method === 'PUT') {
+            UsuarioController::subirInscripcionPdf();
+
         } else {
             http_response_code(404);
             echo json_encode(["error" => "Endpoint not found"]);
