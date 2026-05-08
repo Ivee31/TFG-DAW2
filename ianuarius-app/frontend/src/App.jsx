@@ -65,13 +65,13 @@ export default function App() {
 				<Layout user={user} onLogout={() => { setUser(null); setCurrentView('dashboard'); }} onUserUpdate={setUser} currentView={currentView} onNavigate={setCurrentView}>
 					{user.rol === 'Admin'      && currentView === 'dashboard'   && <AdminPanel />}
 					{user.rol === 'Admin'      && currentView === 'perfil'      && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
-					{user.rol === 'Admin'      && currentView === 'inscripcion' && <Inscripcion />}
+					{user.rol === 'Admin'      && currentView === 'inscripcion' && <Inscripcion user={user} onUserUpdate={setUser} />}
 					{user.rol === 'Entrenador' && currentView === 'dashboard'   && <DashboardEntrenador />}
 					{user.rol === 'Entrenador' && currentView === 'perfil'      && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
-					{user.rol === 'Entrenador' && currentView === 'inscripcion' && <Inscripcion />}
+					{user.rol === 'Entrenador' && currentView === 'inscripcion' && <Inscripcion user={user} onUserUpdate={setUser} />}
 					{user.rol === 'Atleta'     && currentView === 'dashboard'   && <Dashboard />}
 					{user.rol === 'Atleta'     && currentView === 'perfil'      && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
-					{user.rol === 'Atleta'     && currentView === 'inscripcion' && <Inscripcion />}
+					{user.rol === 'Atleta'     && currentView === 'inscripcion' && <Inscripcion user={user} onUserUpdate={setUser} />}
 				</Layout>
 
 			) : (
