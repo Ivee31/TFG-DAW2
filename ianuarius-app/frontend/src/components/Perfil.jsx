@@ -261,7 +261,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					previewSrc={user.foto_dni || null}
 					onUpload={f => subirArchivo('dni', 'foto_dni', f)}
 					accept="image/jpeg,image/png,image/webp,application/pdf"
-					tooltip="Foto o PDF de tu documento de identidad. Lo necesitamos para verificar que eres miembro del club."
+					tooltip="Foto o PDF de tu documento de identidad POR LAS DOS CARAS. Se usará junto con la ficha de inscripcion y tu foto de carnet."
 				/>
 				<FileCard
 					label="Ficha de inscripción"
@@ -272,7 +272,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					onUpload={f => subirArchivo('inscripcion-pdf', 'inscripcion_pdf', f)}
 					accept="application/pdf,image/jpeg,image/png,image/webp"
 					onGoToInscripcion={onGoToInscripcion}
-					tooltip="Formulario oficial de inscripción a la temporada, firmado. Sin él no podrás participar en competiciones ni entrenamientos oficiales."
+					tooltip="Formulario oficial de inscripción a la temporada, firmado. Sin él no podrás participar en competiciones o pertenecer al club oficialmente, ya q no te podremos federar."
 				/>
 				<FileCard
 					label="Foto de carnet"
@@ -280,7 +280,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					previewSrc={user.foto_carnet || null}
 					onUpload={f => subirArchivo('carnet', 'foto_carnet', f)}
 					accept="image/jpeg,image/png,image/webp"
-					tooltip="Foto tipo carnet con fondo claro. Se usará en tu ficha oficial del club y en el listado de atletas para que el equipo técnico te reconozca."
+					tooltip="Foto tipo carnet con fondo claro. Se usará en tu ficha oficial del club y en el listado de atletas para que l@s entrenador@s te reconozcan más facilmente."
 				/>
 			</div>
 		</div>
