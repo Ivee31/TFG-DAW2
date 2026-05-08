@@ -9,11 +9,13 @@ import Home from './components/Home';
 import ResetPassword from './components/ResetPassword';
 import CompleteGoogleProfile from './components/CompleteGoogleProfile';
 import AvisoLegal from './components/AvisoLegal';
+import Perfil from './components/Perfil';
 
 export default function App() {
 	const [user, setUser] = useState(null);
 	const [cargandoSesion, setCargandoSesion] = useState(true);
 	const [googleCompleteData, setGoogleCompleteData] = useState(null);
+	const [currentView, setCurrentView] = useState('dashboard');
 
 	useEffect(() => {
 		fetch(`${API}/session`, { credentials: 'include' })
@@ -45,32 +47,27 @@ export default function App() {
 	const resetToken = new URLSearchParams(window.location.search).get('reset_token');
 	if (resetToken) {
 		return (
-			<ResetPassword
-				token={resetToken}
-				onDone={() => window.history.replaceState({}, '', '/')}
-			/>
+			<ResetPassword token={resetToken} onDone={() => window.history.replaceState({}, '', '/')}/>
 		);
 	}
 
 	// completar perfil tras Google login (usuario nuevo)
 	if (googleCompleteData) {
 		return (
-			<CompleteGoogleProfile
-				data={googleCompleteData}
-				onSuccess={(u) => { setGoogleCompleteData(null); setUser(u); }}
-				onCancel={() => setGoogleCompleteData(null)}
-			/>
+			<CompleteGoogleProfile data={googleCompleteData} onSuccess={(u) => { setGoogleCompleteData(null); setUser(u); }} onCancel={() => setGoogleCompleteData(null)}/>
 		);
 	}
 
 	return (
 		<>
 			{user ? (
-				<Layout user={user} onLogout={() => setUser(null)} onUserUpdate={setUser}>
+				<Layout user={user} onLogout={() => { setUser(null); setCurrentView('dashboard'); }} onUserUpdate={setUser} currentView={currentView} onNavigate={setCurrentView}>
 					{user.rol === 'Admin'      && <AdminPanel />}
 					{user.rol === 'Entrenador' && <DashboardEntrenador />}
-					{user.rol === 'Atleta'     && <Dashboard />}
+					{user.rol === 'Atleta'     && currentView === 'dashboard' && <Dashboard />}
+					{user.rol === 'Atleta'     && currentView === 'perfil'    && <Perfil user={user} onUserUpdate={setUser} />}
 				</Layout>
+
 			) : (
 				<Home onLoginSuccess={setUser} onGoogleNeedsCompletion={setGoogleCompleteData} />
 			)}

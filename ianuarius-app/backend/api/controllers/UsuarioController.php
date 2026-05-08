@@ -47,6 +47,102 @@ class UsuarioController {
         }
     }
 
+    public static function actualizarPerfil() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        $input     = json_decode(file_get_contents('php://input'), true);
+        $nombre    = trim($input['nombre'] ?? '');
+        $apellidos = trim($input['apellidos'] ?? '');
+        $genero    = trim($input['genero'] ?? '');
+        $fecha     = trim($input['fecha_nacimiento'] ?? '');
+
+        if (!$nombre || !$apellidos || !in_array($genero, ['M', 'F']) || !$fecha) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Datos incompletos"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare(
+                "UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, genero = :genero, fecha_nacimiento = :fecha
+                 WHERE id_usuario = :id"
+            );
+            $stmt->bindParam(':nombre',    $nombre,    PDO::PARAM_STR);
+            $stmt->bindParam(':apellidos', $apellidos, PDO::PARAM_STR);
+            $stmt->bindParam(':genero',    $genero,    PDO::PARAM_STR);
+            $stmt->bindParam(':fecha',     $fecha,     PDO::PARAM_STR);
+            $stmt->bindParam(':id',        $_SESSION['id_usuario'], PDO::PARAM_INT);
+            $stmt->execute();
+
+            http_response_code(200);
+            echo json_encode([
+                "status"           => "success",
+                "nombre"           => $nombre,
+                "apellidos"        => $apellidos,
+                "genero"           => $genero,
+                "fecha_nacimiento" => $fecha
+            ]);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
+
+    public static function cambiarPassword() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        $input  = json_decode(file_get_contents('php://input'), true);
+        $actual = trim($input['password_actual'] ?? '');
+        $nueva  = trim($input['nueva_password'] ?? '');
+
+        if (!$actual || !$nueva || strlen($nueva) < 6) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Datos incompletos o contraseña muy corta (mín. 6 caracteres)"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare("SELECT password_hash FROM usuarios WHERE id_usuario = :id");
+            $stmt->bindParam(':id', $_SESSION['id_usuario'], PDO::PARAM_INT);
+            $stmt->execute();
+            $row  = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$row || !password_verify($actual, $row['password_hash'])) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "error" => "Contraseña actual incorrecta"]);
+                return;
+            }
+
+            $hash = password_hash($nueva, PASSWORD_DEFAULT);
+            $upd  = $pdo->prepare("UPDATE usuarios SET password_hash = :hash WHERE id_usuario = :id");
+            $upd->bindParam(':hash', $hash, PDO::PARAM_STR);
+            $upd->bindParam(':id',   $_SESSION['id_usuario'], PDO::PARAM_INT);
+            $upd->execute();
+
+            http_response_code(200);
+            echo json_encode(["status" => "success"]);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
+
     public static function listarAtletas() {
         session_start();
 

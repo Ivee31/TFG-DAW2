@@ -33,7 +33,7 @@ class AuthController {
 
         try {
             $pdo = Connect::conexion();
-            $stmt = $pdo->prepare("SELECT id_usuario, nombre, apellidos, email, password_hash, rol, estado_cuenta FROM usuarios WHERE email = :email");
+            $stmt = $pdo->prepare("SELECT id_usuario, nombre, apellidos, dni, email, genero, fecha_nacimiento, password_hash, rol, estado_cuenta FROM usuarios WHERE email = :email");
             $stmt->bindParam(":email", $email, PDO::PARAM_STR);
             $stmt->execute();
 
@@ -402,7 +402,7 @@ class AuthController {
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
-                "SELECT id_usuario, nombre, apellidos, email, rol FROM usuarios WHERE id_usuario = :id"
+                "SELECT id_usuario, nombre, apellidos, dni, email, genero, fecha_nacimiento, rol FROM usuarios WHERE id_usuario = :id"
             );
             $stmt->bindParam(':id', $_SESSION['id_usuario'], PDO::PARAM_INT);
             $stmt->execute();

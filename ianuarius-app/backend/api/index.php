@@ -84,8 +84,16 @@ switch ($endpoint) {
         $sub = $segments[1] ?? '';
         if ($sub === 'atletas' && $method === 'GET') {
             UsuarioController::listarAtletas();
+
         } elseif ($sub === 'email' && $method === 'PUT') {
             UsuarioController::cambiarEmail();
+
+        } elseif ($sub === 'perfil' && $method === 'PUT') {
+            UsuarioController::actualizarPerfil();
+
+        } elseif ($sub === 'password' && $method === 'PUT') {
+            UsuarioController::cambiarPassword();
+
         } else {
             http_response_code(404);
             echo json_encode(["error" => "Endpoint not found"]);
@@ -96,9 +104,11 @@ switch ($endpoint) {
         $sub = $segments[1] ?? '';
         if ($sub === 'pendientes' && $method === 'GET') {
             AdminController::pendientes();
+
         } elseif ($sub === 'activar' && $method === 'POST') {
             $id = (int)($segments[2] ?? 0);
             AdminController::activar($id);
+
         } else {
             http_response_code(404);
             echo json_encode(["error" => "Endpoint not found"]);
@@ -108,6 +118,7 @@ switch ($endpoint) {
     case 'pruebas':
         if ($method == 'GET') {
             PruebaController::disponibles();
+
         } else {
             http_response_code(405);
             echo json_encode(["error" => "Method not allowed"]);
@@ -138,6 +149,7 @@ switch ($endpoint) {
     case 'google-login':
         if ($method === 'POST') {
             AuthController::loginGoogle();
+
         } else {
             http_response_code(405);
             echo json_encode(["error" => "Method not allowed"]);
@@ -147,6 +159,7 @@ switch ($endpoint) {
     case 'google-complete':
         if ($method === 'POST') {
             AuthController::completeGoogleRegister();
+
         } else {
             http_response_code(405);
             echo json_encode(["error" => "Method not allowed"]);
@@ -156,6 +169,7 @@ switch ($endpoint) {
     case 'forgot-password':
         if ($method === 'POST') {
             ResetController::solicitar();
+
         } else {
             http_response_code(405);
             echo json_encode(["error" => "Method not allowed"]);
@@ -165,6 +179,7 @@ switch ($endpoint) {
     case 'reset-password':
         if ($method === 'POST') {
             ResetController::resetear();
+            
         } else {
             http_response_code(405);
             echo json_encode(["error" => "Method not allowed"]);
