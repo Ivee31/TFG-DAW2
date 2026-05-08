@@ -1,15 +1,65 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 
 const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
 
-function Avatar({ nombre, apellidos }) {
+const resizeToBase64 = (file) => new Promise((resolve, reject) => {
+	const img = new Image();
+	const url = URL.createObjectURL(file);
+	img.onload = () => {
+		const MAX = 300;
+		const scale = Math.min(MAX / img.width, MAX / img.height, 1);
+		const canvas = document.createElement('canvas');
+		canvas.width = Math.round(img.width * scale);
+		canvas.height = Math.round(img.height * scale);
+		canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+		URL.revokeObjectURL(url);
+		resolve(canvas.toDataURL('image/jpeg', 0.85));
+	};
+	img.onerror = reject;
+	img.src = url;
+});
+
+function Avatar({ src, nombre, apellidos, onEdit }) {
+	const [hovered, setHovered] = useState(false);
+	const fileRef = useRef(null);
 	const initials = ((nombre?.[0] || '') + (apellidos?.[0] || '')).toUpperCase();
+
 	return (
-		<div className="w-20 h-20 rounded-full bg-ianuarius flex items-center justify-center shrink-0 shadow-lg">
-			<span className="text-white font-black text-2xl tracking-widest">{initials}</span>
-		</div>
+		<>
+			<div
+				className="relative w-20 h-20 rounded-full cursor-pointer shrink-0 shadow-lg overflow-hidden"
+				onMouseEnter={() => setHovered(true)}
+				onMouseLeave={() => setHovered(false)}
+				onClick={() => fileRef.current?.click()}
+				title="Cambiar foto de perfil"
+			>
+				{src ? (
+					<img src={src} alt="Foto de perfil" className="w-full h-full object-cover" />
+				) : (
+					<div className="w-full h-full bg-ianuarius flex items-center justify-center">
+						<span className="text-white font-black text-2xl tracking-widest">{initials}</span>
+					</div>
+				)}
+
+				<div className={`absolute inset-0 flex flex-col items-center justify-center gap-1 bg-black/60 transition-opacity duration-200 ${hovered ? 'opacity-100' : 'opacity-0'}`}>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-white">
+						<path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+						<path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+					</svg>
+					<span className="text-white text-[9px] font-bold uppercase tracking-wider">Editar</span>
+				</div>
+			</div>
+
+			<input
+				ref={fileRef}
+				type="file"
+				accept="image/jpeg,image/png,image/webp,image/gif"
+				className="hidden"
+				onChange={e => { if (e.target.files[0]) onEdit(e.target.files[0]); e.target.value = ''; }}
+			/>
+		</>
 	);
 }
 
@@ -53,6 +103,7 @@ export default function Perfil({ user, onUserUpdate }) {
 	const [passLoading, setPassLoading] = useState(false);
 
 	const [categoria, setCategoria] = useState(null);
+	const [fotoLoading, setFotoLoading] = useState(false);
 
 	useEffect(() => {
 		fetch(`${API}/categorias`, { credentials: 'include' })
@@ -152,6 +203,22 @@ export default function Perfil({ user, onUserUpdate }) {
 		.catch(() => { setPassLoading(false); setPassMsg('Error de conexión'); });
 	};
 
+	const handleFotoChange = async (file) => {
+		setFotoLoading(true);
+		try {
+			const base64 = await resizeToBase64(file);
+			const res = await fetch(`${API}/usuarios/foto`, {
+				method: 'PUT',
+				credentials: 'include',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ foto: base64 })
+			});
+			const d = await res.json();
+			if (d.status === 'success') onUserUpdate({ ...user, foto_perfil: base64 });
+		} catch {}
+		setFotoLoading(false);
+	};
+
 	const generoLabel = g => g === 'M' ? 'Masculino' : g === 'F' ? 'Femenino' : '-';
 
 	const fechaDisplay = f => {
@@ -164,7 +231,17 @@ export default function Perfil({ user, onUserUpdate }) {
 		<div className="space-y-6 max-w-2xl">
 
 			<div className="flex items-center gap-6 p-6 bg-gris rounded-lg border border-white/10">
-				<Avatar nombre={user.nombre} apellidos={user.apellidos} />
+				<div className="relative">
+					<Avatar src={user.foto_perfil} nombre={user.nombre} apellidos={user.apellidos} onEdit={handleFotoChange} />
+					{fotoLoading && (
+						<div className="absolute inset-0 rounded-full bg-black/70 flex items-center justify-center">
+							<svg className="animate-spin w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+								<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+								<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+							</svg>
+						</div>
+					)}
+				</div>
 
 				<div>
 					<h2 className="text-2xl font-black text-white tracking-tight">{user.nombre} {user.apellidos}</h2>

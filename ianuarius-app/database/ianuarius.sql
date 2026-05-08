@@ -50,6 +50,7 @@ CREATE TABLE usuarios (
     fecha_nacimiento DATE NOT NULL,
     genero ENUM('M', 'F') NOT NULL,
     estado_cuenta BOOLEAN DEFAULT TRUE,
+    foto_perfil MEDIUMTEXT DEFAULT NULL,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
 );
 

@@ -88,6 +88,9 @@ switch ($endpoint) {
         } elseif ($sub === 'email' && $method === 'PUT') {
             UsuarioController::cambiarEmail();
 
+        } elseif ($sub === 'foto' && $method === 'PUT') {
+            UsuarioController::subirFoto();
+
         } elseif ($sub === 'perfil' && $method === 'PUT') {
             UsuarioController::actualizarPerfil();
 
