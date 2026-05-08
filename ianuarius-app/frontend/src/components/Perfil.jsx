@@ -111,10 +111,11 @@ function IconDoc() {
 	);
 }
 
-function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenado, onUpload, accept, onGoToInscripcion }) {
+function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenado, onUpload, accept, onGoToInscripcion, tooltip }) {
 	const fileRef = useRef(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
+	const [showInfo, setShowInfo] = useState(false);
 
 	const handleFile = async (file) => {
 		setLoading(true);
@@ -132,9 +133,18 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 	return (
 		<div className="border border-white/10 rounded-lg p-4 space-y-3">
 			<div className="flex items-center justify-between gap-2">
-				<div className="flex items-center gap-3 min-w-0">
+				<div className="flex items-center gap-2 min-w-0">
 					<IconDoc />
 					<span className="text-xs font-bold uppercase tracking-wider text-gray-300 truncate">{label}</span>
+					{tooltip && (
+						<button
+							onClick={() => setShowInfo(v => !v)}
+							className={`shrink-0 w-4 h-4 rounded-full border flex items-center justify-center transition ${showInfo ? 'border-white/40 text-white' : 'border-white/20 text-gray-500 hover:border-white/40 hover:text-gray-300'}`}
+							title="¿Qué es esto?"
+						>
+							<span className="text-[9px] font-black leading-none">i</span>
+						</button>
+					)}
 				</div>
 				{loading ? (
 					<svg className="animate-spin w-4 h-4 text-gray-400 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -143,6 +153,12 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 					</svg>
 				) : subido ? <IconCheck /> : <IconWarning />}
 			</div>
+
+			{showInfo && tooltip && (
+				<div className="bg-white/5 border border-white/10 rounded-md px-3 py-2">
+					<p className="text-gray-300 text-xs leading-relaxed">{tooltip}</p>
+				</div>
+			)}
 
 			{!loading && subido && (
 				<>
@@ -245,6 +261,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					previewSrc={user.foto_dni || null}
 					onUpload={f => subirArchivo('dni', 'foto_dni', f)}
 					accept="image/jpeg,image/png,image/webp,application/pdf"
+					tooltip="Foto o PDF de tu documento de identidad. Lo necesitamos para verificar que eres miembro del club."
 				/>
 				<FileCard
 					label="Ficha de inscripción"
@@ -255,6 +272,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					onUpload={f => subirArchivo('inscripcion-pdf', 'inscripcion_pdf', f)}
 					accept="application/pdf,image/jpeg,image/png,image/webp"
 					onGoToInscripcion={onGoToInscripcion}
+					tooltip="Formulario oficial de inscripción a la temporada, firmado. Sin él no podrás participar en competiciones ni entrenamientos oficiales."
 				/>
 				<FileCard
 					label="Foto de carnet"
@@ -262,6 +280,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					previewSrc={user.foto_carnet || null}
 					onUpload={f => subirArchivo('carnet', 'foto_carnet', f)}
 					accept="image/jpeg,image/png,image/webp"
+					tooltip="Foto tipo carnet con fondo claro. Se usará en tu ficha oficial del club y en el listado de atletas para que el equipo técnico te reconozca."
 				/>
 			</div>
 		</div>
