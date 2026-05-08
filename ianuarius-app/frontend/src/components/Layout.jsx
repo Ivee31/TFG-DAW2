@@ -10,7 +10,7 @@ const COUNTDOWN_SEGS = 2 * 60;
 export default function Layout({ children, user, onLogout, onUserUpdate, currentView, onNavigate }) {
 	// control estados menu lateral
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const [isPinned, setIsPinned] = useState(false);
+	const [isPinned, setIsPinned] = useState(() => window.innerWidth >= 1024);
 	const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024);
 	const menuRef = useRef(null);
 	const btnRef = useRef(null);
