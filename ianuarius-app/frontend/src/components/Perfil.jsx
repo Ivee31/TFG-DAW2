@@ -105,7 +105,7 @@ function IconDoc() {
 	);
 }
 
-function FileCard({ label, subido, esInscripcion }) {
+function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenado }) {
 	return (
 		<div className="border border-white/10 rounded-lg p-4 space-y-3">
 			<div className="flex items-center justify-between gap-2">
@@ -116,22 +116,36 @@ function FileCard({ label, subido, esInscripcion }) {
 				{subido ? <IconCheck /> : <IconWarning />}
 			</div>
 
-			<p className={`text-[10px] uppercase tracking-widest font-bold ${subido ? 'text-green-500' : 'text-yellow-400'}`}>
-				{subido ? 'Adjuntado' : 'Pendiente'}
-			</p>
+			{subido ? (
+				<>
+					{previewSrc && (
+						<div className="rounded overflow-hidden border border-white/10">
+							<img src={previewSrc} alt={label} className="w-full h-28 object-cover object-center" />
+						</div>
+					)}
+					{formularioRellenado && (
+						<p className="text-[10px] uppercase tracking-widest font-bold text-green-500">Formulario completado</p>
+					)}
+					{!previewSrc && !formularioRellenado && (
+						<p className="text-[10px] uppercase tracking-widest font-bold text-green-500">Adjuntado</p>
+					)}
+				</>
+			) : (
+				<p className="text-[10px] uppercase tracking-widest font-bold text-yellow-400">Pendiente</p>
+			)}
 
-			{esInscripcion && (
-				<div className="flex gap-2 pt-1">
-					<button
-						className="flex-1 flex items-center justify-center gap-1 border border-white/10 text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition"
-						onClick={() => {}}
-					>
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
-						</svg>
-						Subir PDF
-					</button>
+			<div className="flex gap-2 pt-1">
+				<button
+					className="flex-1 flex items-center justify-center gap-1 border border-white/10 text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition"
+					onClick={() => {}}
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
+						<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+					</svg>
+					{esInscripcion ? 'Subir PDF' : 'Subir archivo'}
+				</button>
 
+				{esInscripcion && (
 					<button
 						className="flex-1 flex items-center justify-center gap-1 bg-ianuarius/10 border border-ianuarius/30 text-ianuarius text-[9px] font-black uppercase tracking-widest py-2 rounded hover:bg-ianuarius/20 transition"
 						onClick={() => {}}
@@ -141,8 +155,8 @@ function FileCard({ label, subido, esInscripcion }) {
 						</svg>
 						Formulario
 					</button>
-				</div>
-			)}
+				)}
+			</div>
 		</div>
 	);
 }
@@ -312,9 +326,9 @@ export default function Perfil({ user, onUserUpdate }) {
 	};
 
 	return (
-		<div className="flex flex-col lg:flex-row gap-6 items-start">
+		<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
 
-		<div className="flex-1 min-w-0 space-y-6">
+		<div className="space-y-6">
 
 			<div className="flex items-center gap-6 p-6 bg-gris rounded-lg border border-white/10">
 				<div className="relative">
@@ -494,7 +508,7 @@ export default function Perfil({ user, onUserUpdate }) {
 		</div>
 
 		{/* columna derecha: mis archivos */}
-		<div className="w-full lg:w-80 shrink-0">
+		<div>
 			<MisArchivos />
 		</div>
 
