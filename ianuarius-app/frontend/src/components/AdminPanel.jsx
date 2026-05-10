@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { API } from '../api';
+import PerfilAtleta from './PerfilAtleta';
 
 const calcularCategoria = (fechaNacimiento, genero) => {
 	const edad = new Date().getFullYear() - parseInt(fechaNacimiento?.split('-')[0] ?? 0);
@@ -37,6 +38,7 @@ export default function AdminPanel() {
 	const [cargandoA, setCargandoA] = useState(true);
 	const [cargandoE, setCargandoE] = useState(true);
 	const [activando, setActivando] = useState(null);
+	const [atletaSeleccionado, setAtletaSeleccionado] = useState(null);
 
 	const cargarPendientes = () => {
 		setCargandoP(true);
@@ -72,6 +74,10 @@ export default function AdminPanel() {
 			.finally(() => setActivando(null));
 
 	};
+
+	if (atletaSeleccionado) {
+		return <PerfilAtleta atletaId={atletaSeleccionado} onVolver={() => setAtletaSeleccionado(null)} />;
+	}
 
 	return (
 		<main className="space-y-8">
@@ -177,7 +183,8 @@ export default function AdminPanel() {
 								<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
 									{atletas.map(a => (
 										<div key={a.id_usuario}
-											className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300">
+											onClick={() => setAtletaSeleccionado(a.id_usuario)}
+											className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300 cursor-pointer">
 											<div className="flex items-start gap-3">
 												<UsuarioAvatar fotoPerfil={a.foto_perfil} fotoCarnet={a.foto_carnet} nombre={a.nombre} apellidos={a.apellidos} />
 												<div className="flex-1 min-w-0">

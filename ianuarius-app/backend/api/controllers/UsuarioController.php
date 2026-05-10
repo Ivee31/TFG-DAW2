@@ -378,4 +378,54 @@ class UsuarioController {
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
     }
+
+    // devuelve perfil completo de un atleta (incluye documentos) — solo Entrenador / Admin
+    public static function perfilAtleta(int $id): void {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        if (!in_array($_SESSION['rol'], ['Entrenador', 'Admin'])) {
+            http_response_code(403);
+            echo json_encode(["status" => "error", "error" => "Acceso denegado"]);
+            return;
+        }
+
+        if ($id < 1) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "ID no válido"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare(
+                "SELECT id_usuario, nombre, apellidos, email, genero, fecha_nacimiento,
+                        foto_perfil, foto_carnet, foto_dni, inscripcion_pdf
+                 FROM usuarios
+                 WHERE id_usuario = :id AND rol = 'Atleta' AND estado_cuenta = 1"
+            );
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $atleta = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$atleta) {
+                http_response_code(404);
+                echo json_encode(["status" => "error", "error" => "Atleta no encontrado"]);
+                return;
+            }
+
+            http_response_code(200);
+            echo json_encode(["status" => "success", "atleta" => $atleta]);
+
+        } catch (PDOException $e) {
+            error_log("perfilAtleta() - " . $e->getMessage(), 3, Config::LOGFILE);
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
 }

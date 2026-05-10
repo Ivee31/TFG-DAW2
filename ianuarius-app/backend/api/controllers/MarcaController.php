@@ -186,6 +186,52 @@ class MarcaController {
         }
     }
 
+    // devuelve marcas de un atleta concreto — solo Entrenador / Admin
+    public static function listarDeAtleta(int $id): void {
+        session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        if (!in_array($_SESSION['rol'], ['Entrenador', 'Admin'])) {
+            http_response_code(403);
+            echo json_encode(["status" => "error", "error" => "Acceso denegado"]);
+            return;
+        }
+
+        if ($id < 1) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "ID no válido"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare(
+                "SELECT m.id_marca, m.id_categoria, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
+                        c.nombre AS categoria_nombre
+                 FROM marcas m
+                 LEFT JOIN categorias c ON m.id_categoria = c.id_categoria
+                 WHERE m.id_usuario = :id
+                 ORDER BY m.fecha DESC, m.id_marca DESC"
+            );
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $marcas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            http_response_code(200);
+            echo json_encode(["status" => "success", "marcas" => $marcas]);
+
+        } catch (PDOException $e) {
+            error_log("listarDeAtleta() - " . $e->getMessage(), 3, Config::LOGFILE);
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
+
     // elimina una marca — solo si pertenece al usuario en sesion
     public static function eliminar($id_marca) {
         session_start();

@@ -88,6 +88,10 @@ switch ($endpoint) {
         if ($sub === 'atletas' && $method === 'GET') {
             UsuarioController::listarAtletas();
 
+        } elseif ($sub === 'atleta' && $method === 'GET') {
+            $id = (int)($segments[2] ?? 0);
+            UsuarioController::perfilAtleta($id);
+
         } elseif ($sub === 'entrenadores' && $method === 'GET') {
             UsuarioController::listarEntrenadores();
 
@@ -144,18 +148,23 @@ switch ($endpoint) {
         break;
 
     case 'marcas':
+        $sub = $segments[1] ?? '';
         if ($method == 'POST') {
             MarcaController::guardar();
+
+        } elseif ($method === 'GET' && $sub === 'atleta') {
+            $id = (int)($segments[2] ?? 0);
+            MarcaController::listarDeAtleta($id);
 
         } elseif ($method == 'GET') {
             MarcaController::listar();
 
         } elseif ($method == 'DELETE') {
-            $id_marca = (int)($segments[1] ?? 0);
+            $id_marca = (int)($sub ?: 0);
             MarcaController::eliminar($id_marca);
 
         } elseif ($method == 'PUT') {
-            $id_marca = (int)($segments[1] ?? 0);
+            $id_marca = (int)($sub ?: 0);
             MarcaController::actualizar($id_marca);
 
         } else {
