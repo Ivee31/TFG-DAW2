@@ -310,7 +310,19 @@ export default function Dashboard() {
 	const labelClasses = "block text-xs lg:text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2";
 
 	return (
-		<main className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">
+		<main className="space-y-6">
+
+			{/* aviso uso responsable */}
+			<div className="bg-white/[0.03] border border-white/8 rounded-xl px-4 py-3 flex items-start gap-3">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-gray-500 shrink-0 mt-0.5">
+					<path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+				</svg>
+				<p className="text-[10px] text-gray-500 leading-relaxed">
+					Por favor, introduce solo marcas reales y verídicas. Este apartado existe para ayudar a l@s entrenador@s a consultar el rendimiento de sus atletas. Si se introducen marcas incorrectas y un entrenador las usa para inscribir a alguien en una competición, las posibles consecuencias — como quedar excluido de la misma — serán responsabilidad del atleta que haya introducido la información errónea.
+				</p>
+			</div>
+
+		<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">
 
 			{/* listado marcas desde bd */}
 			<section className="lg:col-span-7">
@@ -606,6 +618,7 @@ export default function Dashboard() {
 				</div>
 			</aside>
 
+		</div>
 		</main>
 	);
 
