@@ -165,7 +165,9 @@ class EventoController {
                      ORDER BY e.fecha_hora ASC
                      LIMIT ?"
                 );
-                $stmt->execute([$id_categoria, $n]);
+                $stmt->bindValue(1, $id_categoria, PDO::PARAM_INT);
+                $stmt->bindValue(2, $n, PDO::PARAM_INT);
+                $stmt->execute();
             } else {
                 $stmt = $pdo->prepare(
                     "SELECT e.*, u.nombre AS creado_por, c.nombre AS categoria_nombre
@@ -176,7 +178,8 @@ class EventoController {
                      ORDER BY e.fecha_hora ASC
                      LIMIT ?"
                 );
-                $stmt->execute([$n]);
+                $stmt->bindValue(1, $n, PDO::PARAM_INT);
+                $stmt->execute();
             }
 
             $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
