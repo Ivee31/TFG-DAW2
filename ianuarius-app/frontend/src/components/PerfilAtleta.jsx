@@ -137,7 +137,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 											<th className="text-left px-3 py-2 font-semibold">Marca</th>
 											<th className="text-left px-3 py-2 font-semibold">Tipo</th>
 											<th className="text-left px-3 py-2 font-semibold">Fecha</th>
-											<th className="text-left px-3 py-2 font-semibold">Sens.</th>
+											<th className="text-left px-3 py-2 font-semibold">Sensaciones</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -150,9 +150,12 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 												<td className="px-3 py-2 text-gray-500">{m.fecha}</td>
 												<td className="px-3 py-2">
 													{m.sensaciones_valor ? (
-														<span title={m.sensaciones_notas || undefined} className="text-base cursor-default">
-															{SENSACIONES[parseInt(m.sensaciones_valor) - 1]}
-														</span>
+														<div className="flex flex-col gap-0.5">
+															<span className="text-base leading-none">{SENSACIONES[parseInt(m.sensaciones_valor) - 1]}</span>
+															{m.sensaciones_notas && (
+																<span className="text-gray-400 text-[10px] leading-tight max-w-[140px] break-words">{m.sensaciones_notas}</span>
+															)}
+														</div>
 													) : (
 														<span className="text-gray-700">—</span>
 													)}

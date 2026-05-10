@@ -230,6 +230,7 @@ class MarcaController {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
                 "SELECT m.id_marca, m.id_categoria, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
+                        m.sensaciones_valor, m.sensaciones_notas,
                         c.nombre AS categoria_nombre
                  FROM marcas m
                  LEFT JOIN categorias c ON m.id_categoria = c.id_categoria
