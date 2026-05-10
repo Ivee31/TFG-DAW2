@@ -40,6 +40,8 @@ const FORM_INICIAL = {
     titulo: '',
     descripcion: '',
     hora: '10:00',
+    fecha_fin: '',
+    enlace: '',
     tipo_evento: 'control',
     tipo_pista: 'aire libre',
     id_categoria: '',
@@ -125,6 +127,8 @@ export default function Calendario({ user }) {
                 titulo: form.titulo.trim(),
                 descripcion: form.descripcion.trim(),
                 fecha_hora,
+                fecha_fin: form.fecha_fin || null,
+                enlace: form.enlace.trim() || null,
                 tipo_evento: form.tipo_evento,
                 tipo_pista: form.tipo_pista,
                 id_categoria: form.id_categoria,
@@ -331,13 +335,36 @@ export default function Calendario({ user }) {
                                 />
                             </div>
 
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Hora inicio</label>
+                                    <input
+                                        type="time"
+                                        value={form.hora}
+                                        onChange={e => setForm(f => ({ ...f, hora: e.target.value }))}
+                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Fecha fin <span className="text-gray-600 normal-case">(opcional)</span></label>
+                                    <input
+                                        type="date"
+                                        value={form.fecha_fin}
+                                        onChange={e => setForm(f => ({ ...f, fecha_fin: e.target.value }))}
+                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition"
+                                    />
+                                </div>
+                            </div>
+
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Hora</label>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Enlace oficial <span className="text-gray-600 normal-case">(opcional)</span></label>
                                 <input
-                                    type="time"
-                                    value={form.hora}
-                                    onChange={e => setForm(f => ({ ...f, hora: e.target.value }))}
+                                    type="url"
+                                    value={form.enlace}
+                                    onChange={e => setForm(f => ({ ...f, enlace: e.target.value }))}
                                     className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition"
+                                    placeholder="https://..."
                                 />
                             </div>
 
@@ -425,9 +452,15 @@ export default function Calendario({ user }) {
 
                         <div className="space-y-1.5 text-xs text-gray-400 mb-4">
                             <p>
-                                <span className="font-bold text-gray-300">Fecha: </span>
+                                <span className="font-bold text-gray-300">Inicio: </span>
                                 {new Date(eventoDetalle.fecha_hora).toLocaleString('es-ES', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                             </p>
+                            {eventoDetalle.fecha_fin && (
+                                <p>
+                                    <span className="font-bold text-gray-300">Fin: </span>
+                                    {new Date(eventoDetalle.fecha_fin + 'T00:00:00').toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' })}
+                                </p>
+                            )}
                             <p>
                                 <span className="font-bold text-gray-300">Pista: </span>
                                 {TIPO_PISTA_LABEL[eventoDetalle.tipo_pista]}
@@ -443,6 +476,20 @@ export default function Calendario({ user }) {
                                 </p>
                             )}
                         </div>
+
+                        {eventoDetalle.enlace && (
+                            <a
+                                href={eventoDetalle.enlace}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-xs text-ianuarius hover:text-white transition mb-4 border border-ianuarius/30 rounded-lg px-3 py-2 hover:bg-ianuarius/10"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 shrink-0">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                                </svg>
+                                <span className="truncate font-bold uppercase tracking-widest">Ver horario oficial</span>
+                            </a>
+                        )}
 
                         {eventoDetalle.descripcion && (
                             <p className="text-sm text-gray-300 bg-oscuro/50 rounded-lg p-3 mb-4 leading-relaxed">

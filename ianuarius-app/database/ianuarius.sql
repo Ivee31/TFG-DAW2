@@ -85,6 +85,8 @@ CREATE TABLE eventos_calendario (
     titulo VARCHAR(100) NOT NULL,
     descripcion TEXT,
     fecha_hora DATETIME NOT NULL,
+    fecha_fin DATE DEFAULT NULL,
+    enlace VARCHAR(500) DEFAULT NULL,
     tipo_evento ENUM('nacional', 'autonomico', 'provincial', 'control', 'escolares') NOT NULL,
     tipo_pista ENUM('aire libre', 'pista cubierta', 'cross') NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,

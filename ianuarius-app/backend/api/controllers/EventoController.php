@@ -92,6 +92,8 @@ class EventoController {
         $titulo     = trim($data['titulo'] ?? '');
         $descripcion = trim($data['descripcion'] ?? '');
         $fecha_hora  = $data['fecha_hora'] ?? '';
+        $fecha_fin   = (isset($data['fecha_fin']) && $data['fecha_fin'] !== '') ? $data['fecha_fin'] : null;
+        $enlace      = (isset($data['enlace']) && trim($data['enlace']) !== '') ? trim($data['enlace']) : null;
         $tipo_evento = $data['tipo_evento'] ?? 'control';
         $tipo_pista  = $data['tipo_pista'] ?? 'aire libre';
         $id_categoria = (isset($data['id_categoria']) && $data['id_categoria'] !== '') ? (int)$data['id_categoria'] : null;
@@ -117,10 +119,10 @@ class EventoController {
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
-                "INSERT INTO eventos_calendario (id_usuario, id_categoria, titulo, descripcion, fecha_hora, tipo_evento, tipo_pista)
-                 VALUES (?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO eventos_calendario (id_usuario, id_categoria, titulo, descripcion, fecha_hora, fecha_fin, enlace, tipo_evento, tipo_pista)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
-            $stmt->execute([$id_usuario, $id_categoria, $titulo, $descripcion, $fecha_hora, $tipo_evento, $tipo_pista]);
+            $stmt->execute([$id_usuario, $id_categoria, $titulo, $descripcion, $fecha_hora, $fecha_fin, $enlace, $tipo_evento, $tipo_pista]);
 
             echo json_encode(['status' => 'success', 'id_evento' => $pdo->lastInsertId()]);
 
