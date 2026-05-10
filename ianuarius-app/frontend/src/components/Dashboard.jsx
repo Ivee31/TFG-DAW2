@@ -94,6 +94,8 @@ const formatMarcaTiempo = (raw) => {
 	if (digits.length > 4) result += '"' + digits.slice(4, 6);
 	return result;
 };
+const SENSACIONES = ['😩', '😟', '😐', '😊', '🤩'];
+
 // marcas visibles en modo reducido
 const MARCAS_RECIENTES = 3;
 // marcas por pagina en modo completo
@@ -108,6 +110,8 @@ export default function Dashboard() {
 	const [pruebas, setPruebas] = useState([]);
 	const [tipoCompeticion, setTipoCompeticion] = useState('Control');
 	const [marcaTiempo, setMarcaTiempo] = useState('');
+	const [sensacionesValor, setSensacionesValor] = useState(null);
+	const [sensacionesNotas, setSensacionesNotas] = useState('');
 	const [guardando, setGuardando] = useState(false);
 	const [feedbackMsg, setFeedbackMsg] = useState(null);
 	const [formatoError, setFormatoError] = useState(false);
@@ -135,6 +139,8 @@ export default function Dashboard() {
 	const [editTipo, setEditTipo] = useState('Control');
 	const [editMarca, setEditMarca] = useState('');
 	const [editCategoria, setEditCategoria] = useState('');
+	const [editSensacionesValor, setEditSensacionesValor] = useState(null);
+	const [editSensacionesNotas, setEditSensacionesNotas] = useState('');
 	const [editFormatoError, setEditFormatoError] = useState(false);
 	const [guardandoEdicion, setGuardandoEdicion] = useState(false);
 
@@ -208,7 +214,9 @@ export default function Dashboard() {
 				temporada: temporada === 'shortTrack' ? 'short_track' : 'outdoor',
 				tipo_competicion: tipoCompeticion,
 				marca: marcaTiempo,
-				id_categoria: categoriaSeleccionada
+				id_categoria: categoriaSeleccionada,
+				sensaciones_valor: sensacionesValor,
+				sensaciones_notas: sensacionesNotas
 			})
 		})
 		.then(res => res.json())
@@ -217,6 +225,8 @@ export default function Dashboard() {
 			if (data.status === 'success') {
 				setFeedbackMsg({ tipo: 'ok', texto: 'Marca guardada correctamente' });
 				setMarcaTiempo('');
+				setSensacionesValor(null);
+				setSensacionesNotas('');
 				cargarMarcas();
 
 			} else {
@@ -259,6 +269,8 @@ export default function Dashboard() {
 		setEditTipo(m.tipo_competicion);
 		setEditMarca(m.marca);
 		setEditCategoria(m.id_categoria ?? '');
+		setEditSensacionesValor(m.sensaciones_valor ? parseInt(m.sensaciones_valor) : null);
+		setEditSensacionesNotas(m.sensaciones_notas ?? '');
 		setEditFormatoError(false);
 		setConfirmandoId(null);
 		setEditandoId(m.id_marca);
@@ -277,7 +289,9 @@ export default function Dashboard() {
 				temporada: editTemporada === 'shortTrack' ? 'short_track' : 'outdoor',
 				tipo_competicion: editTipo,
 				marca: editMarca,
-				id_categoria: editCategoria
+				id_categoria: editCategoria,
+				sensaciones_valor: editSensacionesValor,
+				sensaciones_notas: editSensacionesNotas
 			})
 		})
 		.then(res => res.json())
@@ -358,6 +372,15 @@ export default function Dashboard() {
 										<p className="text-[10px] md:text-[9px] text-gray-400 uppercase">{formatearFecha(m.fecha)}</p>
 									</div>
 								</div>
+
+								{m.sensaciones_valor && (
+									<div className="mt-3 pt-3 border-t border-white/5 flex items-center gap-2">
+										<span className="text-lg leading-none">{SENSACIONES[m.sensaciones_valor - 1]}</span>
+										{m.sensaciones_notas && (
+											<p className="text-xs text-gray-400 italic truncate">{m.sensaciones_notas}</p>
+										)}
+									</div>
+								)}
 
 								<div className="flex justify-between mt-3 pt-3 border-t border-white/5">
 									<button
@@ -457,6 +480,33 @@ export default function Dashboard() {
 											{editFormatoError && (
 												<p className="text-red-400 text-[10px] mt-1 uppercase tracking-wider">Formato incorrecto — usa MM'SS"ms</p>
 											)}
+										</div>
+
+										<div>
+											<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-600 font-normal">(opcional)</span></label>
+											<div className="flex gap-2 mb-2">
+												{SENSACIONES.map((emoji, i) => {
+													const val = i + 1;
+													return (
+														<button
+															key={val}
+															type="button"
+															onClick={() => setEditSensacionesValor(editSensacionesValor === val ? null : val)}
+															className={`flex-1 text-lg py-1.5 rounded-lg border transition ${editSensacionesValor === val ? 'border-ianuarius bg-ianuarius/15' : 'border-white/10 bg-oscuro hover:border-white/30'}`}
+														>
+															{emoji}
+														</button>
+													);
+												})}
+											</div>
+											<textarea
+												value={editSensacionesNotas}
+												onChange={e => setEditSensacionesNotas(e.target.value)}
+												placeholder="Notas opcionales..."
+												maxLength={500}
+												rows={2}
+												className="w-full bg-oscuro border border-white/10 p-2 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-ianuarius transition resize-none"
+											/>
 										</div>
 
 										<div className="flex gap-2">
@@ -604,6 +654,34 @@ export default function Dashboard() {
 									Formato incorrecto — usa MM'SS"ms (ej: 00'49"15)
 								</p>
 							)}
+						</div>
+
+						<div>
+							<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-600 font-normal">(opcional)</span></label>
+							<div className="flex gap-2 mb-3">
+								{SENSACIONES.map((emoji, i) => {
+									const val = i + 1;
+									return (
+										<button
+											key={val}
+											type="button"
+											onClick={() => setSensacionesValor(sensacionesValor === val ? null : val)}
+											className={`flex-1 text-xl py-2 rounded-lg border transition ${sensacionesValor === val ? 'border-ianuarius bg-ianuarius/15' : 'border-white/10 bg-oscuro hover:border-white/30'}`}
+											title={['Muy mal', 'Mal', 'Regular', 'Bien', 'Excelente'][i]}
+										>
+											{emoji}
+										</button>
+									);
+								})}
+							</div>
+							<textarea
+								value={sensacionesNotas}
+								onChange={e => setSensacionesNotas(e.target.value)}
+								placeholder="Notas opcionales..."
+								maxLength={500}
+								rows={2}
+								className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-ianuarius transition resize-none"
+							/>
 						</div>
 
 						<button

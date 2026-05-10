@@ -361,8 +361,10 @@ CREATE TABLE IF NOT EXISTS marcas (
     prueba           VARCHAR(50) NOT NULL,
     temporada        ENUM('short_track', 'outdoor') NOT NULL,
     tipo_competicion ENUM('Nacional','Autonomico CyL','Provincial','Escolar','Control') NOT NULL DEFAULT 'Control',
-    marca            VARCHAR(20) NOT NULL,
-    fecha            DATE NOT NULL,
+    marca               VARCHAR(20) NOT NULL,
+    fecha               DATE NOT NULL,
+    sensaciones_valor   TINYINT DEFAULT NULL COMMENT '1-5: 1=muy mal, 5=excelente',
+    sensaciones_notas   VARCHAR(500) DEFAULT NULL,
     FOREIGN KEY (id_usuario)   REFERENCES usuarios(id_usuario)     ON DELETE CASCADE,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
 );

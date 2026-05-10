@@ -46,13 +46,19 @@ class MarcaController {
             return;
         }
 
-        $id_categoria = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
+        $id_categoria       = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
+        $sensaciones_valor  = isset($input['sensaciones_valor']) && $input['sensaciones_valor'] !== '' ? (int)$input['sensaciones_valor'] : null;
+        $sensaciones_notas  = isset($input['sensaciones_notas']) && trim($input['sensaciones_notas']) !== '' ? trim($input['sensaciones_notas']) : null;
+
+        if ($sensaciones_valor !== null && ($sensaciones_valor < 1 || $sensaciones_valor > 5)) {
+            $sensaciones_valor = null;
+        }
 
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
-                "INSERT INTO marcas (id_usuario, id_categoria, prueba, temporada, tipo_competicion, marca, fecha)
-                 VALUES (:id_usuario, :id_categoria, :prueba, :temporada, :tipo_competicion, :marca, CURDATE())"
+                "INSERT INTO marcas (id_usuario, id_categoria, prueba, temporada, tipo_competicion, marca, fecha, sensaciones_valor, sensaciones_notas)
+                 VALUES (:id_usuario, :id_categoria, :prueba, :temporada, :tipo_competicion, :marca, CURDATE(), :sensaciones_valor, :sensaciones_notas)"
             );
 
             $stmt->bindParam(':id_usuario',       $id_usuario,       PDO::PARAM_INT);
@@ -61,6 +67,8 @@ class MarcaController {
             $stmt->bindParam(':temporada',         $temporada,        PDO::PARAM_STR);
             $stmt->bindParam(':tipo_competicion',  $tipo_competicion, PDO::PARAM_STR);
             $stmt->bindParam(':marca',             $marca,            PDO::PARAM_STR);
+            $stmt->bindParam(':sensaciones_valor', $sensaciones_valor, PDO::PARAM_INT);
+            $stmt->bindParam(':sensaciones_notas', $sensaciones_notas, PDO::PARAM_STR);
             $stmt->execute();
 
             http_response_code(201);
@@ -89,6 +97,7 @@ class MarcaController {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
                 "SELECT m.id_marca, m.id_categoria, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
+                        m.sensaciones_valor, m.sensaciones_notas,
                         c.nombre AS categoria_nombre
                  FROM marcas m
                  LEFT JOIN categorias c ON m.id_categoria = c.id_categoria
@@ -152,24 +161,33 @@ class MarcaController {
             return;
         }
 
-        $id_categoria = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
+        $id_categoria      = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
+        $sensaciones_valor = isset($input['sensaciones_valor']) && $input['sensaciones_valor'] !== '' ? (int)$input['sensaciones_valor'] : null;
+        $sensaciones_notas = isset($input['sensaciones_notas']) && trim($input['sensaciones_notas']) !== '' ? trim($input['sensaciones_notas']) : null;
+
+        if ($sensaciones_valor !== null && ($sensaciones_valor < 1 || $sensaciones_valor > 5)) {
+            $sensaciones_valor = null;
+        }
 
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
                 "UPDATE marcas
                  SET prueba = :prueba, temporada = :temporada, tipo_competicion = :tipo_competicion,
-                     marca = :marca, id_categoria = :id_categoria
+                     marca = :marca, id_categoria = :id_categoria,
+                     sensaciones_valor = :sensaciones_valor, sensaciones_notas = :sensaciones_notas
                  WHERE id_marca = :id_marca AND id_usuario = :id_usuario"
             );
 
-            $stmt->bindParam(':prueba',            $prueba,           PDO::PARAM_STR);
-            $stmt->bindParam(':temporada',         $temporada,        PDO::PARAM_STR);
-            $stmt->bindParam(':tipo_competicion',  $tipo_competicion, PDO::PARAM_STR);
-            $stmt->bindParam(':marca',             $marca,            PDO::PARAM_STR);
-            $stmt->bindParam(':id_categoria',      $id_categoria,     PDO::PARAM_INT);
-            $stmt->bindParam(':id_marca',          $id_marca,         PDO::PARAM_INT);
-            $stmt->bindParam(':id_usuario',        $id_usuario,       PDO::PARAM_INT);
+            $stmt->bindParam(':prueba',            $prueba,            PDO::PARAM_STR);
+            $stmt->bindParam(':temporada',         $temporada,         PDO::PARAM_STR);
+            $stmt->bindParam(':tipo_competicion',  $tipo_competicion,  PDO::PARAM_STR);
+            $stmt->bindParam(':marca',             $marca,             PDO::PARAM_STR);
+            $stmt->bindParam(':id_categoria',      $id_categoria,      PDO::PARAM_INT);
+            $stmt->bindParam(':sensaciones_valor', $sensaciones_valor, PDO::PARAM_INT);
+            $stmt->bindParam(':sensaciones_notas', $sensaciones_notas, PDO::PARAM_STR);
+            $stmt->bindParam(':id_marca',          $id_marca,          PDO::PARAM_INT);
+            $stmt->bindParam(':id_usuario',        $id_usuario,        PDO::PARAM_INT);
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {

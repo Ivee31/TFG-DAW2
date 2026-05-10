@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { API } from '../api';
 
+const SENSACIONES = ['😩', '😟', '😐', '😊', '🤩'];
+
 const calcularCategoria = (fechaNacimiento, genero) => {
 	const edad = new Date().getFullYear() - parseInt(fechaNacimiento?.split('-')[0] ?? 0);
 	if (edad < 10)  return 'Sub-10';
@@ -135,6 +137,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 											<th className="text-left px-3 py-2 font-semibold">Marca</th>
 											<th className="text-left px-3 py-2 font-semibold">Tipo</th>
 											<th className="text-left px-3 py-2 font-semibold">Fecha</th>
+											<th className="text-left px-3 py-2 font-semibold">Sens.</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -145,6 +148,15 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 												<td className="px-3 py-2 font-bold text-ianuarius">{m.marca}</td>
 												<td className="px-3 py-2 text-gray-400">{m.tipo_competicion}</td>
 												<td className="px-3 py-2 text-gray-500">{m.fecha}</td>
+												<td className="px-3 py-2">
+													{m.sensaciones_valor ? (
+														<span title={m.sensaciones_notas || undefined} className="text-base cursor-default">
+															{SENSACIONES[parseInt(m.sensaciones_valor) - 1]}
+														</span>
+													) : (
+														<span className="text-gray-700">—</span>
+													)}
+												</td>
 											</tr>
 										))}
 									</tbody>
