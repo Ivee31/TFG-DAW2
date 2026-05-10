@@ -8,6 +8,17 @@ const COUNTDOWN_SEGS = 2 * 60;
 
 // plantilla principal para vistas autenticadas
 export default function Layout({ children, user, onLogout, onUserUpdate, currentView, onNavigate }) {
+	// pendientes admin — para el triangulo de aviso
+	const [hayPendientes, setHayPendientes] = useState(false);
+
+	useEffect(() => {
+		if (user?.rol !== 'Admin') return;
+		fetch(`${API}/admin/pendientes`, { credentials: 'include' })
+			.then(r => r.json())
+			.then(d => { if (d.status === 'success') setHayPendientes(d.pendientes?.length > 0); })
+			.catch(() => {});
+	}, [user?.rol]);
+
 	// control estados menu lateral
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isPinned, setIsPinned] = useState(() => window.innerWidth >= 1024);
@@ -198,11 +209,26 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 					)}
 
 					{user?.rol === 'Admin' && (
-						<button onClick={() => { onNavigate?.('admin'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'admin' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Panel Admin</button>
+						<button onClick={() => { onNavigate?.('admin'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'admin' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
+							Panel Admin
+							{hayPendientes && (
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-yellow-400 shrink-0">
+									<path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+								</svg>
+							)}
+						</button>
+					)}
+
+					{user?.rol === 'Admin' && (
+						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Tus Marcas</button>
 					)}
 
 					{user?.rol === 'Entrenador' && (
 						<button onClick={() => { onNavigate?.('entrenador'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'entrenador' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Panel Entrenador</button>
+					)}
+
+					{user?.rol === 'Entrenador' && (
+						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Tus Marcas</button>
 					)}
 
 					<button onClick={() => { onNavigate?.('perfil'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'perfil' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>

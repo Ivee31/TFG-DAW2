@@ -67,8 +67,8 @@ export default function App() {
 					{/* calendario: vista inicio para todos los roles */}
 					{currentView === 'dashboard'   && <Calendario user={user} />}
 
-					{/* marcas: solo atletas */}
-					{user.rol === 'Atleta'     && currentView === 'marcas'      && <Dashboard />}
+					{/* marcas: atletas, entrenadores y admins */}
+					{currentView === 'marcas' && <Dashboard />}
 
 					{/* panel admin */}
 					{user.rol === 'Admin'      && currentView === 'admin'       && <AdminPanel />}
