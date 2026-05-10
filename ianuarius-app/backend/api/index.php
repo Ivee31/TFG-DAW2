@@ -205,14 +205,18 @@ switch ($endpoint) {
         break;
 
     case 'eventos':
-        if ($method === 'GET') {
+        $sub = $segments[1] ?? '';
+        if ($method === 'GET' && $sub === 'proximos') {
+            EventoController::proximos();
+
+        } elseif ($method === 'GET') {
             EventoController::listar();
 
         } elseif ($method === 'POST') {
             EventoController::crear();
 
         } elseif ($method === 'DELETE') {
-            $id_evento = (int)($segments[1] ?? 0);
+            $id_evento = (int)($sub ?: 0);
             EventoController::eliminar($id_evento);
 
         } else {

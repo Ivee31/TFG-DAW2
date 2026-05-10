@@ -132,6 +132,62 @@ class EventoController {
         }
     }
 
+    // GET /eventos/proximos?n=2
+    public static function proximos(): void {
+        session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(['status' => 'error', 'error' => 'No autenticado']);
+            return;
+        }
+
+        $rol        = $_SESSION['rol'];
+        $id_usuario = $_SESSION['id_usuario'];
+        $n          = min((int)($_GET['n'] ?? 2), 10);
+
+        try {
+            $pdo = Connect::conexion();
+
+            if ($rol === 'Atleta') {
+                $stmt = $pdo->prepare("SELECT id_categoria FROM usuarios WHERE id_usuario = ?");
+                $stmt->execute([$id_usuario]);
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $id_categoria = $row['id_categoria'] ?? null;
+
+                $stmt = $pdo->prepare(
+                    "SELECT e.*, u.nombre AS creado_por, c.nombre AS categoria_nombre
+                     FROM eventos_calendario e
+                     JOIN usuarios u ON e.id_usuario = u.id_usuario
+                     LEFT JOIN categorias c ON e.id_categoria = c.id_categoria
+                     WHERE e.fecha_hora >= NOW()
+                       AND (e.id_categoria IS NULL OR e.id_categoria = ?)
+                     ORDER BY e.fecha_hora ASC
+                     LIMIT ?"
+                );
+                $stmt->execute([$id_categoria, $n]);
+            } else {
+                $stmt = $pdo->prepare(
+                    "SELECT e.*, u.nombre AS creado_por, c.nombre AS categoria_nombre
+                     FROM eventos_calendario e
+                     JOIN usuarios u ON e.id_usuario = u.id_usuario
+                     LEFT JOIN categorias c ON e.id_categoria = c.id_categoria
+                     WHERE e.fecha_hora >= NOW()
+                     ORDER BY e.fecha_hora ASC
+                     LIMIT ?"
+                );
+                $stmt->execute([$n]);
+            }
+
+            $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode(['status' => 'success', 'eventos' => $eventos]);
+
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'error' => 'Error interno']);
+        }
+    }
+
     // DELETE /eventos/{id}
     public static function eliminar(int $id): void {
         session_start();

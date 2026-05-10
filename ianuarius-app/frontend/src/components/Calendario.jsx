@@ -65,6 +65,9 @@ export default function Calendario({ user }) {
     const [eventoDetalle, setEventoDetalle] = useState(null);
     const [eliminando, setEliminando]       = useState(false);
 
+    // proximos eventos para el banner
+    const [proximos, setProximos] = useState([]);
+
     const puedeEditar = user?.rol === 'Entrenador' || user?.rol === 'Admin';
 
     const mesStr = `${year}-${String(month + 1).padStart(2, '0')}`;
@@ -78,6 +81,12 @@ export default function Calendario({ user }) {
     };
 
     useEffect(() => { cargarEventos(); }, [year, month]);
+
+    useEffect(() => {
+        fetch(`${API}/eventos/proximos?n=2`, { credentials: 'include' })
+            .then(r => r.json())
+            .then(d => { if (d.status === 'success') setProximos(d.eventos); });
+    }, []);
 
     useEffect(() => {
         if (!puedeEditar) return;
@@ -96,11 +105,18 @@ export default function Calendario({ user }) {
         else setMonth(m => m + 1);
     };
 
-    const eventosPorDia = (dia) =>
-        eventos.filter(e => {
-            const f = new Date(e.fecha_hora + 'Z');
-            return f.getDate() === dia && f.getMonth() === month && f.getFullYear() === year;
+    const eventosPorDia = (dia) => {
+        const celdaTs = new Date(year, month, dia).getTime();
+        return eventos.filter(e => {
+            const inicio = new Date(e.fecha_hora.replace(' ', 'T'));
+            const inicioTs = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate()).getTime();
+            if (e.fecha_fin) {
+                const finTs = new Date(e.fecha_fin + 'T00:00:00').getTime();
+                return celdaTs >= inicioTs && celdaTs <= finTs;
+            }
+            return inicioTs === celdaTs;
         });
+    };
 
     const abrirModal = (dia) => {
         setModalDia(dia);
@@ -173,8 +189,43 @@ export default function Calendario({ user }) {
     const esHoy = (dia) =>
         dia === hoy.getDate() && month === hoy.getMonth() && year === hoy.getFullYear();
 
+    const irAEvento = (ev) => {
+        const f = new Date(ev.fecha_hora.replace(' ', 'T'));
+        setYear(f.getFullYear());
+        setMonth(f.getMonth());
+        setEventoDetalle(ev);
+    };
+
     return (
         <div className="space-y-6">
+
+            {/* banner proximos eventos */}
+            {proximos.length > 0 && (
+                <div className="bg-ianuarius/5 border border-ianuarius/20 rounded-xl p-4 flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 text-ianuarius shrink-0 mt-0.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                    </svg>
+                    <div className="grow">
+                        <p className="text-ianuarius text-[10px] font-black uppercase tracking-widest mb-2">Próximos eventos</p>
+                        <div className="flex flex-wrap gap-2">
+                            {proximos.map(ev => {
+                                const f = new Date(ev.fecha_hora.replace(' ', 'T'));
+                                const fechaLabel = f.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
+                                return (
+                                    <button
+                                        key={ev.id_evento}
+                                        onClick={() => irAEvento(ev)}
+                                        className="text-[10px] bg-ianuarius/10 border border-ianuarius/25 text-gray-200 px-3 py-1.5 rounded-lg font-bold uppercase tracking-wider hover:bg-ianuarius/20 transition flex items-center gap-2"
+                                    >
+                                        <span className="text-ianuarius">{fechaLabel}</span>
+                                        <span>{ev.titulo}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* cabecera mes */}
             <div className="flex items-center justify-between">
