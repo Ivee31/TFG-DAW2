@@ -194,7 +194,24 @@ switch ($endpoint) {
     case 'reset-password':
         if ($method === 'POST') {
             ResetController::resetear();
-            
+
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
+    case 'eventos':
+        if ($method === 'GET') {
+            EventoController::listar();
+
+        } elseif ($method === 'POST') {
+            EventoController::crear();
+
+        } elseif ($method === 'DELETE') {
+            $id_evento = (int)($segments[1] ?? 0);
+            EventoController::eliminar($id_evento);
+
         } else {
             http_response_code(405);
             echo json_encode(["error" => "Method not allowed"]);

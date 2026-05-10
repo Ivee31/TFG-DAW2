@@ -11,6 +11,7 @@ import CompleteGoogleProfile from './components/CompleteGoogleProfile';
 import AvisoLegal from './components/AvisoLegal';
 import Perfil from './components/Perfil';
 import Inscripcion from './components/Inscripcion';
+import Calendario from './components/Calendario';
 
 export default function App() {
 	const [user, setUser] = useState(null);
@@ -63,15 +64,21 @@ export default function App() {
 		<>
 			{user ? (
 				<Layout user={user} onLogout={() => { setUser(null); setCurrentView('dashboard'); }} onUserUpdate={setUser} currentView={currentView} onNavigate={setCurrentView}>
-					{user.rol === 'Admin'      && currentView === 'dashboard'   && <AdminPanel />}
-					{user.rol === 'Admin'      && currentView === 'perfil'      && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
-					{user.rol === 'Admin'      && currentView === 'inscripcion' && <Inscripcion user={user} onUserUpdate={setUser} />}
-					{user.rol === 'Entrenador' && currentView === 'dashboard'   && <DashboardEntrenador />}
-					{user.rol === 'Entrenador' && currentView === 'perfil'      && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
-					{user.rol === 'Entrenador' && currentView === 'inscripcion' && <Inscripcion user={user} onUserUpdate={setUser} />}
-					{user.rol === 'Atleta'     && currentView === 'dashboard'   && <Dashboard />}
-					{user.rol === 'Atleta'     && currentView === 'perfil'      && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
-					{user.rol === 'Atleta'     && currentView === 'inscripcion' && <Inscripcion user={user} onUserUpdate={setUser} />}
+					{/* calendario: vista inicio para todos los roles */}
+					{currentView === 'dashboard'   && <Calendario user={user} />}
+
+					{/* marcas: solo atletas */}
+					{user.rol === 'Atleta'     && currentView === 'marcas'      && <Dashboard />}
+
+					{/* panel admin */}
+					{user.rol === 'Admin'      && currentView === 'admin'       && <AdminPanel />}
+
+					{/* panel entrenador */}
+					{user.rol === 'Entrenador' && currentView === 'entrenador'  && <DashboardEntrenador />}
+
+					{/* perfil e inscripcion — todos los roles */}
+					{currentView === 'perfil'      && <Perfil user={user} onUserUpdate={setUser} onNavigate={setCurrentView} />}
+					{currentView === 'inscripcion' && <Inscripcion user={user} onUserUpdate={setUser} />}
 				</Layout>
 
 			) : (

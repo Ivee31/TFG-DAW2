@@ -81,14 +81,14 @@ CREATE TABLE feedback_entrenamientos (
 CREATE TABLE eventos_calendario (
     id_evento INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
-    id_categoria INT NOT NULL,
+    id_categoria INT DEFAULT NULL,
     titulo VARCHAR(100) NOT NULL,
     descripcion TEXT,
     fecha_hora DATETIME NOT NULL,
     tipo_evento ENUM('nacional', 'autonomico', 'provincial', 'control', 'escolares') NOT NULL,
     tipo_pista ENUM('aire libre', 'pista cubierta', 'cross') NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
-    FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE CASCADE
+    FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
 );
 
 -- ==========================================

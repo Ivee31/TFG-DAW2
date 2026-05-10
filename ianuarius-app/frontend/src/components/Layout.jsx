@@ -191,7 +191,20 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 				</div>
 
 				<nav className="space-y-6 grow">
-					<button onClick={() => onNavigate?.('dashboard')} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'dashboard' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Inicio</button>
+					<button onClick={() => { onNavigate?.('dashboard'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'dashboard' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Inicio</button>
+
+					{user?.rol === 'Atleta' && (
+						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Registro de Marcas</button>
+					)}
+
+					{user?.rol === 'Admin' && (
+						<button onClick={() => { onNavigate?.('admin'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'admin' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Panel Admin</button>
+					)}
+
+					{user?.rol === 'Entrenador' && (
+						<button onClick={() => { onNavigate?.('entrenador'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'entrenador' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Panel Entrenador</button>
+					)}
+
 					<button onClick={() => { onNavigate?.('perfil'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'perfil' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
 						Mi Perfil
 						{(!user?.foto_dni || !user?.foto_carnet) && (
@@ -209,10 +222,6 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 							</svg>
 						)}
 					</button>
-
-					<a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Historico</a>
-					<a href="#" className="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Estadisticas</a>
-				
 				</nav>
 			</aside>
 
