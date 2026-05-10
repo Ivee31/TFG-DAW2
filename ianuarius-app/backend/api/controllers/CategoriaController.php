@@ -65,4 +65,34 @@ class CategoriaController {
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
     }
+
+    // devuelve todas las categorias — solo Entrenador / Admin
+    public static function todas() {
+        session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        if (!in_array($_SESSION['rol'], ['Entrenador', 'Admin'])) {
+            http_response_code(403);
+            echo json_encode(["status" => "error", "error" => "Acceso denegado"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->query("SELECT id_categoria, nombre FROM categorias ORDER BY edad_min ASC, nombre ASC");
+            $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            echo json_encode(["status" => "success", "categorias" => $categorias]);
+
+        } catch (PDOException $e) {
+            error_log("categorias.todas() - " . $e->getMessage(), 3, Config::LOGFILE);
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
 }

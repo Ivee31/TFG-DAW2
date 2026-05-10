@@ -53,7 +53,10 @@ switch ($endpoint) {
         break;
 
     case 'categorias':
-        if ($method == 'GET') {
+        $sub = $segments[1] ?? '';
+        if ($method === 'GET' && $sub === 'todas') {
+            CategoriaController::todas();
+        } elseif ($method == 'GET') {
             CategoriaController::disponibles();
         } else {
             http_response_code(405);

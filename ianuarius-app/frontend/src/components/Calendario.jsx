@@ -81,7 +81,7 @@ export default function Calendario({ user }) {
 
     useEffect(() => {
         if (!puedeEditar) return;
-        fetch(`${API}/categorias`, { credentials: 'include' })
+        fetch(`${API}/categorias/todas`, { credentials: 'include' })
             .then(r => r.json())
             .then(d => { if (d.status === 'success') setCategorias(d.categorias); });
     }, [puedeEditar]);
