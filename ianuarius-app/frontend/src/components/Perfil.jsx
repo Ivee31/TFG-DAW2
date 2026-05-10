@@ -111,7 +111,15 @@ function IconDoc() {
 	);
 }
 
-function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenado, onUpload, accept, onGoToInscripcion, tooltip }) {
+function extFromDataUri(src) {
+	if (!src) return '';
+	if (src.startsWith('data:application/pdf')) return '.pdf';
+	if (src.startsWith('data:image/png'))  return '.png';
+	if (src.startsWith('data:image/webp')) return '.webp';
+	return '.jpg';
+}
+
+function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenado, onUpload, accept, onGoToInscripcion, tooltip, downloadName }) {
 	const fileRef = useRef(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
@@ -216,6 +224,19 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 					{esInscripcion ? 'Subir PDF' : 'Subir archivo'}
 				</button>
 
+				{subido && previewSrc && (
+					<a
+						href={previewSrc}
+						download={(downloadName || label.toLowerCase().replace(/\s+/g, '_')) + extFromDataUri(previewSrc)}
+						className="flex-1 flex items-center justify-center gap-1 border border-white/10 text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5 0-4.5 4.5M12 3v13.5m0 0 4.5-4.5" />
+						</svg>
+						Descargar
+					</a>
+				)}
+
 				{esInscripcion && (
 					<button
 						className="flex-1 flex items-center justify-center gap-1 bg-ianuarius/10 border border-ianuarius/30 text-ianuarius text-[9px] font-black uppercase tracking-widest py-2 rounded hover:bg-ianuarius/20 transition"
@@ -259,6 +280,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					label="DNI escaneado"
 					subido={!!user.foto_dni}
 					previewSrc={user.foto_dni || null}
+					downloadName="dni"
 					onUpload={f => subirArchivo('dni', 'foto_dni', f)}
 					accept="image/jpeg,image/png,image/webp,application/pdf"
 					tooltip="Foto o PDF de tu documento de identidad POR LAS DOS CARAS. Se usará junto con la ficha de inscripcion y tu foto de carnet."
@@ -269,6 +291,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					esInscripcion
 					formularioRellenado={!!user.inscripcion_formulario}
 					previewSrc={user.inscripcion_pdf || null}
+					downloadName="inscripcion"
 					onUpload={f => subirArchivo('inscripcion-pdf', 'inscripcion_pdf', f)}
 					accept="application/pdf,image/jpeg,image/png,image/webp"
 					onGoToInscripcion={onGoToInscripcion}
@@ -278,6 +301,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 					label="Foto de carnet"
 					subido={!!user.foto_carnet}
 					previewSrc={user.foto_carnet || null}
+					downloadName="carnet"
 					onUpload={f => subirArchivo('carnet', 'foto_carnet', f)}
 					accept="image/jpeg,image/png,image/webp"
 					tooltip="Foto tipo carnet con fondo claro. Se usará en tu ficha oficial del club y en el listado de atletas para que l@s entrenador@s te reconozcan más facilmente."
