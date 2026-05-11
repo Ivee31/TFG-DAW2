@@ -10,11 +10,12 @@ const fileToBase64 = (file) => new Promise((resolve, reject) => {
 
 export default function Inscripcion({ user, onUserUpdate }) {
 	const fileRef = useRef(null);
-	const [loading, setLoading]     = useState(false);
-	const [error, setError]         = useState('');
-	const [ok, setOk]               = useState(false);
-	const [plantilla, setPlantilla] = useState(null);
-	const [cargandoP, setCargandoP] = useState(true);
+	const [loading, setLoading]         = useState(false);
+	const [error, setError]             = useState('');
+	const [ok, setOk]                   = useState(false);
+	const [plantilla, setPlantilla]     = useState(null);
+	const [cargandoP, setCargandoP]     = useState(true);
+	const [visorAbierto, setVisorAbierto] = useState(false);
 
 	const inscripcionCompleta = !!(user?.inscripcion_pdf || user?.inscripcion_formulario);
 	const isPdf = user?.inscripcion_pdf?.startsWith('data:application/pdf');
@@ -26,6 +27,13 @@ export default function Inscripcion({ user, onUserUpdate }) {
 			.catch(() => {})
 			.finally(() => setCargandoP(false));
 	}, []);
+
+	useEffect(() => {
+		if (!visorAbierto) return;
+		const onKey = (e) => { if (e.key === 'Escape') setVisorAbierto(false); };
+		window.addEventListener('keydown', onKey);
+		return () => window.removeEventListener('keydown', onKey);
+	}, [visorAbierto]);
 
 	const handleFile = async (file) => {
 		setLoading(true);
@@ -53,6 +61,37 @@ export default function Inscripcion({ user, onUserUpdate }) {
 	return (
 		<div className="space-y-6 max-w-2xl">
 
+			{visorAbierto && (
+				<div
+					className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col"
+					onClick={() => setVisorAbierto(false)}
+				>
+					<div className="flex items-center justify-between px-6 py-3 bg-gris border-b border-white/10 shrink-0" onClick={e => e.stopPropagation()}>
+						<div>
+							<p className="text-white text-sm font-black uppercase tracking-widest">Formulario de inscripción</p>
+							<p className="text-gray-400 text-[10px] uppercase tracking-wider mt-0.5">Rellena los campos y descarga el PDF completado desde el visor</p>
+						</div>
+
+						<button
+							onClick={() => setVisorAbierto(false)}
+							className="w-8 h-8 flex items-center justify-center rounded border border-white/10 text-gray-400 hover:text-white hover:border-white/30 transition"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+								<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+							</svg>
+						</button>
+					</div>
+
+					<div className="flex-1 overflow-hidden" onClick={e => e.stopPropagation()}>
+						<iframe
+							src={plantilla}
+							className="w-full h-full border-0"
+							title="Formulario de inscripción"
+						/>
+					</div>
+				</div>
+			)}
+
 			{inscripcionCompleta ? (
 				<div className="flex items-center gap-3 px-5 py-3 bg-green-500/10 border border-green-500/20 rounded-lg">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-green-500 shrink-0">
@@ -74,28 +113,29 @@ export default function Inscripcion({ user, onUserUpdate }) {
 				<h2 className="text-2xl font-black tracking-tight text-white mb-3">Formaliza tu inscripción</h2>
 				<p className="text-gray-400 text-sm leading-relaxed">
 					Para participar en los entrenamientos y competiciones de la temporada debes completar tu inscripción.
-					Descarga el formulario oficial, complétalo, fírmalo y sube el PDF escaneado.
+					Puedes rellenar el formulario directamente en el navegador o descargarlo para completarlo localmente.
 				</p>
 			</div>
 
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-				{/* Descargar plantilla */}
+				{/* Formulario oficial */}
 				<div className="bg-gris rounded-lg border border-white/10 p-6 space-y-4">
 					<div className="flex items-center gap-3">
 						<div className="w-10 h-10 bg-ianuarius/10 border border-ianuarius/30 rounded-lg flex items-center justify-center">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-ianuarius">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+								<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 							</svg>
 						</div>
+
 						<div>
-							<h3 className="text-sm font-black uppercase tracking-wide text-white">Descargar plantilla</h3>
-							<p className="text-gray-400 text-[10px] uppercase tracking-wider">Formulario oficial</p>
+							<h3 className="text-sm font-black uppercase tracking-wide text-white">Formulario oficial</h3>
+							<p className="text-gray-400 text-[10px] uppercase tracking-wider">Rellenar o descargar</p>
 						</div>
 					</div>
 
 					<p className="text-gray-400 text-xs leading-relaxed">
-						Descarga el formulario oficial de inscripción, complétalo a mano y fírmalo antes de subirlo.
+						Rellena el formulario directamente en el navegador o descárgalo para completarlo en local.
 					</p>
 
 					{cargandoP ? (
@@ -103,16 +143,28 @@ export default function Inscripcion({ user, onUserUpdate }) {
 							<span className="text-gray-500 text-[10px] uppercase tracking-widest animate-pulse">Cargando...</span>
 						</div>
 					) : plantilla ? (
-						<a
-							href={plantilla}
-							download="plantilla_inscripcion.pdf"
-							className="w-full flex items-center justify-center gap-2 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest py-3 rounded hover:bg-red-700 transition"
-						>
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-							</svg>
-							Descargar PDF
-						</a>
+						<div className="space-y-2">
+							<button
+								onClick={() => setVisorAbierto(true)}
+								className="w-full flex items-center justify-center gap-2 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest py-3 rounded hover:bg-red-700 transition"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+									<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+								</svg>
+								Rellenar en el navegador
+							</button>
+
+							<a
+								href={plantilla}
+								download="plantilla_inscripcion.pdf"
+								className="w-full flex items-center justify-center gap-2 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest py-3 rounded hover:border-white/40 hover:bg-white/5 transition"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+									<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+								</svg>
+								Descargar PDF
+							</a>
+						</div>
 					) : (
 						<div className="w-full py-3 text-center border border-dashed border-gray-700 rounded">
 							<p className="text-gray-500 text-[10px] uppercase tracking-widest">Pendiente — el administrador aún no ha subido la plantilla</p>
@@ -125,9 +177,10 @@ export default function Inscripcion({ user, onUserUpdate }) {
 					<div className="flex items-center gap-3">
 						<div className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-gray-400">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
 							</svg>
 						</div>
+
 						<div>
 							<h3 className="text-sm font-black uppercase tracking-wide text-white">Subir PDF firmado</h3>
 							<p className="text-gray-400 text-[10px] uppercase tracking-wider">Completado y escaneado</p>
@@ -145,8 +198,9 @@ export default function Inscripcion({ user, onUserUpdate }) {
 									<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 								</svg>
 							) : (
-								<img src={user.inscripcion_pdf} alt="Inscripción" className="w-16 h-12 object-cover rounded" />
+								<img src={user.inscripcion_pdf} alt="Inscripción subida" className="w-16 h-12 object-cover rounded" />
 							)}
+
 							<div>
 								<p className="text-xs text-green-500 font-bold uppercase tracking-wider">Adjuntado</p>
 								<p className="text-[10px] text-gray-400">{isPdf ? 'Documento PDF' : 'Imagen'}</p>
