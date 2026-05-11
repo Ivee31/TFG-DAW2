@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe – Perfil Atleta</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #f5f5f0; --surface: #ffffff; --stroke: #c8c8c0; --stroke2: #a0a098;
+            --label: #888880; --text: #2a2a28; --placeholder: #d0d0c8; --accent: #2a2a28;
+            --gap: 24px; --r: 6px;
+        }
+        body { background: var(--bg); font-family: 'Courier New', monospace; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+        .zona-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); margin-bottom: 6px; }
+        .linea { height: 8px; background: var(--placeholder); border-radius: 2px; margin-bottom: 6px; }
+        .linea.corta { width: 55%; } .linea.media { width: 75%; } .linea.titulo { height: 14px; width: 60%; margin-bottom: 10px; }
+        .card { background: var(--surface); border: 1px solid var(--stroke); border-radius: var(--r); padding: 16px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--stroke2); border-radius: var(--r); padding: 7px 14px; font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); background: var(--surface); cursor: default; }
+        .btn.fill { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+        .btn.pill { border-radius: 20px; padding: 4px 12px; font-size: 9px; }
+        .btn.pill.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+        header { border-bottom: 2px solid var(--accent); padding: 24px var(--gap); display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+        .h1-wf { font-size: 32px; letter-spacing: -0.02em; line-height: 1; font-weight: 400; color: var(--stroke2); border: 1.5px solid var(--stroke2); padding: 2px 6px; display: inline-block; margin-bottom: 10px; }
+        .sesion { display: flex; align-items: center; gap: 8px; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--stroke2); background: var(--placeholder); }
+        .header-der { display: flex; gap: 10px; align-items: center; }
+        .icon-sq { width: 36px; height: 36px; border: 1px solid var(--stroke); border-radius: var(--r); display: flex; align-items: center; justify-content: center; }
+        .icon-sq svg { width: 16px; height: 16px; stroke: var(--label); fill: none; stroke-width: 1.5; }
+        main { flex: 1; padding: var(--gap); display: grid; grid-template-columns: 4fr 8fr; gap: var(--gap); max-width: 1100px; margin: 0 auto; width: 100%; }
+        .avatar-wf { width: 68px; height: 68px; border-radius: 50%; background: var(--placeholder); border: 2px dashed var(--stroke2); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--label); margin: 0 auto 12px; }
+        .tabs-doc { display: flex; gap: 6px; margin-bottom: 10px; }
+        .doc-placeholder { background: var(--bg); border: 1px dashed var(--stroke2); border-radius: var(--r); padding: 22px; text-align: center; }
+        .doc-icon { width: 28px; height: 28px; background: var(--placeholder); border-radius: var(--r); margin: 0 auto 8px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); padding: 0 12px 10px 0; border-bottom: 1px solid var(--stroke); font-weight: 400; }
+        th.right { text-align: right; }
+        th.center { text-align: center; }
+        td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--stroke); font-size: 11px; vertical-align: middle; }
+        td.right { text-align: right; }
+        td.center { text-align: center; }
+        .marca-val { font-size: 18px; letter-spacing: 0.04em; color: var(--stroke2); }
+        .emoji-ph { width: 20px; height: 20px; background: var(--placeholder); border-radius: 50%; display: inline-block; }
+        .badge-sm { font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--stroke); border-radius: 3px; padding: 2px 7px; color: var(--label); }
+        footer { border-top: 1px solid var(--stroke); padding: 16px var(--gap); text-align: center; }
+        .wf-nota { font-size: 9px; color: var(--label); letter-spacing: 0.12em; text-transform: uppercase; border-left: 2px solid var(--stroke); padding-left: 6px; margin-top: 10px; }
+        .volver-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); border: 1px solid var(--stroke); border-radius: var(--r); padding: 5px 12px; cursor: default; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <div class="h1-wf">PERFIL ATLETA</div>
+            <div class="sesion"><span class="dot"></span><span>Vista entrenador / admin</span></div>
+        </div>
+        <div class="header-der">
+            <button class="btn fill">Cerrar Sesion</button>
+            <div class="icon-sq"><svg viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></div>
+        </div>
+    </header>
+
+    <div style="padding: 24px 24px 0; max-width:1100px; margin:0 auto; width:100%">
+        <div class="volver-btn">← Volver al panel</div>
+    </div>
+
+    <main>
+
+        <!-- COL IZQ -->
+        <section>
+            <div class="zona-label">col izq / info atleta + docs</div>
+
+            <!-- Info atleta -->
+            <div class="card" style="text-align:center; margin-bottom:16px">
+                <div class="avatar-wf">JG</div>
+                <div class="linea titulo" style="margin:0 auto 6px"></div>
+                <div class="linea corta" style="margin:0 auto 10px; height:6px"></div>
+                <span class="badge-sm" style="margin-bottom:12px; display:inline-block">Sub-23</span>
+                <div style="border-top:1px solid var(--stroke); padding-top:12px; text-align:left; margin-top:8px">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:7px"><span style="font-size:9px; color:var(--label); text-transform:uppercase">Género</span><div class="linea" style="width:70px; margin:0; height:7px"></div></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:7px"><span style="font-size:9px; color:var(--label); text-transform:uppercase">Nacimiento</span><div class="linea" style="width:80px; margin:0; height:7px"></div></div>
+                    <div style="display:flex; justify-content:space-between"><span style="font-size:9px; color:var(--label); text-transform:uppercase">DNI</span><div class="linea" style="width:70px; margin:0; height:7px"></div></div>
+                </div>
+            </div>
+
+            <!-- Documentos -->
+            <div class="card">
+                <div style="font-size:9px; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:10px; border-bottom:1px solid var(--stroke); padding-bottom:8px">Documentos</div>
+                <div class="tabs-doc">
+                    <div class="btn pill active">Carnet</div>
+                    <div class="btn pill">DNI</div>
+                </div>
+                <div class="doc-placeholder">
+                    <div class="doc-icon"></div>
+                    <div style="font-size:9px; color:var(--label); letter-spacing:0.08em; text-transform:uppercase">archivo.pdf</div>
+                    <button class="btn" style="margin-top:8px; padding:4px 10px; font-size:9px">Descargar</button>
+                </div>
+                <div class="wf-nota">2 tabs: Carnet / DNI · descarga directa</div>
+            </div>
+        </section>
+
+        <!-- COL DER: tabla marcas -->
+        <section>
+            <div class="zona-label">col der / historial de marcas</div>
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+                    <div class="linea titulo" style="width:40%; margin:0"></div>
+                    <span class="badge-sm">Temporada 2026</span>
+                </div>
+                <div style="overflow-x:auto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prueba</th>
+                                <th>Evento</th>
+                                <th class="right">Marca</th>
+                                <th>Fecha</th>
+                                <th class="center">Sensación</th>
+                                <th>Temporada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="linea" style="width:90px; margin:0; height:8px"></div></td>
+                                <td><div class="linea corta" style="width:80px; margin:0; height:7px"></div></td>
+                                <td class="right"><span class="marca-val">00'49''15</span></td>
+                                <td><div class="linea" style="width:80px; margin:0; height:7px"></div></td>
+                                <td class="center"><span class="emoji-ph"></span></td>
+                                <td><span class="badge-sm">Short Track</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="linea" style="width:90px; margin:0; height:8px"></div></td>
+                                <td><div class="linea corta" style="width:80px; margin:0; height:7px"></div></td>
+                                <td class="right"><span class="marca-val">00'52''30</span></td>
+                                <td><div class="linea" style="width:80px; margin:0; height:7px"></div></td>
+                                <td class="center"><span class="emoji-ph"></span></td>
+                                <td><span class="badge-sm">Outdoor</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="linea" style="width:90px; margin:0; height:8px"></div></td>
+                                <td><div class="linea corta" style="width:80px; margin:0; height:7px"></div></td>
+                                <td class="right"><span class="marca-val">00'22''80</span></td>
+                                <td><div class="linea" style="width:80px; margin:0; height:7px"></div></td>
+                                <td class="center"><span class="emoji-ph"></span></td>
+                                <td><span class="badge-sm">Outdoor</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="wf-nota">cols: prueba · evento · marca (destacada) · fecha · sensación (emoji placeholder) · temporada badge</div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="linea media" style="margin:0 auto 4px"></div>
+        <div class="linea corta" style="margin:0 auto; opacity:0.5"></div>
+    </footer>
+</body>
+</html>

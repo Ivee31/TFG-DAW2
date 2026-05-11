@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Selector de Vista</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        /* El iframe ocupara toda la pantalla */
+        iframe { width: 100%; height: 100vh; border: none; }
+    </style>
+</head>
+<body>
+
+    <iframe id="visor" src=""></iframe>
+
+    <script>
+        // Cambiar esta variable con el nombre del archivo
+        const vistaActiva = 'wf/panelLateral';
+
+        const iframe = document.getElementById('visor');
+
+        // Logica para cambiar el src segun la variable
+        switch (vistaActiva) {
+            case 'mu/home':
+            case 'home':
+                iframe.src = '/pruebaUI/home-mu.html';
+                break;
+                
+            case 'wf/home':
+                iframe.src = '/pruebaUI/home-wf.html';
+                break;
+            
+            case 'mu/dashboard':
+            case 'dashboard':
+                iframe.src = '/pruebaUI/dashboard-mu.html';
+                break;
+
+            case 'wf/dashboard':
+                iframe.src = '/pruebaUI/dashboard-wf.html';
+                break;
+
+            case 'mu/panelLateral':
+            case 'panelLateral':
+                iframe.src = '/pruebaUI/panelLateral-mu.html';
+                break;
+
+            case 'wf/panelLateral':
+                iframe.src = '/pruebaUI/panelLateral-wf.html';
+                break;
+
+            case 'mu/login':
+            case 'login':
+                iframe.src = '/pruebaUI/login-mu.html';
+                break;
+
+            case 'wf/login':
+                iframe.src = '/pruebaUI/login-wf.html';
+                break;
+
+            case 'mu/register':
+            case 'register':
+                iframe.src = '/pruebaUI/register-mu.html';
+                break;
+
+            case 'wf/register':
+                iframe.src = '/pruebaUI/register-wf.html';
+                break;
+
+            case 'mu/forgotPassword':
+            case 'forgotPassword':
+                iframe.src = '/pruebaUI/forgotPassword-mu.html';
+                break;
+
+            case 'wf/forgotPassword':
+                iframe.src = '/pruebaUI/forgotPassword-wf.html';
+                break;
+
+            case 'mu/perfil':
+            case 'perfil':
+                iframe.src = '/pruebaUI/perfil-mu.html';
+                break;
+
+            case 'wf/perfil':
+                iframe.src = '/pruebaUI/perfil-wf.html';
+                break;
+
+            case 'mu/dashboardEntrenador':
+            case 'dashboardEntrenador':
+                iframe.src = '/pruebaUI/dashboardEntrenador-mu.html';
+                break;
+
+            case 'wf/dashboardEntrenador':
+                iframe.src = '/pruebaUI/dashboardEntrenador-wf.html';
+                break;
+
+            case 'mu/adminPanel':
+            case 'adminPanel':
+                iframe.src = '/pruebaUI/adminPanel-mu.html';
+                break;
+
+            case 'wf/adminPanel':
+                iframe.src = '/pruebaUI/adminPanel-wf.html';
+                break;
+
+            case 'mu/perfilAtleta':
+            case 'perfilAtleta':
+                iframe.src = '/pruebaUI/perfilAtleta-mu.html';
+                break;
+
+            case 'wf/perfilAtleta':
+                iframe.src = '/pruebaUI/perfilAtleta-wf.html';
+                break;
+
+            case 'mu/calendario':
+            case 'calendario':
+                iframe.src = '/pruebaUI/calendario-mu.html';
+                break;
+
+            case 'wf/calendario':
+                iframe.src = '/pruebaUI/calendario-wf.html';
+                break;
+
+            case 'mu/inscripcion':
+            case 'inscripcion':
+                iframe.src = '/pruebaUI/inscripcion-mu.html';
+                break;
+
+            case 'wf/inscripcion':
+                iframe.src = '/pruebaUI/inscripcion-wf.html';
+                break;
+        }
+        
+    </script>
+</body>
+</html>

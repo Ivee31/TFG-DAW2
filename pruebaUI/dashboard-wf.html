@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wireframe – Dashboard Atleta</title>
+	<style>
+		/* Reset y base */
+		*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+		:root {
+			--bg:       #f5f5f0;
+			--surface:  #ffffff;
+			--stroke:   #c8c8c0;
+			--stroke2:  #a0a098;
+			--label:    #888880;
+			--text:     #2a2a28;
+			--placeholder: #d0d0c8;
+			--accent:   #2a2a28;
+			--gap:      24px;
+			--r:        6px;
+		}
+
+		body {
+			background: var(--bg);
+			font-family: 'Courier New', monospace;
+			color: var(--text);
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+		}
+
+		/* Anotacion de zona */
+		.zona-label {
+			font-size: 9px;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			color: var(--label);
+			margin-bottom: 6px;
+		}
+
+		/* Bloque placeholder imagen / grafico */
+		.placeholder {
+			background: var(--placeholder);
+			border: 1px dashed var(--stroke2);
+			border-radius: var(--r);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			overflow: hidden;
+		}
+		.placeholder::before,
+		.placeholder::after {
+			content: '';
+			position: absolute;
+			background: var(--stroke2);
+			opacity: 0.4;
+		}
+		/* X dentro del placeholder */
+		.placeholder.x-mark::before {
+			width: 100%; height: 1px;
+			top: 50%; left: 0;
+			transform: rotate(var(--deg, 35deg));
+		}
+		.placeholder.x-mark::after {
+			width: 100%; height: 1px;
+			top: 50%; left: 0;
+			transform: rotate(calc(var(--deg, 35deg) * -1));
+		}
+		.placeholder span {
+			font-size: 10px;
+			color: var(--label);
+			letter-spacing: 0.1em;
+			z-index: 1;
+			background: var(--placeholder);
+			padding: 2px 6px;
+		}
+
+		/* Linea de texto placeholder */
+		.linea {
+			height: 8px;
+			background: var(--placeholder);
+			border-radius: 2px;
+			margin-bottom: 6px;
+		}
+		.linea.corta  { width: 55%; }
+		.linea.media  { width: 75%; }
+		.linea.larga  { width: 100%; }
+		.linea.titulo { height: 14px; width: 60%; margin-bottom: 10px; }
+		.linea.subtitulo { height: 10px; width: 40%; margin-bottom: 8px; background: var(--stroke); }
+
+		/* Tarjeta base */
+		.card {
+			background: var(--surface);
+			border: 1px solid var(--stroke);
+			border-radius: var(--r);
+			padding: 20px;
+		}
+		.card.acento-top {
+			border-top: 4px solid var(--accent);
+		}
+
+		/* Boton wireframe */
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid var(--stroke2);
+			border-radius: var(--r);
+			padding: 8px 16px;
+			font-family: 'Courier New', monospace;
+			font-size: 10px;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			color: var(--label);
+			background: var(--surface);
+			cursor: default;
+		}
+		.btn.fill {
+			background: var(--accent);
+			border-color: var(--accent);
+			color: var(--bg);
+		}
+		.btn.dashed {
+			border-style: dashed;
+			width: 100%;
+			padding: 12px;
+			text-align: center;
+		}
+		.btn.pill {
+			border-radius: 20px;
+			padding: 5px 14px;
+		}
+
+		/* Input wireframe */
+		.inp {
+			width: 100%;
+			border: 1px solid var(--stroke);
+			border-radius: var(--r);
+			padding: 10px 12px;
+			font-family: 'Courier New', monospace;
+			font-size: 11px;
+			color: var(--label);
+			background: var(--bg);
+		}
+		.inp.grande {
+			font-size: 22px;
+			padding: 14px 12px;
+			letter-spacing: 0.05em;
+		}
+		select.inp { appearance: none; cursor: default; }
+
+		/* Label campo */
+		.field-label {
+			font-size: 9px;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: var(--label);
+			display: block;
+			margin-bottom: 6px;
+		}
+
+		/* Toggle 2 botones */
+		.toggle-pair {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+		}
+		.toggle-btn {
+			padding: 10px;
+			font-size: 9px;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			text-align: center;
+			border-radius: var(--r);
+			font-family: 'Courier New', monospace;
+			cursor: default;
+		}
+		.toggle-btn.activo {
+			background: var(--accent);
+			color: var(--bg);
+			border: 1px solid var(--accent);
+		}
+		.toggle-btn.inactivo {
+			background: var(--bg);
+			color: var(--label);
+			border: 1px solid var(--stroke);
+		}
+
+		/* Fila de marca */
+		.marca-row {
+			border: 1px solid var(--stroke);
+			border-radius: var(--r);
+			padding: 14px 16px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+		.marca-row .izq .linea { margin-bottom: 4px; }
+		.marca-row .der {
+			text-align: right;
+		}
+		.marca-row .der .tiempo {
+			font-size: 22px;
+			letter-spacing: 0.04em;
+			color: var(--stroke2);
+		}
+		.marca-row .der .fecha {
+			font-size: 9px;
+			color: var(--label);
+			letter-spacing: 0.1em;
+		}
+
+		/* ───── LAYOUT ───── */
+
+		/* Header */
+		header {
+			border-bottom: 2px solid var(--accent);
+			padding: 24px var(--gap);
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+			gap: 16px;
+			flex-wrap: wrap;
+		}
+		.header-izq .h1-wf {
+			font-size: 38px;
+			letter-spacing: -0.02em;
+			line-height: 1;
+			font-weight: 400;
+			color: var(--stroke2);
+			border: 1.5px solid var(--stroke2);
+			padding: 2px 6px;
+			display: inline-block;
+			margin-bottom: 10px;
+		}
+		.header-izq .sesion {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			font-size: 9px;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: var(--label);
+		}
+		.dot {
+			width: 8px; height: 8px;
+			border-radius: 50%;
+			border: 1px solid var(--stroke2);
+			background: var(--placeholder);
+			flex-shrink: 0;
+		}
+		.header-der {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+		}
+		.icon-sq {
+			width: 36px; height: 36px;
+			border: 1px solid var(--stroke);
+			border-radius: var(--r);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.icon-sq svg { width: 16px; height: 16px; stroke: var(--label); fill: none; stroke-width: 1.5; }
+
+		/* Main grid */
+		main {
+			flex: 1;
+			padding: var(--gap);
+			display: grid;
+			grid-template-columns: 7fr 5fr;
+			gap: var(--gap);
+			max-width: 1100px;
+			margin: 0 auto;
+			width: 100%;
+		}
+
+		/* Seccion marcas */
+		.sec-marcas .card-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+
+		/* Footer */
+		footer {
+			border-top: 1px solid var(--stroke);
+			padding: 16px var(--gap);
+			text-align: center;
+		}
+		footer .linea { margin: 0 auto; }
+
+		/* Anotaciones laterales wireframe */
+		.wf-nota {
+			font-size: 9px;
+			color: var(--label);
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			border-left: 2px solid var(--stroke);
+			padding-left: 6px;
+			margin-top: 4px;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- HEADER -->
+	<header>
+		<div class="header-izq">
+			<div class="h1-wf">PANEL DE ATLETA</div>
+			<div class="sesion">
+				<span class="dot"></span>
+				<span>Sesion activa: Atleta Ianuarius</span>
+			</div>
+		</div>
+		<div class="header-der">
+			<button class="btn fill">Cerrar Sesion</button>
+			<button class="btn">Ajustes</button>
+			<!-- hamburger -->
+			<div class="icon-sq">
+				<svg viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+			</div>
+		</div>
+		<div class="wf-nota" style="width:100%">zona: header – borde inferior acento, titulo outline, sesion activa + acciones</div>
+	</header>
+
+	<!-- MAIN -->
+	<main>
+
+		<!-- COL IZQ: Marcas recientes -->
+		<section class="sec-marcas">
+			<div class="zona-label">col 1–7 / marcas recientes</div>
+			<div class="card" style="height:100%">
+				<div class="card-header">
+					<div>
+						<div class="linea titulo"></div>
+					</div>
+					<span class="btn pill">Temporada 2026</span>
+				</div>
+
+				<!-- Fila marca 1 -->
+				<div class="marca-row">
+					<div class="izq">
+						<div class="linea subtitulo"></div>
+						<div class="linea corta" style="height:7px"></div>
+					</div>
+					<div class="der">
+						<div class="tiempo">00'49''15</div>
+						<div class="fecha">12 MAR 2026</div>
+					</div>
+				</div>
+
+				<!-- Fila marca 2 -->
+				<div class="marca-row">
+					<div class="izq">
+						<div class="linea subtitulo"></div>
+						<div class="linea corta" style="height:7px"></div>
+					</div>
+					<div class="der">
+						<div class="tiempo">00'52''30</div>
+						<div class="fecha">04 ABR 2026</div>
+					</div>
+				</div>
+
+				<!-- btn historico -->
+				<button class="btn dashed" style="margin-top:20px">Ver historico →</button>
+
+				<div class="wf-nota" style="margin-top:12px">filas: prueba + tiempo destacado + fecha · btn historico dashed al final</div>
+			</div>
+		</section>
+
+		<!-- COL DER: Formulario nueva marca -->
+		<aside>
+			<div class="zona-label">col 8–12 / nueva marca</div>
+			<div class="card acento-top">
+				<div class="linea titulo"></div>
+				<div class="linea corta" style="margin-bottom:20px"></div>
+
+				<!-- Campo prueba -->
+				<div style="margin-bottom:16px">
+					<label class="field-label">Prueba</label>
+					<select class="inp"><option>400m Lisos</option></select>
+				</div>
+
+				<!-- Campo temporada toggle -->
+				<div style="margin-bottom:16px">
+					<label class="field-label">Temporada</label>
+					<div class="toggle-pair">
+						<div class="toggle-btn activo">Short Track</div>
+						<div class="toggle-btn inactivo">Outdoor</div>
+					</div>
+					<div class="wf-nota" style="margin-top:6px">toggle exclusivo – uno activo a la vez</div>
+				</div>
+
+				<!-- Campo marca -->
+				<div style="margin-bottom:20px">
+					<label class="field-label">Marca Final (MM'SS''ms)</label>
+					<input class="inp grande" type="text" placeholder="00'00''00" readonly>
+				</div>
+
+				<!-- Submit -->
+				<button class="btn fill" style="width:100%; padding:14px; font-size:11px">Guardar Registro</button>
+
+				<div class="wf-nota" style="margin-top:12px">form: select + toggle + input tiempo grande + submit</div>
+			</div>
+		</aside>
+
+	</main>
+
+	<!-- FOOTER -->
+	<footer>
+		<div class="linea media" style="margin:0 auto 4px"></div>
+		<div class="linea corta" style="margin:0 auto; opacity:0.5"></div>
+		<div class="wf-nota" style="text-align:center; border:none; padding:0; margin-top:6px">zona: footer – copyright + subtitulo club</div>
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wireframe – Panel Lateral</title>
+	<style>
+		*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+		:root {
+			--bg:          #f5f5f0;
+			--surface:     #ffffff;
+			--surface2:    #ebebе6;
+			--stroke:      #c8c8c0;
+			--stroke2:     #a0a098;
+			--label:       #888880;
+			--text:        #2a2a28;
+			--placeholder: #d0d0c8;
+			--accent:      #2a2a28;
+			--r:           6px;
+		}
+
+		body {
+			background: var(--bg);
+			font-family: 'Courier New', monospace;
+			color: var(--text);
+			min-height: 100vh;
+			/* Muestra el panel en contexto, como si estuviese abierto sobre el dashboard */
+			display: flex;
+			align-items: flex-start;
+			justify-content: flex-end;
+			position: relative;
+		}
+
+		/* Simulacion de contenido detras del overlay */
+		.fake-bg {
+			position: fixed;
+			inset: 0;
+			background: repeating-linear-gradient(
+				0deg,
+				var(--bg) 0px,
+				var(--bg) 39px,
+				var(--stroke) 40px
+			);
+			opacity: 0.35;
+			z-index: 0;
+		}
+
+		/* Overlay oscuro simulado */
+		.overlay-sim {
+			position: fixed;
+			inset: 0;
+			background: var(--text);
+			opacity: 0.12;
+			z-index: 1;
+		}
+		.overlay-label {
+			position: fixed;
+			bottom: 20px;
+			left: 20px;
+			font-size: 9px;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			color: var(--label);
+			z-index: 2;
+			border-left: 2px solid var(--stroke);
+			padding-left: 8px;
+		}
+
+		/* ───── PANEL ───── */
+		.panel {
+			position: relative;
+			z-index: 10;
+			width: 260px;
+			min-height: 100vh;
+			background: var(--surface);
+			border-left: 1px solid var(--stroke);
+			display: flex;
+			flex-direction: column;
+			padding: 24px 20px;
+		}
+
+		/* Header panel */
+		.panel-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-bottom: 16px;
+			border-bottom: 1px solid var(--stroke);
+			margin-bottom: 28px;
+		}
+		.panel-header .titulo-nav {
+			font-size: 10px;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: var(--text);
+		}
+		.panel-header .acciones {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+		}
+		.icon-btn {
+			width: 28px; height: 28px;
+			border: 1px solid var(--stroke);
+			border-radius: var(--r);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: default;
+		}
+		.icon-btn svg {
+			width: 13px; height: 13px;
+			stroke: var(--label);
+			fill: none;
+			stroke-width: 1.5;
+		}
+		.icon-btn.pin svg { stroke: var(--text); }
+
+		/* Nav links */
+		nav.menu-links {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+		.nav-item {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 10px 12px;
+			border-radius: var(--r);
+			font-size: 9px;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: var(--label);
+			border: 1px solid transparent;
+			cursor: default;
+		}
+		.nav-item.activo {
+			border-color: var(--stroke);
+			color: var(--text);
+			background: var(--bg);
+		}
+		.nav-item .nav-dot {
+			width: 5px; height: 5px;
+			border-radius: 50%;
+			background: var(--placeholder);
+			flex-shrink: 0;
+		}
+		.nav-item.activo .nav-dot {
+			background: var(--accent);
+		}
+
+		/* Anotacion wirframe */
+		.wf-nota {
+			font-size: 9px;
+			color: var(--label);
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			border-left: 2px solid var(--stroke);
+			padding-left: 6px;
+		}
+
+		/* Seccion anotaciones al pie del panel */
+		.panel-notas {
+			margin-top: 28px;
+			padding-top: 16px;
+			border-top: 1px dashed var(--stroke);
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+		.nota-item {
+			display: flex;
+			gap: 8px;
+			align-items: flex-start;
+		}
+		.nota-item .nota-key {
+			font-size: 9px;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			color: var(--stroke2);
+			white-space: nowrap;
+			min-width: 70px;
+		}
+		.nota-item .nota-val {
+			font-size: 9px;
+			color: var(--label);
+			letter-spacing: 0.05em;
+			line-height: 1.5;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Fondo simulado -->
+	<div class="fake-bg"></div>
+	<div class="overlay-sim"></div>
+	<div class="overlay-label">fondo: overlay oscuro sobre dashboard (z-index inferior)</div>
+
+	<!-- PANEL LATERAL -->
+	<div class="panel">
+
+		<!-- Header -->
+		<div class="panel-header">
+			<span class="titulo-nav">Navegacion</span>
+			<div class="acciones">
+				<!-- boton pin (solo lg) -->
+				<div class="icon-btn pin" title="Fijar menu">
+					<svg viewBox="0 0 24 24">
+						<line x1="12" y1="17" x2="12" y2="22"/>
+						<path d="M5 17h14v-2l-2-4V5H7v6l-2 4v2z"/>
+					</svg>
+				</div>
+				<!-- boton cerrar (mobile) -->
+				<div class="icon-btn" title="Cerrar">
+					<svg viewBox="0 0 24 24">
+						<line x1="6" y1="6" x2="18" y2="18"/>
+						<line x1="18" y1="6" x2="6" y2="18"/>
+					</svg>
+				</div>
+			</div>
+		</div>
+		<div class="wf-nota" style="margin-bottom:16px">pin: solo visible en lg · close: solo en mobile</div>
+
+		<!-- Links de navegacion -->
+		<nav class="menu-links">
+			<div class="nav-item activo">
+				<span class="nav-dot"></span>
+				Dashboard
+			</div>
+			<div class="nav-item">
+				<span class="nav-dot"></span>
+				Mi Perfil
+			</div>
+			<div class="nav-item">
+				<span class="nav-dot"></span>
+				Historico
+			</div>
+			<div class="nav-item">
+				<span class="nav-dot"></span>
+				Estadisticas
+			</div>
+		</nav>
+
+		<!-- Notas de comportamiento -->
+		<div class="panel-notas">
+			<div class="wf-nota" style="margin-bottom:8px">comportamiento del panel</div>
+
+			<div class="nota-item">
+				<span class="nota-key">Estado</span>
+				<span class="nota-val">translate-x-full por defecto, slide-in al abrir</span>
+			</div>
+			<div class="nota-item">
+				<span class="nota-key">Cierre</span>
+				<span class="nota-val">clic fuera del panel o btn close (mobile)</span>
+			</div>
+			<div class="nota-item">
+				<span class="nota-key">Pin (lg)</span>
+				<span class="nota-val">fija el panel abierto, empuja el main con pr-64</span>
+			</div>
+			<div class="nota-item">
+				<span class="nota-key">Z-index</span>
+				<span class="nota-val">z-50, por encima del contenido principal</span>
+			</div>
+			<div class="nota-item">
+				<span class="nota-key">Ancho</span>
+				<span class="nota-val">w-64 (256px) fijo</span>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

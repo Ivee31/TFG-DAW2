@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ianuarius - Calendario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Graduate&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { ianuarius: '#FE0000', oscuro: '#171717', gris: '#262626' },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], collegiate: ['Graduate', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .titulo-collegiate { font-family: 'Graduate', sans-serif; color: transparent; -webkit-text-stroke: 1px #FFFFFF; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #171717; }
+        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #FE0000; }
+    </style>
+</head>
+<body class="bg-oscuro font-sans antialiased text-gray-200 flex flex-col min-h-screen overflow-x-hidden">
+
+    <!-- SIDEBAR -->
+    <aside id="sideMenu" class="fixed right-0 top-0 h-full w-64 bg-gris border-l border-white/10 transform translate-x-full transition-transform duration-300 z-50 p-6 flex flex-col shadow-2xl">
+        <div class="flex justify-between items-center mb-10 border-b border-white/10 pb-4">
+            <h3 class="font-bold tracking-widest uppercase text-sm">Navegacion</h3>
+            <div class="flex gap-3 items-center">
+                <button id="pinBtn" onclick="togglePin()" class="hidden lg:block text-gray-400 hover:text-white transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 3h-6m3 12v6m-2.5-6h5l1.5-3v-2l-1.5-1V3h-5v6l-1.5 1v2l1.5 3z" />
+                    </svg>
+                </button>
+                <button onclick="toggleMenu()" class="text-gray-400 hover:text-ianuarius transition lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <nav class="space-y-6 flex-grow">
+            <a href="#" class="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Dashboard</a>
+            <a href="#" class="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Mi Perfil</a>
+            <a href="#" class="block text-base lg:text-sm uppercase tracking-widest text-ianuarius font-bold hover:translate-x-2 transition transform">Calendario</a>
+            <a href="#" class="block text-base lg:text-sm uppercase tracking-widest text-gray-400 hover:text-white hover:translate-x-2 transition transform">Inscripcion</a>
+        </nav>
+    </aside>
+
+    <div id="mainContent" class="flex-grow p-4 md:p-10 max-w-7xl mx-auto w-full transition-all duration-300">
+
+        <!-- HEADER -->
+        <header class="mb-8 border-b-2 border-ianuarius pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div class="space-y-2">
+                <h1 class="titulo-collegiate text-4xl md:text-6xl font-black tracking-tighter uppercase">Calendario</h1>
+                <div class="flex items-center gap-3">
+                    <span class="w-3 h-3 bg-ianuarius rounded-full animate-pulse"></span>
+                    <p class="text-ianuarius font-black tracking-[0.4em] text-xs md:text-sm uppercase">Competiciones 2026</p>
+                </div>
+            </div>
+            <div class="flex gap-3 items-center w-full md:w-auto justify-end">
+                <button class="bg-ianuarius px-4 py-3 md:px-4 md:py-2 rounded text-xs font-bold tracking-widest uppercase hover:bg-red-700 transition">Cerrar Sesion</button>
+                <button id="hamburgerBtn" onclick="toggleMenu()" class="text-white hover:text-ianuarius transition p-2 ml-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- Calendario -->
+            <div class="lg:col-span-8">
+                <div class="bg-gris rounded-2xl border border-white/5 p-6 shadow-xl">
+                    <!-- Navegación mes -->
+                    <div class="flex items-center justify-between mb-6">
+                        <button class="w-9 h-9 bg-oscuro border border-white/10 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+                        </button>
+                        <h2 class="text-lg font-extrabold tracking-wider uppercase">Mayo 2026</h2>
+                        <button class="w-9 h-9 bg-oscuro border border-white/10 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 transition">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                        </button>
+                    </div>
+
+                    <!-- Cabecera días semana -->
+                    <div class="grid grid-cols-7 mb-2">
+                        <div class="text-center text-[10px] text-gray-500 uppercase tracking-widest pb-2 font-bold">Lun</div>
+                        <div class="text-center text-[10px] text-gray-500 uppercase tracking-widest pb-2 font-bold">Mar</div>
+                        <div class="text-center text-[10px] text-gray-500 uppercase tracking-widest pb-2 font-bold">Mié</div>
+                        <div class="text-center text-[10px] text-gray-500 uppercase tracking-widest pb-2 font-bold">Jue</div>
+                        <div class="text-center text-[10px] text-gray-500 uppercase tracking-widest pb-2 font-bold">Vie</div>
+                        <div class="text-center text-[10px] text-gray-500 uppercase tracking-widest pb-2 font-bold text-gray-600">Sáb</div>
+                        <div class="text-center text-[10px] text-gray-500 uppercase tracking-widest pb-2 font-bold text-gray-600">Dom</div>
+                    </div>
+
+                    <!-- Grid días (Mayo 2026 empieza en viernes = col 5) -->
+                    <div class="grid grid-cols-7 gap-1">
+                        <!-- Semana 1: días vacíos + 1-4 -->
+                        <div class="h-12 rounded-lg"></div>
+                        <div class="h-12 rounded-lg"></div>
+                        <div class="h-12 rounded-lg"></div>
+                        <div class="h-12 rounded-lg"></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition relative">
+                            <span class="text-xs text-gray-400">1</span>
+                        </div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition relative">
+                            <span class="text-xs text-gray-500">2</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-red-500 mt-1"></div>
+                        </div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition relative">
+                            <span class="text-xs text-gray-500">3</span>
+                        </div>
+
+                        <!-- Semana 2: 4-10 -->
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">4</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">5</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">6</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">7</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">8</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition">
+                            <span class="text-xs text-gray-500">9</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1"></div>
+                        </div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition">
+                            <span class="text-xs text-gray-500">10</span>
+                        </div>
+
+                        <!-- Semana 3: 11-17 -->
+                        <div class="h-12 rounded-lg bg-ianuarius/10 border border-ianuarius/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-ianuarius/20 transition">
+                            <span class="text-xs text-ianuarius font-bold">11</span>
+                        </div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">12</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">13</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">14</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">15</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition">
+                            <span class="text-xs text-gray-500">16</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-yellow-500 mt-1"></div>
+                        </div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition">
+                            <span class="text-xs text-gray-500">17</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-yellow-500 mt-1"></div>
+                        </div>
+
+                        <!-- Semana 4: 18-24 -->
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">18</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">19</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">20</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">21</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">22</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition">
+                            <span class="text-xs text-gray-500">23</span>
+                            <div class="flex gap-0.5 mt-1"><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div></div>
+                        </div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition">
+                            <span class="text-xs text-gray-500">24</span>
+                        </div>
+
+                        <!-- Semana 5: 25-31 -->
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">25</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">26</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">27</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">28</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition"><span class="text-xs text-gray-400">29</span></div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition">
+                            <span class="text-xs text-gray-500">30</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-green-500 mt-1"></div>
+                        </div>
+                        <div class="h-12 rounded-lg bg-oscuro/30 flex flex-col items-center justify-start pt-1.5 cursor-pointer hover:bg-oscuro/60 transition">
+                            <span class="text-xs text-gray-500">31</span>
+                        </div>
+                    </div>
+
+                    <!-- Leyenda colores -->
+                    <div class="mt-5 pt-4 border-t border-white/10 flex flex-wrap gap-4">
+                        <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-red-500"></div><span class="text-[10px] text-gray-500 uppercase tracking-widest">Nacional</span></div>
+                        <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-orange-500"></div><span class="text-[10px] text-gray-500 uppercase tracking-widest">Autonómico</span></div>
+                        <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-yellow-500"></div><span class="text-[10px] text-gray-500 uppercase tracking-widest">Provincial</span></div>
+                        <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-green-500"></div><span class="text-[10px] text-gray-500 uppercase tracking-widest">Local</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar eventos -->
+            <aside class="lg:col-span-4 space-y-4">
+                <h3 class="text-xs font-extrabold uppercase tracking-widest text-gray-400 mb-4">Próximos eventos</h3>
+
+                <div class="bg-gris rounded-xl border-l-4 border-red-500 p-4 shadow-lg hover:border-l-4 hover:border-ianuarius transition">
+                    <div class="flex items-start justify-between mb-2">
+                        <span class="text-[10px] bg-red-900/30 text-red-400 px-2 py-0.5 rounded font-bold uppercase tracking-widest">Nacional</span>
+                        <span class="text-[10px] text-gray-500">2 May</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Campeonato de España Sub-23</h4>
+                    <p class="text-xs text-gray-500 mt-1">Madrid · Pista cubierta</p>
+                </div>
+
+                <div class="bg-gris rounded-xl border-l-4 border-orange-500 p-4 shadow-lg">
+                    <div class="flex items-start justify-between mb-2">
+                        <span class="text-[10px] bg-orange-900/30 text-orange-400 px-2 py-0.5 rounded font-bold uppercase tracking-widest">Autonómico</span>
+                        <span class="text-[10px] text-gray-500">9 May</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Liga Autonómica CyL</h4>
+                    <p class="text-xs text-gray-500 mt-1">Valladolid · Aire libre</p>
+                </div>
+
+                <div class="bg-gris rounded-xl border-l-4 border-yellow-500 p-4 shadow-lg">
+                    <div class="flex items-start justify-between mb-2">
+                        <span class="text-[10px] bg-yellow-900/30 text-yellow-400 px-2 py-0.5 rounded font-bold uppercase tracking-widest">Provincial</span>
+                        <span class="text-[10px] text-gray-500">16–17 May</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Copa Provincial de Salamanca</h4>
+                    <p class="text-xs text-gray-500 mt-1">Salamanca · Pista</p>
+                </div>
+
+                <div class="bg-gris rounded-xl border-l-4 border-red-500 p-4 shadow-lg">
+                    <div class="flex items-start justify-between mb-2">
+                        <span class="text-[10px] bg-red-900/30 text-red-400 px-2 py-0.5 rounded font-bold uppercase tracking-widest">Nacional</span>
+                        <span class="text-[10px] text-gray-500">23 May</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Gran Premio Madrid</h4>
+                    <p class="text-xs text-gray-500 mt-1">Madrid · Aire libre</p>
+                </div>
+
+                <div class="bg-gris rounded-xl border-l-4 border-orange-500 p-4 shadow-lg">
+                    <div class="flex items-start justify-between mb-2">
+                        <span class="text-[10px] bg-orange-900/30 text-orange-400 px-2 py-0.5 rounded font-bold uppercase tracking-widest">Autonómico</span>
+                        <span class="text-[10px] text-gray-500">23 May</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Trofeo Ciudad de Ávila</h4>
+                    <p class="text-xs text-gray-500 mt-1">Ávila · Aire libre</p>
+                </div>
+
+                <div class="bg-gris rounded-xl border-l-4 border-green-500 p-4 shadow-lg">
+                    <div class="flex items-start justify-between mb-2">
+                        <span class="text-[10px] bg-green-900/30 text-green-400 px-2 py-0.5 rounded font-bold uppercase tracking-widest">Local</span>
+                        <span class="text-[10px] text-gray-500">30 May</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Prueba Club Ianuarius</h4>
+                    <p class="text-xs text-gray-500 mt-1">Salamanca · Interno</p>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <footer class="w-full py-8 mt-auto flex justify-center border-t border-white/5">
+        <p class="text-xs text-gray-600 uppercase tracking-[0.5em]">Ianuarius Athletics Club &copy; 2026</p>
+    </footer>
+
+    <script>
+        const sideMenu = document.getElementById('sideMenu');
+        const mainContent = document.getElementById('mainContent');
+        const pinBtn = document.getElementById('pinBtn');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        let menuPinned = false;
+
+        function toggleMenu() {
+            if (!menuPinned) sideMenu.classList.toggle('translate-x-full');
+        }
+        function togglePin() {
+            menuPinned = !menuPinned;
+            if (menuPinned) {
+                pinBtn.classList.replace('text-gray-400','text-ianuarius');
+                if (window.innerWidth >= 1024) mainContent.classList.add('lg:pr-64');
+            } else {
+                pinBtn.classList.replace('text-ianuarius','text-gray-400');
+                mainContent.classList.remove('lg:pr-64');
+            }
+        }
+        document.addEventListener('click', function(e) {
+            if (!sideMenu.contains(e.target) && !hamburgerBtn.contains(e.target) && !menuPinned && !sideMenu.classList.contains('translate-x-full')) {
+                sideMenu.classList.add('translate-x-full');
+            }
+        });
+    </script>
+</body>
+</html>

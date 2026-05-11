@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe – Perfil</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #f5f5f0; --surface: #ffffff; --stroke: #c8c8c0; --stroke2: #a0a098;
+            --label: #888880; --text: #2a2a28; --placeholder: #d0d0c8; --accent: #2a2a28;
+            --gap: 24px; --r: 6px;
+        }
+        body { background: var(--bg); font-family: 'Courier New', monospace; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+        .zona-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); margin-bottom: 6px; }
+        .placeholder { background: var(--placeholder); border: 1px dashed var(--stroke2); border-radius: var(--r); display: flex; align-items: center; justify-content: center; }
+        .placeholder span { font-size: 10px; color: var(--label); letter-spacing: 0.1em; z-index: 1; background: var(--placeholder); padding: 2px 6px; }
+        .linea { height: 8px; background: var(--placeholder); border-radius: 2px; margin-bottom: 6px; }
+        .linea.corta { width: 55%; } .linea.media { width: 75%; } .linea.larga { width: 100%; }
+        .linea.titulo { height: 14px; width: 60%; margin-bottom: 10px; }
+        .card { background: var(--surface); border: 1px solid var(--stroke); border-radius: var(--r); padding: 20px; }
+        .card.acento-top { border-top: 4px solid var(--accent); }
+        .card.danger { border: 1px solid var(--stroke2); border-left: 4px solid var(--stroke2); }
+        .btn { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--stroke2); border-radius: var(--r); padding: 8px 16px; font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); background: var(--surface); cursor: default; }
+        .btn.fill { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+        .btn.danger-btn { border-color: var(--stroke2); color: var(--stroke2); }
+        .inp { width: 100%; border: 1px solid var(--stroke); border-radius: var(--r); padding: 9px 12px; font-family: 'Courier New', monospace; font-size: 11px; color: var(--label); background: var(--bg); margin-bottom: 12px; }
+        select.inp { appearance: none; }
+        .field-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 5px; }
+        .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        header { border-bottom: 2px solid var(--accent); padding: 24px var(--gap); display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+        .h1-wf { font-size: 38px; letter-spacing: -0.02em; line-height: 1; font-weight: 400; color: var(--stroke2); border: 1.5px solid var(--stroke2); padding: 2px 6px; display: inline-block; margin-bottom: 10px; }
+        .sesion { display: flex; align-items: center; gap: 8px; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--stroke2); background: var(--placeholder); }
+        .header-der { display: flex; gap: 10px; align-items: center; }
+        .icon-sq { width: 36px; height: 36px; border: 1px solid var(--stroke); border-radius: var(--r); display: flex; align-items: center; justify-content: center; }
+        .icon-sq svg { width: 16px; height: 16px; stroke: var(--label); fill: none; stroke-width: 1.5; }
+        main { flex: 1; padding: var(--gap); display: grid; grid-template-columns: 4fr 8fr; gap: var(--gap); max-width: 1100px; margin: 0 auto; width: 100%; }
+        .avatar-wf { width: 80px; height: 80px; border-radius: 50%; background: var(--placeholder); border: 2px dashed var(--stroke2); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 9px; color: var(--label); letter-spacing: 0.05em; }
+        .doc-row { border: 1px solid var(--stroke); border-radius: var(--r); padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .doc-icon { width: 32px; height: 32px; background: var(--placeholder); border-radius: var(--r); display: flex; align-items: center; justify-content: center; margin-right: 10px; flex-shrink: 0; }
+        footer { border-top: 1px solid var(--stroke); padding: 16px var(--gap); text-align: center; }
+        .wf-nota { font-size: 9px; color: var(--label); letter-spacing: 0.12em; text-transform: uppercase; border-left: 2px solid var(--stroke); padding-left: 6px; margin-top: 10px; }
+        .section-title { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text); border-bottom: 1px solid var(--stroke); padding-bottom: 8px; margin-bottom: 14px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <div class="h1-wf">MI PERFIL</div>
+            <div class="sesion"><span class="dot"></span><span>Sesion activa: Atleta Ianuarius</span></div>
+        </div>
+        <div class="header-der">
+            <button class="btn fill">Cerrar Sesion</button>
+            <div class="icon-sq"><svg viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- COL IZQ: tarjeta usuario -->
+        <section>
+            <div class="zona-label">col izq / info usuario</div>
+            <div class="card" style="text-align:center">
+                <div class="avatar-wf">AVATAR</div>
+                <div class="linea titulo" style="margin:0 auto 8px"></div>
+                <div class="linea corta" style="margin:0 auto 6px"></div>
+                <div class="linea corta" style="margin:0 auto 16px; height:6px; width:40%"></div>
+                <div style="border-top:1px solid var(--stroke); padding-top:14px; text-align:left">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px"><span style="font-size:9px; color:var(--label); text-transform:uppercase; letter-spacing:0.1em">DNI</span><div class="linea corta" style="width:100px; margin:0"></div></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px"><span style="font-size:9px; color:var(--label); text-transform:uppercase; letter-spacing:0.1em">Nacimiento</span><div class="linea corta" style="width:80px; margin:0"></div></div>
+                    <div style="display:flex; justify-content:space-between"><span style="font-size:9px; color:var(--label); text-transform:uppercase; letter-spacing:0.1em">Rol</span><div class="linea corta" style="width:60px; margin:0"></div></div>
+                </div>
+                <div class="wf-nota" style="margin-top:14px; text-align:left">avatar círculo iniciales · nombre · email · categoría · datos readonly</div>
+            </div>
+        </section>
+
+        <!-- COL DER: formularios -->
+        <section style="display:flex; flex-direction:column; gap:20px">
+
+            <!-- Datos personales -->
+            <div class="card">
+                <div class="section-title">Datos Personales</div>
+                <div class="row-2">
+                    <div><label class="field-label">Nombre</label><input class="inp" placeholder="Juan" readonly></div>
+                    <div><label class="field-label">Apellidos</label><input class="inp" placeholder="García López" readonly></div>
+                    <div><label class="field-label">Fecha Nacimiento</label><input class="inp" placeholder="12/03/2002" readonly></div>
+                    <div><label class="field-label">Género</label><select class="inp"><option>Masculino</option></select></div>
+                </div>
+                <button class="btn fill" style="margin-top:4px">Guardar cambios</button>
+                <div class="wf-nota">form editable: nombre · apellidos · fecha_nac · género</div>
+            </div>
+
+            <!-- Cambiar email -->
+            <div class="card">
+                <div class="section-title">Cambiar Email</div>
+                <label class="field-label">Nuevo correo electrónico</label>
+                <input class="inp" placeholder="nuevo@ianuarius.es" readonly>
+                <button class="btn fill">Actualizar email</button>
+            </div>
+
+            <!-- Cambiar contraseña -->
+            <div class="card">
+                <div class="section-title">Cambiar Contraseña</div>
+                <label class="field-label">Contraseña actual</label>
+                <input class="inp" placeholder="••••••••" readonly>
+                <label class="field-label">Nueva contraseña</label>
+                <input class="inp" placeholder="••••••••" readonly>
+                <label class="field-label">Confirmar nueva contraseña</label>
+                <input class="inp" placeholder="••••••••" readonly>
+                <button class="btn fill">Cambiar contraseña</button>
+            </div>
+
+            <!-- Documentos -->
+            <div class="card">
+                <div class="section-title">Documentos</div>
+                <div class="doc-row">
+                    <div style="display:flex; align-items:center;">
+                        <div class="doc-icon"><span style="font-size:9px;color:var(--label)">IMG</span></div>
+                        <div><div class="linea subtitulo" style="height:9px; width:100px; margin-bottom:4px"></div><div class="linea corta" style="height:6px; width:70px"></div></div>
+                    </div>
+                    <button class="btn" style="padding:5px 12px; font-size:9px">Subir</button>
+                </div>
+                <div class="doc-row">
+                    <div style="display:flex; align-items:center;">
+                        <div class="doc-icon"><span style="font-size:9px;color:var(--label)">PDF</span></div>
+                        <div><div class="linea subtitulo" style="height:9px; width:100px; margin-bottom:4px"></div><div class="linea corta" style="height:6px; width:70px"></div></div>
+                    </div>
+                    <span style="font-size:9px; color:var(--label); letter-spacing:0.1em; text-transform:uppercase; border:1px solid var(--stroke); padding:3px 8px; border-radius:var(--r)">Subido</span>
+                </div>
+                <div class="doc-row">
+                    <div style="display:flex; align-items:center;">
+                        <div class="doc-icon"><span style="font-size:9px;color:var(--label)">PDF</span></div>
+                        <div><div class="linea subtitulo" style="height:9px; width:100px; margin-bottom:4px"></div><div class="linea corta" style="height:6px; width:70px"></div></div>
+                    </div>
+                    <button class="btn" style="padding:5px 12px; font-size:9px">Subir</button>
+                </div>
+                <div class="wf-nota">3 items: foto perfil · DNI escaneado · carnet atletismo · estado subido/pendiente</div>
+            </div>
+
+            <!-- Zona peligro -->
+            <div class="card danger">
+                <div class="section-title" style="color:var(--stroke2)">Zona de Peligro</div>
+                <div class="linea media" style="margin-bottom:14px"></div>
+                <button class="btn danger-btn">Eliminar cuenta</button>
+                <div class="wf-nota">botón destructivo · acción irreversible · borde rojo (danger)</div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <div class="linea media" style="margin:0 auto 4px"></div>
+        <div class="linea corta" style="margin:0 auto; opacity:0.5"></div>
+    </footer>
+</body>
+</html>

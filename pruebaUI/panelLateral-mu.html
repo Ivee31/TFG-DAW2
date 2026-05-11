@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Mockup – Panel Lateral</title>
+	<link href="https://fonts.googleapis.com/css2?family=Graduate&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+	<style>
+		*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+		body {
+			background: #111111;
+			font-family: 'Inter', sans-serif;
+			min-height: 100vh;
+			display: flex;
+			align-items: flex-start;
+			justify-content: flex-end;
+			position: relative;
+			overflow: hidden;
+		}
+
+		/* Dashboard falso detras */
+		.fake-dash {
+			position: fixed;
+			inset: 0;
+			padding: 28px;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+			pointer-events: none;
+		}
+		.fd-bar {
+			height: 52px;
+			background: #1e1e1e;
+			border-radius: 6px;
+			border-bottom: 2px solid #FE0000;
+		}
+		.fd-grid {
+			display: grid;
+			grid-template-columns: 7fr 5fr;
+			gap: 16px;
+			flex: 1;
+		}
+		.fd-block { background: #1a1a1a; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); }
+
+		/* Overlay */
+		.overlay {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.6);
+			z-index: 10;
+		}
+
+		/* Panel lateral */
+		aside {
+			position: fixed;
+			top: 0;
+			right: 0;
+			height: 100%;
+			width: 256px;
+			background: #262626;
+			border-left: 1px solid rgba(255, 255, 255, 0.08);
+			z-index: 50;
+			display: flex;
+			flex-direction: column;
+			padding: 24px 20px;
+		}
+
+		/* Header panel */
+		.panel-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-bottom: 16px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			margin-bottom: 28px;
+		}
+		.panel-header h3 {
+			font-size: 10px;
+			font-weight: 700;
+			letter-spacing: 0.22em;
+			text-transform: uppercase;
+			color: rgba(255, 255, 255, 0.9);
+		}
+		.icon-row {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+		}
+		.icn {
+			width: 28px;
+			height: 28px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 6px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			transition: border-color 0.2s, background 0.2s;
+		}
+		.icn:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.2); }
+		.icn svg { width: 14px; height: 14px; stroke: rgba(255, 255, 255, 0.4); fill: none; stroke-width: 1.5; }
+		.icn.pin svg { stroke: #FE0000; }
+
+		/* Nav links */
+		nav {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			flex: 1;
+		}
+		.nav-link {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 10px 12px;
+			border-radius: 6px;
+			font-size: 10px;
+			font-weight: 700;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: rgba(255, 255, 255, 0.3);
+			cursor: pointer;
+			transition: color 0.2s, background 0.2s;
+			text-decoration: none;
+		}
+		.nav-link:hover { color: rgba(255, 255, 255, 0.7); background: rgba(255, 255, 255, 0.04); }
+		.nav-link.active { color: #FE0000; background: rgba(254, 0, 0, 0.08); }
+		.nav-dot {
+			width: 5px;
+			height: 5px;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.15);
+			flex-shrink: 0;
+			transition: background 0.2s;
+		}
+		.nav-link.active .nav-dot { background: #FE0000; }
+		.nav-link:hover .nav-dot { background: rgba(255, 255, 255, 0.5); }
+
+		/* Footer panel */
+		.panel-footer {
+			padding-top: 16px;
+			border-top: 1px solid rgba(255, 255, 255, 0.06);
+		}
+		.panel-footer p {
+			font-size: 9px;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			color: rgba(255, 255, 255, 0.2);
+			line-height: 1.8;
+		}
+		.panel-footer span { opacity: 0.5; }
+	</style>
+</head>
+<body>
+
+	<!-- Dashboard simulado detras -->
+	<div class="fake-dash">
+		<div class="fd-bar"></div>
+		<div class="fd-grid">
+			<div class="fd-block"></div>
+			<div class="fd-block"></div>
+		</div>
+	</div>
+
+	<!-- Overlay oscuro -->
+	<div class="overlay"></div>
+
+	<!-- PANEL LATERAL -->
+	<aside>
+
+		<div class="panel-header">
+			<h3>Navegacion</h3>
+			<div class="icon-row">
+				<div class="icn pin" title="Fijar menu">
+					<svg viewBox="0 0 24 24">
+						<line x1="12" y1="17" x2="12" y2="22"/>
+						<path d="M5 17h14v-2l-2-4V5H7v6l-2 4v2z"/>
+					</svg>
+				</div>
+				<div class="icn" title="Cerrar">
+					<svg viewBox="0 0 24 24">
+						<line x1="6" y1="6" x2="18" y2="18"/>
+						<line x1="18" y1="6" x2="6" y2="18"/>
+					</svg>
+				</div>
+			</div>
+		</div>
+
+		<nav>
+			<a href="#" class="nav-link active">
+				<span class="nav-dot"></span>
+				Dashboard
+			</a>
+			<a href="#" class="nav-link">
+				<span class="nav-dot"></span>
+				Mi Perfil
+			</a>
+			<a href="#" class="nav-link">
+				<span class="nav-dot"></span>
+				Historico
+			</a>
+			<a href="#" class="nav-link">
+				<span class="nav-dot"></span>
+				Estadisticas
+			</a>
+		</nav>
+
+		<div class="panel-footer">
+			<p>
+				Ianuarius Athletics Club &copy; 2026<br>
+				<span>Tecnificacion en Salamanca</span>
+			</p>
+		</div>
+
+	</aside>
+
+</body>
+</html>

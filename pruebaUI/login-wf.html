@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe – Login</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:          #f5f5f0;
+            --surface:     #ffffff;
+            --stroke:      #c8c8c0;
+            --stroke2:     #a0a098;
+            --label:       #888880;
+            --text:        #2a2a28;
+            --placeholder: #d0d0c8;
+            --accent:      #2a2a28;
+            --r:           6px;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Courier New', monospace;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .logo-block {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .logo-title {
+            font-size: 32px;
+            letter-spacing: 0.15em;
+            color: var(--stroke2);
+            border: 2px solid var(--stroke2);
+            padding: 4px 12px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .logo-sub {
+            font-size: 9px;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--label);
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--stroke);
+            border-top: 4px solid var(--accent);
+            border-radius: var(--r);
+            padding: 28px 24px;
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .card-titulo {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .card-sub {
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--label);
+            margin-bottom: 24px;
+        }
+
+        .field-label {
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--label);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .inp {
+            width: 100%;
+            border: 1px solid var(--stroke);
+            border-radius: var(--r);
+            padding: 10px 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: var(--label);
+            background: var(--bg);
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            border: 1px solid var(--stroke2);
+            border-radius: var(--r);
+            padding: 10px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--label);
+            background: var(--surface);
+            cursor: default;
+            margin-bottom: 10px;
+        }
+        .btn.fill {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+            margin-top: 8px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .divider hr { flex: 1; border: none; border-top: 1px solid var(--stroke); }
+        .divider span {
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--label);
+            white-space: nowrap;
+        }
+
+        .links {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .link-item {
+            font-size: 10px;
+            color: var(--label);
+            letter-spacing: 0.05em;
+            text-decoration: underline;
+            cursor: default;
+        }
+        .link-item.destacado { color: var(--text); }
+
+        .wf-nota {
+            font-size: 9px;
+            color: var(--label);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-left: 2px solid var(--stroke);
+            padding-left: 6px;
+            margin-top: 16px;
+        }
+
+        .footer-wf {
+            margin-top: 20px;
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--label);
+        }
+
+        .oauth-icon {
+            width: 14px; height: 14px;
+            background: var(--placeholder);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo / título -->
+    <div class="logo-block">
+        <div class="logo-title">IANUARIUS</div>
+        <div class="logo-sub">A T L E T I S M O</div>
+    </div>
+
+    <!-- Card de login -->
+    <div class="card">
+        <div class="card-titulo">Iniciar sesión</div>
+        <div class="card-sub">Accede a tu cuenta</div>
+
+        <!-- Email -->
+        <label class="field-label">Correo electrónico</label>
+        <input class="inp" type="text" placeholder="atleta@ianuarius.es" readonly>
+
+        <!-- Contraseña -->
+        <label class="field-label">Contraseña</label>
+        <input class="inp" type="text" placeholder="••••••••" readonly>
+
+        <!-- Submit -->
+        <button class="btn fill">Iniciar sesión</button>
+
+        <!-- Divisor -->
+        <div class="divider">
+            <hr>
+            <span>o continúa con</span>
+            <hr>
+        </div>
+
+        <!-- Google OAuth -->
+        <button class="btn">
+            <span class="oauth-icon"></span>
+            Continuar con Google
+        </button>
+
+        <!-- Links -->
+        <div class="links">
+            <span class="link-item">¿Olvidaste tu contraseña?</span>
+            <span class="link-item">¿No tienes cuenta? <span class="destacado">Crear cuenta →</span></span>
+        </div>
+
+        <div class="wf-nota">layout: email · contraseña · submit · divisor · oauth · links olvidaste / registro</div>
+    </div>
+
+    <p class="footer-wf">Ianuarius Athletics Club © 2026</p>
+
+</body>
+</html>

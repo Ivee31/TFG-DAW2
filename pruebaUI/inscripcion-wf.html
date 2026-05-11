@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe – Inscripción</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #f5f5f0; --surface: #ffffff; --stroke: #c8c8c0; --stroke2: #a0a098;
+            --label: #888880; --text: #2a2a28; --placeholder: #d0d0c8; --accent: #2a2a28;
+            --gap: 24px; --r: 6px;
+        }
+        body { background: var(--bg); font-family: 'Courier New', monospace; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+        .zona-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); margin-bottom: 6px; }
+        .linea { height: 8px; background: var(--placeholder); border-radius: 2px; margin-bottom: 6px; }
+        .linea.corta { width: 55%; } .linea.media { width: 75%; } .linea.titulo { height: 14px; width: 60%; margin-bottom: 10px; }
+        .card { background: var(--surface); border: 1px solid var(--stroke); border-radius: var(--r); padding: 16px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--stroke2); border-radius: var(--r); padding: 7px 14px; font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); background: var(--surface); cursor: default; }
+        .btn.fill { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+        header { border-bottom: 2px solid var(--accent); padding: 24px var(--gap); display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+        .h1-wf { font-size: 34px; letter-spacing: -0.02em; line-height: 1; font-weight: 400; color: var(--stroke2); border: 1.5px solid var(--stroke2); padding: 2px 6px; display: inline-block; margin-bottom: 10px; }
+        .sesion { display: flex; align-items: center; gap: 8px; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--stroke2); background: var(--placeholder); }
+        .header-der { display: flex; gap: 10px; align-items: center; }
+        .icon-sq { width: 36px; height: 36px; border: 1px solid var(--stroke); border-radius: var(--r); display: flex; align-items: center; justify-content: center; }
+        .icon-sq svg { width: 16px; height: 16px; stroke: var(--label); fill: none; stroke-width: 1.5; }
+        main { flex: 1; padding: var(--gap); display: grid; grid-template-columns: 7fr 5fr; gap: var(--gap); max-width: 1100px; margin: 0 auto; width: 100%; }
+
+        /* Visor PDF placeholder */
+        .pdf-viewer { background: var(--placeholder); border: 1px dashed var(--stroke2); border-radius: var(--r); width: 100%; height: 240px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; position: relative; overflow: hidden; }
+        .pdf-viewer::before { content: ''; position: absolute; width: 100%; height: 1px; background: var(--stroke2); opacity: 0.35; top: 50%; transform: rotate(8deg); }
+        .pdf-viewer::after { content: ''; position: absolute; width: 100%; height: 1px; background: var(--stroke2); opacity: 0.35; top: 50%; transform: rotate(-8deg); }
+        .pdf-viewer span { font-size: 10px; color: var(--label); letter-spacing: 0.1em; z-index: 1; background: var(--placeholder); padding: 2px 8px; }
+        .pdf-icon { width: 36px; height: 46px; background: var(--surface); border: 1px solid var(--stroke2); border-radius: 3px; z-index: 1; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--label); letter-spacing: 0.05em; }
+
+        /* Drop zone */
+        .drop-zone { border: 1px dashed var(--stroke2); border-radius: var(--r); padding: 32px 20px; text-align: center; background: var(--bg); }
+        .upload-icon { width: 36px; height: 36px; background: var(--placeholder); border-radius: 50%; margin: 0 auto 10px; }
+
+        /* Estado pasos */
+        .step { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--stroke); }
+        .step:last-child { border-bottom: none; }
+        .step-dot { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--stroke2); background: var(--bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .step-dot.done { background: var(--accent); border-color: var(--accent); }
+        .step-dot.done::after { content: '✓'; color: var(--bg); font-size: 9px; }
+        .step-dot.active { border: 2px solid var(--accent); }
+        .step-text .step-title { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); }
+        .step-text .step-sub { font-size: 9px; color: var(--label); }
+
+        footer { border-top: 1px solid var(--stroke); padding: 16px var(--gap); text-align: center; }
+        .wf-nota { font-size: 9px; color: var(--label); letter-spacing: 0.12em; text-transform: uppercase; border-left: 2px solid var(--stroke); padding-left: 6px; margin-top: 10px; }
+        .section-title { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; border-bottom: 1px solid var(--stroke); padding-bottom: 8px; margin-bottom: 14px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <div class="h1-wf">INSCRIPCIÓN</div>
+            <div class="sesion"><span class="dot"></span><span>Competición: Copa Provincial</span></div>
+        </div>
+        <div class="header-der">
+            <button class="btn fill">Cerrar Sesion</button>
+            <div class="icon-sq"><svg viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- COL IZQ: visor PDF -->
+        <section>
+            <div class="zona-label">col 7 / visor PDF plantilla oficial</div>
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+                    <div class="linea titulo" style="width:50%; margin:0"></div>
+                    <button class="btn" style="font-size:9px; padding:5px 10px">Ver plantilla oficial ↗</button>
+                </div>
+
+                <!-- Placeholder visor PDF -->
+                <div class="pdf-viewer">
+                    <div class="pdf-icon">PDF</div>
+                    <span>visor PDF plantilla</span>
+                </div>
+
+                <div class="linea corta" style="margin-top:10px; height:6px"></div>
+                <div class="wf-nota">rectángulo gris con icono PDF · botón "ver plantilla oficial" (nueva pestaña) · descripción debajo</div>
+            </div>
+        </section>
+
+        <!-- COL DER: upload + estado -->
+        <section style="display:flex; flex-direction:column; gap:20px">
+
+            <!-- Área subida -->
+            <div class="card">
+                <div class="section-title">Subir Inscripción</div>
+                <div class="linea corta" style="margin-bottom:14px"></div>
+
+                <div class="drop-zone">
+                    <div class="upload-icon"></div>
+                    <div style="font-size:10px; color:var(--label); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px">Arrastra tu PDF aquí</div>
+                    <div style="font-size:9px; color:var(--stroke2)">o clic para seleccionar</div>
+                    <button class="btn" style="margin-top:12px; font-size:9px">Seleccionar archivo</button>
+                </div>
+
+                <button class="btn fill" style="width:100%; margin-top:14px; padding:12px">Enviar inscripción</button>
+
+                <div class="wf-nota">drag & drop · selector archivo · submit · acepta solo PDF</div>
+            </div>
+
+            <!-- Estado inscripción -->
+            <div class="card">
+                <div class="section-title">Estado de Inscripción</div>
+
+                <div class="step">
+                    <div class="step-dot done"></div>
+                    <div class="step-text">
+                        <div class="step-title">Plantilla descargada</div>
+                        <div class="step-sub">07 May 2026</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-dot active"></div>
+                    <div class="step-text">
+                        <div class="step-title">Formulario cumplimentado</div>
+                        <div class="step-sub">Pendiente de subida</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-dot"></div>
+                    <div class="step-text">
+                        <div class="step-title" style="color:var(--label)">Validación admin</div>
+                        <div class="step-sub">En espera</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-dot"></div>
+                    <div class="step-text">
+                        <div class="step-title" style="color:var(--label)">Inscripción completada</div>
+                        <div class="step-sub">En espera</div>
+                    </div>
+                </div>
+
+                <div class="wf-nota">4 pasos lineales: descarga · subida · validación admin · completado</div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <div class="linea media" style="margin:0 auto 4px"></div>
+        <div class="linea corta" style="margin:0 auto; opacity:0.5"></div>
+    </footer>
+</body>
+</html>
