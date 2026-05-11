@@ -19,7 +19,7 @@ const MAP_TIPO = {
 
 const MAP_TIPO_BACKEND = {
 	nacional:   'Nacional',
-	autonomico: 'Autonomico CyL',
+	autonomico: 'Autonomico',
 	provincial: 'Provincial',
 	escolares:  'Escolar',
 	control:    'Control',
@@ -487,7 +487,7 @@ export default function Dashboard() {
 													<label className={labelClasses}>Tipo de Competicion</label>
 													<select value={editTipo} onChange={(e) => setEditTipo(e.target.value)} className={selectClasses}>
 														<option>Nacional</option>
-														<option>Autonomico CyL</option>
+														<option>Autonomico</option>
 														<option>Provincial</option>
 														<option>Escolar</option>
 														<option>Control</option>

@@ -210,17 +210,29 @@ class EventoController {
             $row          = $stmtCat->fetch(PDO::FETCH_ASSOC);
             $id_categoria = $row['id_categoria'] ?? null;
 
-            $stmt = $pdo->prepare(
-                "SELECT id_evento, titulo, fecha_hora, tipo_evento, tipo_pista
-                 FROM eventos_calendario
-                 WHERE fecha_hora <= NOW()
-                   AND (id_categoria IS NULL OR id_categoria = ?)
-                 ORDER BY fecha_hora DESC
-                 LIMIT 200"
-            );
-            $stmt->execute([$id_categoria]);
-            $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // Si el usuario no tiene categoría asignada, devolver todos los eventos pasados
+            if ($id_categoria === null) {
+                $stmt = $pdo->prepare(
+                    "SELECT id_evento, titulo, fecha_hora, tipo_evento, tipo_pista
+                     FROM eventos_calendario
+                     WHERE fecha_hora <= NOW()
+                     ORDER BY fecha_hora DESC
+                     LIMIT 200"
+                );
+                $stmt->execute();
+            } else {
+                $stmt = $pdo->prepare(
+                    "SELECT id_evento, titulo, fecha_hora, tipo_evento, tipo_pista
+                     FROM eventos_calendario
+                     WHERE fecha_hora <= NOW()
+                       AND (id_categoria IS NULL OR id_categoria = ?)
+                     ORDER BY fecha_hora DESC
+                     LIMIT 200"
+                );
+                $stmt->execute([$id_categoria]);
+            }
 
+            $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode(['status' => 'success', 'eventos' => $eventos]);
 
         } catch (Exception $e) {

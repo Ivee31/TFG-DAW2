@@ -6,11 +6,11 @@ class MarcaController {
     const FORMATO_MARCA = "/^\d{2}'\d{2}\"\d{2}$/";
 
     // valores permitidos para tipo_competicion
-    const TIPOS_COMPETICION = ['Nacional', 'Autonomico CyL', 'Provincial', 'Escolar', 'Control'];
+    const TIPOS_COMPETICION = ['Nacional', 'Autonomico', 'Provincial', 'Escolar', 'Control'];
 
     const MAP_TIPO = [
         'nacional'   => 'Nacional',
-        'autonomico' => 'Autonomico CyL',
+        'autonomico' => 'Autonomico',
         'provincial' => 'Provincial',
         'escolares'  => 'Escolar',
         'control'    => 'Control',

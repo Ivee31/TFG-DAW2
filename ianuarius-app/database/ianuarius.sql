@@ -361,7 +361,7 @@ CREATE TABLE IF NOT EXISTS marcas (
     id_evento        INT DEFAULT NULL,
     prueba           VARCHAR(50) NOT NULL,
     temporada        ENUM('short_track', 'outdoor') NOT NULL,
-    tipo_competicion ENUM('Nacional','Autonomico CyL','Provincial','Escolar','Control') NOT NULL DEFAULT 'Control',
+    tipo_competicion ENUM('Nacional','Autonomico','Provincial','Escolar','Control') NOT NULL DEFAULT 'Control',
     marca               VARCHAR(20) NOT NULL,
     fecha               DATE NOT NULL,
     sensaciones_valor   TINYINT DEFAULT NULL COMMENT '1-5: 1=muy mal, 5=excelente',
