@@ -19,6 +19,18 @@ export default function App() {
 	const [googleCompleteData, setGoogleCompleteData] = useState(null);
 	const [currentView, setCurrentView] = useState('dashboard');
 
+	const navigate = (view) => {
+		window.history.pushState({ view }, '');
+		setCurrentView(view);
+	};
+
+	useEffect(() => {
+		window.history.replaceState({ view: 'dashboard' }, '');
+		const onPop = (e) => setCurrentView(e.state?.view ?? 'dashboard');
+		window.addEventListener('popstate', onPop);
+		return () => window.removeEventListener('popstate', onPop);
+	}, []);
+
 	useEffect(() => {
 		fetch(`${API}/session`, { credentials: 'include' })
 			.then(res => res.json())
@@ -63,7 +75,7 @@ export default function App() {
 	return (
 		<>
 			{user ? (
-				<Layout user={user} onLogout={() => { setUser(null); setCurrentView('dashboard'); }} onUserUpdate={setUser} currentView={currentView} onNavigate={setCurrentView}>
+				<Layout user={user} onLogout={() => { setUser(null); navigate('dashboard'); }} onUserUpdate={setUser} currentView={currentView} onNavigate={navigate}>
 					{/* calendario: vista inicio para todos los roles */}
 					{currentView === 'dashboard'   && <Calendario user={user} />}
 

@@ -32,6 +32,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 	const [cargando, setCargando] = useState(true);
 	const [error, setError]     = useState(null);
 	const [tabDoc, setTabDoc]   = useState('carnet');
+	const [zipping, setZipping] = useState(false);
 
 	useEffect(() => {
 		setCargando(true);
@@ -65,8 +66,6 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 			</main>
 		);
 	}
-
-	const [zipping, setZipping] = useState(false);
 
 	const descargarZip = async () => {
 		setZipping(true);
