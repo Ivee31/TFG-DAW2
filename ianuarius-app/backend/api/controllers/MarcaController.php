@@ -120,7 +120,7 @@ class MarcaController {
             return;
         }
 
-        $id_usuario = $_SESSION['id_usuario'];
+        $id_usuario = (int)$_SESSION['id_usuario'];
 
         try {
             $pdo  = Connect::conexion();
@@ -151,7 +151,7 @@ class MarcaController {
     }
 
     // actualiza una marca — solo si pertenece al usuario en sesion
-    public static function actualizar($id_marca) {
+    public static function actualizar(int $id_marca) {
         session_start();
 
         if (!isset($_SESSION['id_usuario'])) {
@@ -167,7 +167,7 @@ class MarcaController {
         }
 
         $input      = json_decode(file_get_contents('php://input'), true);
-        $id_usuario = $_SESSION['id_usuario'];
+        $id_usuario = (int)$_SESSION['id_usuario'];
         $prueba     = trim($input['prueba'] ?? '');
         $marca      = trim($input['marca'] ?? '');
         $id_evento  = isset($input['id_evento']) && $input['id_evento'] ? (int)$input['id_evento'] : null;
@@ -302,7 +302,7 @@ class MarcaController {
     }
 
     // elimina una marca — solo si pertenece al usuario en sesion
-    public static function eliminar($id_marca) {
+    public static function eliminar(int $id_marca) {
         session_start();
 
         if (!isset($_SESSION['id_usuario'])) {
@@ -317,7 +317,7 @@ class MarcaController {
             return;
         }
 
-        $id_usuario = $_SESSION['id_usuario'];
+        $id_usuario = (int)$_SESSION['id_usuario'];
 
         try {
             $pdo  = Connect::conexion();
