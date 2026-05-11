@@ -110,7 +110,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="opacity-60 hover:opacity-100 transition"
+						className="hover:opacity-70 transition"
 					>
 						<img src={logoInstagram} alt="Instagram" className="w-8 h-8 object-contain" />
 					</a>
