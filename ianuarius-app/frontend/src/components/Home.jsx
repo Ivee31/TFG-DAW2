@@ -100,7 +100,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				{/* NAV */}
 				<nav className="w-full px-6 md:px-10 py-5 flex items-center justify-between">
 					<div className="flex items-center gap-3">
-						<div className="w-12 h-12 bg-oscuro/60 backdrop-blur-md rounded-full border border-ianuarius/50 flex items-center justify-center p-2 shadow-[0_0_14px_rgba(254,0,0,0.3)]">
+						<div className="w-14 h-14 bg-oscuro/60 backdrop-blur-md rounded-full border border-ianuarius/50 flex items-center justify-center p-2 shadow-[0_0_14px_rgba(254,0,0,0.3)]">
 							<img src={logoIanuarius} alt="Ianuarius" className="w-full h-full object-contain" />
 						</div>
 						<span className="text-white font-black text-sm tracking-[0.25em] uppercase">Ianuarius</span>
@@ -112,12 +112,12 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						rel="noopener noreferrer"
 						className="hover:opacity-70 transition"
 					>
-						<img src={logoInstagram} alt="Instagram" className="w-8 h-8 object-contain" />
+						<img src={logoInstagram} alt="Instagram" className="w-10 h-10 object-contain" />
 					</a>
 				</nav>
 
 				{/* HERO CENTER */}
-				<div className="flex-1 flex flex-col items-center justify-center px-4 text-center pb-16">
+				<div className="flex-1 flex flex-col items-center justify-center px-4 text-center pb-6">
 
 					<h1 className="titulo-collegiate text-5xl md:text-7xl lg:text-[7rem] tracking-widest select-none drop-shadow-[0_0_30px_rgba(254,0,0,0.2)]">
 						IANUARIUS
@@ -149,12 +149,9 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					</div>
 
 					{/* Puertas abiertas */}
-				<div className="mb-10 max-w-md px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-center">
-					<p className="text-[9px] font-black uppercase tracking-widest text-ianuarius mb-2">Jornadas de puertas abiertas</p>
-					<p className="text-gray-300 text-xs md:text-sm leading-relaxed">
-						¿Tienes hijos que quieran probar el atletismo? Abre las puertas a su talento — jornadas de iniciación gratuitas las primeras semanas de septiembre y junio.
-					</p>
-				</div>
+				<p className="mb-10 max-w-sm text-[10px] text-gray-500 leading-relaxed text-center">
+					¿Tienes hijos que quieran probar el atletismo? Jornadas de iniciación gratuitas — primeras semanas de septiembre y junio.
+				</p>
 
 				{/* Feature pills */}
 					<div className="flex flex-wrap justify-center items-center gap-2 text-[10px] text-gray-500 tracking-widest uppercase">
