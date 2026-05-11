@@ -59,7 +59,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				</nav>
 
 				{/* HERO CENTER */}
-				<div className="flex-1 flex flex-col items-center justify-center px-4 text-center pb-20">
+				<div className="flex-1 flex flex-col items-center justify-start px-4 text-center pt-10 md:pt-14">
 
 					<h1 className="titulo-collegiate text-5xl md:text-7xl lg:text-[7rem] tracking-widest select-none drop-shadow-[0_0_30px_rgba(254,0,0,0.2)]">
 						IANUARIUS
