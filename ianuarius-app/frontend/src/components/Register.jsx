@@ -29,8 +29,19 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 	const handleRegister = (e) => {
 		e.preventDefault();
 		setErrorMsg('');
-		if (form.password !== form.confirm_password) { setErrorMsg('Las contraseñas no coinciden'); return; }
+
+		if (form.nombre.trim().length < 2) { setErrorMsg('El nombre debe tener al menos 2 caracteres'); return; }
+		if (form.apellidos.trim().length < 2) { setErrorMsg('Los apellidos deben tener al menos 2 caracteres'); return; }
+		if (!/^\d{8}[A-Za-z]$/.test(form.dni.trim())) { setErrorMsg('DNI no válido — formato: 8 dígitos y una letra (ej. 12345678A)'); return; }
 		if (!form.fecha_nacimiento) { setErrorMsg('Fecha de nacimiento requerida'); return; }
+		const yearNac = parseInt(form.fecha_nacimiento.split('-')[0], 10);
+		const yearActual = new Date().getFullYear();
+		if (yearNac < 1930 || yearNac > yearActual - 3) { setErrorMsg('Fecha de nacimiento no válida'); return; }
+		if (form.password.length < 8) { setErrorMsg('La contraseña debe tener al menos 8 caracteres'); return; }
+		if (!/[A-Z]/.test(form.password)) { setErrorMsg('La contraseña debe contener al menos una letra mayúscula'); return; }
+		if (!/[!@#$%^&*()_+={}|;:,.?-]/.test(form.password)) { setErrorMsg('La contraseña debe contener al menos un carácter especial (ej. !, @, #, -, _)'); return; }
+		if (form.password !== form.confirm_password) { setErrorMsg('Las contraseñas no coinciden'); return; }
+
 		const fechaISO = form.fecha_nacimiento;
 		setLoading(true);
 		fetch(`${API}/register`, {

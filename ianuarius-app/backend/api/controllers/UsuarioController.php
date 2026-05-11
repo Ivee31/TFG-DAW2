@@ -303,6 +303,43 @@ class UsuarioController {
         }
     }
 
+    public static function eliminarCuenta(): void {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        $id = (int)$_SESSION['id_usuario'];
+
+        try {
+            $pdo = Connect::conexion();
+
+            $stmt = $pdo->prepare("SELECT email FROM usuarios WHERE id_usuario = :id");
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($row) {
+                $pdo->prepare("DELETE FROM password_resets WHERE email = :email")
+                    ->execute([':email' => $row['email']]);
+            }
+
+            $pdo->prepare("DELETE FROM usuarios WHERE id_usuario = :id")
+                ->execute([':id' => $id]);
+
+            session_destroy();
+            http_response_code(200);
+            echo json_encode(["status" => "success"]);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
+
     public static function listarAtletas() {
         session_start();
 

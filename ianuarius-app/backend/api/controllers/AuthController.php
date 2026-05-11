@@ -97,6 +97,56 @@ class AuthController {
         // Atleta activo de inmediato; Entrenador requiere activación por admin
         $estado_cuenta    = ($rol === 'Atleta') ? 1 : 0;
 
+        if (mb_strlen($nombre) < 2 || mb_strlen($nombre) > 100) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Nombre no válido (mín. 2 caracteres)"]);
+            return;
+        }
+
+        if (mb_strlen($apellidos) < 2 || mb_strlen($apellidos) > 150) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Apellidos no válidos (mín. 2 caracteres)"]);
+            return;
+        }
+
+        if (!preg_match('/^\d{8}[A-Za-z]$/', $dni)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Formato de DNI no válido (ej. 12345678A)"]);
+            return;
+        }
+
+        if (strlen($password) < 8) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "La contraseña debe tener al menos 8 caracteres"]);
+            return;
+        }
+
+        if (!preg_match('/[A-Z]/', $password)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "La contraseña debe contener al menos una letra mayúscula"]);
+            return;
+        }
+
+        if (!preg_match('/[!@#$%^&*()\-_+={}|;:,.?]/', $password)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "La contraseña debe contener al menos un carácter especial (ej. !, @, #, -, _)"]);
+            return;
+        }
+
+        $fechaObj = DateTime::createFromFormat('Y-m-d', $fecha_nacimiento);
+        if (!$fechaObj) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Fecha de nacimiento no válida"]);
+            return;
+        }
+        $anioNac    = (int)$fechaObj->format('Y');
+        $anioActual = (int)date('Y');
+        if ($anioNac < 1930 || $anioNac > $anioActual - 5) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Fecha de nacimiento no válida"]);
+            return;
+        }
+
         if (!in_array($genero, ['M', 'F'])) {
             http_response_code(400);
             echo json_encode(["status" => "error", "error" => "Género no válido"]);

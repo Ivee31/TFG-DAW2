@@ -116,6 +116,9 @@ switch ($endpoint) {
         } elseif ($sub === 'inscripcion-pdf' && $method === 'PUT') {
             UsuarioController::subirInscripcionPdf();
 
+        } elseif ($sub === 'cuenta' && $method === 'DELETE') {
+            UsuarioController::eliminarCuenta();
+
         } else {
             http_response_code(404);
             echo json_encode(["error" => "Endpoint not found"]);

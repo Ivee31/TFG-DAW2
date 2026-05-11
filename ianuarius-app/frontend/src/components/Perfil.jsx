@@ -335,6 +335,10 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 	const [categoria, setCategoria] = useState(null);
 	const [fotoLoading, setFotoLoading] = useState(false);
 
+	const [showDelete, setShowDelete] = useState(false);
+	const [deleteLoading, setDeleteLoading] = useState(false);
+	const [deleteMsg, setDeleteMsg] = useState('');
+
 	useEffect(() => {
 		fetch(`${API}/categorias`, { credentials: 'include' })
 			.then(r => r.json())
@@ -447,6 +451,27 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 			if (d.status === 'success') onUserUpdate({ ...user, foto_perfil: base64 });
 		} catch {}
 		setFotoLoading(false);
+	};
+
+	const handleEliminarCuenta = async () => {
+		setDeleteLoading(true);
+		setDeleteMsg('');
+		try {
+			const res = await fetch(`${API}/usuarios/cuenta`, {
+				method: 'DELETE',
+				credentials: 'include'
+			});
+			const d = await res.json();
+			if (d.status === 'success') {
+				onUserUpdate(null);
+			} else {
+				setDeleteMsg(d.error || 'Error al eliminar la cuenta');
+				setDeleteLoading(false);
+			}
+		} catch {
+			setDeleteMsg('Error de conexión');
+			setDeleteLoading(false);
+		}
 	};
 
 	const generoLabel = g => g === 'M' ? 'Masculino' : g === 'F' ? 'Femenino' : '-';
@@ -636,6 +661,40 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 					)}
 				</div>
 			</div>
+
+		<div className="bg-gris rounded-lg border border-red-900/40 overflow-hidden">
+			<SectionHeader
+				title="Zona de peligro"
+				action={
+					<button
+						onClick={() => { setShowDelete(v => !v); setDeleteMsg(''); }}
+						className="text-[10px] font-bold uppercase tracking-widest text-red-500 hover:text-red-400 transition"
+					>
+						{showDelete ? 'Cancelar' : 'Eliminar cuenta'}
+					</button>
+				}
+			/>
+
+			{showDelete && (
+				<div className="p-6 space-y-4">
+					<p className="text-gray-400 text-xs leading-relaxed">
+						Esta acción eliminará permanentemente tu cuenta y todos tus datos. No se puede deshacer.
+					</p>
+
+					{deleteMsg && (
+						<p className="text-xs text-center text-red-400">{deleteMsg}</p>
+					)}
+
+					<button
+						onClick={handleEliminarCuenta}
+						disabled={deleteLoading}
+						className="w-full bg-red-700 text-white text-[10px] font-black uppercase tracking-widest py-2 rounded hover:bg-red-600 transition disabled:opacity-50"
+					>
+						{deleteLoading ? 'Eliminando...' : 'Confirmar — eliminar mi cuenta'}
+					</button>
+				</div>
+			)}
+		</div>
 
 		</div>
 
