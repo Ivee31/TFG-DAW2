@@ -17,17 +17,18 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 		setCookiesAceptadas(true);
 	};
 
-	const toggleLogin = () => { setShowLogin(v => !v); setShowRegister(false); };
+	const toggleLogin    = () => { setShowLogin(v => !v); setShowRegister(false); };
 	const toggleRegister = () => { setShowRegister(v => !v); setShowLogin(false); };
 
 	return (
 		<div className="bg-oscuro text-gray-200 font-sans antialiased overflow-x-hidden">
 			<style>{`
 				.bg-hero {
-					background: linear-gradient(to bottom, rgba(23, 23, 23, 0.7), rgba(23, 23, 23, 1)), url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center;
+					background: linear-gradient(to bottom, rgba(23,23,23,0.72), rgba(23,23,23,1)),
+					            url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')
+					            no-repeat center center;
 					background-size: cover;
 				}
-
 				.titulo-collegiate {
 					font-family: 'Graduate', sans-serif;
 					color: transparent;
@@ -35,69 +36,95 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				}
 			`}</style>
 
-			<section className="min-h-[85vh] w-full bg-hero flex flex-col">
-				<nav className="w-full px-4 md:px-8 pt-8 pb-4 md:py-4 grid grid-cols-3 items-start md:items-center text-[10px] md:text-xs tracking-widest uppercase">
-					{/* nav Izq. */}
-					<div className="flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-4 relative">
-						<button onClick={toggleRegister} className="bg-ianuarius text-white font-bold px-4 md:px-5 py-3 md:py-2 rounded-full shadow-[0_0_15px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_25px_rgba(254,0,0,0.6)] transition duration-300">
+			{/* HERO */}
+			<section className="min-h-screen w-full bg-hero flex flex-col">
+
+				{/* NAV */}
+				<nav className="w-full px-6 md:px-10 py-5 flex items-center justify-between">
+					<div className="flex items-center gap-3">
+						<div className="w-9 h-9 bg-oscuro/60 backdrop-blur-md rounded-full border border-ianuarius/50 flex items-center justify-center p-1.5 shadow-[0_0_12px_rgba(254,0,0,0.3)]">
+							<img src={logoIanuarius} alt="Ianuarius" className="w-full h-full object-contain" />
+						</div>
+						<span className="text-white font-black text-xs tracking-[0.25em] uppercase">Ianuarius</span>
+					</div>
+
+					<a
+						href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="opacity-60 hover:opacity-100 transition"
+					>
+						<img src={logoInstagram} alt="Instagram" className="w-6 h-6 object-contain" />
+					</a>
+				</nav>
+
+				{/* HERO CENTER */}
+				<div className="flex-1 flex flex-col items-center justify-center px-4 text-center pb-20">
+
+					<h1 className="titulo-collegiate text-5xl md:text-7xl lg:text-[7rem] tracking-widest select-none drop-shadow-[0_0_30px_rgba(254,0,0,0.2)]">
+						IANUARIUS
+					</h1>
+
+					<p className="text-[10px] md:text-xs font-bold tracking-[0.5em] text-ianuarius mt-3 mb-6">
+						A T L E T I S M O
+					</p>
+
+					<p className="text-gray-300 text-sm md:text-base max-w-lg mb-10 leading-relaxed font-light">
+						Plataforma de gestión deportiva para atletas y entrenadores — registra marcas, consulta el calendario y gestiona tu documentación en un solo lugar.
+					</p>
+
+					{/* CTAs + dropdowns */}
+					<div className="relative flex flex-col sm:flex-row items-center gap-3 mb-10">
+						<button
+							onClick={toggleRegister}
+							className="px-8 py-3 bg-ianuarius text-white font-black text-[10px] tracking-widest uppercase rounded shadow-[0_0_20px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_30px_rgba(254,0,0,0.6)] transition duration-300"
+						>
 							Registrarse
 						</button>
 
-						<button onClick={toggleLogin} className="py-3 pl-4 md:py-0 text-white hover:text-ianuarius transition duration-300 font-bold">
-							Login
+						<button
+							onClick={toggleLogin}
+							className="px-8 py-3 border border-white/30 text-white font-black text-[10px] tracking-widest uppercase rounded hover:border-white hover:bg-white/5 transition duration-300"
+						>
+							Acceder
 						</button>
 
-						<a href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5" target="_blank" rel="noopener noreferrer" className="hover:text-ianuarius transition">
-							<img src={logoInstagram} alt="Instagram" className="w-10 h-10 object-contain" />
-						</a>
-
 						{showLogin && (
-							<div className="absolute left-0 top-full mt-4 w-72 md:w-80 z-50 origin-top-left">
+							<div className="absolute top-full mt-3 w-72 md:w-80 z-50 left-1/2 -translate-x-1/2">
 								<Login onLoginSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
 							</div>
 						)}
+
 						{showRegister && (
-							<div className="absolute left-0 top-full mt-4 w-80 md:w-96 z-50 origin-top-left">
+							<div className="absolute top-full mt-3 w-80 md:w-96 z-50 left-1/2 -translate-x-1/2">
 								<Register onRegisterSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
 							</div>
 						)}
-						
 					</div>
 
-					{/* Logo centrado */}
-					<div className="flex justify-center self-center">
-						<div className="w-20 h-20 md:w-32 md:h-32 bg-oscuro/60 backdrop-blur-md rounded-full border-2 border-ianuarius/50 flex items-center justify-center p-2 md:p-3 hover:border-ianuarius shadow-[0_0_30px_rgba(254,0,0,0.4)] transition duration-300">
-							<img src={logoIanuarius} alt="Escudo Ianuarius" className="w-full h-full object-contain" />
-						</div>
+					{/* Feature pills */}
+					<div className="flex flex-wrap justify-center items-center gap-2 text-[10px] text-gray-500 tracking-widest uppercase">
+						<span>Registro de marcas</span>
+						<span className="text-ianuarius/60">·</span>
+						<span>Calendario de eventos</span>
+						<span className="text-ianuarius/60">·</span>
+						<span>Gestión documental</span>
+						<span className="text-ianuarius/60">·</span>
+						<span>Inscripciones online</span>
 					</div>
 
-					{/* nav Der. */}
-					<div className="flex items-center gap-3 md:gap-5 text-white/60 justify-end">
-						<span className="hidden md:block hover:text-white cursor-pointer transition">ES / EN</span>
-						<button className="flex items-center gap-2.5 text-white hover:text-ianuarius transition group">
-							MENU
-							<div className="space-y-1">
-								<span className="block w-5 h-px bg-white group-hover:bg-ianuarius transition"></span>
-								<span className="block w-5 h-px bg-white group-hover:bg-ianuarius transition"></span>
-							</div>
-						</button>
-					</div>
-				</nav>
-
-				<div className="flex-1 flex flex-col justify-center items-center">
-					<h1 className="titulo-collegiate text-5xl md:text-7xl lg:text-[8rem] tracking-widest md:tracking-[0.15em] select-none ml-4 md:ml-12 drop-shadow-[0_0_30px_rgba(254,0,0,0.2)]">
-						IANUARIUS
-					</h1>
-					<p className="text-xs md:text-lg font-bold tracking-[0.4em] md:tracking-[0.8em] text-ianuarius mt-4 ml-2 md:ml-6 drop-shadow-md">
-						A T L E T I S M O
-					</p>
 				</div>
 			</section>
 
-			<section className="bg-oscuro px-6 md:px-12 pb-24 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-				<div className="lg:col-span-6 bg-gris p-5 md:p-6 rounded-xl border-t-4 border-ianuarius transform -translate-y-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+			{/* INFO SECTION */}
+			<section className="bg-oscuro px-6 md:px-12 py-16 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+				<div className="lg:col-span-6 bg-gris p-5 md:p-6 rounded-xl border-t-4 border-ianuarius shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 					<div className="w-full h-48 bg-oscuro rounded-lg mb-5 overflow-hidden relative group">
-						<img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pista" className="object-cover w-full h-full opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-700 ease-in-out" />
+						<img
+							src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+							alt="Pista de atletismo"
+							className="object-cover w-full h-full opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-700 ease-in-out"
+						/>
 					</div>
 					<h3 className="text-xl md:text-2xl font-semibold text-white mb-3 leading-snug">Superar tus límites es posible, solo hay un paso...</h3>
 					<p className="text-gray-400 text-sm md:text-base mb-6 leading-relaxed">
@@ -108,7 +135,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					</a>
 				</div>
 
-				<div className="lg:col-span-6 flex flex-col justify-center gap-8 lg:pr-8 pt-0 lg:pt-8">
+				<div className="lg:col-span-6 flex flex-col justify-center gap-8 lg:pr-8">
 					<p className="text-gray-400 text-base md:text-lg leading-relaxed font-light">
 						Gracias al atletismo, somos capaces de acortar grandes distancias y acercar metas que parecían inalcanzables. Nos encontramos en un momento crítico de la temporada. ¿Cómo podemos asegurar que nuestro rendimiento futuro sea impecable sin comprometer la técnica?
 					</p>
@@ -122,39 +149,36 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				</div>
 			</section>
 
-		{/* footer */}
-		<footer className="w-full py-8 flex justify-center border-t border-white/5">
-			<p className="text-[9px] text-gray-600 uppercase tracking-[0.5em] text-center leading-relaxed">
-				Ianuarius Athletics Club &copy; 2026<br />
-				<a href="?page=aviso-legal" className="hover:text-gray-400 transition underline underline-offset-2">Aviso Legal</a>
-			</p>
-		</footer>
+			{/* FOOTER */}
+			<footer className="w-full py-8 flex justify-center border-t border-white/5">
+				<p className="text-[9px] text-gray-600 uppercase tracking-[0.5em] text-center leading-relaxed">
+					Ianuarius Athletics Club &copy; 2026<br />
+					<a href="?page=aviso-legal" className="hover:text-gray-400 transition underline underline-offset-2">Aviso Legal</a>
+				</p>
+			</footer>
 
-		{/* banner cookies */}
-		{!cookiesAceptadas && (
-			<div className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6">
-				<div className="max-w-3xl mx-auto bg-gris border border-white/10 border-t-2 border-t-ianuarius rounded-xl shadow-[0_-4px_30px_rgba(0,0,0,0.5)] px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-					<div className="flex-1">
-						<p className="text-white text-xs font-bold uppercase tracking-widest mb-2">Uso de cookies</p>
-
-						<p className="text-gray-400 text-xs leading-relaxed">
-							Esta aplicación utiliza únicamente las cookies estrictamente necesarias para su funcionamiento.
-							Concretamente, una <span className="text-white">cookie de sesión</span> (<code className="text-ianuarius text-[11px]">PHPSESSID</code>) que
-							identifica tu sesión iniciada y te mantiene autenticado mientras usas la app.
-							Se elimina automáticamente al cerrar el navegador. No se usan cookies de análisis, publicidad ni terceros.
-						</p>
-
+			{/* BANNER COOKIES */}
+			{!cookiesAceptadas && (
+				<div className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6">
+					<div className="max-w-3xl mx-auto bg-gris border border-white/10 border-t-2 border-t-ianuarius rounded-xl shadow-[0_-4px_30px_rgba(0,0,0,0.5)] px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+						<div className="flex-1">
+							<p className="text-white text-xs font-bold uppercase tracking-widest mb-2">Uso de cookies</p>
+							<p className="text-gray-400 text-xs leading-relaxed">
+								Esta aplicación utiliza únicamente las cookies estrictamente necesarias para su funcionamiento.
+								Concretamente, una <span className="text-white">cookie de sesión</span> (<code className="text-ianuarius text-[11px]">PHPSESSID</code>) que
+								identifica tu sesión iniciada y te mantiene autenticado mientras usas la app.
+								Se elimina automáticamente al cerrar el navegador. No se usan cookies de análisis, publicidad ni terceros.
+							</p>
+						</div>
+						<button
+							onClick={aceptarCookies}
+							className="shrink-0 px-6 py-2.5 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest rounded hover:bg-red-700 transition duration-300"
+						>
+							Aceptar
+						</button>
 					</div>
-
-					<button onClick={aceptarCookies} className="shrink-0 px-6 py-2.5 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest rounded hover:bg-red-700 transition duration-300">
-						Aceptar
-					</button>
-
 				</div>
-			</div>
-		)}
-
+			)}
 		</div>
 	);
-
 }
