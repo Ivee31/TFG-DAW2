@@ -1,12 +1,43 @@
 // vista Home
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Login from './Login';
 import Register from './Register';
 import logoIanuarius from '../assets/logoIanuarius.png';
 import logoInstagram from '../assets/logoInstagram.png';
 
+function Modal({ onClose, children }) {
+	useEffect(() => {
+		const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+		document.addEventListener('keydown', onKey);
+		return () => document.removeEventListener('keydown', onKey);
+	}, [onClose]);
+
+	return (
+		<div
+			className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+			onClick={onClose}
+		>
+			<div
+				className="relative w-full max-w-sm md:max-w-md"
+				onClick={e => e.stopPropagation()}
+			>
+				<button
+					onClick={onClose}
+					className="absolute -top-3 -right-3 z-10 w-7 h-7 rounded-full bg-gris border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/50 transition"
+					aria-label="Cerrar"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
+						<path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+					</svg>
+				</button>
+				{children}
+			</div>
+		</div>
+	);
+}
+
 export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
-	const [showLogin, setShowLogin] = useState(false);
+	const [showLogin, setShowLogin]       = useState(false);
 	const [showRegister, setShowRegister] = useState(false);
 	const [cookiesAceptadas, setCookiesAceptadas] = useState(
 		() => localStorage.getItem('cookies_aceptadas') === 'true'
@@ -17,8 +48,9 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 		setCookiesAceptadas(true);
 	};
 
-	const toggleLogin    = () => { setShowLogin(v => !v); setShowRegister(false); };
-	const toggleRegister = () => { setShowRegister(v => !v); setShowLogin(false); };
+	const openLogin    = () => { setShowLogin(true);  setShowRegister(false); };
+	const openRegister = () => { setShowRegister(true); setShowLogin(false); };
+	const closeAll     = () => { setShowLogin(false); setShowRegister(false); };
 
 	return (
 		<div className="bg-oscuro text-gray-200 font-sans antialiased overflow-x-hidden">
@@ -34,6 +66,11 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					color: transparent;
 					-webkit-text-stroke: 3px #FFFFFF;
 				}
+				@keyframes scrollBounce {
+					0%, 100% { transform: translateY(0); opacity: 0.5; }
+					50%       { transform: translateY(8px); opacity: 1; }
+				}
+				.scroll-hint { animation: scrollBounce 1.8s ease-in-out infinite; }
 			`}</style>
 
 			{/* HERO */}
@@ -73,33 +110,21 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						Plataforma de gestión deportiva para atletas y entrenadores — registra marcas, consulta el calendario y gestiona tu documentación en un solo lugar.
 					</p>
 
-					{/* CTAs + dropdowns */}
-					<div className="relative flex flex-col sm:flex-row items-center gap-3 mb-10">
+					{/* CTAs */}
+					<div className="flex flex-col sm:flex-row items-center gap-3 mb-10">
 						<button
-							onClick={toggleRegister}
+							onClick={openRegister}
 							className="px-8 py-3 bg-ianuarius text-white font-black text-[10px] tracking-widest uppercase rounded shadow-[0_0_20px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_30px_rgba(254,0,0,0.6)] transition duration-300"
 						>
 							Registrarse
 						</button>
 
 						<button
-							onClick={toggleLogin}
+							onClick={openLogin}
 							className="px-8 py-3 border border-white/30 text-white font-black text-[10px] tracking-widest uppercase rounded hover:border-white hover:bg-white/5 transition duration-300"
 						>
 							Acceder
 						</button>
-
-						{showLogin && (
-							<div className="absolute top-full mt-3 w-72 md:w-80 z-50 left-1/2 -translate-x-1/2">
-								<Login onLoginSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
-							</div>
-						)}
-
-						{showRegister && (
-							<div className="absolute top-full mt-3 w-80 md:w-96 z-50 left-1/2 -translate-x-1/2">
-								<Register onRegisterSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
-							</div>
-						)}
 					</div>
 
 					{/* Feature pills */}
@@ -114,6 +139,15 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					</div>
 
 				</div>
+
+				{/* SCROLL HINT */}
+				<div className="flex flex-col items-center pb-8 gap-2">
+					<span className="text-[9px] text-gray-600 uppercase tracking-[0.3em]">Descubre más</span>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="scroll-hint w-5 h-5 text-gray-600">
+						<path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+					</svg>
+				</div>
+
 			</section>
 
 			{/* INFO SECTION */}
@@ -156,6 +190,19 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					<a href="?page=aviso-legal" className="hover:text-gray-400 transition underline underline-offset-2">Aviso Legal</a>
 				</p>
 			</footer>
+
+			{/* MODALES */}
+			{showLogin && (
+				<Modal onClose={closeAll}>
+					<Login onLoginSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
+				</Modal>
+			)}
+
+			{showRegister && (
+				<Modal onClose={closeAll}>
+					<Register onRegisterSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
+				</Modal>
+			)}
 
 			{/* BANNER COOKIES */}
 			{!cookiesAceptadas && (
