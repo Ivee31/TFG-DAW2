@@ -191,6 +191,44 @@ class EventoController {
         }
     }
 
+    // GET /eventos/mis-competiciones — competiciones pasadas visibles al usuario autenticado
+    public static function misCompeticionesPasadas(): void {
+        session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(['status' => 'error', 'error' => 'No autenticado']);
+            return;
+        }
+
+        try {
+            $pdo        = Connect::conexion();
+            $id_usuario = (int)$_SESSION['id_usuario'];
+
+            $stmtCat = $pdo->prepare("SELECT id_categoria FROM usuarios WHERE id_usuario = ?");
+            $stmtCat->execute([$id_usuario]);
+            $row          = $stmtCat->fetch(PDO::FETCH_ASSOC);
+            $id_categoria = $row['id_categoria'] ?? null;
+
+            $stmt = $pdo->prepare(
+                "SELECT id_evento, titulo, fecha_hora, tipo_evento, tipo_pista
+                 FROM eventos_calendario
+                 WHERE fecha_hora <= NOW()
+                   AND (id_categoria IS NULL OR id_categoria = ?)
+                 ORDER BY fecha_hora DESC
+                 LIMIT 200"
+            );
+            $stmt->execute([$id_categoria]);
+            $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            echo json_encode(['status' => 'success', 'eventos' => $eventos]);
+
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'error' => 'Error interno']);
+        }
+    }
+
     // DELETE /eventos/{id}
     public static function eliminar(int $id): void {
         session_start();

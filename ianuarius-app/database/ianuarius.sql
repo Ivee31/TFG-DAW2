@@ -358,6 +358,7 @@ CREATE TABLE IF NOT EXISTS marcas (
     id_marca         INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario       INT NOT NULL,
     id_categoria     INT DEFAULT NULL,
+    id_evento        INT DEFAULT NULL,
     prueba           VARCHAR(50) NOT NULL,
     temporada        ENUM('short_track', 'outdoor') NOT NULL,
     tipo_competicion ENUM('Nacional','Autonomico CyL','Provincial','Escolar','Control') NOT NULL DEFAULT 'Control',
@@ -366,7 +367,8 @@ CREATE TABLE IF NOT EXISTS marcas (
     sensaciones_valor   TINYINT DEFAULT NULL COMMENT '1-5: 1=muy mal, 5=excelente',
     sensaciones_notas   VARCHAR(500) DEFAULT NULL,
     FOREIGN KEY (id_usuario)   REFERENCES usuarios(id_usuario)     ON DELETE CASCADE,
-    FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
+    FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL,
+    FOREIGN KEY (id_evento)    REFERENCES eventos_calendario(id_evento) ON DELETE SET NULL
 );
 
 -- Tabla configuracion del club (plantilla PDF inscripcion, etc.)

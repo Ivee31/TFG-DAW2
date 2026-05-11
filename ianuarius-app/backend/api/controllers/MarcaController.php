@@ -8,65 +8,86 @@ class MarcaController {
     // valores permitidos para tipo_competicion
     const TIPOS_COMPETICION = ['Nacional', 'Autonomico CyL', 'Provincial', 'Escolar', 'Control'];
 
-    // guarda nueva marca del atleta autenticado
+    const MAP_TIPO = [
+        'nacional'   => 'Nacional',
+        'autonomico' => 'Autonomico CyL',
+        'provincial' => 'Provincial',
+        'escolares'  => 'Escolar',
+        'control'    => 'Control',
+    ];
+
+    // guarda nueva marca del atleta autenticado — requiere evento del calendario
     public static function guardar() {
         session_start();
-        
+
         if (!isset($_SESSION['id_usuario'])) {
             http_response_code(401);
             echo json_encode(["status" => "error", "error" => "No autenticado"]);
             return;
         }
 
-        $input = json_decode(file_get_contents('php://input'), true);
+        $input      = json_decode(file_get_contents('php://input'), true);
+        $id_usuario = (int)$_SESSION['id_usuario'];
+        $prueba     = trim($input['prueba'] ?? '');
+        $marca      = trim($input['marca'] ?? '');
+        $id_evento  = isset($input['id_evento']) ? (int)$input['id_evento'] : 0;
 
-        if (!isset($input['prueba']) || !isset($input['temporada']) || !isset($input['marca']) || !isset($input['tipo_competicion'])) {
+        if (!$prueba || !$marca || !$id_evento) {
             http_response_code(400);
             echo json_encode(["status" => "error", "error" => "Datos incompletos"]);
             return;
         }
 
-        $id_usuario = $_SESSION['id_usuario'];
-        $prueba = trim($input['prueba']);
-        $temporada = trim($input['temporada']);
-        $tipo_competicion = trim($input['tipo_competicion']);
-        $marca = trim($input['marca']);
-
-        // validar formato de tiempo MM'SS"ms
         if (!preg_match(self::FORMATO_MARCA, $marca)) {
             http_response_code(422);
             echo json_encode(["status" => "error", "error" => "Formato incorrecto. Usa MM'SS\"ms (ej: 00'49\"15)"]);
             return;
         }
 
-        // validar tipo_competicion
-        if (!in_array($tipo_competicion, self::TIPOS_COMPETICION)) {
-            http_response_code(422);
-            echo json_encode(["status" => "error", "error" => "Tipo de competicion no valido"]);
-            return;
-        }
-
-        $id_categoria       = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
-        $sensaciones_valor  = isset($input['sensaciones_valor']) && $input['sensaciones_valor'] !== '' ? (int)$input['sensaciones_valor'] : null;
-        $sensaciones_notas  = isset($input['sensaciones_notas']) && trim($input['sensaciones_notas']) !== '' ? trim($input['sensaciones_notas']) : null;
-
-        if ($sensaciones_valor !== null && ($sensaciones_valor < 1 || $sensaciones_valor > 5)) {
-            $sensaciones_valor = null;
-        }
-
         try {
-            $pdo  = Connect::conexion();
-            $stmt = $pdo->prepare(
-                "INSERT INTO marcas (id_usuario, id_categoria, prueba, temporada, tipo_competicion, marca, fecha, sensaciones_valor, sensaciones_notas)
-                 VALUES (:id_usuario, :id_categoria, :prueba, :temporada, :tipo_competicion, :marca, CURDATE(), :sensaciones_valor, :sensaciones_notas)"
-            );
+            $pdo = Connect::conexion();
 
-            $stmt->bindParam(':id_usuario',       $id_usuario,       PDO::PARAM_INT);
-            $stmt->bindParam(':id_categoria',      $id_categoria,     PDO::PARAM_INT);
-            $stmt->bindParam(':prueba',            $prueba,           PDO::PARAM_STR);
-            $stmt->bindParam(':temporada',         $temporada,        PDO::PARAM_STR);
-            $stmt->bindParam(':tipo_competicion',  $tipo_competicion, PDO::PARAM_STR);
-            $stmt->bindParam(':marca',             $marca,            PDO::PARAM_STR);
+            $stmtCat = $pdo->prepare("SELECT id_categoria FROM usuarios WHERE id_usuario = ?");
+            $stmtCat->execute([$id_usuario]);
+            $rowCat        = $stmtCat->fetch(PDO::FETCH_ASSOC);
+            $id_cat_atleta = $rowCat['id_categoria'] ?? null;
+
+            $stmtEvt = $pdo->prepare(
+                "SELECT tipo_evento, tipo_pista FROM eventos_calendario
+                 WHERE id_evento = ? AND fecha_hora <= NOW()
+                   AND (id_categoria IS NULL OR id_categoria = ?)"
+            );
+            $stmtEvt->execute([$id_evento, $id_cat_atleta]);
+            $evento = $stmtEvt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$evento) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "error" => "Competición no válida o no accesible"]);
+                return;
+            }
+
+            $tipo_competicion = self::MAP_TIPO[$evento['tipo_evento']] ?? 'Control';
+            $temporada        = ($evento['tipo_pista'] === 'pista cubierta') ? 'short_track' : 'outdoor';
+
+            $id_categoria      = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
+            $sensaciones_valor = isset($input['sensaciones_valor']) && $input['sensaciones_valor'] !== '' ? (int)$input['sensaciones_valor'] : null;
+            $sensaciones_notas = isset($input['sensaciones_notas']) && trim($input['sensaciones_notas']) !== '' ? trim($input['sensaciones_notas']) : null;
+
+            if ($sensaciones_valor !== null && ($sensaciones_valor < 1 || $sensaciones_valor > 5)) {
+                $sensaciones_valor = null;
+            }
+
+            $stmt = $pdo->prepare(
+                "INSERT INTO marcas (id_usuario, id_categoria, id_evento, prueba, temporada, tipo_competicion, marca, fecha, sensaciones_valor, sensaciones_notas)
+                 VALUES (:id_usuario, :id_categoria, :id_evento, :prueba, :temporada, :tipo_competicion, :marca, CURDATE(), :sensaciones_valor, :sensaciones_notas)"
+            );
+            $stmt->bindParam(':id_usuario',       $id_usuario,        PDO::PARAM_INT);
+            $stmt->bindParam(':id_categoria',      $id_categoria,      PDO::PARAM_INT);
+            $stmt->bindParam(':id_evento',         $id_evento,         PDO::PARAM_INT);
+            $stmt->bindParam(':prueba',            $prueba,            PDO::PARAM_STR);
+            $stmt->bindParam(':temporada',         $temporada,         PDO::PARAM_STR);
+            $stmt->bindParam(':tipo_competicion',  $tipo_competicion,  PDO::PARAM_STR);
+            $stmt->bindParam(':marca',             $marca,             PDO::PARAM_STR);
             $stmt->bindParam(':sensaciones_valor', $sensaciones_valor, PDO::PARAM_INT);
             $stmt->bindParam(':sensaciones_notas', $sensaciones_notas, PDO::PARAM_STR);
             $stmt->execute();
@@ -96,11 +117,13 @@ class MarcaController {
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
-                "SELECT m.id_marca, m.id_categoria, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
+                "SELECT m.id_marca, m.id_evento, m.id_categoria, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
                         m.sensaciones_valor, m.sensaciones_notas,
-                        c.nombre AS categoria_nombre
+                        c.nombre AS categoria_nombre,
+                        e.titulo AS titulo_evento
                  FROM marcas m
                  LEFT JOIN categorias c ON m.id_categoria = c.id_categoria
+                 LEFT JOIN eventos_calendario e ON m.id_evento = e.id_evento
                  WHERE m.id_usuario = :id_usuario
                  ORDER BY m.fecha DESC, m.id_marca DESC"
             );
@@ -135,19 +158,17 @@ class MarcaController {
             return;
         }
 
-        $input = json_decode(file_get_contents('php://input'), true);
+        $input      = json_decode(file_get_contents('php://input'), true);
+        $id_usuario = $_SESSION['id_usuario'];
+        $prueba     = trim($input['prueba'] ?? '');
+        $marca      = trim($input['marca'] ?? '');
+        $id_evento  = isset($input['id_evento']) && $input['id_evento'] ? (int)$input['id_evento'] : null;
 
-        if (!isset($input['prueba']) || !isset($input['temporada']) || !isset($input['marca']) || !isset($input['tipo_competicion'])) {
+        if (!$prueba || !$marca) {
             http_response_code(400);
             echo json_encode(["status" => "error", "error" => "Datos incompletos"]);
             return;
         }
-
-        $id_usuario      = $_SESSION['id_usuario'];
-        $prueba          = trim($input['prueba']);
-        $temporada       = trim($input['temporada']);
-        $tipo_competicion = trim($input['tipo_competicion']);
-        $marca           = trim($input['marca']);
 
         if (!preg_match(self::FORMATO_MARCA, $marca)) {
             http_response_code(422);
@@ -155,35 +176,54 @@ class MarcaController {
             return;
         }
 
-        if (!in_array($tipo_competicion, self::TIPOS_COMPETICION)) {
-            http_response_code(422);
-            echo json_encode(["status" => "error", "error" => "Tipo de competicion no valido"]);
-            return;
-        }
-
-        $id_categoria      = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
-        $sensaciones_valor = isset($input['sensaciones_valor']) && $input['sensaciones_valor'] !== '' ? (int)$input['sensaciones_valor'] : null;
-        $sensaciones_notas = isset($input['sensaciones_notas']) && trim($input['sensaciones_notas']) !== '' ? trim($input['sensaciones_notas']) : null;
-
-        if ($sensaciones_valor !== null && ($sensaciones_valor < 1 || $sensaciones_valor > 5)) {
-            $sensaciones_valor = null;
-        }
-
         try {
-            $pdo  = Connect::conexion();
+            $pdo = Connect::conexion();
+
+            if ($id_evento) {
+                $stmtEvt = $pdo->prepare("SELECT tipo_evento, tipo_pista FROM eventos_calendario WHERE id_evento = ?");
+                $stmtEvt->execute([$id_evento]);
+                $evento = $stmtEvt->fetch(PDO::FETCH_ASSOC);
+
+                if ($evento) {
+                    $tipo_competicion = self::MAP_TIPO[$evento['tipo_evento']] ?? 'Control';
+                    $temporada        = ($evento['tipo_pista'] === 'pista cubierta') ? 'short_track' : 'outdoor';
+                } else {
+                    $id_evento        = null;
+                    $tipo_competicion = trim($input['tipo_competicion'] ?? 'Control');
+                    $temporada        = trim($input['temporada'] ?? 'outdoor');
+                }
+            } else {
+                $tipo_competicion = trim($input['tipo_competicion'] ?? 'Control');
+                $temporada        = trim($input['temporada'] ?? 'outdoor');
+            }
+
+            if (!in_array($tipo_competicion, self::TIPOS_COMPETICION)) {
+                http_response_code(422);
+                echo json_encode(["status" => "error", "error" => "Tipo de competicion no valido"]);
+                return;
+            }
+
+            $id_categoria      = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
+            $sensaciones_valor = isset($input['sensaciones_valor']) && $input['sensaciones_valor'] !== '' ? (int)$input['sensaciones_valor'] : null;
+            $sensaciones_notas = isset($input['sensaciones_notas']) && trim($input['sensaciones_notas']) !== '' ? trim($input['sensaciones_notas']) : null;
+
+            if ($sensaciones_valor !== null && ($sensaciones_valor < 1 || $sensaciones_valor > 5)) {
+                $sensaciones_valor = null;
+            }
+
             $stmt = $pdo->prepare(
                 "UPDATE marcas
                  SET prueba = :prueba, temporada = :temporada, tipo_competicion = :tipo_competicion,
-                     marca = :marca, id_categoria = :id_categoria,
+                     marca = :marca, id_categoria = :id_categoria, id_evento = :id_evento,
                      sensaciones_valor = :sensaciones_valor, sensaciones_notas = :sensaciones_notas
                  WHERE id_marca = :id_marca AND id_usuario = :id_usuario"
             );
-
             $stmt->bindParam(':prueba',            $prueba,            PDO::PARAM_STR);
             $stmt->bindParam(':temporada',         $temporada,         PDO::PARAM_STR);
             $stmt->bindParam(':tipo_competicion',  $tipo_competicion,  PDO::PARAM_STR);
             $stmt->bindParam(':marca',             $marca,             PDO::PARAM_STR);
             $stmt->bindParam(':id_categoria',      $id_categoria,      PDO::PARAM_INT);
+            $stmt->bindParam(':id_evento',         $id_evento,         PDO::PARAM_INT);
             $stmt->bindParam(':sensaciones_valor', $sensaciones_valor, PDO::PARAM_INT);
             $stmt->bindParam(':sensaciones_notas', $sensaciones_notas, PDO::PARAM_STR);
             $stmt->bindParam(':id_marca',          $id_marca,          PDO::PARAM_INT);
@@ -229,11 +269,13 @@ class MarcaController {
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
-                "SELECT m.id_marca, m.id_categoria, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
+                "SELECT m.id_marca, m.id_evento, m.id_categoria, m.prueba, m.temporada, m.tipo_competicion, m.marca, m.fecha,
                         m.sensaciones_valor, m.sensaciones_notas,
-                        c.nombre AS categoria_nombre
+                        c.nombre AS categoria_nombre,
+                        e.titulo AS titulo_evento
                  FROM marcas m
                  LEFT JOIN categorias c ON m.id_categoria = c.id_categoria
+                 LEFT JOIN eventos_calendario e ON m.id_evento = e.id_evento
                  WHERE m.id_usuario = :id
                  ORDER BY m.fecha DESC, m.id_marca DESC"
             );

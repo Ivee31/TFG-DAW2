@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 
-// clave unica por item: cubre el caso de misma prueba con variante propia + variante Absoluta
 const pruebaKey = (p) => `${p.id_prueba}_${p.especificaciones ?? ''}`;
 
 const GRUPO_ORDEN = [
@@ -9,6 +8,30 @@ const GRUPO_ORDEN = [
 	'Medio Fondo', 'Fondo', 'Larga Distancia', 'Obstaculos',
 	'Salto', 'Lanzamiento', 'Marcha',
 ];
+
+const MAP_TIPO = {
+	nacional:   'Nacional',
+	autonomico: 'Autonómico CyL',
+	provincial: 'Provincial',
+	escolares:  'Escolar',
+	control:    'Control',
+};
+
+const MAP_TIPO_BACKEND = {
+	nacional:   'Nacional',
+	autonomico: 'Autonomico CyL',
+	provincial: 'Provincial',
+	escolares:  'Escolar',
+	control:    'Control',
+};
+
+const etiquetaTipoPista = (tipo_pista) =>
+	tipo_pista === 'pista cubierta' ? 'Short Track / Pista Cubierta' : 'Outdoor / Aire Libre';
+
+const formatFechaEvento = (fecha_hora) => {
+	const [fecha] = fecha_hora.split(' ');
+	return new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+};
 
 function PruebaSelect({ pruebas, value, onChange }) {
 	const [open, setOpen] = useState(false);
@@ -84,7 +107,6 @@ function PruebaSelect({ pruebas, value, onChange }) {
 	);
 }
 
-// regex formato MM'SS"ms (ej: 00'49"15)
 const REGEX_MARCA = /^\d{2}'\d{2}"\d{2}$/;
 
 const formatMarcaTiempo = (raw) => {
@@ -94,55 +116,56 @@ const formatMarcaTiempo = (raw) => {
 	if (digits.length > 4) result += '"' + digits.slice(4, 6);
 	return result;
 };
+
 const SENSACIONES = ['😩', '😟', '😐', '😊', '🤩'];
 
-// marcas visibles en modo reducido
 const MARCAS_RECIENTES = 3;
-// marcas por pagina en modo completo
 const MARCAS_POR_PAGINA = 10;
 
-// vista interna de marcas y registro
 export default function Dashboard() {
-	const [temporada, setTemporada] = useState('outdoor');
+	// campos formulario nueva marca
+	const [prueba, setPrueba]                       = useState('');
+	const [pruebas, setPruebas]                     = useState([]);
+	const [marcaTiempo, setMarcaTiempo]             = useState('');
+	const [sensacionesValor, setSensacionesValor]   = useState(null);
+	const [sensacionesNotas, setSensacionesNotas]   = useState('');
+	const [guardando, setGuardando]                 = useState(false);
+	const [feedbackMsg, setFeedbackMsg]             = useState(null);
+	const [formatoError, setFormatoError]           = useState(false);
 
-	// campos del formulario
-	const [prueba, setPrueba] = useState('');
-	const [pruebas, setPruebas] = useState([]);
-	const [tipoCompeticion, setTipoCompeticion] = useState('Control');
-	const [marcaTiempo, setMarcaTiempo] = useState('');
-	const [sensacionesValor, setSensacionesValor] = useState(null);
-	const [sensacionesNotas, setSensacionesNotas] = useState('');
-	const [guardando, setGuardando] = useState(false);
-	const [feedbackMsg, setFeedbackMsg] = useState(null);
-	const [formatoError, setFormatoError] = useState(false);
+	// competiciones del calendario (para vincular la marca)
+	const [competiciones, setCompeticiones]             = useState([]);
+	const [cargandoEventos, setCargandoEventos]         = useState(true);
+	const [eventoSeleccionado, setEventoSeleccionado]   = useState(null);
 
-	// categorias disponibles para el usuario
-	const [categorias, setCategorias] = useState([]);
+	// categorias
+	const [categorias, setCategorias]                   = useState([]);
 	const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
 
-	// listado marcas desde bd
-	const [marcas, setMarcas] = useState([]);
-	const [cargando, setCargando] = useState(true);
+	// listado marcas
+	const [marcas, setMarcas]       = useState([]);
+	const [cargando, setCargando]   = useState(true);
 
-	// modo de visualizacion
-	const [verTodas, setVerTodas] = useState(false);
-	const [pagina, setPagina] = useState(1);
+	// visualizacion
+	const [verTodas, setVerTodas]   = useState(false);
+	const [pagina, setPagina]       = useState(1);
 
 	// borrado
 	const [confirmandoId, setConfirmandoId] = useState(null);
-	const [eliminando, setEliminando] = useState(false);
+	const [eliminando, setEliminando]       = useState(false);
 
 	// edicion
-	const [editandoId, setEditandoId] = useState(null);
-	const [editPrueba, setEditPrueba] = useState('');
-	const [editTemporada, setEditTemporada] = useState('outdoor');
-	const [editTipo, setEditTipo] = useState('Control');
-	const [editMarca, setEditMarca] = useState('');
-	const [editCategoria, setEditCategoria] = useState('');
+	const [editandoId, setEditandoId]                   = useState(null);
+	const [editPrueba, setEditPrueba]                   = useState('');
+	const [editTemporada, setEditTemporada]             = useState('outdoor');
+	const [editTipo, setEditTipo]                       = useState('Control');
+	const [editMarca, setEditMarca]                     = useState('');
+	const [editCategoria, setEditCategoria]             = useState('');
 	const [editSensacionesValor, setEditSensacionesValor] = useState(null);
 	const [editSensacionesNotas, setEditSensacionesNotas] = useState('');
-	const [editFormatoError, setEditFormatoError] = useState(false);
-	const [guardandoEdicion, setGuardandoEdicion] = useState(false);
+	const [editFormatoError, setEditFormatoError]       = useState(false);
+	const [guardandoEdicion, setGuardandoEdicion]       = useState(false);
+	const [editEvento, setEditEvento]                   = useState(null);
 
 	const cargarMarcas = () => {
 		setCargando(true);
@@ -151,13 +174,10 @@ export default function Dashboard() {
 			.then(data => {
 				if (data.status === 'success') {
 					setMarcas(data.marcas);
-					setPagina(1); // reiniciar pagina al recargar
-
+					setPagina(1);
 				}
-
 			})
 			.finally(() => setCargando(false));
-
 	};
 
 	useEffect(() => {
@@ -181,6 +201,10 @@ export default function Dashboard() {
 				}
 			});
 
+		fetch(`${API}/eventos/mis-competiciones`, { credentials: 'include' })
+			.then(res => res.json())
+			.then(data => { if (data.status === 'success') setCompeticiones(data.eventos); })
+			.finally(() => setCargandoEventos(false));
 	}, []);
 
 	const etiquetaTemporada = (t) =>
@@ -189,18 +213,20 @@ export default function Dashboard() {
 	const formatearFecha = (fechaStr) => {
 		const fecha = new Date(fechaStr + 'T00:00:00');
 		return fecha.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
-
 	};
 
 	const handleMarcaBlur = () => {
 		if (marcaTiempo && !REGEX_MARCA.test(marcaTiempo)) setFormatoError(true);
 		else setFormatoError(false);
-
 	};
 
 	const handleGuardarMarca = (e) => {
 		e.preventDefault();
 		setFeedbackMsg(null);
+		if (!eventoSeleccionado) {
+			setFeedbackMsg({ tipo: 'error', texto: 'Selecciona una competición del calendario' });
+			return;
+		}
 		if (!REGEX_MARCA.test(marcaTiempo)) { setFormatoError(true); return; }
 		setFormatoError(false);
 		setGuardando(true);
@@ -211,10 +237,9 @@ export default function Dashboard() {
 			credentials: 'include',
 			body: JSON.stringify({
 				prueba: selectedPrueba?.nombre_prueba ?? prueba,
-				temporada: temporada === 'shortTrack' ? 'short_track' : 'outdoor',
-				tipo_competicion: tipoCompeticion,
-				marca: marcaTiempo,
+				id_evento: eventoSeleccionado.id_evento,
 				id_categoria: categoriaSeleccionada,
+				marca: marcaTiempo,
 				sensaciones_valor: sensacionesValor,
 				sensaciones_notas: sensacionesNotas
 			})
@@ -228,19 +253,14 @@ export default function Dashboard() {
 				setSensacionesValor(null);
 				setSensacionesNotas('');
 				cargarMarcas();
-
 			} else {
 				setFeedbackMsg({ tipo: 'error', texto: data.error || 'Error al guardar' });
-
 			}
-
 		})
 		.catch(() => {
 			setGuardando(false);
 			setFeedbackMsg({ tipo: 'error', texto: 'Error de conexion' });
-
 		});
-
 	};
 
 	const handleEliminarMarca = (id_marca) => {
@@ -251,14 +271,11 @@ export default function Dashboard() {
 				setEliminando(false);
 				setConfirmandoId(null);
 				if (data.status === 'success') cargarMarcas();
-
 			})
 			.catch(() => {
 				setEliminando(false);
 				setConfirmandoId(null);
-
 			});
-
 	};
 
 	const handleAbrirEditar = (m) => {
@@ -273,6 +290,10 @@ export default function Dashboard() {
 		setEditSensacionesNotas(m.sensaciones_notas ?? '');
 		setEditFormatoError(false);
 		setConfirmandoId(null);
+		const eventoMarca = m.id_evento
+			? (competiciones.find(e => e.id_evento === parseInt(m.id_evento)) ?? null)
+			: null;
+		setEditEvento(eventoMarca);
 		setEditandoId(m.id_marca);
 	};
 
@@ -286,10 +307,15 @@ export default function Dashboard() {
 			credentials: 'include',
 			body: JSON.stringify({
 				prueba: sel?.nombre_prueba ?? editPrueba,
-				temporada: editTemporada === 'shortTrack' ? 'short_track' : 'outdoor',
-				tipo_competicion: editTipo,
+				temporada: editEvento
+					? (editEvento.tipo_pista === 'pista cubierta' ? 'short_track' : 'outdoor')
+					: (editTemporada === 'shortTrack' ? 'short_track' : 'outdoor'),
+				tipo_competicion: editEvento
+					? (MAP_TIPO_BACKEND[editEvento.tipo_evento] ?? 'Control')
+					: editTipo,
 				marca: editMarca,
 				id_categoria: editCategoria,
+				id_evento: editEvento?.id_evento ?? null,
 				sensaciones_valor: editSensacionesValor,
 				sensaciones_notas: editSensacionesNotas
 			})
@@ -305,10 +331,8 @@ export default function Dashboard() {
 	const toggleVerTodas = () => {
 		setVerTodas(v => !v);
 		setPagina(1);
-
 	};
 
-	// logica de que marcas mostrar
 	const hayMas = marcas.length > MARCAS_RECIENTES;
 	const usaPaginacion = verTodas && marcas.length > MARCAS_POR_PAGINA;
 	const totalPaginas = Math.ceil(marcas.length / MARCAS_POR_PAGINA);
@@ -317,7 +341,6 @@ export default function Dashboard() {
 		if (!verTodas) return marcas.slice(0, MARCAS_RECIENTES);
 		if (usaPaginacion) return marcas.slice((pagina - 1) * MARCAS_POR_PAGINA, pagina * MARCAS_POR_PAGINA);
 		return marcas;
-
 	})();
 
 	const selectClasses = "w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm focus:border-ianuarius outline-none transition appearance-none cursor-pointer";
@@ -326,7 +349,6 @@ export default function Dashboard() {
 	return (
 		<main className="space-y-6">
 
-			{/* aviso uso responsable */}
 			<div className="bg-white/[0.03] border border-white/8 rounded-xl px-4 py-3 flex items-start gap-3">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-gray-500 shrink-0 mt-0.5">
 					<path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -338,7 +360,7 @@ export default function Dashboard() {
 
 		<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">
 
-			{/* listado marcas desde bd */}
+			{/* listado marcas */}
 			<section className="lg:col-span-7">
 				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl h-full flex flex-col">
 					<div className="flex justify-between items-center mb-6 md:mb-8 shrink-0">
@@ -364,7 +386,7 @@ export default function Dashboard() {
 										<h3 className="text-white font-bold text-base md:text-lg">{m.prueba}</h3>
 										<p className="text-xs text-gray-400 uppercase tracking-widest">{etiquetaTemporada(m.temporada)}</p>
 										<p className="text-xs text-gray-400 mt-0.5">
-											{m.tipo_competicion}{m.categoria_nombre ? ` · ${m.categoria_nombre}` : ''}
+											{m.titulo_evento ?? m.tipo_competicion}{m.categoria_nombre ? ` · ${m.categoria_nombre}` : ''}
 										</p>
 									</div>
 									<div className="sm:text-right">
@@ -429,21 +451,62 @@ export default function Dashboard() {
 
 								{editandoId === m.id_marca && (
 									<div className="mt-3 pt-3 border-t border-white/20 bg-gris rounded-xl p-4 space-y-4">
+
+										<div>
+											<label className={labelClasses}>Competición <span className="normal-case text-gray-600 font-normal">(opcional)</span></label>
+											<select
+												value={editEvento?.id_evento ?? ''}
+												onChange={(e) => {
+													const id = parseInt(e.target.value);
+													setEditEvento(id ? (competiciones.find(c => c.id_evento === id) ?? null) : null);
+												}}
+												className={selectClasses}
+											>
+												<option value="">Sin competición vinculada</option>
+												{competiciones.map(c => (
+													<option key={c.id_evento} value={c.id_evento}>
+														{c.titulo} — {formatFechaEvento(c.fecha_hora)}
+													</option>
+												))}
+											</select>
+											{editEvento && (
+												<p className="text-[10px] text-gray-400 mt-1.5 uppercase tracking-wider">
+													{MAP_TIPO[editEvento.tipo_evento]} · {etiquetaTipoPista(editEvento.tipo_pista)}
+												</p>
+											)}
+										</div>
+
 										<div>
 											<label className={labelClasses}>Prueba</label>
 											<PruebaSelect pruebas={pruebas} value={editPrueba} onChange={setEditPrueba} />
 										</div>
 
-										<div>
-											<label className={labelClasses}>Tipo de Competicion</label>
-											<select value={editTipo} onChange={(e) => setEditTipo(e.target.value)} className={selectClasses}>
-												<option>Nacional</option>
-												<option>Autonomico CyL</option>
-												<option>Provincial</option>
-												<option>Escolar</option>
-												<option>Control</option>
-											</select>
-										</div>
+										{!editEvento && (
+											<>
+												<div>
+													<label className={labelClasses}>Tipo de Competicion</label>
+													<select value={editTipo} onChange={(e) => setEditTipo(e.target.value)} className={selectClasses}>
+														<option>Nacional</option>
+														<option>Autonomico CyL</option>
+														<option>Provincial</option>
+														<option>Escolar</option>
+														<option>Control</option>
+													</select>
+												</div>
+
+												<div>
+													<label className={labelClasses}>Temporada</label>
+													<div className="grid grid-cols-2 gap-3">
+														<button type="button" onClick={() => setEditTemporada('shortTrack')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'shortTrack' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
+															Short Track
+														</button>
+														<button type="button" onClick={() => setEditTemporada('outdoor')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'outdoor' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
+															Outdoor
+														</button>
+													</div>
+												</div>
+											</>
+										)}
 
 										<div>
 											<label className={labelClasses}>Categoría</label>
@@ -453,19 +516,6 @@ export default function Dashboard() {
 													<option key={c.id_categoria} value={c.id_categoria}>{c.nombre}</option>
 												))}
 											</select>
-										</div>
-
-										<div>
-											<label className={labelClasses}>Temporada</label>
-											<div className="grid grid-cols-2 gap-3">
-												<button type="button" onClick={() => setEditTemporada('shortTrack')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'shortTrack' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
-													Short Track
-												</button>
-
-												<button type="button" onClick={() => setEditTemporada('outdoor')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'outdoor' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
-													Outdoor
-												</button>
-											</div>
 										</div>
 
 										<div>
@@ -531,11 +581,9 @@ export default function Dashboard() {
 						))}
 					</div>
 
-					{/* controles inferiores */}
 					{!cargando && (
 						<div className="mt-6 shrink-0 space-y-3">
 
-							{/* paginacion — solo cuando hay mas de 10 marcas en modo completo */}
 							{usaPaginacion && (
 								<div className="flex items-center justify-between border border-white/5 rounded-xl px-4 py-3">
 									<button
@@ -566,7 +614,6 @@ export default function Dashboard() {
 								</div>
 							)}
 
-							{/* boton ver mas / ver menos */}
 							{hayMas && (
 								<button
 									onClick={toggleVerTodas}
@@ -582,7 +629,7 @@ export default function Dashboard() {
 				</div>
 			</section>
 
-			{/* formulario nueva marca — self-start en desktop: no crece con el historial */}
+			{/* formulario nueva marca */}
 			<aside className="lg:col-span-5 lg:self-start">
 				<div className="bg-gris p-6 md:p-8 rounded-2xl border-t-8 border-ianuarius shadow-2xl">
 					<div className="shrink-0">
@@ -599,19 +646,46 @@ export default function Dashboard() {
 					<form onSubmit={handleGuardarMarca} className="space-y-6">
 
 						<div>
-							<label className={labelClasses}>Prueba</label>
-							<PruebaSelect pruebas={pruebas} value={prueba} onChange={setPrueba} />
+							<label className={labelClasses}>Competición</label>
+							{cargandoEventos ? (
+								<div className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm text-gray-500 animate-pulse">
+									Cargando competiciones...
+								</div>
+							) : competiciones.length === 0 ? (
+								<div className="border border-dashed border-gray-700 rounded-lg py-5 px-3 text-center">
+									<p className="text-gray-500 text-xs uppercase tracking-widest">Sin competiciones en el calendario</p>
+									<p className="text-gray-600 text-[10px] mt-1">Pide a tu entrenador que añada la competición antes de registrar una marca</p>
+								</div>
+							) : (
+								<>
+									<select
+										value={eventoSeleccionado?.id_evento ?? ''}
+										onChange={(e) => {
+											const id = parseInt(e.target.value);
+											setEventoSeleccionado(id ? (competiciones.find(c => c.id_evento === id) ?? null) : null);
+										}}
+										className={selectClasses}
+										required
+									>
+										<option value="">Seleccionar competición</option>
+										{competiciones.map(c => (
+											<option key={c.id_evento} value={c.id_evento}>
+												{c.titulo} — {formatFechaEvento(c.fecha_hora)}
+											</option>
+										))}
+									</select>
+									{eventoSeleccionado && (
+										<p className="text-[10px] text-gray-400 mt-1.5 uppercase tracking-wider">
+											{MAP_TIPO[eventoSeleccionado.tipo_evento]} · {etiquetaTipoPista(eventoSeleccionado.tipo_pista)}
+										</p>
+									)}
+								</>
+							)}
 						</div>
 
 						<div>
-							<label className={labelClasses}>Tipo de Competicion</label>
-							<select value={tipoCompeticion} onChange={(e) => setTipoCompeticion(e.target.value)} className={selectClasses}>
-								<option>Nacional</option>
-								<option>Autonomico CyL</option>
-								<option>Provincial</option>
-								<option>Escolar</option>
-								<option>Control</option>
-							</select>
+							<label className={labelClasses}>Prueba</label>
+							<PruebaSelect pruebas={pruebas} value={prueba} onChange={setPrueba} />
 						</div>
 
 						<div>
@@ -622,20 +696,6 @@ export default function Dashboard() {
 									<option key={c.id_categoria} value={c.id_categoria}>{c.nombre}</option>
 								))}
 							</select>
-						</div>
-
-						<div>
-							<label className={labelClasses}>Temporada</label>
-							<div className="grid grid-cols-2 gap-4">
-								<button type="button" onClick={() => setTemporada('shortTrack')}
-									className={`py-3 md:py-2 text-xs lg:text-[10px] font-bold rounded uppercase tracking-widest transition-all duration-300 transform hover:scale-[1.03] active:scale-95 ${temporada === 'shortTrack' ? 'bg-ianuarius border border-transparent text-white shadow-[0_0_15px_rgba(254,0,0,0.4)]' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
-									Short Track
-								</button>
-								<button type="button" onClick={() => setTemporada('outdoor')}
-									className={`py-3 md:py-2 text-xs lg:text-[10px] font-bold rounded uppercase tracking-widest transition-all duration-300 transform hover:scale-[1.03] active:scale-95 ${temporada === 'outdoor' ? 'bg-ianuarius border border-transparent text-white shadow-[0_0_15px_rgba(254,0,0,0.4)]' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
-									Outdoor
-								</button>
-							</div>
 						</div>
 
 						<div>
@@ -686,7 +746,7 @@ export default function Dashboard() {
 
 						<button
 							type="submit"
-							disabled={guardando}
+							disabled={guardando || !eventoSeleccionado || cargandoEventos}
 							className="w-full bg-white text-oscuro font-black py-5 md:py-4 rounded-xl text-sm lg:text-xs uppercase tracking-[0.3em] hover:bg-ianuarius hover:text-white transition duration-500 shadow-[0_5px_20px_rgba(255,255,255,0.1)] hover:shadow-[0_5px_20px_rgba(254,0,0,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
 						>
 							{guardando ? 'Guardando...' : 'Guardar Registro'}

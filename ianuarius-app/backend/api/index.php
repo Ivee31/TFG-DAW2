@@ -231,6 +231,9 @@ switch ($endpoint) {
         if ($method === 'GET' && $sub === 'proximos') {
             EventoController::proximos();
 
+        } elseif ($method === 'GET' && $sub === 'mis-competiciones') {
+            EventoController::misCompeticionesPasadas();
+
         } elseif ($method === 'GET') {
             EventoController::listar();
 
