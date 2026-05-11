@@ -44,6 +44,7 @@ export default function AdminPanel() {
 	const [cargandoE, setCargandoE] = useState(true);
 	const [activando, setActivando] = useState(null);
 	const [atletaSeleccionado, setAtletaSeleccionado] = useState(null);
+	const [entrenadorSeleccionado, setEntrenadorSeleccionado] = useState(null);
 	const plantillaRef = useRef(null);
 	const [plantillaInfo, setPlantillaInfo]   = useState(null);
 	const [subiendoP, setSubiendoP]           = useState(false);
@@ -128,6 +129,10 @@ export default function AdminPanel() {
 
 	if (atletaSeleccionado) {
 		return <PerfilAtleta atletaId={atletaSeleccionado} onVolver={() => setAtletaSeleccionado(null)} />;
+	}
+
+	if (entrenadorSeleccionado) {
+		return <PerfilAtleta atletaId={entrenadorSeleccionado} onVolver={() => setEntrenadorSeleccionado(null)} />;
 	}
 
 	const categoriasDisponibles = [...new Set(atletas.map(a => calcularCategoria(a.fecha_nacimiento, a.genero)))]
@@ -427,18 +432,34 @@ export default function AdminPanel() {
 							{!cargandoE && entrenadoresFiltrados.length > 0 && (
 								<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
 									{entrenadoresFiltrados.map(e => (
-										<div key={e.id_usuario}
-											className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300">
+										<div
+											key={e.id_usuario}
+											onClick={() => setEntrenadorSeleccionado(e.id_usuario)}
+											className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300 cursor-pointer"
+										>
 											<div className="flex items-start gap-3">
 												<UsuarioAvatar fotoPerfil={e.foto_perfil} fotoCarnet={e.foto_carnet} nombre={e.nombre} apellidos={e.apellidos} />
+
 												<div className="flex-1 min-w-0">
-													<h3 className="text-white font-bold text-sm truncate">
-														{e.apellidos}, {e.nombre}
-													</h3>
-													<p className="text-gray-400 text-[10px] truncate mt-0.5">{e.email}</p>
-													<div className="mt-2 pt-2 border-t border-white/5">
+													<div className="flex justify-between items-start gap-2">
+														<div className="min-w-0">
+															<h3 className="text-white font-bold text-sm truncate">
+																{e.apellidos}, {e.nombre}
+															</h3>
+															<p className="text-gray-400 text-[10px] truncate mt-0.5">{e.email}</p>
+														</div>
+
+														<span className="shrink-0 text-[9px] font-bold uppercase tracking-wider bg-ianuarius/15 text-ianuarius px-2 py-0.5 rounded-full">
+															{calcularCategoria(e.fecha_nacimiento, e.genero)}
+														</span>
+													</div>
+
+													<div className="mt-2 pt-2 border-t border-white/5 flex justify-between items-center">
 														<span className="text-[10px] text-gray-400 uppercase tracking-widest">
 															{e.genero === 'M' ? 'Masculino' : 'Femenino'}
+														</span>
+														<span className="text-[9px] font-bold text-ianuarius/60 uppercase tracking-widest">
+															Entrenador
 														</span>
 													</div>
 												</div>

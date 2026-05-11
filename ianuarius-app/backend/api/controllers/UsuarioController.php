@@ -479,11 +479,14 @@ class UsuarioController {
 
         try {
             $pdo  = Connect::conexion();
+
+            // Admin puede ver cualquier usuario; Entrenador solo atletas
+            $rolFiltro = ($_SESSION['rol'] === 'Admin') ? '' : "AND rol = 'Atleta'";
             $stmt = $pdo->prepare(
                 "SELECT id_usuario, nombre, apellidos, email, genero, fecha_nacimiento,
                         foto_perfil, foto_carnet, foto_dni, inscripcion_pdf
                  FROM usuarios
-                 WHERE id_usuario = :id AND rol = 'Atleta' AND estado_cuenta = 1"
+                 WHERE id_usuario = :id $rolFiltro AND estado_cuenta = 1"
             );
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
@@ -491,7 +494,7 @@ class UsuarioController {
 
             if (!$atleta) {
                 http_response_code(404);
-                echo json_encode(["status" => "error", "error" => "Atleta no encontrado"]);
+                echo json_encode(["status" => "error", "error" => "Usuario no encontrado"]);
                 return;
             }
 
