@@ -62,7 +62,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 
 	return (
 		<div ref={ref} className="relative">
-			<div onClick={() => setOpen(v => !v)} className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm outline-none transition cursor-pointer flex items-center justify-between">
+			<div onClick={() => setOpen(v => !v)} className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 transition cursor-pointer flex items-center justify-between">
 				<span className={selected ? 'text-white' : 'text-gray-500'}>
 					{selected
 						? selected.nombre_prueba + (selected.especificaciones ? ` · ${selected.especificaciones}` : '')
@@ -77,7 +77,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 			{open && (
 				<div className="absolute z-50 w-full mt-1 bg-oscuro border border-white/10 rounded-lg shadow-2xl overflow-hidden">
 					<div className="p-2 border-b border-white/5">
-						<input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Buscar prueba..." autoFocus className="w-full bg-gris text-white text-sm p-2 rounded outline-none placeholder-gray-600 focus:ring-1 ring-ianuarius" />
+						<input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Buscar prueba..." autoFocus className="w-full bg-gris text-white text-sm p-2 rounded focus:ring-2 focus:ring-ianuarius/40 placeholder-gray-600" />
 					</div>
 
 					<div className="max-h-96 overflow-y-auto">
@@ -343,7 +343,7 @@ export default function Dashboard() {
 		return marcas;
 	})();
 
-	const selectClasses = "w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm focus:border-ianuarius outline-none transition appearance-none cursor-pointer";
+	const selectClasses = "w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition appearance-none cursor-pointer";
 	const labelClasses = "block text-xs lg:text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2";
 
 	return (
@@ -453,8 +453,9 @@ export default function Dashboard() {
 									<div className="mt-3 pt-3 border-t border-white/20 bg-gris rounded-xl p-4 space-y-4">
 
 										<div>
-											<label className={labelClasses}>Competición <span className="normal-case text-gray-600 font-normal">(opcional)</span></label>
+											<label htmlFor="dash-edit-competicion" className={labelClasses}>Competición <span className="normal-case text-gray-600 font-normal">(opcional)</span></label>
 											<select
+												id="dash-edit-competicion"
 												value={editEvento?.id_evento ?? ''}
 												onChange={(e) => {
 													const id = parseInt(e.target.value);
@@ -484,8 +485,8 @@ export default function Dashboard() {
 										{!editEvento && (
 											<>
 												<div>
-													<label className={labelClasses}>Tipo de Competicion</label>
-													<select value={editTipo} onChange={(e) => setEditTipo(e.target.value)} className={selectClasses}>
+													<label htmlFor="dash-edit-tipo" className={labelClasses}>Tipo de Competicion</label>
+													<select id="dash-edit-tipo" value={editTipo} onChange={(e) => setEditTipo(e.target.value)} className={selectClasses}>
 														<option>Nacional</option>
 														<option>Autonomico</option>
 														<option>Provincial</option>
@@ -509,8 +510,8 @@ export default function Dashboard() {
 										)}
 
 										<div>
-											<label className={labelClasses}>Categoría</label>
-											<select value={editCategoria} onChange={(e) => setEditCategoria(e.target.value)} className={selectClasses}>
+											<label htmlFor="dash-edit-categoria" className={labelClasses}>Categoría</label>
+											<select id="dash-edit-categoria" value={editCategoria} onChange={(e) => setEditCategoria(e.target.value)} className={selectClasses}>
 												<option value="">Sin especificar</option>
 												{categorias.map(c => (
 													<option key={c.id_categoria} value={c.id_categoria}>{c.nombre}</option>
@@ -519,13 +520,14 @@ export default function Dashboard() {
 										</div>
 
 										<div>
-											<label className={labelClasses}>Marca (MM'SS"ms)</label>
+											<label htmlFor="dash-edit-marca" className={labelClasses}>Marca (MM'SS"ms)</label>
 											<input
+												id="dash-edit-marca"
 												type="text"
 												value={editMarca}
 												onChange={(e) => { setEditMarca(formatMarcaTiempo(e.target.value)); setEditFormatoError(false); }}
 												onBlur={() => { if (editMarca && !REGEX_MARCA.test(editMarca)) setEditFormatoError(true); else setEditFormatoError(false); }}
-												className={`w-full bg-oscuro border p-3 rounded-lg text-xl text-ianuarius outline-none transition font-mono ${editFormatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
+												className={`w-full bg-oscuro border p-3 rounded-lg text-xl text-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition font-mono ${editFormatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
 											/>
 											{editFormatoError && (
 												<p className="text-red-400 text-[10px] mt-1 uppercase tracking-wider">Formato incorrecto — usa MM'SS"ms</p>
@@ -555,7 +557,7 @@ export default function Dashboard() {
 												placeholder="Notas opcionales..."
 												maxLength={500}
 												rows={2}
-												className="w-full bg-oscuro border border-white/10 p-2 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-ianuarius transition resize-none"
+												className="w-full bg-oscuro border border-white/10 p-2 rounded-lg text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none"
 											/>
 										</div>
 
@@ -646,7 +648,7 @@ export default function Dashboard() {
 					<form onSubmit={handleGuardarMarca} className="space-y-6">
 
 						<div>
-							<label className={labelClasses}>Competición</label>
+							<label htmlFor="dash-new-competicion" className={labelClasses}>Competición</label>
 							{cargandoEventos ? (
 								<div className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm text-gray-500 animate-pulse">
 									Cargando competiciones...
@@ -659,6 +661,7 @@ export default function Dashboard() {
 							) : (
 								<>
 									<select
+										id="dash-new-competicion"
 										value={eventoSeleccionado?.id_evento ?? ''}
 										onChange={(e) => {
 											const id = parseInt(e.target.value);
@@ -688,8 +691,8 @@ export default function Dashboard() {
 						</div>
 
 						<div>
-							<label className={labelClasses}>Categoría</label>
-							<select value={categoriaSeleccionada} onChange={(e) => setCategoriaSeleccionada(e.target.value)} className={selectClasses}>
+							<label htmlFor="dash-new-categoria" className={labelClasses}>Categoría</label>
+							<select id="dash-new-categoria" value={categoriaSeleccionada} onChange={(e) => setCategoriaSeleccionada(e.target.value)} className={selectClasses}>
 								<option value="">Sin especificar</option>
 								{categorias.map(c => (
 									<option key={c.id_categoria} value={c.id_categoria}>{c.nombre}</option>
@@ -698,14 +701,15 @@ export default function Dashboard() {
 						</div>
 
 						<div>
-							<label className={labelClasses}>Marca Final (MM'SS"ms)</label>
+							<label htmlFor="dash-new-marca" className={labelClasses}>Marca Final (MM'SS"ms)</label>
 							<input
+								id="dash-new-marca"
 								type="text"
 								placeholder={`00'00"00`}
 								value={marcaTiempo}
 								onChange={(e) => { setMarcaTiempo(formatMarcaTiempo(e.target.value)); setFormatoError(false); }}
 								onBlur={handleMarcaBlur}
-								className={`w-full bg-oscuro border p-5 md:p-4 rounded-lg text-2xl text-ianuarius outline-none transition font-mono ${formatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
+								className={`w-full bg-oscuro border p-5 md:p-4 rounded-lg text-2xl text-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition font-mono ${formatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
 							/>
 							{formatoError && (
 								<p className="text-red-400 text-[10px] mt-1.5 uppercase tracking-wider">
@@ -738,7 +742,7 @@ export default function Dashboard() {
 								placeholder="Notas opcionales..."
 								maxLength={500}
 								rows={2}
-								className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-ianuarius transition resize-none"
+								className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none"
 							/>
 						</div>
 

@@ -68,12 +68,12 @@ export default function Login({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			)}
 			<form onSubmit={handleLogin} className="space-y-4">
 				<div>
-					<label className="block text-gray-400 mb-1 text-xs">Email</label>
-					<input type="email" className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm" placeholder="atleta@ianuarius.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+					<label htmlFor="login-email" className="block text-gray-400 mb-1 text-xs">Email</label>
+					<input id="login-email" type="email" className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm" placeholder="atleta@ianuarius.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
 				</div>
 				<div>
-					<label className="block text-gray-400 mb-1 text-xs">Password</label>
-					<input type="password" className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
+					<label htmlFor="login-password" className="block text-gray-400 mb-1 text-xs">Password</label>
+					<input id="login-password" type="password" className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
 				</div>
 				<button type="submit" disabled={loading} className="w-full bg-ianuarius text-white font-bold py-2 rounded hover:bg-red-700 transition duration-300 text-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
 					{loading && (

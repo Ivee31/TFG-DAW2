@@ -103,7 +103,7 @@ export default function DashboardEntrenador() {
 								value={busqueda}
 								onChange={e => setBusqueda(e.target.value)}
 								placeholder="Buscar por nombre o email..."
-								className="w-full bg-oscuro border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-ianuarius transition"
+								className="w-full bg-oscuro border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
 							/>
 						</div>
 
@@ -123,7 +123,7 @@ export default function DashboardEntrenador() {
 							<select
 								value={filtroCategoria}
 								onChange={e => setFiltroCategoria(e.target.value)}
-								className="bg-oscuro border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-ianuarius appearance-none cursor-pointer shrink-0"
+								className="bg-oscuro border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius appearance-none cursor-pointer shrink-0"
 							>
 								<option value="">Todas las categorías</option>
 								{categoriasDisponibles.map(c => (

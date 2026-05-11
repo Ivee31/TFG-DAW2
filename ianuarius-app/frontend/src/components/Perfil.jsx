@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 
-const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm";
+const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
 
 const resizeToBase64 = (file, max = 300) => new Promise((resolve, reject) => {
@@ -540,25 +540,25 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 					<form onSubmit={handleInfoSave} className="p-6 space-y-4">
 						<div className="grid grid-cols-2 gap-3">
 							<div>
-								<label className={labelClasses}>Nombre</label>
-								<input type="text" name="nombre" className={inputClasses} value={form.nombre} onChange={handleInfoChange} required />
+								<label htmlFor="perfil-nombre" className={labelClasses}>Nombre</label>
+								<input id="perfil-nombre" type="text" name="nombre" className={inputClasses} value={form.nombre} onChange={handleInfoChange} required />
 							</div>
 
 							<div>
-								<label className={labelClasses}>Apellidos</label>
-								<input type="text" name="apellidos" className={inputClasses} value={form.apellidos} onChange={handleInfoChange} required />
+								<label htmlFor="perfil-apellidos" className={labelClasses}>Apellidos</label>
+								<input id="perfil-apellidos" type="text" name="apellidos" className={inputClasses} value={form.apellidos} onChange={handleInfoChange} required />
 							</div>
 						</div>
 
 						<div className="grid grid-cols-2 gap-3">
 							<div>
-								<label className={labelClasses}>Fecha de nacimiento</label>
-								<input type="date" name="fecha_nacimiento" className={inputClasses + " [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-70"} value={form.fecha_nacimiento} onChange={handleInfoChange} required />
+								<label htmlFor="perfil-fecha" className={labelClasses}>Fecha de nacimiento</label>
+								<input id="perfil-fecha" type="date" name="fecha_nacimiento" className={inputClasses + " [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-70"} value={form.fecha_nacimiento} onChange={handleInfoChange} required />
 							</div>
 
 							<div>
-								<label className={labelClasses}>Género</label>
-								<select name="genero" className={inputClasses} value={form.genero} onChange={handleInfoChange} required>
+								<label htmlFor="perfil-genero" className={labelClasses}>Género</label>
+								<select id="perfil-genero" name="genero" className={inputClasses} value={form.genero} onChange={handleInfoChange} required>
 									<option value="M">Masculino</option>
 									<option value="F">Femenino</option>
 								</select>
@@ -601,8 +601,8 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 					{showEmail && (
 						<form onSubmit={handleEmailChange} className="mt-4 space-y-3">
 							<div>
-								<label className={labelClasses}>Nuevo email</label>
-								<input type="email" className={inputClasses} value={nuevoEmail} onChange={e => setNuevoEmail(e.target.value)} placeholder="nuevo@email.com" required />
+								<label htmlFor="perfil-email" className={labelClasses}>Nuevo email</label>
+								<input id="perfil-email" type="email" className={inputClasses} value={nuevoEmail} onChange={e => setNuevoEmail(e.target.value)} placeholder="nuevo@email.com" required />
 							</div>
 
 							{emailMsg && (
@@ -636,18 +636,18 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 					{showPass && (
 						<form onSubmit={handlePassChange} className="mt-4 space-y-3">
 							<div>
-								<label className={labelClasses}>Contraseña actual</label>
-								<input type="password" className={inputClasses} value={passForm.actual} onChange={e => setPassForm({ ...passForm, actual: e.target.value })} placeholder="••••••••" required />
+								<label htmlFor="perfil-pwd-actual" className={labelClasses}>Contraseña actual</label>
+								<input id="perfil-pwd-actual" type="password" className={inputClasses} value={passForm.actual} onChange={e => setPassForm({ ...passForm, actual: e.target.value })} placeholder="••••••••" required />
 							</div>
 
 							<div>
-								<label className={labelClasses}>Nueva contraseña</label>
-								<input type="password" className={inputClasses} value={passForm.nueva} onChange={e => setPassForm({ ...passForm, nueva: e.target.value })} placeholder="••••••••" required />
+								<label htmlFor="perfil-pwd-nueva" className={labelClasses}>Nueva contraseña</label>
+								<input id="perfil-pwd-nueva" type="password" className={inputClasses} value={passForm.nueva} onChange={e => setPassForm({ ...passForm, nueva: e.target.value })} placeholder="••••••••" required />
 							</div>
 
 							<div>
-								<label className={labelClasses}>Confirmar nueva contraseña</label>
-								<input type="password" className={inputClasses} value={passForm.confirmar} onChange={e => setPassForm({ ...passForm, confirmar: e.target.value })} placeholder="••••••••" required />
+								<label htmlFor="perfil-pwd-confirm" className={labelClasses}>Confirmar nueva contraseña</label>
+								<input id="perfil-pwd-confirm" type="password" className={inputClasses} value={passForm.confirmar} onChange={e => setPassForm({ ...passForm, confirmar: e.target.value })} placeholder="••••••••" required />
 							</div>
 
 							{passMsg && (

@@ -365,67 +365,73 @@ export default function Calendario({ user }) {
 
                         <form onSubmit={handleGuardar} className="space-y-4">
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Título *</label>
+                                <label htmlFor="cal-titulo" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Título *</label>
                                 <input
+                                    id="cal-titulo"
                                     type="text"
                                     value={form.titulo}
                                     onChange={e => setForm(f => ({ ...f, titulo: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition"
+                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
                                     placeholder="Campeonato Provincial de Pista..."
                                     autoFocus
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Descripción</label>
+                                <label htmlFor="cal-descripcion" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Descripción</label>
                                 <textarea
+                                    id="cal-descripcion"
                                     value={form.descripcion}
                                     onChange={e => setForm(f => ({ ...f, descripcion: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition resize-none h-20"
+                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none h-20"
                                     placeholder="Detalles adicionales..."
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Hora inicio</label>
+                                    <label htmlFor="cal-hora" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Hora inicio</label>
                                     <input
+                                        id="cal-hora"
                                         type="time"
                                         value={form.hora}
                                         onChange={e => setForm(f => ({ ...f, hora: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition"
+                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Fecha fin <span className="text-gray-600 normal-case">(opcional)</span></label>
+                                    <label htmlFor="cal-fecha-fin" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Fecha fin <span className="text-gray-600 normal-case">(opcional)</span></label>
                                     <input
+                                        id="cal-fecha-fin"
                                         type="date"
                                         value={form.fecha_fin}
                                         onChange={e => setForm(f => ({ ...f, fecha_fin: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition"
+                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Enlace oficial <span className="text-gray-600 normal-case">(opcional)</span></label>
+                                <label htmlFor="cal-enlace" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Enlace oficial <span className="text-gray-600 normal-case">(opcional)</span></label>
                                 <input
+                                    id="cal-enlace"
                                     type="url"
                                     value={form.enlace}
                                     onChange={e => setForm(f => ({ ...f, enlace: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition"
+                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
                                     placeholder="https://..."
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Tipo de evento</label>
+                                    <label htmlFor="cal-tipo-evento" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Tipo de evento</label>
                                     <select
+                                        id="cal-tipo-evento"
                                         value={form.tipo_evento}
                                         onChange={e => setForm(f => ({ ...f, tipo_evento: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition appearance-none cursor-pointer"
+                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
                                     >
                                         {Object.entries(TIPO_EVENTO_LABEL).map(([k, v]) => (
                                             <option key={k} value={k}>{v}</option>
@@ -434,11 +440,12 @@ export default function Calendario({ user }) {
                                 </div>
 
                                 <div>
-                                    <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Tipo de pista</label>
+                                    <label htmlFor="cal-tipo-pista" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Tipo de pista</label>
                                     <select
+                                        id="cal-tipo-pista"
                                         value={form.tipo_pista}
                                         onChange={e => setForm(f => ({ ...f, tipo_pista: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition appearance-none cursor-pointer"
+                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
                                     >
                                         {Object.entries(TIPO_PISTA_LABEL).map(([k, v]) => (
                                             <option key={k} value={k}>{v}</option>
@@ -448,11 +455,12 @@ export default function Calendario({ user }) {
                             </div>
 
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Categoría</label>
+                                <label htmlFor="cal-categoria" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Categoría</label>
                                 <select
+                                    id="cal-categoria"
                                     value={form.id_categoria}
                                     onChange={e => setForm(f => ({ ...f, id_categoria: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm outline-none focus:border-ianuarius transition appearance-none cursor-pointer"
+                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
                                 >
                                     <option value="">Todos</option>
                                     {categorias.map(c => (

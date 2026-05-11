@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { API } from '../api';
 
-const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm";
+const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
 
 const GoogleIcon = () => (
@@ -118,22 +118,22 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 			<form onSubmit={handleRegister} className="space-y-3">
 				<div className="grid grid-cols-2 gap-3">
 					<div>
-						<label className={labelClasses}>Nombre</label>
-						<input type="text" name="nombre" className={inputClasses} placeholder="Juan" value={form.nombre} onChange={handleChange} required />
+						<label htmlFor="reg-nombre" className={labelClasses}>Nombre</label>
+						<input id="reg-nombre" type="text" name="nombre" className={inputClasses} placeholder="Juan" value={form.nombre} onChange={handleChange} required />
 					</div>
 					<div>
-						<label className={labelClasses}>Apellidos</label>
-						<input type="text" name="apellidos" className={inputClasses} placeholder="García López" value={form.apellidos} onChange={handleChange} required />
+						<label htmlFor="reg-apellidos" className={labelClasses}>Apellidos</label>
+						<input id="reg-apellidos" type="text" name="apellidos" className={inputClasses} placeholder="García López" value={form.apellidos} onChange={handleChange} required />
 					</div>
 				</div>
 				<div className="grid grid-cols-2 gap-3">
 					<div>
-						<label className={labelClasses}>DNI</label>
-						<input type="text" name="dni" className={inputClasses} placeholder="12345678A" maxLength={9} value={form.dni} onChange={handleChange} required />
+						<label htmlFor="reg-dni" className={labelClasses}>DNI</label>
+						<input id="reg-dni" type="text" name="dni" className={inputClasses} placeholder="12345678A" maxLength={9} value={form.dni} onChange={handleChange} required />
 					</div>
 					<div>
-						<label className={labelClasses}>Rol</label>
-						<select name="rol" className={inputClasses} value={form.rol} onChange={handleChange} required>
+						<label htmlFor="reg-rol" className={labelClasses}>Rol</label>
+						<select id="reg-rol" name="rol" className={inputClasses} value={form.rol} onChange={handleChange} required>
 							<option value="Atleta">Atleta</option>
 							<option value="Entrenador">Entrenador</option>
 						</select>
@@ -145,17 +145,17 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 					</p>
 				)}
 				<div>
-					<label className={labelClasses}>Email</label>
-					<input type="email" name="email" className={inputClasses} placeholder="atleta@ianuarius.com" value={form.email} onChange={handleChange} required />
+					<label htmlFor="reg-email" className={labelClasses}>Email</label>
+					<input id="reg-email" type="email" name="email" className={inputClasses} placeholder="atleta@ianuarius.com" value={form.email} onChange={handleChange} required />
 				</div>
 				<div className="grid grid-cols-2 gap-3 items-end">
 					<div>
-						<label className={labelClasses}>Fecha de nacimiento</label>
-						<input type="date" name="fecha_nacimiento" className={inputClasses + " [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-70"} value={form.fecha_nacimiento} onChange={handleChange} required />
+						<label htmlFor="reg-fecha" className={labelClasses}>Fecha de nacimiento</label>
+						<input id="reg-fecha" type="date" name="fecha_nacimiento" className={inputClasses + " [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-70"} value={form.fecha_nacimiento} onChange={handleChange} required />
 					</div>
 					<div>
-						<label className={labelClasses}>Género</label>
-						<select name="genero" className={inputClasses} value={form.genero} onChange={handleChange} required>
+						<label htmlFor="reg-genero" className={labelClasses}>Género</label>
+						<select id="reg-genero" name="genero" className={inputClasses} value={form.genero} onChange={handleChange} required>
 							<option value="" disabled>Seleccionar</option>
 							<option value="M">Masculino</option>
 							<option value="F">Femenino</option>
@@ -163,12 +163,12 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 					</div>
 				</div>
 				<div>
-					<label className={labelClasses}>Contraseña</label>
-					<input type="password" name="password" className={inputClasses} placeholder="••••••••" value={form.password} onChange={handleChange} required />
+					<label htmlFor="reg-password" className={labelClasses}>Contraseña</label>
+					<input id="reg-password" type="password" name="password" className={inputClasses} placeholder="••••••••" value={form.password} onChange={handleChange} required />
 				</div>
 				<div>
-					<label className={labelClasses}>Confirmar contraseña</label>
-					<input type="password" name="confirm_password" className={inputClasses} placeholder="••••••••" value={form.confirm_password} onChange={handleChange} required />
+					<label htmlFor="reg-confirm" className={labelClasses}>Confirmar contraseña</label>
+					<input id="reg-confirm" type="password" name="confirm_password" className={inputClasses} placeholder="••••••••" value={form.confirm_password} onChange={handleChange} required />
 				</div>
 				<button type="submit" disabled={loading} className="w-full bg-ianuarius text-white font-bold py-2 rounded hover:bg-red-700 transition duration-300 text-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
 					{loading && (

@@ -58,12 +58,12 @@ export default function ResetPassword({ token, onDone }) {
 						)}
 						<form onSubmit={handleSubmit} className="space-y-4">
 							<div>
-								<label className="block text-gray-400 mb-1 text-xs">Nueva contraseña</label>
-								<input type="password" className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
+								<label htmlFor="reset-pwd" className="block text-gray-400 mb-1 text-xs">Nueva contraseña</label>
+								<input id="reset-pwd" type="password" className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
 							</div>
 							<div>
-								<label className="block text-gray-400 mb-1 text-xs">Confirmar contraseña</label>
-								<input type="password" className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm" placeholder="••••••••" value={confirm} onChange={(e) => setConfirm(e.target.value)} required />
+								<label htmlFor="reset-confirm" className="block text-gray-400 mb-1 text-xs">Confirmar contraseña</label>
+								<input id="reset-confirm" type="password" className="w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm" placeholder="••••••••" value={confirm} onChange={(e) => setConfirm(e.target.value)} required />
 							</div>
 							<button type="submit" disabled={loading} className="w-full bg-ianuarius text-white font-bold py-2 rounded hover:bg-red-700 transition duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
 								{loading ? 'GUARDANDO...' : 'RESTABLECER'}

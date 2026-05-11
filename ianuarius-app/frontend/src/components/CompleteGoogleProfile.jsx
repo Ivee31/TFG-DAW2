@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { API } from '../api';
 import logoIanuarius from '../assets/logoIanuarius.png';
 
-const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:outline-none text-sm";
+const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
 
 export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
@@ -86,12 +86,12 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 					<form onSubmit={handleSubmit} className="space-y-3">
 						<div className="grid grid-cols-2 gap-3">
 							<div>
-								<label className={labelClasses}>DNI</label>
-								<input type="text" name="dni" className={inputClasses} placeholder="12345678A" maxLength={9} value={form.dni} onChange={handleChange} required />
+								<label htmlFor="cgp-dni" className={labelClasses}>DNI</label>
+								<input id="cgp-dni" type="text" name="dni" className={inputClasses} placeholder="12345678A" maxLength={9} value={form.dni} onChange={handleChange} required />
 							</div>
 							<div>
-								<label className={labelClasses}>Rol</label>
-								<select name="rol" className={inputClasses} value={form.rol} onChange={handleChange} required>
+								<label htmlFor="cgp-rol" className={labelClasses}>Rol</label>
+								<select id="cgp-rol" name="rol" className={inputClasses} value={form.rol} onChange={handleChange} required>
 									<option value="Atleta">Atleta</option>
 									<option value="Entrenador">Entrenador</option>
 								</select>
@@ -104,12 +104,12 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 						)}
 						<div className="grid grid-cols-2 gap-3">
 							<div>
-								<label className={labelClasses}>Fecha nacimiento</label>
-								<input type="text" name="fecha_nacimiento" className={inputClasses} placeholder="DD/MM/YYYY" maxLength={10} value={form.fecha_nacimiento} onChange={handleChange} required />
+								<label htmlFor="cgp-fecha" className={labelClasses}>Fecha nacimiento</label>
+								<input id="cgp-fecha" type="text" name="fecha_nacimiento" className={inputClasses} placeholder="DD/MM/YYYY" maxLength={10} value={form.fecha_nacimiento} onChange={handleChange} required />
 							</div>
 							<div>
-								<label className={labelClasses}>Género</label>
-								<select name="genero" className={inputClasses} value={form.genero} onChange={handleChange} required>
+								<label htmlFor="cgp-genero" className={labelClasses}>Género</label>
+								<select id="cgp-genero" name="genero" className={inputClasses} value={form.genero} onChange={handleChange} required>
 									<option value="" disabled>Seleccionar</option>
 									<option value="M">Masculino</option>
 									<option value="F">Femenino</option>
