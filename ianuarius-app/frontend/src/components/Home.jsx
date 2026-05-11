@@ -36,6 +36,27 @@ function Modal({ onClose, children }) {
 	);
 }
 
+const noticias = [
+	{
+		img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=600&q=70',
+		categoria: 'Competición',
+		titulo: 'RFEA anuncia el calendario oficial de la temporada 2026',
+		fecha: '15 abr 2026',
+	},
+	{
+		img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=70',
+		categoria: 'Club',
+		titulo: 'Campus de verano Ianuarius — inscripciones abiertas',
+		fecha: '8 may 2026',
+	},
+	{
+		img: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=600&q=70',
+		categoria: 'Atletismo',
+		titulo: 'Nuevo récord personal en 400m durante el último meeting regional',
+		fecha: '5 may 2026',
+	},
+];
+
 export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 	const [showLogin, setShowLogin]       = useState(false);
 	const [showRegister, setShowRegister] = useState(false);
@@ -67,8 +88,8 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					-webkit-text-stroke: 3px #FFFFFF;
 				}
 				@keyframes scrollBounce {
-					0%, 100% { transform: translateY(0); opacity: 0.5; }
-					50%       { transform: translateY(8px); opacity: 1; }
+					0%, 100% { transform: translateY(0); opacity: 0.4; }
+					50%       { transform: translateY(8px); opacity: 0.9; }
 				}
 				.scroll-hint { animation: scrollBounce 1.8s ease-in-out infinite; }
 			`}</style>
@@ -79,10 +100,10 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				{/* NAV */}
 				<nav className="w-full px-6 md:px-10 py-5 flex items-center justify-between">
 					<div className="flex items-center gap-3">
-						<div className="w-9 h-9 bg-oscuro/60 backdrop-blur-md rounded-full border border-ianuarius/50 flex items-center justify-center p-1.5 shadow-[0_0_12px_rgba(254,0,0,0.3)]">
+						<div className="w-12 h-12 bg-oscuro/60 backdrop-blur-md rounded-full border border-ianuarius/50 flex items-center justify-center p-2 shadow-[0_0_14px_rgba(254,0,0,0.3)]">
 							<img src={logoIanuarius} alt="Ianuarius" className="w-full h-full object-contain" />
 						</div>
-						<span className="text-white font-black text-xs tracking-[0.25em] uppercase">Ianuarius</span>
+						<span className="text-white font-black text-sm tracking-[0.25em] uppercase">Ianuarius</span>
 					</div>
 
 					<a
@@ -91,12 +112,12 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						rel="noopener noreferrer"
 						className="opacity-60 hover:opacity-100 transition"
 					>
-						<img src={logoInstagram} alt="Instagram" className="w-6 h-6 object-contain" />
+						<img src={logoInstagram} alt="Instagram" className="w-8 h-8 object-contain" />
 					</a>
 				</nav>
 
 				{/* HERO CENTER */}
-				<div className="flex-1 flex flex-col items-center justify-start px-4 text-center pt-10 md:pt-14">
+				<div className="flex-1 flex flex-col items-center justify-center px-4 text-center pb-16">
 
 					<h1 className="titulo-collegiate text-5xl md:text-7xl lg:text-[7rem] tracking-widest select-none drop-shadow-[0_0_30px_rgba(254,0,0,0.2)]">
 						IANUARIUS
@@ -141,7 +162,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				</div>
 
 				{/* SCROLL HINT */}
-				<div className="flex flex-col items-center pb-8 gap-2">
+				<div className="flex flex-col items-center pb-8 gap-1.5">
 					<span className="text-[9px] text-gray-600 uppercase tracking-[0.3em]">Descubre más</span>
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="scroll-hint w-5 h-5 text-gray-600">
 						<path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -150,8 +171,56 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 			</section>
 
+			{/* NOTICIAS — MOCKUP */}
+			<section className="bg-oscuro px-6 md:px-12 py-16 max-w-[1400px] mx-auto">
+
+				<div className="flex items-center justify-between mb-8">
+					<h2 className="text-white font-black text-xl md:text-2xl tracking-widest uppercase">Últimas noticias</h2>
+					<span className="flex items-center gap-1.5 px-3 py-1 bg-yellow-500/10 border border-yellow-500/30 rounded-full text-yellow-500 text-[9px] font-black uppercase tracking-widest">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3">
+							<path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495ZM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clipRule="evenodd" />
+						</svg>
+						Sección en desarrollo
+					</span>
+				</div>
+
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+					{noticias.map((n, i) => (
+						<article key={i} className="bg-gris rounded-xl border border-white/10 overflow-hidden group relative">
+							{/* mockup badge */}
+							<div className="absolute top-3 left-3 z-10 px-2 py-0.5 bg-black/60 backdrop-blur-sm border border-white/10 rounded text-[8px] font-black uppercase tracking-widest text-gray-400">
+								Mockup
+							</div>
+
+							<div className="w-full h-40 overflow-hidden">
+								<img
+									src={n.img}
+									alt={n.titulo}
+									className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition duration-700"
+								/>
+							</div>
+
+							<div className="p-5 space-y-2">
+								<div className="flex items-center justify-between">
+									<span className="text-[9px] font-black uppercase tracking-widest text-ianuarius">{n.categoria}</span>
+									<span className="text-[9px] text-gray-600">{n.fecha}</span>
+								</div>
+								<h3 className="text-white text-sm font-semibold leading-snug">{n.titulo}</h3>
+								<p className="text-gray-500 text-xs leading-relaxed">
+									Contenido de la noticia pendiente de implementar en una futura versión de la plataforma.
+								</p>
+								<button disabled className="text-ianuarius/40 text-[10px] font-bold tracking-wide cursor-not-allowed">
+									Leer más →
+								</button>
+							</div>
+						</article>
+					))}
+				</div>
+
+			</section>
+
 			{/* INFO SECTION */}
-			<section className="bg-oscuro px-6 md:px-12 py-16 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+			<section className="bg-oscuro px-6 md:px-12 pb-16 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
 				<div className="lg:col-span-6 bg-gris p-5 md:p-6 rounded-xl border-t-4 border-ianuarius shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 					<div className="w-full h-48 bg-oscuro rounded-lg mb-5 overflow-hidden relative group">
 						<img
