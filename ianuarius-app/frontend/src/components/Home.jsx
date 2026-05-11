@@ -38,21 +38,21 @@ function Modal({ onClose, children }) {
 
 const noticias = [
 	{
-		img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=600&q=70',
+		img: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=70',
 		categoria: 'Competición',
-		titulo: 'RFEA anuncia el calendario oficial de la temporada 2026',
+		titulo: 'RFEA anuncia el calendario oficial de competiciones para la temporada 2026',
 		fecha: '15 abr 2026',
 	},
 	{
-		img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=70',
+		img: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=70',
 		categoria: 'Club',
-		titulo: 'Campus de verano Ianuarius — inscripciones abiertas',
+		titulo: 'Campus de verano Ianuarius — entrenamiento intensivo para jóvenes atletas',
 		fecha: '8 may 2026',
 	},
 	{
-		img: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=600&q=70',
+		img: 'https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=600&q=70',
 		categoria: 'Atletismo',
-		titulo: 'Nuevo récord personal en 400m durante el último meeting regional',
+		titulo: 'Nuevo récord personal en 400m lisos en el meeting regional de primavera',
 		fecha: '5 may 2026',
 	},
 ];
@@ -148,7 +148,15 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						</button>
 					</div>
 
-					{/* Feature pills */}
+					{/* Puertas abiertas */}
+				<div className="mb-10 max-w-md px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-center">
+					<p className="text-[9px] font-black uppercase tracking-widest text-ianuarius mb-2">Jornadas de puertas abiertas</p>
+					<p className="text-gray-300 text-xs md:text-sm leading-relaxed">
+						¿Tienes hijos que quieran probar el atletismo? Abre las puertas a su talento — jornadas de iniciación gratuitas las primeras semanas de septiembre y junio.
+					</p>
+				</div>
+
+				{/* Feature pills */}
 					<div className="flex flex-wrap justify-center items-center gap-2 text-[10px] text-gray-500 tracking-widest uppercase">
 						<span>Registro de marcas</span>
 						<span className="text-ianuarius/60">·</span>
@@ -163,8 +171,8 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 				{/* SCROLL HINT */}
 				<div className="flex flex-col items-center pb-8 gap-1.5">
-					<span className="text-[9px] text-gray-600 uppercase tracking-[0.3em]">Descubre más</span>
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="scroll-hint w-5 h-5 text-gray-600">
+					<span className="text-[9px] text-gray-300 uppercase tracking-[0.3em]">Descubre más</span>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="scroll-hint w-5 h-5 text-gray-300">
 						<path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
 					</svg>
 				</div>
