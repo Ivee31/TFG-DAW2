@@ -134,6 +134,16 @@ switch ($endpoint) {
             $id = (int)($segments[2] ?? 0);
             AdminController::activar($id);
 
+        } elseif ($sub === 'plantilla-inscripcion' && $method === 'GET') {
+            AdminController::obtenerPlantilla();
+
+        } elseif ($sub === 'plantilla-inscripcion' && $method === 'PUT') {
+            AdminController::subirPlantilla();
+
+        } elseif ($sub === 'inscripcion' && $method === 'PUT') {
+            $id = (int)($segments[2] ?? 0);
+            AdminController::marcarPago($id);
+
         } else {
             http_response_code(404);
             echo json_encode(["error" => "Endpoint not found"]);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 import PerfilAtleta from './PerfilAtleta';
 
@@ -39,6 +39,10 @@ export default function AdminPanel() {
 	const [cargandoE, setCargandoE] = useState(true);
 	const [activando, setActivando] = useState(null);
 	const [atletaSeleccionado, setAtletaSeleccionado] = useState(null);
+	const plantillaRef = useRef(null);
+	const [plantillaInfo, setPlantillaInfo]   = useState(null);
+	const [subiendoP, setSubiendoP]           = useState(false);
+	const [plantillaMsg, setPlantillaMsg]     = useState('');
 
 	const cargarPendientes = () => {
 		setCargandoP(true);
@@ -51,6 +55,10 @@ export default function AdminPanel() {
 
 	useEffect(() => {
 		cargarPendientes();
+		fetch(`${API}/admin/plantilla-inscripcion`, { credentials: 'include' })
+			.then(r => r.json())
+			.then(d => { if (d.status === 'success') setPlantillaInfo(true); })
+			.catch(() => {});
 		fetch(`${API}/usuarios/atletas`, { credentials: 'include' })
 			.then(res => res.json())
 			.then(data => { if (data.status === 'success') setAtletas(data.atletas); })
@@ -75,12 +83,78 @@ export default function AdminPanel() {
 
 	};
 
+	const handlePlantilla = async (file) => {
+		if (file.type !== 'application/pdf') { setPlantillaMsg('Solo se aceptan archivos PDF'); return; }
+		setSubiendoP(true);
+		setPlantillaMsg('');
+		try {
+			const reader = new FileReader();
+			const base64 = await new Promise((res, rej) => { reader.onload = () => res(reader.result); reader.onerror = rej; reader.readAsDataURL(file); });
+			const resp = await fetch(`${API}/admin/plantilla-inscripcion`, {
+				method: 'PUT', credentials: 'include',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ pdf: base64 })
+			});
+			const d = await resp.json();
+			if (d.status === 'success') { setPlantillaInfo(true); setPlantillaMsg('Plantilla actualizada'); }
+			else setPlantillaMsg(d.error || 'Error al subir');
+		} catch { setPlantillaMsg('Error de conexión'); }
+		setSubiendoP(false);
+	};
+
+	const handleTogglePago = async (id, pagadoActual) => {
+		const nuevo = !pagadoActual;
+		setAtletas(prev => prev.map(a => a.id_usuario === id ? { ...a, estado_pago: nuevo ? 'pagado' : 'pendiente' } : a));
+		try {
+			await fetch(`${API}/admin/inscripcion/${id}`, {
+				method: 'PUT', credentials: 'include',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ pagado: nuevo })
+			});
+		} catch {
+			setAtletas(prev => prev.map(a => a.id_usuario === id ? { ...a, estado_pago: pagadoActual ? 'pagado' : 'pendiente' } : a));
+		}
+	};
+
 	if (atletaSeleccionado) {
 		return <PerfilAtleta atletaId={atletaSeleccionado} onVolver={() => setAtletaSeleccionado(null)} />;
 	}
 
 	return (
 		<main className="space-y-8">
+
+			{/* plantilla inscripcion */}
+			<section>
+				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
+					<div className="flex justify-between items-center mb-4">
+						<div>
+							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Plantilla de inscripción</h2>
+							<p className="text-gray-400 text-xs mt-1 uppercase tracking-widest font-semibold">
+								PDF oficial que los atletas descargarán para inscribirse
+							</p>
+						</div>
+						{plantillaInfo && (
+							<span className="text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-bold uppercase tracking-widest">
+								Subida
+							</span>
+						)}
+					</div>
+					{plantillaMsg && (
+						<p className={`text-xs mb-3 text-center ${plantillaMsg === 'Plantilla actualizada' ? 'text-green-400' : 'text-red-400'}`}>{plantillaMsg}</p>
+					)}
+					<input ref={plantillaRef} type="file" accept="application/pdf" className="hidden" onChange={e => { if (e.target.files[0]) handlePlantilla(e.target.files[0]); e.target.value = ''; }} />
+					<button
+						disabled={subiendoP}
+						onClick={() => plantillaRef.current?.click()}
+						className="flex items-center gap-2 px-5 py-2 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+						</svg>
+						{subiendoP ? 'Subiendo...' : plantillaInfo ? 'Reemplazar plantilla' : 'Subir plantilla PDF'}
+					</button>
+				</div>
+			</section>
 
 			{/* cuentas pendientes de activacion */}
 			<section>
@@ -147,6 +221,11 @@ export default function AdminPanel() {
 									? (cargandoA ? '...' : `${atletas.length} atletas activos`)
 									: (cargandoE ? '...' : `${entrenadores.length} entrenadores activos`)}
 							</p>
+							{tab === 'atletas' && !cargandoA && atletas.filter(a => a.estado_pago !== 'pagado').length > 0 && (
+								<p className="text-yellow-400 text-[10px] font-bold uppercase tracking-widest mt-1">
+									⚠ {atletas.filter(a => a.estado_pago !== 'pagado').length} pago{atletas.filter(a => a.estado_pago !== 'pagado').length !== 1 ? 's' : ''} pendiente{atletas.filter(a => a.estado_pago !== 'pagado').length !== 1 ? 's' : ''}
+								</p>
+							)}
 						</div>
 						<div className="flex items-center gap-1 bg-oscuro/60 border border-white/10 rounded-lg p-1">
 							<button
@@ -184,7 +263,7 @@ export default function AdminPanel() {
 									{atletas.map(a => (
 										<div key={a.id_usuario}
 											onClick={() => setAtletaSeleccionado(a.id_usuario)}
-											className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300 cursor-pointer">
+											className={`bg-oscuro/50 p-4 rounded-xl border transition duration-300 cursor-pointer hover:border-ianuarius/50 ${a.estado_pago !== 'pagado' ? 'border-yellow-500/20' : 'border-transparent'}`}>
 											<div className="flex items-start gap-3">
 												<UsuarioAvatar fotoPerfil={a.foto_perfil} fotoCarnet={a.foto_carnet} nombre={a.nombre} apellidos={a.apellidos} />
 												<div className="flex-1 min-w-0">
@@ -206,6 +285,17 @@ export default function AdminPanel() {
 														<span className="text-[10px] font-bold text-gray-400">
 															{a.total_marcas} {parseInt(a.total_marcas) === 1 ? 'marca' : 'marcas'}
 														</span>
+													</div>
+													<div className="mt-2 pt-2 border-t border-white/5 flex justify-between items-center" onClick={e => e.stopPropagation()}>
+														<span className={`text-[9px] font-bold uppercase tracking-widest ${a.estado_pago === 'pagado' ? 'text-green-500' : 'text-yellow-400'}`}>
+															{a.estado_pago === 'pagado' ? '✓ Pagado' : '⚠ Pago pendiente'}
+														</span>
+														<button
+															onClick={() => handleTogglePago(a.id_usuario, a.estado_pago === 'pagado')}
+															className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded transition ${a.estado_pago === 'pagado' ? 'bg-green-500/20 text-green-400 hover:bg-red-500/20 hover:text-red-400' : 'bg-yellow-500/20 text-yellow-400 hover:bg-green-500/20 hover:text-green-400'}`}
+														>
+															{a.estado_pago === 'pagado' ? 'Marcar pendiente' : 'Marcar pagado'}
+														</button>
 													</div>
 												</div>
 											</div>

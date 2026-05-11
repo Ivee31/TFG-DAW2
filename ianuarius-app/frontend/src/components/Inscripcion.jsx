@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { API } from '../api';
 
 const fileToBase64 = (file) => new Promise((resolve, reject) => {
@@ -10,12 +10,22 @@ const fileToBase64 = (file) => new Promise((resolve, reject) => {
 
 export default function Inscripcion({ user, onUserUpdate }) {
 	const fileRef = useRef(null);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState('');
-	const [ok, setOk] = useState(false);
+	const [loading, setLoading]     = useState(false);
+	const [error, setError]         = useState('');
+	const [ok, setOk]               = useState(false);
+	const [plantilla, setPlantilla] = useState(null);
+	const [cargandoP, setCargandoP] = useState(true);
 
 	const inscripcionCompleta = !!(user?.inscripcion_pdf || user?.inscripcion_formulario);
 	const isPdf = user?.inscripcion_pdf?.startsWith('data:application/pdf');
+
+	useEffect(() => {
+		fetch(`${API}/admin/plantilla-inscripcion`, { credentials: 'include' })
+			.then(r => r.json())
+			.then(d => { if (d.status === 'success') setPlantilla(d.pdf); })
+			.catch(() => {})
+			.finally(() => setCargandoP(false));
+	}, []);
 
 	const handleFile = async (file) => {
 		setLoading(true);
@@ -64,38 +74,53 @@ export default function Inscripcion({ user, onUserUpdate }) {
 				<h2 className="text-2xl font-black tracking-tight text-white mb-3">Formaliza tu inscripción</h2>
 				<p className="text-gray-400 text-sm leading-relaxed">
 					Para participar en los entrenamientos y competiciones de la temporada debes completar tu inscripción.
-					Puedes hacerlo rellenando el formulario online o subiendo el PDF oficial firmado.
+					Descarga el formulario oficial, complétalo, fírmalo y sube el PDF escaneado.
 				</p>
 			</div>
 
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-				<div className="bg-gris rounded-lg border border-white/10 p-6 space-y-4 relative overflow-hidden">
-					<div className="absolute inset-0 bg-oscuro/70 backdrop-blur-[1px] flex items-center justify-center z-10">
-						<span className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 border border-gray-700 px-3 py-1 rounded">Próximamente</span>
-					</div>
-
+				{/* Descargar plantilla */}
+				<div className="bg-gris rounded-lg border border-white/10 p-6 space-y-4">
 					<div className="flex items-center gap-3">
 						<div className="w-10 h-10 bg-ianuarius/10 border border-ianuarius/30 rounded-lg flex items-center justify-center">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-ianuarius">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25Z" />
+								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
 							</svg>
 						</div>
 						<div>
-							<h3 className="text-sm font-black uppercase tracking-wide text-white">Formulario Online</h3>
-							<p className="text-gray-400 text-[10px] uppercase tracking-wider">Recomendado</p>
+							<h3 className="text-sm font-black uppercase tracking-wide text-white">Descargar plantilla</h3>
+							<p className="text-gray-400 text-[10px] uppercase tracking-wider">Formulario oficial</p>
 						</div>
 					</div>
 
 					<p className="text-gray-400 text-xs leading-relaxed">
-						Rellena el formulario médico y de inscripción directamente desde la plataforma. Proceso guiado paso a paso.
+						Descarga el formulario oficial de inscripción, complétalo a mano y fírmalo antes de subirlo.
 					</p>
 
-					<button disabled className="w-full bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest py-3 rounded opacity-40">
-						Rellenar formulario
-					</button>
+					{cargandoP ? (
+						<div className="w-full py-3 flex items-center justify-center">
+							<span className="text-gray-500 text-[10px] uppercase tracking-widest animate-pulse">Cargando...</span>
+						</div>
+					) : plantilla ? (
+						<a
+							href={plantilla}
+							download="plantilla_inscripcion.pdf"
+							className="w-full flex items-center justify-center gap-2 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest py-3 rounded hover:bg-red-700 transition"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+							</svg>
+							Descargar PDF
+						</a>
+					) : (
+						<div className="w-full py-3 text-center border border-dashed border-gray-700 rounded">
+							<p className="text-gray-500 text-[10px] uppercase tracking-widest">Pendiente — el administrador aún no ha subido la plantilla</p>
+						</div>
+					)}
 				</div>
 
+				{/* Subir PDF firmado */}
 				<div className="bg-gris rounded-lg border border-white/10 p-6 space-y-4">
 					<div className="flex items-center gap-3">
 						<div className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center">
@@ -104,13 +129,13 @@ export default function Inscripcion({ user, onUserUpdate }) {
 							</svg>
 						</div>
 						<div>
-							<h3 className="text-sm font-black uppercase tracking-wide text-white">Subir PDF</h3>
-							<p className="text-gray-400 text-[10px] uppercase tracking-wider">Firmado y escaneado</p>
+							<h3 className="text-sm font-black uppercase tracking-wide text-white">Subir PDF firmado</h3>
+							<p className="text-gray-400 text-[10px] uppercase tracking-wider">Completado y escaneado</p>
 						</div>
 					</div>
 
 					<p className="text-gray-400 text-xs leading-relaxed">
-						Descarga el formulario oficial, complétalo a mano, fírmalo y sube el PDF escaneado.
+						Una vez rellenado y firmado, sube el PDF escaneado para completar tu inscripción.
 					</p>
 
 					{user?.inscripcion_pdf && (
@@ -129,7 +154,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 						</div>
 					)}
 
-					{ok && <p className="text-xs text-green-400 text-center">Archivo subido correctamente</p>}
+					{ok    && <p className="text-xs text-green-400 text-center">Archivo subido correctamente</p>}
 					{error && <p className="text-xs text-red-400 text-center">{error}</p>}
 
 					<input

@@ -368,3 +368,10 @@ CREATE TABLE IF NOT EXISTS marcas (
     FOREIGN KEY (id_usuario)   REFERENCES usuarios(id_usuario)     ON DELETE CASCADE,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
 );
+
+-- Tabla configuracion del club (plantilla PDF inscripcion, etc.)
+CREATE TABLE IF NOT EXISTS configuracion_club (
+    clave VARCHAR(50) PRIMARY KEY,
+    valor LONGTEXT,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

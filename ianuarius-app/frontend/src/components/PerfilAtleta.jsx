@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { API } from '../api';
+import JSZip from 'jszip';
 
 const SENSACIONES = ['😩', '😟', '😐', '😊', '🤩'];
 
@@ -65,6 +66,48 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 		);
 	}
 
+	const [zipping, setZipping] = useState(false);
+
+	const descargarZip = async () => {
+		setZipping(true);
+		try {
+			const zip = new JSZip();
+			const carpeta = `${perfil.apellidos}_${perfil.nombre}`;
+			const folder = zip.folder(carpeta);
+
+			const b64toBlob = (b64) => {
+				const [header, data] = b64.split(',');
+				const mime = header.match(/:(.*?);/)[1];
+				const bin  = atob(data);
+				const arr  = new Uint8Array(bin.length);
+				for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+				return { blob: new Blob([arr], { type: mime }), mime };
+			};
+
+			if (perfil.foto_dni) {
+				const { blob, mime } = b64toBlob(perfil.foto_dni);
+				folder.file(`dni.${mime.split('/')[1] === 'pdf' ? 'pdf' : mime.split('/')[1]}`, blob);
+			}
+			if (perfil.foto_carnet) {
+				const { blob, mime } = b64toBlob(perfil.foto_carnet);
+				folder.file(`carnet.${mime.split('/')[1]}`, blob);
+			}
+			if (perfil.inscripcion_pdf) {
+				const { blob, mime } = b64toBlob(perfil.inscripcion_pdf);
+				folder.file(`inscripcion.${mime.split('/')[1] === 'pdf' ? 'pdf' : mime.split('/')[1]}`, blob);
+			}
+
+			const content = await zip.generateAsync({ type: 'blob' });
+			const url = URL.createObjectURL(content);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `${carpeta}.zip`;
+			a.click();
+			URL.revokeObjectURL(url);
+		} catch {}
+		setZipping(false);
+	};
+
 	const initials = ((perfil.nombre?.[0] || '') + (perfil.apellidos?.[0] || '')).toUpperCase();
 	const avatarSrc = perfil.foto_carnet || perfil.foto_perfil || null;
 
@@ -80,13 +123,25 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 		<main className="space-y-6">
 
 			{/* header */}
-			<div className="flex items-center gap-4">
+			<div className="flex items-center justify-between gap-4">
 				<button
 					onClick={onVolver}
 					className="flex items-center gap-1.5 text-gray-400 hover:text-white text-xs uppercase tracking-widest font-bold transition"
 				>
 					← Volver
 				</button>
+				{(perfil.foto_dni || perfil.foto_carnet || perfil.inscripcion_pdf) && (
+					<button
+						onClick={descargarZip}
+						disabled={zipping}
+						className="flex items-center gap-2 px-4 py-2 border border-white/20 text-white text-[9px] font-black uppercase tracking-widest rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+						</svg>
+						{zipping ? 'Generando...' : 'Descargar documentos (.zip)'}
+					</button>
+				)}
 			</div>
 
 			<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">

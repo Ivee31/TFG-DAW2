@@ -361,9 +361,11 @@ class UsuarioController {
             $stmt = $pdo->prepare(
                 "SELECT u.id_usuario, u.nombre, u.apellidos, u.email, u.genero, u.fecha_nacimiento,
                         u.foto_perfil, u.foto_carnet,
-                        COUNT(m.id_marca) AS total_marcas
+                        COUNT(m.id_marca) AS total_marcas,
+                        COALESCE(fi.estado_pago, 'pendiente') AS estado_pago
                  FROM usuarios u
                  LEFT JOIN marcas m ON u.id_usuario = m.id_usuario
+                 LEFT JOIN fichas_inscripcion fi ON u.id_usuario = fi.id_usuario
                  WHERE u.rol = 'Atleta' AND u.estado_cuenta = 1
                  GROUP BY u.id_usuario
                  ORDER BY u.apellidos, u.nombre"
