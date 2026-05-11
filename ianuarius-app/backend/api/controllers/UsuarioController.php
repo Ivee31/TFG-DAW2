@@ -275,15 +275,52 @@ class UsuarioController {
         $input = json_decode(file_get_contents('php://input'), true);
         $foto  = trim($input['foto'] ?? '');
 
-        if (!$foto || (strpos($foto, 'data:image/') !== 0 && strpos($foto, 'data:application/pdf') !== 0)) {
+        // Whitelist estricta de prefijos aceptados (SVG excluido — puede contener JS)
+        $tipos_permitidos = [
+            'data:application/pdf;base64,' => 'pdf',
+            'data:image/jpeg;base64,'      => 'jpeg',
+            'data:image/png;base64,'       => 'png',
+            'data:image/webp;base64,'      => 'webp',
+        ];
+
+        $tipo_detectado = null;
+        $b64payload     = null;
+        foreach ($tipos_permitidos as $prefijo => $tipo) {
+            if (strncmp($foto, $prefijo, strlen($prefijo)) === 0) {
+                $tipo_detectado = $tipo;
+                $b64payload     = substr($foto, strlen($prefijo));
+                break;
+            }
+        }
+
+        if (!$tipo_detectado) {
             http_response_code(400);
-            echo json_encode(["status" => "error", "error" => "Formato no válido (PDF o imagen)"]);
+            echo json_encode(["status" => "error", "error" => "Formato no válido (PDF, JPEG, PNG o WebP)"]);
             return;
         }
 
         if (strlen($foto) > 5000000) {
             http_response_code(400);
             echo json_encode(["status" => "error", "error" => "Archivo demasiado grande (máx. ~3,7 MB)"]);
+            return;
+        }
+
+        // Verificar magic bytes según el tipo declarado
+        $bytes = base64_decode(substr($b64payload, 0, 20), true);
+        if ($bytes === false) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Archivo corrupto o inválido"]);
+            return;
+        }
+        $magic_ok = false;
+        if ($tipo_detectado === 'pdf')  $magic_ok = strncmp($bytes, '%PDF-', 5) === 0;
+        if ($tipo_detectado === 'jpeg') $magic_ok = substr($bytes, 0, 3) === "\xFF\xD8\xFF";
+        if ($tipo_detectado === 'png')  $magic_ok = substr($bytes, 0, 8) === "\x89PNG\r\n\x1A\n";
+        if ($tipo_detectado === 'webp') $magic_ok = substr($bytes, 0, 4) === 'RIFF' && substr($bytes, 8, 4) === 'WEBP';
+
+        if (!$magic_ok) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "El contenido del archivo no coincide con su tipo"]);
             return;
         }
 

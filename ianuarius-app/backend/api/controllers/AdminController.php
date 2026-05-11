@@ -44,7 +44,8 @@ class AdminController {
         $input = json_decode(file_get_contents('php://input'), true);
         $pdf   = trim($input['pdf'] ?? '');
 
-        if (!$pdf || strpos($pdf, 'data:application/pdf') !== 0) {
+        $prefix_pdf = 'data:application/pdf;base64,';
+        if (!$pdf || strncmp($pdf, $prefix_pdf, strlen($prefix_pdf)) !== 0) {
             http_response_code(400);
             echo json_encode(["status" => "error", "error" => "Formato no válido (PDF requerido)"]);
             return;
@@ -53,6 +54,15 @@ class AdminController {
         if (strlen($pdf) > 10000000) {
             http_response_code(400);
             echo json_encode(["status" => "error", "error" => "Archivo demasiado grande (máx. ~7 MB)"]);
+            return;
+        }
+
+        // Verificar magic bytes: un PDF real empieza con %PDF-
+        $b64payload = substr($pdf, strlen($prefix_pdf));
+        $decoded    = base64_decode(substr($b64payload, 0, 20), true);
+        if ($decoded === false || strncmp($decoded, '%PDF-', 5) !== 0) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "El archivo no es un PDF válido"]);
             return;
         }
 
