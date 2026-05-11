@@ -2,6 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 import PerfilAtleta from './PerfilAtleta';
 
+const CATEGORIA_ORDEN = [
+	'Sub-10','Sub-12','Sub-14','Sub-16','Sub-18','Sub-20','Sub-23',
+	'Absoluta',
+	'M35','F35','M40','F40','M45','F45','M50','F50','M55','F55','M60','F60','M65','F65',
+];
+
 const calcularCategoria = (fechaNacimiento, genero) => {
 	const edad = new Date().getFullYear() - parseInt(fechaNacimiento?.split('-')[0] ?? 0);
 	if (edad < 10)  return 'Sub-10';
@@ -14,7 +20,6 @@ const calcularCategoria = (fechaNacimiento, genero) => {
 	if (edad <= 34) return 'Absoluta';
 	const tramo = Math.min(Math.floor((edad - 35) / 5) * 5 + 35, 65);
 	return `${genero === 'M' ? 'M' : 'F'}${tramo}`;
-
 };
 
 function UsuarioAvatar({ fotoPerfil, fotoCarnet, nombre, apellidos }) {
@@ -43,6 +48,11 @@ export default function AdminPanel() {
 	const [plantillaInfo, setPlantillaInfo]   = useState(null);
 	const [subiendoP, setSubiendoP]           = useState(false);
 	const [plantillaMsg, setPlantillaMsg]     = useState('');
+
+	const [busquedaA, setBusquedaA]               = useState('');
+	const [filtroGeneroA, setFiltroGeneroA]       = useState('todos');
+	const [filtroCategoriaA, setFiltroCategoriaA] = useState('');
+	const [busquedaE, setBusquedaE]               = useState('');
 
 	const cargarPendientes = () => {
 		setCargandoP(true);
@@ -119,6 +129,28 @@ export default function AdminPanel() {
 	if (atletaSeleccionado) {
 		return <PerfilAtleta atletaId={atletaSeleccionado} onVolver={() => setAtletaSeleccionado(null)} />;
 	}
+
+	const categoriasDisponibles = [...new Set(atletas.map(a => calcularCategoria(a.fecha_nacimiento, a.genero)))]
+		.sort((a, b) => CATEGORIA_ORDEN.indexOf(a) - CATEGORIA_ORDEN.indexOf(b));
+
+	const atletasFiltrados = atletas.filter(a => {
+		const q = busquedaA.toLowerCase().trim();
+		const matchBusqueda = !q ||
+			`${a.nombre} ${a.apellidos}`.toLowerCase().includes(q) ||
+			a.email.toLowerCase().includes(q);
+		const matchGenero    = filtroGeneroA === 'todos' || a.genero === filtroGeneroA;
+		const matchCategoria = !filtroCategoriaA || calcularCategoria(a.fecha_nacimiento, a.genero) === filtroCategoriaA;
+		return matchBusqueda && matchGenero && matchCategoria;
+	});
+
+	const entrenadoresFiltrados = entrenadores.filter(e => {
+		const q = busquedaE.toLowerCase().trim();
+		return !q ||
+			`${e.nombre} ${e.apellidos}`.toLowerCase().includes(q) ||
+			e.email.toLowerCase().includes(q);
+	});
+
+	const hayFiltrosA = busquedaA.trim() || filtroGeneroA !== 'todos' || filtroCategoriaA;
 
 	return (
 		<main className="space-y-8">
@@ -218,8 +250,8 @@ export default function AdminPanel() {
 							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Miembros del Club</h2>
 							<p className="text-gray-400 text-xs mt-1 uppercase tracking-widest font-semibold">
 								{tab === 'atletas'
-									? (cargandoA ? '...' : `${atletas.length} atletas activos`)
-									: (cargandoE ? '...' : `${entrenadores.length} entrenadores activos`)}
+									? (cargandoA ? '...' : hayFiltrosA ? `${atletasFiltrados.length} de ${atletas.length} atletas` : `${atletas.length} atletas activos`)
+									: (cargandoE ? '...' : busquedaE.trim() ? `${entrenadoresFiltrados.length} de ${entrenadores.length} entrenadores` : `${entrenadores.length} entrenadores activos`)}
 							</p>
 							{tab === 'atletas' && !cargandoA && atletas.filter(a => a.estado_pago !== 'pagado').length > 0 && (
 								<p className="text-yellow-400 text-[10px] font-bold uppercase tracking-widest mt-1">
@@ -246,6 +278,48 @@ export default function AdminPanel() {
 					{/* tab atletas */}
 					{tab === 'atletas' && (
 						<>
+							{!cargandoA && atletas.length > 0 && (
+								<div className="flex flex-col sm:flex-row gap-3 mb-6">
+									<div className="relative flex-1">
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none">
+											<path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+										</svg>
+										<input
+											type="text"
+											value={busquedaA}
+											onChange={e => setBusquedaA(e.target.value)}
+											placeholder="Buscar por nombre o email..."
+											className="w-full bg-oscuro border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-ianuarius transition"
+										/>
+									</div>
+
+									<div className="flex items-center gap-1 bg-oscuro/60 border border-white/10 rounded-lg p-1 shrink-0">
+										{[['todos','Todos'],['M','Masc'],['F','Fem']].map(([val, label]) => (
+											<button
+												key={val}
+												onClick={() => setFiltroGeneroA(val)}
+												className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${filtroGeneroA === val ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
+											>
+												{label}
+											</button>
+										))}
+									</div>
+
+									{categoriasDisponibles.length > 1 && (
+										<select
+											value={filtroCategoriaA}
+											onChange={e => setFiltroCategoriaA(e.target.value)}
+											className="bg-oscuro border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-ianuarius appearance-none cursor-pointer shrink-0"
+										>
+											<option value="">Todas las categorías</option>
+											{categoriasDisponibles.map(c => (
+												<option key={c} value={c}>{c}</option>
+											))}
+										</select>
+									)}
+								</div>
+							)}
+
 							{cargandoA && (
 								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10">
 									Cargando atletas...
@@ -258,9 +332,15 @@ export default function AdminPanel() {
 								</p>
 							)}
 
-							{!cargandoA && atletas.length > 0 && (
+							{!cargandoA && atletas.length > 0 && atletasFiltrados.length === 0 && (
+								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
+									Sin resultados para los filtros aplicados
+								</p>
+							)}
+
+							{!cargandoA && atletasFiltrados.length > 0 && (
 								<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-									{atletas.map(a => (
+									{atletasFiltrados.map(a => (
 										<div key={a.id_usuario}
 											onClick={() => setAtletaSeleccionado(a.id_usuario)}
 											className={`bg-oscuro/50 p-4 rounded-xl border transition duration-300 cursor-pointer hover:border-ianuarius/50 ${a.estado_pago !== 'pagado' ? 'border-yellow-500/20' : 'border-transparent'}`}>
@@ -309,6 +389,23 @@ export default function AdminPanel() {
 					{/* tab entrenadores */}
 					{tab === 'entrenadores' && (
 						<>
+							{!cargandoE && entrenadores.length > 0 && (
+								<div className="mb-6">
+									<div className="relative">
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none">
+											<path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+										</svg>
+										<input
+											type="text"
+											value={busquedaE}
+											onChange={e => setBusquedaE(e.target.value)}
+											placeholder="Buscar por nombre o email..."
+											className="w-full bg-oscuro border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-ianuarius transition"
+										/>
+									</div>
+								</div>
+							)}
+
 							{cargandoE && (
 								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10">
 									Cargando entrenadores...
@@ -321,9 +418,15 @@ export default function AdminPanel() {
 								</p>
 							)}
 
-							{!cargandoE && entrenadores.length > 0 && (
+							{!cargandoE && entrenadores.length > 0 && entrenadoresFiltrados.length === 0 && (
+								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
+									Sin resultados para la búsqueda
+								</p>
+							)}
+
+							{!cargandoE && entrenadoresFiltrados.length > 0 && (
 								<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-									{entrenadores.map(e => (
+									{entrenadoresFiltrados.map(e => (
 										<div key={e.id_usuario}
 											className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300">
 											<div className="flex items-start gap-3">
