@@ -149,9 +149,12 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					</div>
 
 					{/* Puertas abiertas */}
-				<p className="mb-10 max-w-sm text-[10px] text-gray-500 leading-relaxed text-center">
-					¿Tienes hijos que quieran probar el atletismo? Jornadas de iniciación gratuitas — primeras semanas de septiembre y junio.
-				</p>
+				<div className="mb-10 max-w-sm text-center space-y-1">
+					<p className="text-[9px] font-black uppercase tracking-widest text-ianuarius/70">Jornadas de puertas abiertas</p>
+					<p className="text-gray-400 text-xs leading-relaxed">
+						¿Tienes hijos que quieran probar el atletismo? Iniciación gratuita — primeras semanas de septiembre y junio.
+					</p>
+				</div>
 
 				{/* Feature pills */}
 					<div className="flex flex-wrap justify-center items-center gap-2 text-[10px] text-gray-500 tracking-widest uppercase">
