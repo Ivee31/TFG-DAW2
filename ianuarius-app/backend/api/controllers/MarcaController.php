@@ -52,12 +52,20 @@ class MarcaController {
             $rowCat        = $stmtCat->fetch(PDO::FETCH_ASSOC);
             $id_cat_atleta = $rowCat['id_categoria'] ?? null;
 
-            $stmtEvt = $pdo->prepare(
-                "SELECT tipo_evento, tipo_pista FROM eventos_calendario
-                 WHERE id_evento = ? AND fecha_hora <= NOW()
-                   AND (id_categoria IS NULL OR id_categoria = ?)"
-            );
-            $stmtEvt->execute([$id_evento, $id_cat_atleta]);
+            if ($id_cat_atleta === null) {
+                $stmtEvt = $pdo->prepare(
+                    "SELECT tipo_evento, tipo_pista FROM eventos_calendario
+                     WHERE id_evento = ? AND fecha_hora <= NOW()"
+                );
+                $stmtEvt->execute([$id_evento]);
+            } else {
+                $stmtEvt = $pdo->prepare(
+                    "SELECT tipo_evento, tipo_pista FROM eventos_calendario
+                     WHERE id_evento = ? AND fecha_hora <= NOW()
+                       AND (id_categoria IS NULL OR id_categoria = ?)"
+                );
+                $stmtEvt->execute([$id_evento, $id_cat_atleta]);
+            }
             $evento = $stmtEvt->fetch(PDO::FETCH_ASSOC);
 
             if (!$evento) {

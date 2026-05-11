@@ -21,7 +21,8 @@ CREATE TABLE pruebas (
         'Obstaculos',
         'Salto',
         'Lanzamiento',
-        'Marcha'
+        'Marcha',
+        'Relevos'
     ) NOT NULL
 );
 
@@ -161,7 +162,13 @@ INSERT INTO pruebas (id_prueba, nombre_prueba, tipo) VALUES
 (32, '3000m marcha',            'Marcha'),
 (33, '5000m marcha',            'Marcha'),
 (34, '10km marcha',             'Marcha'),
-(35, '20km marcha',             'Marcha');
+(35, '20km marcha',             'Marcha'),
+(36, '4x100m Masc',            'Relevos'),
+(37, '4x100m Fem',             'Relevos'),
+(38, '4x100m Mix',             'Relevos'),
+(39, '4x400m Masc',            'Relevos'),
+(40, '4x400m Fem',             'Relevos'),
+(41, '4x400m Mix',             'Relevos');
 
 -- Variantes de vallas (altura varía por categoría y género)
 INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable, especificaciones) VALUES

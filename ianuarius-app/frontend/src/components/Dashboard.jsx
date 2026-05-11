@@ -6,7 +6,7 @@ const pruebaKey = (p) => `${p.id_prueba}_${p.especificaciones ?? ''}`;
 const GRUPO_ORDEN = [
 	'Velocidad Corta', 'Velocidad Larga', 'Vallas',
 	'Medio Fondo', 'Fondo', 'Larga Distancia', 'Obstaculos',
-	'Salto', 'Lanzamiento', 'Marcha',
+	'Salto', 'Lanzamiento', 'Marcha', 'Relevos',
 ];
 
 const MAP_TIPO = {
@@ -665,7 +665,6 @@ export default function Dashboard() {
 											setEventoSeleccionado(id ? (competiciones.find(c => c.id_evento === id) ?? null) : null);
 										}}
 										className={selectClasses}
-										required
 									>
 										<option value="">Seleccionar competición</option>
 										{competiciones.map(c => (
@@ -706,7 +705,6 @@ export default function Dashboard() {
 								value={marcaTiempo}
 								onChange={(e) => { setMarcaTiempo(formatMarcaTiempo(e.target.value)); setFormatoError(false); }}
 								onBlur={handleMarcaBlur}
-								required
 								className={`w-full bg-oscuro border p-5 md:p-4 rounded-lg text-2xl text-ianuarius outline-none transition font-mono ${formatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
 							/>
 							{formatoError && (
