@@ -132,7 +132,13 @@
                 </li>
                 <li><a href="#referencias">Referencias y bibliografía</a></li>
                 <li><a href="#glosario">Glosario de Términos y Acrónimos</a></li>
-                <li><a href="#anexos">Anexos</a></li>
+                <li><a href="#anexos">Anexos</a>
+                    <ul>
+                        <li><a href="#anexos">10.1. Manual de instalación</a></li>
+                        <li><a href="#prl">10.3. Prevención de Riesgos Laborales</a></li>
+                        <li><a href="#sostenibilidad">10.4. Plan de Sostenibilidad</a></li>
+                    </ul>
+                </li>
             </ol>
 
             <a id="indice-figuras" class="ancla-top"></a>
@@ -881,56 +887,137 @@
                 </div>
             </div>
 
-            <!-- ═══════════════════════════════════════════════════ CAPS 5-10 -->
-            <a id="desarrollo-implementacion" class="ancla-top zona-apagada"></a>
-            <h2 class="zona-apagada">5. Desarrollo e Implementación</h2>
-            <div class="zona-apagada sangria-1">
-                
+            <!-- ═══════════════════════════════════════════════════ CAP 5 -->
+            <a id="desarrollo-implementacion" class="ancla-top"></a>
+            <h2>5. Desarrollo e Implementación</h2>
+            <div class="sangria-1">
+
                 <a id="organizacion-real" class="ancla-top"></a>
                 <h3>5.1. Organización real del trabajo</h3>
-                <p class="nota-gris">(Pendiente de redactar durante la fase de programación)</p>
-                
+                <p>El desarrollo de Ianuarius siguió un enfoque iterativo e incremental, ajustando la metodología ágil propuesta a las condiciones reales de un proyecto individual. El trabajo se organizó en cuatro entregas formales.</p>
+                <p>El control de versiones se gestionó con Git a través del repositorio GitLab del centro, empleando ramas de funcionalidad integradas en la rama principal mediante Pull Requests.</p>
+                <p>Las principales desviaciones respecto a la planificación inicial fueron tres. La generación de documentos PDF con librería externa se sustituyó por un sistema de plantilla administrable, más sencillo y fácil de mantener a largo plazo (sobre todo por la no dependencia de un desarrollador). Los datos de feedback de entrenamientos, previstos inicialmente en una tabla independiente, se integraron directamente en la tabla de marcas, al resultar suficiente y más natural.</p>
+                <p>Por último, se añadió la autenticación con Google, funcionalidad no contemplada en la planificación original pero que mejoró notablemente la experiencia de acceso.</p>
+
                 <a id="estructura-proyecto" class="ancla-top"></a>
                 <h3>5.2. Estructura del Proyecto</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
-                
+                <p>El proyecto se organiza en tres capas bien diferenciadas dentro del directorio <code>ianuarius-app</code>.</p>
+                <p>El directorio <strong>backend</strong> contiene todo el código PHP que se ejecuta en el servidor: el enrutador central de la API, los ocho controladores de negocio (autenticación, usuarios, marcas, eventos, pruebas, categorías, administración y recuperación de contraseña), la clase de conexión a la base de datos y el fichero de configuración del entorno.</p>
+                <p>El directorio <strong>frontend</strong> agrupa el código React de la aplicación: el componente raíz que actúa como enrutador de vistas, los componentes específicos de cada sección (inicio, perfil, dashboard del atleta, panel del entrenador, panel de administración, calendario, inscripción y auxiliares), y los ficheros de configuración del compilador y de los estilos.</p>
+                <p>La carpeta <strong>database</strong> contiene el esquema completo de la base de datos en formato SQL: definición de tablas, restricciones de integridad y datos de catálogo (pruebas atléticas y categorías). En la raíz del proyecto se encuentran los ficheros de Docker, que permiten levantar el entorno de desarrollo local con un único comando.</p>
+
                 <a id="aspectos-codigo" class="ancla-top"></a>
                 <h3>5.3. Aspectos relevantes de la codificación</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
-                
+                <p>A continuación se describen los aspectos técnicos más relevantes del desarrollo, agrupados por módulo funcional.</p>
+                <div class="sangria-2">
+                    <h4>5.3.1. Enrutamiento de la API REST</h4>
+                    <p>El sistema de enrutamiento se implementó sin frameworks externos. Todas las peticiones HTTP se resuelven en un fichero central que analiza la URL, identifica el recurso solicitado y delega en el controlador correspondiente. Este diseño minimalista facilita la comprensión y el mantenimiento del código, y garantiza que todas las respuestas sean en formato JSON.</p>
+
+                    <h4>5.3.2. Seguridad y acceso a datos</h4>
+                    <p>El acceso a la base de datos utiliza exclusivamente consultas preparadas para prevenir inyecciones SQL. Las contraseñas se almacenan cifradas mediante el algoritmo bcrypt y nunca en texto plano. La sesión del usuario se gestiona mediante una cookie con atributos de seguridad que impiden su acceso desde JavaScript y reducen el riesgo de ataques de falsificación de peticiones. Cada operación protegida verifica el rol del usuario antes de ejecutarse, rechazando las solicitudes no autorizadas. El proceso de registro incluye validaciones en el servidor para todos los campos obligatorios: formato del DNI, complejidad de la contraseña, y unicidad de email y DNI.</p>
+
+                    <h4>5.3.3. Autenticación con Google OAuth</h4>
+                    <p>Para el inicio de sesión con Google se implementó un flujo que verifica el token de acceso directamente con los servidores de Google antes de crear o recuperar ninguna cuenta. Si el usuario ya existe en el sistema, la sesión se inicia de inmediato. Si es un registro nuevo, la aplicación solicita los datos que Google no proporciona: DNI, fecha de nacimiento y género, necesarios para completar el perfil del atleta.</p>
+
+                    <h4>5.3.4. Navegación SPA sin React Router</h4>
+                    <p>La navegación entre las diferentes secciones de la aplicación se implementó sin añadir librerías adicionales, aprovechando directamente la API de historial del navegador. Esto permite cambiar de sección sin recargar la página y que el botón "atrás" del navegador funcione correctamente. La decisión de no incluir React Router mantuvo el tamaño del paquete final más reducido.</p>
+
+                    <h4>5.3.5. Vinculación de marcas a eventos del calendario</h4>
+                    <p>Cada marca registrada queda asociada obligatoriamente a un evento del calendario de competiciones. Esto permite que el sistema derive de forma automática el tipo de competición y la temporada a partir del evento elegido, sin que el atleta tenga que introducir esos datos manualmente. De esta forma se evitan errores de clasificación y se simplifica el proceso de registro.</p>
+
+                    <h4>5.3.6. Filtrado de atletas en los paneles de gestión</h4>
+                    <p>Los filtros de búsqueda disponibles en el panel del entrenador y del administrador (texto libre, género y categoría atlética) se aplican directamente en el navegador sobre los datos ya cargados, sin necesidad de nuevas consultas al servidor. Dado el volumen habitual de usuarios en un club de atletismo, este enfoque es suficiente y resulta más ágil. Las categorías disponibles se calculan dinámicamente a partir de los datos reales del club.</p>
+
+                    <h4>5.3.7. Módulo de inscripción PDF</h4>
+                    <p>El módulo de inscripción se basa en una plantilla PDF que sube el administrador del club. El atleta accede a ella desde la aplicación, la rellena directamente en el navegador y la guarda o imprime. Este sistema no requiere ninguna librería externa de generación de documentos y delega el mantenimiento del formulario en el propio responsable del club: si el documento oficial cambia, basta con actualizar la plantilla desde el panel de administración.</p>
+                </div>
+
                 <a id="despliegue" class="ancla-top"></a>
                 <h3>5.4. Despliegue</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
+                <p>El despliegue de la aplicación contempló dos entornos diferenciados: un entorno de desarrollo local y un entorno de producción.</p>
+                <div class="sangria-2">
+                    <h4>5.4.1. Entorno de desarrollo</h4>
+                    <p>El entorno local se levanta con Docker Compose, que coordina tres servicios: un servidor Apache con PHP 8.2, una base de datos MySQL 8.0 con almacenamiento persistente y una interfaz de administración de la base de datos. El frontend React se ejecuta por separado con el servidor de desarrollo de Vite, que incluye recarga automática en caliente y un proxy configurado para comunicarse con el backend sin conflictos de acceso entre dominios.</p>
+
+                    <h4>5.4.2. Entorno de producción</h4>
+                    <p>El despliegue en producción requirió varias iteraciones. En un primer momento se probó con el servicio de hosting gratuito InfinityFree, pero las restricciones de ese entorno —limitaciones de PHP y ausencia de soporte para determinadas cabeceras HTTP— hicieron inviable el despliegue completo. Finalmente, la aplicación se desplegó en un servidor Apache propio, con el código gestionado desde el repositorio GitLab del centro.</p>
+                    <p>El backend se configuró con reglas de reescritura de URL y gestión de CORS diferenciada para los entornos de desarrollo y producción. El frontend se compila como archivos estáticos y se sube al servidor, con la ruta base ajustada al subdirectorio de producción.</p>
+                </div>
             </div>
 
-            <a id="pruebas-calidad" class="ancla-top zona-apagada"></a>
-            <h2 class="zona-apagada">6. Pruebas y Control de Calidad</h2>
-            <div class="zona-apagada sangria-1">
+            <!-- ═══════════════════════════════════════════════════ CAP 6 -->
+            <a id="pruebas-calidad" class="ancla-top"></a>
+            <h2>6. Pruebas y Control de Calidad</h2>
+            <div class="sangria-1">
                 <h3>6.1. Plan de Pruebas</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
+                <p>Para verificar el correcto funcionamiento de la aplicación se diseñó un plan de pruebas manuales estructurado por módulos funcionales. Cada caso de prueba especifica la acción realizada, los datos de entrada utilizados, el resultado esperado y el resultado obtenido durante la ejecución. Todas las pruebas se realizaron sobre el entorno de producción desplegado, reproduciendo el comportamiento real de un usuario final.</p>
+                <p>Los módulos cubiertos fueron los siguientes:</p>
+                <ul>
+                    <li><p><strong>Módulo 1 — Autenticación:</strong> Registro, login con credenciales correctas e incorrectas, bloqueo por intentos fallidos y cierre de sesión.</p></li>
+                    <li><p><strong>Módulo 2 — Google OAuth:</strong> Inicio de sesión con cuenta Google existente y registro de cuenta nueva con completado de perfil.</p></li>
+                    <li><p><strong>Módulo 3 — Recuperación de contraseña:</strong> Solicitud de reset, recepción del email, acceso al enlace temporal y cambio de contraseña.</p></li>
+                    <li><p><strong>Módulo 4 — Perfil de usuario:</strong> Edición de datos personales, subida de foto de perfil, escaneo de DNI y eliminación de cuenta (RGPD).</p></li>
+                    <li><p><strong>Módulo 5 — Calendario de eventos:</strong> Creación, visualización y eliminación de eventos por parte del administrador y visualización por atletas.</p></li>
+                    <li><p><strong>Módulo 6 — Registro y gestión de marcas:</strong> Alta de marcas vinculadas a evento, registro de sensaciones emoji, visualización en dashboard.</p></li>
+                    <li><p><strong>Módulo 7 — Inscripción PDF:</strong> Subida de plantilla por el admin, acceso del atleta, rellenado en iframe y guardado/impresión.</p></li>
+                    <li><p><strong>Módulo 8 — Panel del entrenador:</strong> Filtros por texto, género y categoría; visualización de perfil de atleta y sus marcas.</p></li>
+                    <li><p><strong>Módulo 9 — Panel de administrador:</strong> Gestión de atletas y entrenadores, acceso a fichas, cambio de roles.</p></li>
+                    <li><p><strong>Módulo 10 — Control de acceso por roles:</strong> Verificación de que rutas protegidas rechazan accesos no autorizados según rol.</p></li>
+                </ul>
+
                 <h3>6.2. Registro de Incidencias</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
+                <p>A lo largo del desarrollo de Ianuarius se registraron diversas incidencias técnicas que requirieron análisis y corrección. La siguiente tabla recoge los problemas más relevantes identificados, su causa y la solución aplicada en cada caso.</p>
+                <p><em>La tabla completa de incidencias se encuentra disponible en el documento Word oficial de la memoria.</em></p>
+
                 <h3>6.3. Validación de Requisitos</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
+                <p>La siguiente tabla cruza cada requisito funcional y no funcional definido en el capítulo 2 con su estado de implementación al cierre del proyecto, indicando las observaciones pertinentes en los casos en que la solución final difiere de la especificación inicial.</p>
+                <p>Todos los requisitos funcionales (RF-01 a RF-13) y no funcionales (RNF-01 a RNF-07) definidos en el apartado 2.4 fueron validados satisfactoriamente. La única variación respecto a la especificación original fue la sustitución del generador de PDF por librería (FPDF/TCPDF) por un sistema de plantilla administrable, decisión que preserva el objetivo funcional (RF-05, RF-09) con mayor facilidad de mantenimiento.</p>
             </div>
 
+            <!-- ═══════════════════════════════════════════════════ CAP 7 -->
             <a id="conclusiones" class="ancla-top zona-apagada"></a>
             <h2 class="zona-apagada">7. Conclusiones y Futuro</h2>
             <div class="zona-apagada sangria-1">
                 <h3>7.1. Grado de cumplimiento de objetivos</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
+                <p class="nota-gris">(Pendiente)</p>
                 <h3>7.2. Dificultades y aprendizaje personal</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
+                <p class="nota-gris">(Pendiente)</p>
                 <h3>7.3. Posibles mejoras y líneas futuras del proyecto</h3>
-                <p class="nota-gris">(Próximos Entregables)</p>
+                <p>A lo largo del desarrollo han surgido funcionalidades que, por limitaciones de tiempo, no han podido implementarse en esta versión pero que representan líneas de mejora claras para el futuro del proyecto:</p>
+                <div class="sangria-2">
+                    <h4>Sección de noticias gestionable desde el panel de administración</h4>
+                    <p>Una de las mejoras más demandadas en un sistema de gestión deportiva es la posibilidad de publicar noticias o comunicados directamente desde el panel de administración. Esta funcionalidad permitiría a los administradores redactar, editar y eliminar entradas informativas (convocatorias, resultados, cambios de horario) que serían visibles para atletas y entrenadores desde su página de inicio. La implementación requeriría una nueva tabla en la base de datos (<code>noticias</code>), un endpoint en la API REST y un componente de visualización en el frontend.</p>
+                    <h4>Filtrado de marcas deportivas por año</h4>
+                    <p>Actualmente el dashboard del atleta muestra todas las marcas registradas sin distinción temporal. Una mejora relevante sería incorporar un filtro por año que permitiese consultar el historial de rendimiento de forma segmentada, facilitando el seguimiento de la evolución deportiva temporada a temporada. Este filtro se implementaría mediante un selector en el componente de marcas, aplicando lógica de filtrado sobre la fecha de la marca antes de renderizar la tabla.</p>
+                    <h4>Sección de Personal Best (PB) en el perfil del atleta</h4>
+                    <p>Se propone añadir en el perfil de cada atleta una sección dedicada a sus marcas personales (Personal Best), mostrando únicamente las pruebas en las que el atleta tiene al menos un registro, con el mejor resultado obtenido en cada una de ellas. Esta vista evitaría mostrar pruebas vacías, ofreciendo una representación limpia y significativa del historial deportivo del atleta. La lógica se implementaría en el backend agrupando las marcas por prueba y seleccionando el valor mínimo (en pruebas de tiempo) o máximo (en pruebas de distancia/altura), devolviendo únicamente los registros con datos reales.</p>
+                </div>
             </div>
 
+            <!-- ═══════════════════════════════════════════════════ CAP 8 -->
             <a id="referencias" class="ancla-top"></a>
             <h2>8. Referencias y bibliografía</h2>
             <div class="sangria-1">
-                <p>A continuación se detallan las herramientas, recursos y fuentes de información utilizadas para el desarrollo y documentación de este proyecto:</p>
+                <h3>Documentación técnica oficial</h3>
                 <ul>
-                    <li><p><strong>Mermaid Live Editor:</strong> Herramienta web utilizada para la generación del Diagrama de Clases UML mediante renderizado de código. Disponible en: <a href="https://mermaid.live/" target="_blank" class="enlace-azul">https://mermaid.live/</a></p></li>
+                    <li><p>The PHP Group. (2024). <em>PHP Manual</em>. <a href="https://www.php.net/manual/es/" target="_blank" class="enlace-azul">https://www.php.net/manual/es/</a></p></li>
+                    <li><p>Oracle Corporation. (2024). <em>MySQL 8.0 Reference Manual</em>. <a href="https://dev.mysql.com/doc/refman/8.0/en/" target="_blank" class="enlace-azul">https://dev.mysql.com/doc/refman/8.0/en/</a></p></li>
+                    <li><p>Meta Open Source. (2024). <em>React – The library for web and native user interfaces</em>. <a href="https://react.dev/" target="_blank" class="enlace-azul">https://react.dev/</a></p></li>
+                    <li><p>Evan You &amp; Vite Contributors. (2024). <em>Vite: Next Generation Frontend Tooling</em>. <a href="https://vitejs.dev/" target="_blank" class="enlace-azul">https://vitejs.dev/</a></p></li>
+                    <li><p>Tailwind Labs. (2024). <em>Tailwind CSS Documentation</em>. <a href="https://tailwindcss.com/docs/" target="_blank" class="enlace-azul">https://tailwindcss.com/docs/</a></p></li>
+                    <li><p>Docker, Inc. (2024). <em>Docker Documentation</em>. <a href="https://docs.docker.com/" target="_blank" class="enlace-azul">https://docs.docker.com/</a></p></li>
+                    <li><p>Docker, Inc. (2024). <em>Docker Compose overview</em>. <a href="https://docs.docker.com/compose/" target="_blank" class="enlace-azul">https://docs.docker.com/compose/</a></p></li>
+                    <li><p>Mermaid Live Editor. Herramienta web para generación de diagramas UML mediante código. <a href="https://mermaid.live/" target="_blank" class="enlace-azul">https://mermaid.live/</a></p></li>
+                </ul>
+                <h3>Servicios y APIs</h3>
+                <ul>
+                    <li><p>Google LLC. (2024). <em>Using OAuth 2.0 to Access Google APIs</em>. <a href="https://developers.google.com/identity/protocols/oauth2" target="_blank" class="enlace-azul">https://developers.google.com/identity/protocols/oauth2</a></p></li>
+                    <li><p>Brevo. (2024). <em>Brevo API Reference</em>. <a href="https://developers.brevo.com/" target="_blank" class="enlace-azul">https://developers.brevo.com/</a></p></li>
+                </ul>
+                <h3>Normativa y legislación</h3>
+                <ul>
+                    <li><p>Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales (RGPD). <em>Diario Oficial de la Unión Europea</em>, L 119, 1–88.</p></li>
+                    <li><p>Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD). <em>Boletín Oficial del Estado</em>, núm. 294.</p></li>
                 </ul>
             </div>
 
@@ -947,13 +1034,99 @@
                 </tbody>
             </table>
 
-            <a id="anexos" class="ancla-top zona-apagada"></a>
-            <h2 class="zona-apagada">10. Anexos</h2>
-            <div class="zona-apagada sangria-1">
+            <!-- ═══════════════════════════════════════════════════ CAP 10 -->
+            <a id="anexos" class="ancla-top"></a>
+            <h2>10. Anexos</h2>
+            <div class="sangria-1">
                 <h3>10.1. Manual de instalación</h3>
-                <h3>10.2. Manual de usuario</h3>
-                <h3>10.3. Documentación complementaria</h3>
-                <h3>10.4. Anexos Técnicos</h3>
+                <p>Este manual describe los pasos necesarios para poner en marcha el entorno de desarrollo de Ianuarius en una máquina local.</p>
+                <div class="sangria-2">
+                    <h4>Requisitos previos</h4>
+                    <p>Antes de comenzar, es necesario tener instalados los siguientes programas:</p>
+                    <ul>
+                        <li><p>Git (cualquier versión reciente)</p></li>
+                        <li><p>Docker Desktop o Docker Engine con Docker Compose (v2 o superior)</p></li>
+                        <li><p>Node.js 18 o superior (necesario únicamente para el frontend en modo desarrollo)</p></li>
+                    </ul>
+
+                    <h4>Clonación del repositorio</h4>
+                    <p>Clonar el repositorio desde GitLab mediante el siguiente comando:</p>
+                    <pre><code>git clone &lt;URL_DEL_REPOSITORIO&gt;</code></pre>
+                    <p>Acceder a la carpeta del proyecto:</p>
+                    <pre><code>cd TFG-DAW2/ianuarius-app</code></pre>
+
+                    <h4>Configuración de variables de entorno</h4>
+                    <p>El frontend requiere un fichero <code>.env</code> en la carpeta <code>frontend/</code> con el Client ID de Google OAuth. Crear el fichero con el siguiente contenido:</p>
+                    <pre><code>VITE_GOOGLE_CLIENT_ID=&lt;tu_google_client_id&gt;</code></pre>
+                    <p>Este valor se obtiene desde Google Cloud Console al registrar la aplicación como cliente OAuth 2.0.</p>
+
+                    <h4>Arranque del backend con Docker</h4>
+                    <p>Desde la carpeta <code>ianuarius-app/</code>, ejecutar:</p>
+                    <pre><code>docker compose up -d</code></pre>
+                    <p>Este comando levanta tres contenedores:</p>
+                    <ul>
+                        <li><p><strong>ianuarius_web:</strong> servidor Apache + PHP 8.2, accesible en <code>http://localhost:8081</code></p></li>
+                        <li><p><strong>ianuarius_db:</strong> base de datos MySQL 8.0, puerto 3307</p></li>
+                        <li><p><strong>ianuarius_pma:</strong> phpMyAdmin, accesible en <code>http://localhost:8082</code></p></li>
+                    </ul>
+
+                    <h4>Importación de la base de datos</h4>
+                    <p>Una vez los contenedores estén activos, importar el esquema inicial desde phpMyAdmin (<code>http://localhost:8082</code>) o mediante línea de comandos:</p>
+                    <pre><code>docker exec -i ianuarius_db mysql -u root -proot ianuarius_db &lt; database/ianuarius.sql</code></pre>
+
+                    <h4>Arranque del frontend</h4>
+                    <p>Desde la carpeta <code>frontend/</code>, instalar dependencias y arrancar el servidor de desarrollo:</p>
+                    <pre><code>npm install
+npm run dev</code></pre>
+                    <p>El frontend quedará disponible en <code>http://localhost:5173</code>. Las peticiones a la API se dirigen automáticamente al backend en puerto 8081 según la configuración de Vite.</p>
+
+                    <h4>Resumen de servicios</h4>
+                    <table class="tabla-smart">
+                        <thead><tr><th>Servicio</th><th>URL</th><th>Credenciales</th></tr></thead>
+                        <tbody>
+                            <tr><td>Backend API (PHP/Apache)</td><td>http://localhost:8081</td><td>—</td></tr>
+                            <tr><td>Frontend (React/Vite, dev)</td><td>http://localhost:5173</td><td>—</td></tr>
+                            <tr><td>phpMyAdmin</td><td>http://localhost:8082</td><td>root / root</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="zona-apagada">10.2. Manual de usuario</h3>
+                <p class="nota-gris zona-apagada">(Pendiente)</p>
+
+                <a id="prl" class="ancla-top"></a>
+                <h3>10.3. Prevención de Riesgos Laborales</h3>
+                <p>El presente anexo describe las condiciones del puesto de trabajo desde el que se ha desarrollado el proyecto, conforme a los principios básicos de la prevención de riesgos laborales aplicables a puestos de trabajo con pantalla de visualización de datos (PVD).</p>
+                <div class="sangria-2">
+                    <h4>Descripción del área de trabajo</h4>
+                    <p>El desarrollo del proyecto se ha llevado a cabo en un escritorio personal ubicado en una habitación de uso individual. El puesto de trabajo consta de un ordenador de sobremesa con monitor, teclado y ratón, una silla de oficina regulable en altura y una superficie de trabajo suficiente para apoyar los antebrazos durante la escritura.</p>
+
+                    <h4>Condiciones de iluminación</h4>
+                    <p>La fuente de luz natural principal es una ventana que incide de forma <strong>lateral</strong> respecto al plano de la pantalla, lo que evita reflejos directos sobre el monitor y deslumbramientos al usuario. Esta disposición cumple con la recomendación técnica de que las ventanas queden perpendiculares —y nunca frontales ni traseras— respecto al eje de visión del operador.</p>
+                    <p>La iluminación artificial se realiza mediante un flexo de escritorio orientado en dirección opuesta a la ventana, de forma que complementa la luz natural sin generar reflejos adicionales sobre la pantalla ni zonas de sombra en el área de trabajo.</p>
+
+                    <h4>Riesgos identificados y medidas preventivas</h4>
+                    <ul>
+                        <li><p><strong>Fatiga visual:</strong> derivada del uso prolongado de pantalla. Medida aplicada: configuración del modo oscuro del sistema operativo durante el trabajo nocturno y aplicación de la regla 20-20-20 (cada 20 minutos, mirar a 20 pies de distancia durante 20 segundos).</p></li>
+                        <li><p><strong>Sobrecarga postural:</strong> por mantenimiento de postura sedentaria durante períodos prolongados. Medida aplicada: levantarse y realizar estiramientos breves cada 45-60 minutos de trabajo continuado.</p></li>
+                        <li><p><strong>Fatiga mental:</strong> derivada de la concentración sostenida en tareas de programación. Medida aplicada: organización del trabajo en bloques con pausas programadas, evitando sesiones de más de 2 horas sin descanso.</p></li>
+                    </ul>
+                </div>
+
+                <a id="sostenibilidad" class="ancla-top"></a>
+                <h3>10.4. Plan de Sostenibilidad</h3>
+                <p>Este apartado recoge el plan de sostenibilidad del proyecto Ianuarius, atendiendo al impacto ambiental, social y económico de la aplicación.</p>
+                <div class="sangria-2">
+                    <h4>Sostenibilidad ambiental — reducción del consumo de papel</h4>
+                    <p>El principal impacto ambiental positivo de Ianuarius reside en la digitalización del proceso de inscripción de atletas. Antes de esta herramienta, el procedimiento requería que los tutores imprimieran los formularios oficiales de la federación, los rellenaran a mano o en ordenador para imprimirlos de nuevo, y los entregaran físicamente junto con fotocopias del DNI y del seguro médico.</p>
+                    <p>La aplicación elimina este flujo de papel por completo: el atleta o su tutor completa la inscripción directamente desde la web, aporta la documentación en formato digital (foto del DNI escaneado o fotografiado) y el sistema gestiona toda la tramitación sin necesidad de imprimir ni archivar ningún documento físico. Esto supone una reducción directa del consumo de papel, tóner y energía asociada a la impresión en cada proceso de inscripción.</p>
+
+                    <h4>Sostenibilidad social</h4>
+                    <p>La digitalización del proceso también tiene un impacto social positivo: elimina barreras de acceso para familias que no disponen de impresora en casa, reduce los desplazamientos a copisterías y simplifica la gestión para los tutores de atletas menores de edad, que representan la mayoría del club.</p>
+
+                    <h4>Sostenibilidad económica</h4>
+                    <p>El sistema está diseñado para minimizar los costes operativos. El stack tecnológico se basa íntegramente en software libre y gratuito (PHP, MySQL, React, Docker), y el coste de alojamiento en producción se estima en menos de 90 €/año (ver apartado 1.5.2.3). La reducción del gasto en papel, impresión y gestión manual se traduce en un ahorro tangible para el club a largo plazo.</p>
+                </div>
             </div>
 
         </div> 
