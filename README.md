@@ -94,7 +94,7 @@ Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licenci
 ---
 
 > [!WARNING]
-> Para correr la aplicación en local, se debe usar la rama `main-dev`. De lo contrario el desarrollador deberá gestionar las posibles incompatibilidades.
+> Para correr la aplicación en local, se debe usar la rama `main` (rama de producción) o `main-dev` (rama de desarrollo). De lo contrario el desarrollador deberá gestionar las posibles incompatibilidades.
 
 > [!NOTE]
 > El `.docx` de la memoria del proyecto se encuentra en la rama `gh-pages`.
