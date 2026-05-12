@@ -12,7 +12,7 @@
 - **Tutor:** Serafina Martín Marcos
 - **Ciclo:** Desarrollo de Aplicaciones Web (I.E.S. Venancio Blanco)
 
-<br><br><br><br>
+<br>
 
 <p align="right">
 	<a href="https://ivee31.github.io/TFG-DAW2/" target="_blank">🌐 Ver Documentación (Memoria) Online</a><br>
@@ -24,113 +24,171 @@
 </p>
 
 ---
-<br>
+
+## ¿Qué es Ianuarius?
+
+Ianuarius es una plataforma web de gestión integral para el Club de Atletismo Ianuarius de Salamanca. Digitaliza los procesos de inscripción de atletas, gestión de marcas deportivas, seguimiento de entrenamientos y administración del club, eliminando la burocracia en papel que caracteriza a los clubes modestos.
+
+---
+
+## Stack Tecnológico
+
+| Capa | Tecnología |
+|------|-----------|
+| Frontend | React 18 + Vite + Tailwind CSS |
+| Backend | PHP 8.2 (API REST sin framework) |
+| Base de datos | MySQL 8.0 |
+| Entorno local | Docker + Docker Compose |
+| Autenticación | Sesiones PHP + Google OAuth 2.0 |
+| Email | Brevo (API transaccional) |
+
+---
+
+## Roles
+
+- **Atleta** — consulta sus marcas, registra feedback de entrenamientos, sube documentación y gestiona su inscripción.
+- **Entrenador** — visualiza y filtra fichas de todos los atletas, consulta marcas y calendario global.
+- **Admin** — gestión completa: atletas, entrenadores, plantilla PDF de inscripción y calendario de eventos.
+
+---
+
+## Funcionalidades principales
+
+- Login / Registro con credenciales propias o Google OAuth
+- Recuperación de contraseña por email (Brevo)
+- Perfil de usuario: datos personales, foto, DNI escaneado, eliminación de cuenta (RGPD)
+- Dashboard del atleta: marcas vinculadas a eventos, sensaciones emoji 1-5
+- Inscripción PDF: admin sube plantilla, atleta la rellena en el navegador
+- Calendario de eventos (competiciones, controles, escolares…)
+- Panel del entrenador: filtros por texto, género y categoría
+- Panel de administración: gestión de atletas y entrenadores
+- Aviso legal público
+
+---
+
+## Estructura del proyecto
+
+```
+TFG-DAW2/
+└── ianuarius-app/
+    ├── backend/          # API REST PHP 8.2 (Apache)
+    │   └── api/
+    │       ├── index.php           # Enrutador central
+    │       ├── controllers/        # Lógica de negocio por módulo
+    │       └── config/             # Conexión BD y variables de entorno
+    ├── frontend/         # SPA React 18 + Vite + Tailwind
+    │   └── src/
+    │       ├── App.jsx             # Enrutador de vistas
+    │       └── components/         # Componentes por sección
+    ├── database/
+    │   └── ianuarius.sql           # Esquema completo + datos de catálogo
+    ├── docker-compose.yml
+    └── Dockerfile
+```
+
+---
 
 ## Licencia
 Esta obra está bajo una licencia Reconocimiento-Compartir bajo la misma licencia 3.0 España de Creative Commons. Para ver una copia de la licencia, visite [Creative Commons](http://creativecommons.org/licenses/by-sa/3.0/es/) o envíe una carta a Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA.
 
 ---
-<br>
 
 > [!WARNING]
-> **¡Atención!**
-> Para correr la aplicacion en local, actualmente se debe desplegar esta misma desde la rama `main-dev`, en caso contrario, el desarrollador deberá gestionar por su cuenta las posibles incompatibilidades
+> Para correr la aplicación en local, se debe usar la rama `main-dev`. De lo contrario el desarrollador deberá gestionar las posibles incompatibilidades.
 
 > [!NOTE]
-> Se podrá encontrar el .docx con la memoria del proyecto (aun en desarrollo) en la rama `gh-pages` y `gh-nueva-estructura` (rama de prueba antes de subir a la desplegada).
+> El `.docx` de la memoria del proyecto se encuentra en la rama `gh-pages`.
 
 <br>
 
-// MANUAL DE DESPLIEGUE E INSTALACION
+---
 
-## 1. Configuracion del Entorno
+## Manual de instalación
 
-Este apartado detalla los pasos tecnicos necesarios para poner en marcha la plataforma Ianuarius, separando la configuracion del servidor backend y el frontend.
+### 1.1 Requisitos previos
 
+- **Docker Desktop** (o Docker Engine con Docker Compose v2+)
+- **Node.js** v18 o superior + npm
+- **Git**
 
-### 1.1 Requisitos Previos
+### 1.2 Clonar el repositorio
 
-// software necesario para ejecucion
-* **Virtualizador:** Docker desktop instalado.
-* **Entorno JS:** Node.js (v18+) y gestor npm.
-* **Control Versiones:** Git instalado.
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd TFG-DAW2/ianuarius-app
+```
 
+### 1.3 Configurar variables de entorno del backend
 
-
-### 1.2 Configuracion de la Base de Datos
-
-// inicializacion de datos en mysql
-
-1. Iniciar servicios de Apache y MySQL (o lanzar Docker, ver 1.3).
-2. Importar el esquema localizado en `ianuarius-app/database/ianuarius.sql`.
-3. Configurar el archivo `.env` en `ianuarius-app/backend/` con las credenciales:
+Crear o editar `ianuarius-app/backend/.env`:
 
 ```env
-// CONFIGURACION CONEXION PDO
 DB_HOST=db
 DB_NAME=ianuarius_db
 DB_USER=root
 DB_PASS=root
 DB_PORT=3306
 
-// URL del frontend (para enlaces en emails)
+# URL del frontend (para enlaces en emails)
 APP_URL=http://localhost:5173
 
-// Clave API de Resend (servicio de envio de email transaccional)
-// Obtener en: https://resend.com → Dashboard → API Keys
-RESEND_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# Clave API de Brevo (email transaccional)
+# Obtener en: https://app.brevo.com → SMTP & API → API Keys
+BREVO_KEY=xkeysib-xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
-### 1.3 Montaje de los Contenedores
 
-1. Tener programa docker corriendo.
-2. Acceder al directorio raiz del programa `/ianuarius-app`.
-3. Componer los containers necesarios:
+### 1.4 Levantar contenedores Docker
+
 ```bash
-# COMPOSE DE LOS CONTENEDORES NECESARIOS
 docker compose up -d --build
- ```
+```
+
+Esto levanta tres servicios:
+
+| Servicio | URL local | Descripción |
+|----------|-----------|-------------|
+| `ianuarius_web` | http://localhost:8081 | Apache + PHP 8.2 |
+| `ianuarius_db` | puerto 3307 | MySQL 8.0 |
+| `ianuarius_pma` | http://localhost:8082 | phpMyAdmin (root/root) |
 
 > [!WARNING]
->  En caso de realizar cambios en la configuración que afecten al funcionamiento del docker, se deberá relanzar el compose up en la ruta pertinente
+> Si cambias la configuración de Docker, relanza `docker compose up -d --build`.
 
-### 1.4 Despliegue del Frontend
+### 1.5 Importar la base de datos
 
-1. Acceder a la carpeta del cliente: `ianuarius-app/frontend`.
-2. Crear archivo `.env` en esa carpeta con la clave de Google OAuth:
+Desde phpMyAdmin (`http://localhost:8082`) o por línea de comandos:
+
+```bash
+docker exec -i ianuarius_db mysql -u root -proot ianuarius_db < database/ianuarius.sql
+```
+
+### 1.6 Configurar y arrancar el frontend
+
+Crear `ianuarius-app/frontend/.env`:
 
 ```env
-// CLIENT ID obtenido en Google Cloud Console → APIs & Services → Credentials
+# Client ID de Google OAuth
+# Obtener en: Google Cloud Console → APIs & Services → Credentials
 VITE_GOOGLE_CLIENT_ID=XXXXXXXXXXXXXXXX.apps.googleusercontent.com
 ```
 
-3. Instalar dependencias necesarias:
+Instalar dependencias y arrancar:
 
 ```bash
-# DESCARGA DE MODULOS NODE
+cd frontend
 npm install
-```
-
-4. Arrancar el servidor de desarrollo:
-
-```bash
-# INICIO ENTORNO LOCAL
 npm run dev
 ```
 
-5. Obtener versión para distribución del front:
+El frontend queda disponible en **http://localhost:5173**.
+
+Para generar el build de producción:
 
 ```bash
-# OBTENER LA CARPETA BUILD
 npm run build
 ```
 
-### 1.5 Seguridad y CORS
+### 1.7 Seguridad y CORS
 
-La aplicacion implementa sesiones seguras mediante **Cookies HttpOnly**. 
-
-* El archivo `vite.config.js` actua como proxy para redirigir peticiones `/api` al servidor PHP.
-
-### 1.6 Acceso al Sistema
-
-* **URL:** `http://localhost:5173` (con `npm run dev` corriendo)
-* **phpMyAdmin:** `http://localhost:8082`
+- Autenticación mediante **Cookies HttpOnly** (sin acceso desde JS).
+- El archivo `vite.config.js` actúa como proxy, redirigiendo peticiones `/api` al servidor PHP en puerto 8081.
