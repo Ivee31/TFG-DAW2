@@ -1,32 +1,24 @@
--- 1. Tabla categorias (Basada en apartado 3.4.1 de la memoria)
+-- Categorías atléticas (rangos de edad; veteranos separados por género)
 CREATE TABLE categorias (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     edad_min INT NOT NULL,
     edad_max INT NOT NULL,
     genero ENUM('M', 'F') DEFAULT NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 2. Tabla pruebas (Basada en apartado 3.4.2 de la memoria)
+-- Catálogo de disciplinas atléticas
 CREATE TABLE pruebas (
     id_prueba INT AUTO_INCREMENT PRIMARY KEY,
     nombre_prueba VARCHAR(50) NOT NULL,
     tipo ENUM(
-        'Velocidad Corta',
-        'Velocidad Larga',
-        'Vallas',
-        'Medio Fondo',
-        'Fondo',
-        'Larga Distancia',
-        'Obstaculos',
-        'Salto',
-        'Lanzamiento',
-        'Marcha',
-        'Relevos'
+        'Velocidad Corta', 'Velocidad Larga', 'Vallas', 'Medio Fondo',
+        'Fondo', 'Larga Distancia', 'Obstaculos', 'Salto',
+        'Lanzamiento', 'Marcha', 'Relevos'
     ) NOT NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 3. Tabla pruebas_variantes (Basada en apartado 3.4.3 de la memoria)
+-- Especificaciones técnicas por prueba, categoría y género (alturas de vallas, pesos de implementos)
 CREATE TABLE pruebas_variantes (
     id_variante INT AUTO_INCREMENT PRIMARY KEY,
     id_prueba INT NOT NULL,
@@ -35,9 +27,9 @@ CREATE TABLE pruebas_variantes (
     especificaciones VARCHAR(100) DEFAULT NULL,
     FOREIGN KEY (id_prueba) REFERENCES pruebas(id_prueba) ON DELETE CASCADE,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 4. Tabla usuarios (Basada en apartado 3.4.4 de la memoria)
+-- Usuarios del sistema: atletas, entrenadores y administradores
 CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     id_categoria INT DEFAULT NULL,
@@ -45,17 +37,20 @@ CREATE TABLE usuarios (
     apellidos VARCHAR(100) NOT NULL,
     dni VARCHAR(9) UNIQUE DEFAULT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NULL,
-    google_id VARCHAR(255) NULL UNIQUE,
+    password_hash VARCHAR(255) DEFAULT NULL,
+    google_id VARCHAR(255) UNIQUE DEFAULT NULL,
     rol ENUM('Admin', 'Entrenador', 'Atleta') DEFAULT 'Atleta',
     fecha_nacimiento DATE NOT NULL,
     genero ENUM('M', 'F') NOT NULL,
-    estado_cuenta BOOLEAN DEFAULT TRUE,
+    estado_cuenta TINYINT(1) DEFAULT 1,
     foto_perfil MEDIUMTEXT DEFAULT NULL,
+    foto_dni MEDIUMTEXT DEFAULT NULL,
+    foto_carnet MEDIUMTEXT DEFAULT NULL,
+    inscripcion_pdf MEDIUMTEXT DEFAULT NULL,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 5. Tabla fichas_inscripcion (Basada en apartado 3.4.5 de la memoria)
+-- Ficha de inscripción por temporada, una por atleta
 CREATE TABLE fichas_inscripcion (
     id_ficha INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT UNIQUE NOT NULL,
@@ -66,9 +61,9 @@ CREATE TABLE fichas_inscripcion (
     ruta_dni VARCHAR(255) DEFAULT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 6. Tabla feedback_entrenamientos (Basada en apartado 3.4.6 de la memoria)
+-- Registro de sesiones de entrenamiento y sensaciones del atleta
 CREATE TABLE feedback_entrenamientos (
     id_registro INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
@@ -76,9 +71,9 @@ CREATE TABLE feedback_entrenamientos (
     sesion_realizada TEXT NOT NULL,
     sensaciones TEXT DEFAULT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 7. Tabla eventos_calendario (Basada en apartado 3.4.7 de la memoria)
+-- Eventos del calendario de competiciones
 CREATE TABLE eventos_calendario (
     id_evento INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
@@ -92,13 +87,45 @@ CREATE TABLE eventos_calendario (
     tipo_pista ENUM('aire libre', 'pista cubierta', 'cross') NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- ==========================================
--- DATOS DE PRUEBA (SEED) - Para cumplir rúbrica
--- ==========================================
+-- Marcas deportivas registradas por los atletas (formato MM'SS"ms)
+CREATE TABLE marcas (
+    id_marca INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_categoria INT DEFAULT NULL,
+    id_evento INT DEFAULT NULL,
+    prueba VARCHAR(50) NOT NULL,
+    temporada ENUM('short_track', 'outdoor') NOT NULL,
+    tipo_competicion ENUM('Nacional', 'Autonomico', 'Provincial', 'Escolar', 'Control') NOT NULL DEFAULT 'Control',
+    marca VARCHAR(20) NOT NULL,
+    fecha DATE NOT NULL,
+    sensaciones_valor TINYINT DEFAULT NULL,
+    sensaciones_notas VARCHAR(500) DEFAULT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL,
+    FOREIGN KEY (id_evento) REFERENCES eventos_calendario(id_evento) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Insertar categorías (IDs 1-22)
+-- Tokens de recuperación de contraseña (un solo uso con caducidad)
+CREATE TABLE password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    token VARCHAR(64) NOT NULL UNIQUE,
+    expires_at DATETIME NOT NULL,
+    usado TINYINT(1) NOT NULL DEFAULT 0,
+    creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Configuración del club (plantilla PDF de inscripción y otros parámetros)
+CREATE TABLE configuracion_club (
+    clave VARCHAR(50) PRIMARY KEY,
+    valor LONGTEXT,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- Categorías atléticas
 INSERT INTO categorias (nombre, edad_min, edad_max, genero) VALUES
 ('Sub-10',   0,  9, NULL),
 ('Sub-12',  10, 11, NULL),
@@ -123,8 +150,8 @@ INSERT INTO categorias (nombre, edad_min, edad_max, genero) VALUES
 ('M65',     65,150, 'M'),
 ('F65',     65,150, 'F');
 
--- Insertar pruebas (con IDs explícitos para consistencia con migraciones)
--- Categorias de referencia: Sub-14=3, Sub-16=4, Sub-18=5, Sub-20=6, Sub-23=7, Absoluta=8
+-- Pruebas atléticas (IDs explícitos para consistencia con referencias en pruebas_variantes)
+-- Referencia de IDs de categoría: Sub-14=3, Sub-16=4, Sub-18=5, Sub-20=6, Sub-23=7, Absoluta=8
 -- Masters M: M35=9, M40=11, M45=13, M50=15, M55=17, M60=19, M65=21
 -- Masters F: F35=10, F40=12, F45=14, F50=16, F55=18, F60=20, F65=22
 INSERT INTO pruebas (id_prueba, nombre_prueba, tipo) VALUES
@@ -163,12 +190,12 @@ INSERT INTO pruebas (id_prueba, nombre_prueba, tipo) VALUES
 (33, '5000m marcha',            'Marcha'),
 (34, '10km marcha',             'Marcha'),
 (35, '20km marcha',             'Marcha'),
-(36, '4x100m Masc',            'Relevos'),
-(37, '4x100m Fem',             'Relevos'),
-(38, '4x100m Mix',             'Relevos'),
-(39, '4x400m Masc',            'Relevos'),
-(40, '4x400m Fem',             'Relevos'),
-(41, '4x400m Mix',             'Relevos');
+(36, '4x100m Masc',             'Relevos'),
+(37, '4x100m Fem',              'Relevos'),
+(38, '4x100m Mix',              'Relevos'),
+(39, '4x400m Masc',             'Relevos'),
+(40, '4x400m Fem',              'Relevos'),
+(41, '4x400m Mix',              'Relevos');
 
 -- Variantes de vallas (altura varía por categoría y género)
 INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable, especificaciones) VALUES
@@ -196,31 +223,31 @@ INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable, especi
 (19, 6, 'M', 'altura: 0.99m'),
 (19, 7, 'M', 'altura: 1.067m'),
 (19, 8, 'M', 'altura: 1.067m'),
--- 400m vallas (id 2) — Sub-18 a Absoluta + Masters
+-- 400m vallas (id 2) — Sub-18 a Absoluta y Masters
 (2,  5, 'M', 'altura: 0.84m'),
 (2,  6, 'M', 'altura: 0.91m'),
 (2,  7, 'M', 'altura: 0.91m'),
 (2,  8, 'M', 'altura: 0.91m'),
-(2,  9, 'M', 'altura: 0.91m'),   -- M35
-(2, 11, 'M', 'altura: 0.91m'),   -- M40
-(2, 13, 'M', 'altura: 0.84m'),   -- M45
-(2, 15, 'M', 'altura: 0.76m'),   -- M50
-(2, 17, 'M', 'altura: 0.76m'),   -- M55
-(2, 19, 'M', 'altura: 0.686m'),  -- M60
-(2, 21, 'M', 'altura: 0.686m'),  -- M65
+(2,  9, 'M', 'altura: 0.91m'),
+(2, 11, 'M', 'altura: 0.91m'),
+(2, 13, 'M', 'altura: 0.84m'),
+(2, 15, 'M', 'altura: 0.76m'),
+(2, 17, 'M', 'altura: 0.76m'),
+(2, 19, 'M', 'altura: 0.686m'),
+(2, 21, 'M', 'altura: 0.686m'),
 (2,  5, 'F', 'altura: 0.76m'),
 (2,  6, 'F', 'altura: 0.76m'),
 (2,  7, 'F', 'altura: 0.76m'),
 (2,  8, 'F', 'altura: 0.76m'),
-(2, 10, 'F', 'altura: 0.76m'),   -- F35
-(2, 12, 'F', 'altura: 0.76m'),   -- F40
-(2, 14, 'F', 'altura: 0.76m'),   -- F45
-(2, 16, 'F', 'altura: 0.686m'),  -- F50
-(2, 18, 'F', 'altura: 0.686m'),  -- F55
-(2, 20, 'F', 'altura: 0.686m'),  -- F60
-(2, 22, 'F', 'altura: 0.686m');  -- F65
+(2, 10, 'F', 'altura: 0.76m'),
+(2, 12, 'F', 'altura: 0.76m'),
+(2, 14, 'F', 'altura: 0.76m'),
+(2, 16, 'F', 'altura: 0.686m'),
+(2, 18, 'F', 'altura: 0.686m'),
+(2, 20, 'F', 'altura: 0.686m'),
+(2, 22, 'F', 'altura: 0.686m');
 
--- 50m lisos (id 3) — solo Sub-10 y Sub-12 (sin variantes numericas, solo restriccion de categoria)
+-- 50m lisos (id 3) — solo Sub-10 y Sub-12
 INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable) VALUES
 (3, 1, 'M'),
 (3, 1, 'F'),
@@ -341,46 +368,6 @@ INSERT INTO pruebas_variantes (id_prueba, id_categoria, genero_aplicable, especi
 (31, 20, 'F', 'peso: 3kg'),
 (31, 22, 'F', 'peso: 3kg');
 
--- Insertar usuarios de prueba (Contraseñas sin cifrar por ahora para que puedas probar el login más fácil en desarrollo)
-INSERT INTO usuarios (id_categoria, nombre, apellidos, dni, email, password_hash, rol, fecha_nacimiento, genero, estado_cuenta) VALUES 
-(NULL, 'Ivan', 'Admin', '00000000A', 'admin@ianuarius.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin', '2004-10-31', 'M', TRUE);
-
--- Insertar una inscripción de prueba
-INSERT INTO fichas_inscripcion (id_usuario, temporada, estado_validacion, estado_pago) VALUES
-(1, '2025/2026', 'validado', 'pagado');
-
--- 8. Tabla password_resets (tokens para recuperacion de contraseña)
-CREATE TABLE password_resets (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    token VARCHAR(64) NOT NULL UNIQUE,
-    expires_at DATETIME NOT NULL,
-    usado TINYINT(1) NOT NULL DEFAULT 0,
-    creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- 9. Tabla marcas (tiempos registrados por los atletas)
--- formato marca: MM'SS"ms  (ej: 00'49"15)
-CREATE TABLE IF NOT EXISTS marcas (
-    id_marca         INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario       INT NOT NULL,
-    id_categoria     INT DEFAULT NULL,
-    id_evento        INT DEFAULT NULL,
-    prueba           VARCHAR(50) NOT NULL,
-    temporada        ENUM('short_track', 'outdoor') NOT NULL,
-    tipo_competicion ENUM('Nacional','Autonomico','Provincial','Escolar','Control') NOT NULL DEFAULT 'Control',
-    marca               VARCHAR(20) NOT NULL,
-    fecha               DATE NOT NULL,
-    sensaciones_valor   TINYINT DEFAULT NULL COMMENT '1-5: 1=muy mal, 5=excelente',
-    sensaciones_notas   VARCHAR(500) DEFAULT NULL,
-    FOREIGN KEY (id_usuario)   REFERENCES usuarios(id_usuario)     ON DELETE CASCADE,
-    FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL,
-    FOREIGN KEY (id_evento)    REFERENCES eventos_calendario(id_evento) ON DELETE SET NULL
-);
-
--- Tabla configuracion del club (plantilla PDF inscripcion, etc.)
-CREATE TABLE IF NOT EXISTS configuracion_club (
-    clave VARCHAR(50) PRIMARY KEY,
-    valor LONGTEXT,
-    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+-- Usuario administrador por defecto
+INSERT INTO usuarios (id_categoria, nombre, apellidos, dni, email, password_hash, rol, fecha_nacimiento, genero, estado_cuenta) VALUES
+(NULL, 'Ivan', 'Admin', '00000000A', 'admin@ianuarius.com', '$2y$12$IwbfV5lhLBrPsPVSuLB1q.H1EM5GxHIltCOj.xIaVfhEcoSKtCS7y', 'Admin', '2004-10-31', 'M', 1);
