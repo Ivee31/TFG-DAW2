@@ -1,15 +1,42 @@
 // vista Home
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Login from './Login';
 import Register from './Register';
 import logoIanuarius from '../assets/logoIanuarius.png';
 import logoInstagram from '../assets/logoInstagram.png';
 
 function Modal({ onClose, children }) {
+	const containerRef = useRef(null);
+
 	useEffect(() => {
-		const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+		const previousFocus = document.activeElement;
+
+		const focusable = containerRef.current?.querySelectorAll(
+			'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+		);
+		if (focusable?.length) focusable[0].focus();
+
+		const onKey = (e) => {
+			if (e.key === 'Escape') { onClose(); return; }
+			if (e.key === 'Tab') {
+				const els = [...(containerRef.current?.querySelectorAll(
+					'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+				) ?? [])];
+				if (!els.length) return;
+				const first = els[0];
+				const last = els[els.length - 1];
+				if (e.shiftKey) {
+					if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+				} else {
+					if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+				}
+			}
+		};
 		document.addEventListener('keydown', onKey);
-		return () => document.removeEventListener('keydown', onKey);
+		return () => {
+			document.removeEventListener('keydown', onKey);
+			previousFocus?.focus();
+		};
 	}, [onClose]);
 
 	return (
@@ -18,6 +45,9 @@ function Modal({ onClose, children }) {
 			onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
 		>
 			<div
+				ref={containerRef}
+				role="dialog"
+				aria-modal="true"
 				className="relative w-full max-w-sm md:max-w-md"
 				onClick={e => e.stopPropagation()}
 			>
@@ -77,8 +107,8 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 		<div className="bg-oscuro text-gray-200 font-sans antialiased overflow-x-hidden">
 			<style>{`
 				.bg-hero {
-					background: linear-gradient(to bottom, rgba(23,23,23,0.72), rgba(23,23,23,1)),
-					            url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')
+					background: linear-gradient(to bottom, rgba(23,23,23,0.45), rgba(23,23,23,0.95)),
+					            url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=70')
 					            no-repeat center center;
 					background-size: cover;
 				}
@@ -95,7 +125,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			`}</style>
 
 			{/* HERO */}
-			<section className="min-h-screen w-full bg-hero flex flex-col">
+			<section className="min-h-[80vh] w-full bg-hero flex flex-col">
 
 				{/* NAV */}
 				<nav className="w-full px-6 md:px-10 py-5 flex items-center justify-between">
@@ -106,20 +136,12 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						<span className="text-white font-black text-sm tracking-[0.25em] uppercase">Ianuarius</span>
 					</div>
 
-					<a
-						href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="hover:opacity-70 transition"
-					>
-						<img src={logoInstagram} alt="Instagram" className="w-10 h-10 object-contain" />
-					</a>
 				</nav>
 
 				{/* HERO CENTER */}
 				<div className="flex-1 flex flex-col items-center justify-center px-4 text-center pb-6">
 
-					<h1 className="titulo-collegiate text-5xl md:text-7xl lg:text-[7rem] tracking-widest select-none drop-shadow-[0_0_30px_rgba(254,0,0,0.2)]">
+					<h1 className="titulo-collegiate text-5xl md:text-6xl lg:text-[5rem] tracking-widest select-none drop-shadow-[0_0_30px_rgba(254,0,0,0.2)]">
 						IANUARIUS
 					</h1>
 
@@ -142,7 +164,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 						<button
 							onClick={openLogin}
-							className="px-8 py-3 border border-white/30 text-white font-black text-[10px] tracking-widest uppercase rounded hover:border-white hover:bg-white/5 transition duration-300"
+							className="px-8 py-3 bg-white/10 border border-white/40 text-white font-black text-[10px] tracking-widest uppercase rounded hover:border-white hover:bg-white/20 transition duration-300"
 						>
 							Acceder
 						</button>
@@ -232,7 +254,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				<div className="lg:col-span-6 bg-gris p-5 md:p-6 rounded-xl border-t-4 border-ianuarius shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 					<div className="w-full h-48 bg-oscuro rounded-lg mb-5 overflow-hidden relative group">
 						<img
-							src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+							src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=70"
 							alt="Pista de atletismo"
 							className="object-cover w-full h-full opacity-60 group-hover:opacity-90 group-hover:scale-105 transition duration-700 ease-in-out"
 						/>
@@ -261,7 +283,17 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			</section>
 
 			{/* FOOTER */}
-			<footer className="w-full py-8 flex justify-center border-t border-white/5">
+			<footer className="w-full py-8 flex flex-col items-center gap-3 border-t border-white/5">
+				<a
+					href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="flex items-center gap-2 hover:opacity-70 transition"
+					aria-label="Instagram de Ianuarius"
+				>
+					<img src={logoInstagram} alt="" className="w-5 h-5 object-contain" />
+					<span className="text-[10px] text-gray-500 uppercase tracking-widest">@c.a.i.s</span>
+				</a>
 				<p className="text-[9px] text-gray-600 uppercase tracking-[0.5em] text-center leading-relaxed">
 					Ianuarius Athletics Club &copy; 2026<br />
 					<a href="?page=aviso-legal" className="hover:text-gray-400 transition underline underline-offset-2">Aviso Legal</a>

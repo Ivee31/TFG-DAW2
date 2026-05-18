@@ -184,14 +184,14 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 				<div className="flex justify-between items-center mb-10 border-b border-white/10 pb-4">
 					<h3 className="font-bold tracking-widest uppercase text-sm">Navegacion</h3>
 					<div className="flex gap-3 items-center">
-						<button onClick={() => setIsPinned(!isPinned)} className={`transition ${isPinned ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
+						<button onClick={() => setIsPinned(!isPinned)} aria-label={isPinned ? 'Desanclar menú' : 'Anclar menú'} className={`transition ${isPinned ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M15 3h-6m3 12v6m-2.5-6h5l1.5-3v-2l-1.5-1V3h-5v6l-1.5 1v2l1.5 3z" />
 							</svg>
 						
 						</button>
 
-						<button onClick={() => { setIsMenuOpen(false); setIsPinned(false); }} className="text-gray-400 hover:text-ianuarius transition lg:hidden">
+						<button onClick={() => { setIsMenuOpen(false); setIsPinned(false); }} aria-label="Cerrar menú" className="text-gray-400 hover:text-ianuarius transition lg:hidden">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
 							</svg>
@@ -300,7 +300,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 							Cerrar Sesion
 						</button>
 
-						<button ref={btnRef} onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white hover:text-ianuarius transition p-2 ml-1">
+						<button ref={btnRef} onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={isMenuOpen} className="text-white hover:text-ianuarius transition p-2 ml-1">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-7 h-7 md:w-6 md:h-6">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
 							</svg>
