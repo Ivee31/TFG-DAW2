@@ -116,6 +116,15 @@ switch ($endpoint) {
         } elseif ($sub === 'inscripcion-pdf' && $method === 'PUT') {
             UsuarioController::subirInscripcionPdf();
 
+        } elseif ($sub === 'dni' && $method === 'DELETE') {
+            UsuarioController::eliminarArchivo('foto_dni');
+
+        } elseif ($sub === 'carnet' && $method === 'DELETE') {
+            UsuarioController::eliminarArchivo('foto_carnet');
+
+        } elseif ($sub === 'inscripcion-pdf' && $method === 'DELETE') {
+            UsuarioController::eliminarArchivo('inscripcion_pdf');
+
         } elseif ($sub === 'cuenta' && $method === 'DELETE') {
             UsuarioController::eliminarCuenta();
 

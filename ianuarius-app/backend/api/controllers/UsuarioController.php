@@ -340,6 +340,36 @@ class UsuarioController {
         }
     }
 
+    public static function eliminarArchivo(string $campo): void {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        $permitidos = ['foto_dni', 'foto_carnet', 'inscripcion_pdf'];
+        if (!in_array($campo, $permitidos, true)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Campo no válido"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare("UPDATE usuarios SET {$campo} = NULL WHERE id_usuario = :id");
+            $stmt->bindParam(':id', $_SESSION['id_usuario'], PDO::PARAM_INT);
+            $stmt->execute();
+
+            http_response_code(200);
+            echo json_encode(["status" => "success"]);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
+
     public static function eliminarCuenta(): void {
         if (session_status() === PHP_SESSION_NONE) session_start();
 

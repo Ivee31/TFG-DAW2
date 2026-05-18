@@ -377,7 +377,7 @@ export default function AdminPanel() {
 														</span>
 														<button
 															onClick={() => handleTogglePago(a.id_usuario, a.estado_pago === 'pagado')}
-															className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded transition ${a.estado_pago === 'pagado' ? 'bg-green-500/20 text-green-400 hover:bg-red-500/20 hover:text-red-400' : 'bg-yellow-500/20 text-yellow-400 hover:bg-green-500/20 hover:text-green-400'}`}
+															className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded transition bg-ianuarius/10 text-ianuarius hover:bg-ianuarius/20"
 														>
 															{a.estado_pago === 'pagado' ? 'Marcar pendiente' : 'Marcar pagado'}
 														</button>
