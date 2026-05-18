@@ -90,7 +90,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 										<span>{p.nombre_prueba}</span>
 
 										{p.especificaciones && (
-											<span className="text-gray-600 text-xs">{p.especificaciones}</span>
+											<span className="text-gray-500 text-xs">{p.especificaciones}</span>
 										)}
 									</div>
 								))}
@@ -98,7 +98,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 						))}
 
 						{gruposOrdenados.length === 0 && (
-							<p className="text-gray-600 text-xs text-center py-4 uppercase tracking-widest">Sin resultados</p>
+							<p className="text-gray-500 text-xs text-center py-4 uppercase tracking-widest">Sin resultados</p>
 						)}
 					</div>
 				</div>
@@ -410,7 +410,7 @@ export default function Dashboard() {
 								<div className="flex justify-between mt-3 pt-3 border-t border-white/5">
 									<button
 										onClick={() => handleAbrirEditar(m)}
-										className="text-gray-600 hover:text-white transition p-1"
+										className="text-gray-500 hover:text-white transition p-1"
 										aria-label="Editar marca" title="Editar marca"
 									>
 										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
@@ -420,7 +420,7 @@ export default function Dashboard() {
 
 									<button
 										onClick={() => { setConfirmandoId(confirmandoId === m.id_marca ? null : m.id_marca); setEditandoId(null); }}
-										className="text-gray-600 hover:text-ianuarius transition p-1"
+										className="text-gray-500 hover:text-ianuarius transition p-1"
 										aria-label="Eliminar marca" title="Eliminar marca"
 									>
 										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
@@ -456,7 +456,7 @@ export default function Dashboard() {
 									<div className="mt-3 pt-3 border-t border-white/20 bg-gris rounded-xl p-4 space-y-4">
 
 										<div>
-											<label htmlFor="dash-edit-competicion" className={labelClasses}>Competición <span className="normal-case text-gray-600 font-normal">(opcional)</span></label>
+											<label htmlFor="dash-edit-competicion" className={labelClasses}>Competición <span className="normal-case text-gray-500 font-normal">(opcional)</span></label>
 											<select
 												id="dash-edit-competicion"
 												value={editEvento?.id_evento ?? ''}
@@ -538,7 +538,7 @@ export default function Dashboard() {
 										</div>
 
 										<div>
-											<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-600 font-normal">(opcional)</span></label>
+											<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-500 font-normal">(opcional)</span></label>
 											<div className="flex gap-2 mb-2">
 												{SENSACIONES.map((emoji, i) => {
 													const val = i + 1;
@@ -659,7 +659,7 @@ export default function Dashboard() {
 							) : competiciones.length === 0 ? (
 								<div className="border border-dashed border-gray-700 rounded-lg py-5 px-3 text-center">
 									<p className="text-gray-500 text-xs uppercase tracking-widest">Sin competiciones en el calendario</p>
-									<p className="text-gray-600 text-[10px] mt-1">Pide a tu entrenador que añada la competición antes de registrar una marca</p>
+									<p className="text-gray-500 text-[10px] mt-1">Pide a tu entrenador que añada la competición antes de registrar una marca</p>
 								</div>
 							) : (
 								<>
@@ -722,7 +722,7 @@ export default function Dashboard() {
 						</div>
 
 						<div>
-							<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-600 font-normal">(opcional)</span></label>
+							<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-500 font-normal">(opcional)</span></label>
 							<div className="flex gap-2 mb-3">
 								{SENSACIONES.map((emoji, i) => {
 									const val = i + 1;

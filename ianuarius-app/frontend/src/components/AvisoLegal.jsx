@@ -61,7 +61,7 @@ export default function AvisoLegal({ onBack }) {
 
 				</div>
 
-				<p className="text-gray-600 text-xs mt-16 border-t border-white/5 pt-8">
+				<p className="text-gray-500 text-xs mt-16 border-t border-white/5 pt-8">
 					Última actualización: mayo 2026 · Ianuarius Athletics Club © 2026
 				</p>
 

@@ -289,7 +289,7 @@ export default function Calendario({ user }) {
 
                 {/* celdas */}
                 {cargando ? (
-                    <div className="py-20 text-center text-gray-600 text-xs uppercase tracking-widest animate-pulse">
+                    <div className="py-20 text-center text-gray-500 text-xs uppercase tracking-widest animate-pulse">
                         Cargando eventos...
                     </div>
                 ) : (
@@ -417,7 +417,7 @@ export default function Calendario({ user }) {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="cal-fecha-fin" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Fecha fin <span className="text-gray-600 normal-case">(opcional)</span></label>
+                                    <label htmlFor="cal-fecha-fin" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Fecha fin <span className="text-gray-500 normal-case">(opcional)</span></label>
                                     <input
                                         id="cal-fecha-fin"
                                         type="date"
@@ -429,7 +429,7 @@ export default function Calendario({ user }) {
                             </div>
 
                             <div>
-                                <label htmlFor="cal-enlace" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Enlace oficial <span className="text-gray-600 normal-case">(opcional)</span></label>
+                                <label htmlFor="cal-enlace" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Enlace oficial <span className="text-gray-500 normal-case">(opcional)</span></label>
                                 <input
                                     id="cal-enlace"
                                     type="url"

@@ -60,7 +60,7 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 				<div className="bg-gris p-8 rounded-xl border-t-4 border-ianuarius shadow-2xl">
 					<h2 className="text-xl font-black text-white mb-1 text-center tracking-widest">COMPLETAR PERFIL</h2>
 					<p className="text-gray-500 text-[10px] text-center uppercase tracking-widest mb-1">Registro con Google</p>
-					<p className="text-gray-600 text-[10px] text-center mb-6">Necesitamos algunos datos adicionales para el club</p>
+					<p className="text-gray-400 text-[10px] text-center mb-6">Necesitamos algunos datos adicionales para el club</p>
 					{errorMsg && (
 						<div className="bg-red-500/10 border border-red-500 text-red-500 p-2 rounded mb-4 text-xs text-center">
 							{errorMsg}
@@ -120,7 +120,7 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 							{loading ? 'REGISTRANDO...' : 'COMPLETAR REGISTRO'}
 						</button>
 					</form>
-					<button onClick={onCancel} className="w-full mt-3 text-gray-600 hover:text-white text-[10px] uppercase tracking-widest transition">
+					<button onClick={onCancel} className="w-full mt-3 text-gray-400 hover:text-white text-[10px] uppercase tracking-widest transition">
 						Cancelar
 					</button>
 				</div>

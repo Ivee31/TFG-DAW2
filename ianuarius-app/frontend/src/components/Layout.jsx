@@ -349,7 +349,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 			{/* footer */}
 			<footer className="w-full py-8 mt-auto flex justify-center border-t border-white/5">
 				<div className="max-w-md w-full text-center">
-					<p className="text-xs md:text-[9px] text-gray-600 uppercase tracking-[0.5em] leading-relaxed">
+					<p className="text-xs md:text-[9px] text-gray-500 uppercase tracking-[0.5em] leading-relaxed">
 						Ianuarius Athletics Club &copy; 2026<br />
 						<span className="opacity-50">Tecnificacion en Salamanca</span>
 					</p>

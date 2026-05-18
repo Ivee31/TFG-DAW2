@@ -112,7 +112,7 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 			</p>
 			<div className="flex items-center gap-3 mb-4">
 				<div className="flex-1 h-px bg-white/10"></div>
-				<span className="text-gray-600 text-[10px] uppercase tracking-widest">o con email</span>
+				<span className="text-gray-400 text-[10px] uppercase tracking-widest">o con email</span>
 				<div className="flex-1 h-px bg-white/10"></div>
 			</div>
 			<form onSubmit={handleRegister} className="space-y-3">

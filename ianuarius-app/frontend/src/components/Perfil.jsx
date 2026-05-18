@@ -763,9 +763,9 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 			<SectionHeader title="Historial de marcas" />
 			<div className="p-4">
 				{cargandoMarcas ? (
-					<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-4">Cargando...</p>
+					<p className="text-gray-500 text-xs uppercase tracking-widest text-center py-4">Cargando...</p>
 				) : marcasPerfil.length === 0 ? (
-					<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-4 border border-dashed border-gray-700 rounded-lg">Sin marcas registradas</p>
+					<p className="text-gray-500 text-xs uppercase tracking-widest text-center py-4 border border-dashed border-gray-700 rounded-lg">Sin marcas registradas</p>
 				) : (
 					<div className="space-y-0">
 						{marcasPerfil.slice(0, 8).map(m => (
@@ -776,7 +776,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 								</div>
 								<div className="text-right shrink-0">
 									<p className="text-ianuarius font-mono text-sm font-bold">{m.marca}</p>
-									<p className="text-gray-600 text-[10px]">{formatFechaPerfil(m.fecha)}</p>
+									<p className="text-gray-500 text-[10px]">{formatFechaPerfil(m.fecha)}</p>
 								</div>
 							</div>
 						))}
