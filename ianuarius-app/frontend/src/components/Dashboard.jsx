@@ -107,7 +107,8 @@ function PruebaSelect({ pruebas, value, onChange }) {
 	);
 }
 
-const REGEX_MARCA = /^\d{2}'\d{2}"\d{2}$/;
+const REGEX_MARCA = /^(\d{2})'(\d{2})"(\d{2})$/;
+const segundosValidos = (marca) => { const m = marca.match(REGEX_MARCA); return m ? parseInt(m[2]) < 60 : false; };
 
 const formatMarcaTiempo = (raw) => {
 	const digits = raw.replace(/\D/g, '').slice(0, 6);
@@ -216,7 +217,7 @@ export default function Dashboard() {
 	};
 
 	const handleMarcaBlur = () => {
-		if (marcaTiempo && !REGEX_MARCA.test(marcaTiempo)) setFormatoError(true);
+		if (marcaTiempo && (!REGEX_MARCA.test(marcaTiempo) || !segundosValidos(marcaTiempo))) setFormatoError(true);
 		else setFormatoError(false);
 	};
 
@@ -227,7 +228,7 @@ export default function Dashboard() {
 			setFeedbackMsg({ tipo: 'error', texto: 'Selecciona una competición del calendario' });
 			return;
 		}
-		if (!REGEX_MARCA.test(marcaTiempo)) { setFormatoError(true); return; }
+		if (!REGEX_MARCA.test(marcaTiempo) || !segundosValidos(marcaTiempo)) { setFormatoError(true); return; }
 		setFormatoError(false);
 		setGuardando(true);
 
@@ -298,7 +299,7 @@ export default function Dashboard() {
 	};
 
 	const handleGuardarEdicion = (id_marca) => {
-		if (!REGEX_MARCA.test(editMarca)) { setEditFormatoError(true); return; }
+		if (!REGEX_MARCA.test(editMarca) || !segundosValidos(editMarca)) { setEditFormatoError(true); return; }
 		setEditFormatoError(false);
 		setGuardandoEdicion(true);
 		const sel = pruebas.find(p => pruebaKey(p) === editPrueba);
@@ -526,7 +527,7 @@ export default function Dashboard() {
 												type="text"
 												value={editMarca}
 												onChange={(e) => { setEditMarca(formatMarcaTiempo(e.target.value)); setEditFormatoError(false); }}
-												onBlur={() => { if (editMarca && !REGEX_MARCA.test(editMarca)) setEditFormatoError(true); else setEditFormatoError(false); }}
+												onBlur={() => { if (editMarca && (!REGEX_MARCA.test(editMarca) || !segundosValidos(editMarca))) setEditFormatoError(true); else setEditFormatoError(false); }}
 												className={`w-full bg-oscuro border p-3 rounded-lg text-xl text-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition font-mono ${editFormatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
 											/>
 											{editFormatoError && (

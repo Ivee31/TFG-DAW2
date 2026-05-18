@@ -3,7 +3,7 @@
 class MarcaController {
 
     // regex formato MM'SS"ms (ej: 00'49"15)
-    const FORMATO_MARCA = "/^\d{2}'\d{2}\"\d{2}$/";
+    const FORMATO_MARCA = "/^(\d{2})'(\d{2})\"(\d{2})$/";
 
     // valores permitidos para tipo_competicion
     const TIPOS_COMPETICION = ['Nacional', 'Autonomico', 'Provincial', 'Escolar', 'Control'];
@@ -38,9 +38,15 @@ class MarcaController {
             return;
         }
 
-        if (!preg_match(self::FORMATO_MARCA, $marca)) {
+        if (!preg_match(self::FORMATO_MARCA, $marca, $partesMarca)) {
             http_response_code(422);
             echo json_encode(["status" => "error", "error" => "Formato incorrecto. Usa MM'SS\"ms (ej: 00'49\"15)"]);
+            return;
+        }
+
+        if ((int)$partesMarca[2] >= 60) {
+            http_response_code(422);
+            echo json_encode(["status" => "error", "error" => "Los segundos no pueden ser 60 o más (máximo 59)"]);
             return;
         }
 
@@ -76,6 +82,14 @@ class MarcaController {
 
             $tipo_competicion = self::MAP_TIPO[$evento['tipo_evento']] ?? 'Control';
             $temporada        = ($evento['tipo_pista'] === 'pista cubierta') ? 'short_track' : 'outdoor';
+
+            $stmtDup = $pdo->prepare("SELECT COUNT(*) FROM marcas WHERE id_usuario = ? AND id_evento = ? AND prueba = ?");
+            $stmtDup->execute([$id_usuario, $id_evento, $prueba]);
+            if ((int)$stmtDup->fetchColumn() > 0) {
+                http_response_code(409);
+                echo json_encode(["status" => "error", "error" => "Ya tienes una marca registrada para esta prueba en esta competición"]);
+                return;
+            }
 
             $id_categoria      = isset($input['id_categoria']) && $input['id_categoria'] !== '' ? (int)$input['id_categoria'] : null;
             $sensaciones_valor = isset($input['sensaciones_valor']) && $input['sensaciones_valor'] !== '' ? (int)$input['sensaciones_valor'] : null;
@@ -178,9 +192,15 @@ class MarcaController {
             return;
         }
 
-        if (!preg_match(self::FORMATO_MARCA, $marca)) {
+        if (!preg_match(self::FORMATO_MARCA, $marca, $partesMarca)) {
             http_response_code(422);
             echo json_encode(["status" => "error", "error" => "Formato incorrecto. Usa MM'SS\"ms (ej: 00'49\"15)"]);
+            return;
+        }
+
+        if ((int)$partesMarca[2] >= 60) {
+            http_response_code(422);
+            echo json_encode(["status" => "error", "error" => "Los segundos no pueden ser 60 o más (máximo 59)"]);
             return;
         }
 
