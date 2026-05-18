@@ -396,9 +396,11 @@ export default function Dashboard() {
 									</div>
 								</div>
 
-								{m.sensaciones_valor && (
+								{(m.sensaciones_valor || m.sensaciones_notas) && (
 									<div className="mt-3 pt-3 border-t border-white/5 flex items-center gap-2">
-										<span className="text-lg leading-none">{SENSACIONES[m.sensaciones_valor - 1]}</span>
+										{m.sensaciones_valor && (
+											<span className="text-lg leading-none">{SENSACIONES[m.sensaciones_valor - 1]}</span>
+										)}
 										{m.sensaciones_notas && (
 											<p className="text-xs text-gray-400 italic truncate">{m.sensaciones_notas}</p>
 										)}
