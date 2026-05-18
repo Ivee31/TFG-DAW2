@@ -339,6 +339,16 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [deleteMsg, setDeleteMsg] = useState('');
 
+	const [marcasPerfil, setMarcasPerfil] = useState([]);
+	const [cargandoMarcas, setCargandoMarcas] = useState(true);
+
+	useEffect(() => {
+		fetch(`${API}/marcas`, { credentials: 'include' })
+			.then(r => r.json())
+			.then(d => { if (d.status === 'success') setMarcasPerfil(d.marcas); })
+			.finally(() => setCargandoMarcas(false));
+	}, []);
+
 	useEffect(() => {
 		fetch(`${API}/categorias`, { credentials: 'include' })
 			.then(r => r.json())
@@ -475,6 +485,11 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 	};
 
 	const generoLabel = g => g === 'M' ? 'Masculino' : g === 'F' ? 'Femenino' : '-';
+
+	const formatFechaPerfil = (f) => {
+		if (!f) return '';
+		return new Date(f + 'T00:00:00').toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+	};
 
 	const fechaDisplay = f => {
 		if (!f) return '-';
@@ -698,9 +713,35 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 
 		</div>
 
-		{/* columna derecha: mis archivos */}
-		<div>
+		{/* columna derecha: mis archivos + historial marcas */}
+		<div className="space-y-6">
 			<MisArchivos user={user} onUserUpdate={onUserUpdate} onGoToInscripcion={() => onNavigate?.('inscripcion')} />
+
+			<div className="bg-gris rounded-lg border border-white/10 overflow-hidden">
+				<SectionHeader title="Historial de marcas" />
+				<div className="p-4">
+					{cargandoMarcas ? (
+						<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-4">Cargando...</p>
+					) : marcasPerfil.length === 0 ? (
+						<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-4 border border-dashed border-gray-700 rounded-lg">Sin marcas registradas</p>
+					) : (
+						<div className="space-y-0">
+							{marcasPerfil.slice(0, 8).map(m => (
+								<div key={m.id_marca} className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0 gap-3">
+									<div className="min-w-0">
+										<p className="text-white text-xs font-bold truncate">{m.prueba}</p>
+										<p className="text-gray-500 text-[10px] truncate">{m.titulo_evento ?? m.tipo_competicion}</p>
+									</div>
+									<div className="text-right shrink-0">
+										<p className="text-ianuarius font-mono text-sm font-bold">{m.marca}</p>
+										<p className="text-gray-600 text-[10px]">{formatFechaPerfil(m.fecha)}</p>
+									</div>
+								</div>
+							))}
+						</div>
+					)}
+				</div>
+			</div>
 		</div>
 
 		</div>
