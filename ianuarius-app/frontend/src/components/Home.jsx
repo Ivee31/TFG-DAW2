@@ -147,7 +147,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 					{/* Puertas abiertas */}
 				<div className="mb-10 max-w-sm text-center space-y-1">
-					<p className="text-[9px] font-black uppercase tracking-widest text-ianuarius/70">Jornadas de puertas abiertas</p>
+					<p className="text-[9px] font-black uppercase tracking-widest text-red-400">Jornadas de puertas abiertas</p>
 					<p className="text-gray-400 text-xs leading-relaxed">
 						¿Tienes hijos que quieran probar el atletismo? Iniciación gratuita — primeras semanas de septiembre y junio.
 					</p>
