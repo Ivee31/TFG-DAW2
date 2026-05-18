@@ -120,7 +120,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						IANUARIUS
 					</h1>
 
-					<p className="text-[10px] md:text-xs font-bold tracking-[0.5em] text-ianuarius mt-3 mb-6">
+					<p className="text-[10px] md:text-xs font-bold tracking-[0.5em] text-red-400 mt-3 mb-6">
 						A T L E T I S M O
 					</p>
 
@@ -132,7 +132,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					<div className="flex flex-col sm:flex-row items-center gap-3 mb-10">
 						<button
 							onClick={openRegister}
-							className="px-8 py-3 bg-ianuarius text-white font-black text-[10px] tracking-widest uppercase rounded shadow-[0_0_20px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_30px_rgba(254,0,0,0.6)] transition duration-300"
+							className="px-8 py-3 bg-red-600 text-white font-black text-[10px] tracking-widest uppercase rounded shadow-[0_0_20px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_30px_rgba(254,0,0,0.6)] transition duration-300"
 						>
 							Registrarse
 						</button>
@@ -156,11 +156,11 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				{/* Feature pills */}
 					<div className="flex flex-wrap justify-center items-center gap-2 text-[10px] text-gray-400 tracking-widest uppercase">
 						<span>Registro de marcas</span>
-						<span className="text-ianuarius/60">·</span>
+						<span aria-hidden="true" className="text-gray-400">·</span>
 						<span>Calendario de eventos</span>
-						<span className="text-ianuarius/60">·</span>
+						<span aria-hidden="true" className="text-gray-400">·</span>
 						<span>Gestión documental</span>
-						<span className="text-ianuarius/60">·</span>
+						<span aria-hidden="true" className="text-gray-400">·</span>
 						<span>Inscripciones online</span>
 					</div>
 
@@ -207,7 +207,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 							<div className="p-5 space-y-2">
 								<div className="flex items-center justify-between">
-									<span className="text-[9px] font-black uppercase tracking-widest text-ianuarius">{n.categoria}</span>
+									<span className="text-[9px] font-black uppercase tracking-widest text-red-400">{n.categoria}</span>
 									<span className="text-[9px] text-gray-400">{n.fecha}</span>
 								</div>
 								<h3 className="text-white text-sm font-semibold leading-snug">{n.titulo}</h3>
@@ -238,7 +238,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					<p className="text-gray-400 text-sm md:text-base mb-6 leading-relaxed">
 						Ningún atleta en nuestra región entrena con la dedicación, las instalaciones y el seguimiento biométrico que ofrecemos en la disciplina de Ianuarius.
 					</p>
-					<a href="#" className="text-ianuarius hover:text-white text-sm font-semibold tracking-wide flex items-center gap-2 transition">
+					<a href="#" className="text-red-400 hover:text-white text-sm font-semibold tracking-wide flex items-center gap-2 transition">
 						Resumen de noticias <span className="text-xl">&rarr;</span>
 					</a>
 				</div>
@@ -252,7 +252,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					</p>
 					<a href="#" className="text-white hover:text-ianuarius text-sm font-semibold tracking-wide flex items-center gap-2 mt-2 transition w-fit group">
 						Descubre más sobre el club
-						<span className="text-ianuarius text-xl transform group-hover:translate-x-2 transition">&rarr;</span>
+						<span aria-hidden="true" className="text-ianuarius text-xl transform group-hover:translate-x-2 transition">&rarr;</span>
 					</a>
 				</div>
 			</section>
@@ -296,14 +296,14 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 							<p className="text-white text-xs font-bold uppercase tracking-widest mb-2">Uso de cookies</p>
 							<p className="text-gray-400 text-xs leading-relaxed">
 								Esta aplicación utiliza únicamente las cookies estrictamente necesarias para su funcionamiento.
-								Concretamente, una <span className="text-white">cookie de sesión</span> (<code className="text-ianuarius text-[11px]">PHPSESSID</code>) que
+								Concretamente, una <span className="text-white">cookie de sesión</span> (<code className="text-red-400 text-[11px]">PHPSESSID</code>) que
 								identifica tu sesión iniciada y te mantiene autenticado mientras usas la app.
 								Se elimina automáticamente al cerrar el navegador. No se usan cookies de análisis, publicidad ni terceros.
 							</p>
 						</div>
 						<button
 							onClick={aceptarCookies}
-							className="shrink-0 px-6 py-2.5 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest rounded hover:bg-red-700 transition duration-300"
+							className="shrink-0 px-6 py-2.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest rounded hover:bg-red-700 transition duration-300"
 						>
 							Aceptar
 						</button>
