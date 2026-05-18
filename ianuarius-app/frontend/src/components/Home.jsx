@@ -15,7 +15,7 @@ function Modal({ onClose, children }) {
 	return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
-			onClick={onClose}
+			onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
 		>
 			<div
 				className="relative w-full max-w-sm md:max-w-md"

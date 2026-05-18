@@ -61,7 +61,7 @@ export default function App() {
 	const resetToken = new URLSearchParams(window.location.search).get('reset_token');
 	if (resetToken) {
 		return (
-			<ResetPassword token={resetToken} onDone={() => window.history.replaceState({}, '', '/')}/>
+			<ResetPassword token={resetToken} onDone={() => { window.location.href = '/'; }}/>
 		);
 	}
 
