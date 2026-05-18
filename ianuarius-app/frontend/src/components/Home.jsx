@@ -154,7 +154,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				</div>
 
 				{/* Feature pills */}
-					<div className="flex flex-wrap justify-center items-center gap-2 text-[10px] text-gray-500 tracking-widest uppercase">
+					<div className="flex flex-wrap justify-center items-center gap-2 text-[10px] text-gray-400 tracking-widest uppercase">
 						<span>Registro de marcas</span>
 						<span className="text-ianuarius/60">·</span>
 						<span>Calendario de eventos</span>
@@ -208,10 +208,10 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 							<div className="p-5 space-y-2">
 								<div className="flex items-center justify-between">
 									<span className="text-[9px] font-black uppercase tracking-widest text-ianuarius">{n.categoria}</span>
-									<span className="text-[9px] text-gray-500">{n.fecha}</span>
+									<span className="text-[9px] text-gray-400">{n.fecha}</span>
 								</div>
 								<h3 className="text-white text-sm font-semibold leading-snug">{n.titulo}</h3>
-								<p className="text-gray-500 text-xs leading-relaxed">
+								<p className="text-gray-400 text-xs leading-relaxed">
 									Contenido de la noticia pendiente de implementar en una futura versión de la plataforma.
 								</p>
 								<button disabled className="text-ianuarius/40 text-[10px] font-bold tracking-wide cursor-not-allowed">
@@ -267,9 +267,9 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					aria-label="Instagram de Ianuarius"
 				>
 					<img src={logoInstagram} alt="" className="w-5 h-5 object-contain" />
-					<span className="text-[10px] text-gray-500 uppercase tracking-widest">@c.a.i.s</span>
+					<span className="text-[10px] text-gray-400 uppercase tracking-widest">@c.a.i.s</span>
 				</a>
-				<p className="text-[9px] text-gray-500 uppercase tracking-[0.5em] text-center leading-relaxed">
+				<p className="text-[9px] text-gray-400 uppercase tracking-[0.5em] text-center leading-relaxed">
 					Ianuarius Athletics Club &copy; 2026<br />
 					<a href="?page=aviso-legal" className="hover:text-gray-400 transition underline underline-offset-2">Aviso Legal</a>
 				</p>

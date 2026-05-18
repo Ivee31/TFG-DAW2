@@ -3,7 +3,7 @@ export default function AvisoLegal({ onBack }) {
 		<div className="bg-oscuro text-gray-200 font-sans antialiased min-h-screen">
 			<div className="max-w-3xl mx-auto px-6 py-16">
 
-				<button onClick={onBack} className="text-gray-500 hover:text-white text-xs uppercase tracking-widest transition mb-12 flex items-center gap-2">
+				<button onClick={onBack} className="text-gray-400 hover:text-white text-xs uppercase tracking-widest transition mb-12 flex items-center gap-2">
 					← Volver
 				</button>
 
@@ -61,7 +61,7 @@ export default function AvisoLegal({ onBack }) {
 
 				</div>
 
-				<p className="text-gray-500 text-xs mt-16 border-t border-white/5 pt-8">
+				<p className="text-gray-400 text-xs mt-16 border-t border-white/5 pt-8">
 					Última actualización: mayo 2026 · Ianuarius Athletics Club © 2026
 				</p>
 

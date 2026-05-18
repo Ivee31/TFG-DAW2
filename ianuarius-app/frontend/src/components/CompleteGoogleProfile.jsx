@@ -43,7 +43,7 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 				<div className="w-full max-w-sm bg-gris p-8 rounded-xl border-t-4 border-yellow-500 shadow-2xl text-center">
 					<p className="text-yellow-400 font-bold text-sm mb-2">Registro completado</p>
 					<p className="text-gray-400 text-xs leading-relaxed mb-5">{pendingMsg}</p>
-					<button onClick={onCancel} className="text-gray-500 hover:text-white text-xs uppercase tracking-widest transition">Volver al inicio</button>
+					<button onClick={onCancel} className="text-gray-400 hover:text-white text-xs uppercase tracking-widest transition">Volver al inicio</button>
 				</div>
 			</div>
 		);
@@ -59,7 +59,7 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 				</div>
 				<div className="bg-gris p-8 rounded-xl border-t-4 border-ianuarius shadow-2xl">
 					<h2 className="text-xl font-black text-white mb-1 text-center tracking-widest">COMPLETAR PERFIL</h2>
-					<p className="text-gray-500 text-[10px] text-center uppercase tracking-widest mb-1">Registro con Google</p>
+					<p className="text-gray-400 text-[10px] text-center uppercase tracking-widest mb-1">Registro con Google</p>
 					<p className="text-gray-400 text-[10px] text-center mb-6">Necesitamos algunos datos adicionales para el club</p>
 					{errorMsg && (
 						<div className="bg-red-500/10 border border-red-500 text-red-500 p-2 rounded mb-4 text-xs text-center">
@@ -67,19 +67,19 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 						</div>
 					)}
 					<div className="space-y-2 mb-5 bg-oscuro/40 rounded-lg p-3">
-						<p className="text-[10px] text-gray-500 uppercase tracking-widest mb-2">Datos de Google</p>
+						<p className="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Datos de Google</p>
 						<div className="grid grid-cols-2 gap-2">
 							<div>
-								<p className="text-[10px] text-gray-500">Nombre</p>
+								<p className="text-[10px] text-gray-400">Nombre</p>
 								<p className="text-white text-xs">{data.nombre}</p>
 							</div>
 							<div>
-								<p className="text-[10px] text-gray-500">Apellidos</p>
+								<p className="text-[10px] text-gray-400">Apellidos</p>
 								<p className="text-white text-xs">{data.apellidos || '—'}</p>
 							</div>
 						</div>
 						<div>
-							<p className="text-[10px] text-gray-500">Email</p>
+							<p className="text-[10px] text-gray-400">Email</p>
 							<p className="text-ianuarius text-xs">{data.email}</p>
 						</div>
 					</div>

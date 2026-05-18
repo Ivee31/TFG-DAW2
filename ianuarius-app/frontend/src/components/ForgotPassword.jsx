@@ -40,7 +40,7 @@ export default function ForgotPassword({ onBack }) {
 				<div className="bg-yellow-500/10 border border-yellow-500/40 rounded px-3 py-2 mb-5">
 					<p className="text-yellow-400 text-[10px] leading-relaxed">⚠ Si no aparece en bandeja de entrada, revisa la carpeta de <strong>spam o correo no deseado</strong>.</p>
 				</div>
-				<button onClick={onBack} className="text-gray-500 hover:text-white text-xs uppercase tracking-widest transition">
+				<button onClick={onBack} className="text-gray-400 hover:text-white text-xs uppercase tracking-widest transition">
 					← Volver al login
 				</button>
 			</div>
@@ -50,7 +50,7 @@ export default function ForgotPassword({ onBack }) {
 	return (
 		<div className="bg-gris p-6 rounded-lg shadow-2xl border-t-4 border-ianuarius w-full">
 			<h2 className="text-xl font-black text-white mb-1 text-center tracking-widest">RECUPERAR</h2>
-			<p className="text-gray-500 text-[10px] text-center uppercase tracking-widest mb-4">Contraseña olvidada</p>
+			<p className="text-gray-400 text-[10px] text-center uppercase tracking-widest mb-4">Contraseña olvidada</p>
 			<div className="bg-yellow-500/10 border border-yellow-500/40 rounded px-3 py-2 mb-4">
 				<p className="text-yellow-400 text-[10px] leading-relaxed">⚠ El email puede llegar a <strong>spam</strong>. Revísalo si no aparece en bandeja de entrada.</p>
 			</div>
@@ -68,7 +68,7 @@ export default function ForgotPassword({ onBack }) {
 					{loading ? 'ENVIANDO...' : 'ENVIAR ENLACE'}
 				</button>
 			</form>
-			<button onClick={onBack} className="w-full mt-3 text-gray-500 hover:text-white text-[10px] uppercase tracking-widest transition">
+			<button onClick={onBack} className="w-full mt-3 text-gray-400 hover:text-white text-[10px] uppercase tracking-widest transition">
 				← Volver al login
 			</button>
 		</div>

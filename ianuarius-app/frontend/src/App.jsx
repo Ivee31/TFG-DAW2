@@ -44,7 +44,7 @@ export default function App() {
 	if (cargandoSesion) {
 		return (
 			<div className="bg-oscuro min-h-screen flex items-center justify-center">
-				<span className="text-gray-500 text-xs uppercase tracking-[0.4em] animate-pulse">
+				<span className="text-gray-400 text-xs uppercase tracking-[0.4em] animate-pulse">
 					Cargando...
 				</span>
 			</div>

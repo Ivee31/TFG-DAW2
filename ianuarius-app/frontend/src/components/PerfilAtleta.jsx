@@ -21,7 +21,7 @@ const calcularCategoria = (fechaNacimiento, genero) => {
 function DocVacio() {
 	return (
 		<div className="flex flex-col items-center justify-center py-12 border border-dashed border-gray-700 rounded-xl">
-			<span className="text-gray-500 text-xs uppercase tracking-widest">Sin documento</span>
+			<span className="text-gray-400 text-xs uppercase tracking-widest">Sin documento</span>
 		</div>
 	);
 }
@@ -51,7 +51,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 	if (cargando) {
 		return (
 			<main className="flex items-center justify-center py-20">
-				<span className="text-gray-500 text-xs uppercase tracking-[0.4em] animate-pulse">Cargando...</span>
+				<span className="text-gray-400 text-xs uppercase tracking-[0.4em] animate-pulse">Cargando...</span>
 			</main>
 		);
 	}
@@ -163,7 +163,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 							<span className="text-gray-400 text-[10px] uppercase tracking-widest">
 								{perfil.genero === 'M' ? 'Masculino' : 'Femenino'}
 							</span>
-							<span className="text-gray-500 text-[10px]">{perfil.email}</span>
+							<span className="text-gray-400 text-[10px]">{perfil.email}</span>
 						</div>
 					</div>
 				</div>
@@ -174,18 +174,18 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 					{/* marcas */}
 					<div>
 						<h3 className="text-sm font-bold uppercase tracking-widest text-gray-300 mb-3">
-							Marcas <span className="text-gray-500 font-normal">({marcas.length})</span>
+							Marcas <span className="text-gray-400 font-normal">({marcas.length})</span>
 						</h3>
 
 						{marcas.length === 0 ? (
 							<div className="flex items-center justify-center py-10 border border-dashed border-gray-700 rounded-xl">
-								<span className="text-gray-500 text-xs uppercase tracking-widest">Sin marcas registradas</span>
+								<span className="text-gray-400 text-xs uppercase tracking-widest">Sin marcas registradas</span>
 							</div>
 						) : (
 							<div className="overflow-x-auto rounded-xl border border-white/5">
 								<table className="w-full text-xs">
 									<thead>
-										<tr className="border-b border-white/5 text-gray-500 uppercase tracking-widest">
+										<tr className="border-b border-white/5 text-gray-400 uppercase tracking-widest">
 											<th className="text-left px-3 py-2 font-semibold">Prueba</th>
 											<th className="text-left px-3 py-2 font-semibold">Categoría</th>
 											<th className="text-left px-3 py-2 font-semibold">Marca</th>
@@ -201,7 +201,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 												<td className="px-3 py-2 text-gray-400">{m.categoria_nombre ?? '—'}</td>
 												<td className="px-3 py-2 font-bold text-ianuarius">{m.marca}</td>
 												<td className="px-3 py-2 text-gray-400">{m.tipo_competicion}</td>
-												<td className="px-3 py-2 text-gray-500">{m.fecha}</td>
+												<td className="px-3 py-2 text-gray-400">{m.fecha}</td>
 												<td className="px-3 py-2">
 													{m.sensaciones_valor ? (
 														<div className="flex flex-col gap-0.5">

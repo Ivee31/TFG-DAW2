@@ -50,7 +50,7 @@ export default function ResetPassword({ token, onDone }) {
 				) : (
 					<div className="bg-gris p-8 rounded-xl border-t-4 border-ianuarius shadow-2xl">
 						<h2 className="text-xl font-black text-white mb-1 text-center tracking-widest">NUEVA CONTRASEÑA</h2>
-						<p className="text-gray-500 text-[10px] text-center uppercase tracking-widest mb-6">Ianuarius Athletics</p>
+						<p className="text-gray-400 text-[10px] text-center uppercase tracking-widest mb-6">Ianuarius Athletics</p>
 						{errorMsg && (
 							<div className="bg-red-500/10 border border-red-500 text-red-500 p-2 rounded mb-4 text-xs text-center">
 								{errorMsg}

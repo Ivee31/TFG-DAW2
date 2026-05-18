@@ -270,7 +270,7 @@ export default function Calendario({ user }) {
 
             {/* leyenda roles */}
             {puedeEditar && (
-                <p className="text-[10px] text-gray-500 uppercase tracking-widest text-center">
+                <p className="text-[10px] text-gray-400 uppercase tracking-widest text-center">
                     Pasa el cursor sobre un día para añadir un evento
                 </p>
             )}
@@ -281,7 +281,7 @@ export default function Calendario({ user }) {
                 {/* cabecera días semana */}
                 <div className="grid grid-cols-7 border-b border-white/5">
                     {DIAS_SEMANA.map(d => (
-                        <div key={d} className="py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-500">
+                        <div key={d} className="py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-400">
                             {d}
                         </div>
                     ))}
@@ -289,7 +289,7 @@ export default function Calendario({ user }) {
 
                 {/* celdas */}
                 {cargando ? (
-                    <div className="py-20 text-center text-gray-500 text-xs uppercase tracking-widest animate-pulse">
+                    <div className="py-20 text-center text-gray-400 text-xs uppercase tracking-widest animate-pulse">
                         Cargando eventos...
                     </div>
                 ) : (
@@ -320,7 +320,7 @@ export default function Calendario({ user }) {
                                                     </div>
                                                 ))}
                                                 {evsDia.length > 2 && (
-                                                    <div className="text-[9px] text-gray-500 pl-1.5">
+                                                    <div className="text-[9px] text-gray-400 pl-1.5">
                                                         +{evsDia.length - 2} más
                                                     </div>
                                                 )}
@@ -366,7 +366,7 @@ export default function Calendario({ user }) {
                             <h3 className="font-black uppercase tracking-widest text-sm">
                                 Nuevo Evento — <span className="text-ianuarius">{String(modalDia).padStart(2, '0')} {MESES[month]}</span>
                             </h3>
-                            <button onClick={cerrarModal} className="text-gray-500 hover:text-ianuarius transition">
+                            <button onClick={cerrarModal} className="text-gray-400 hover:text-ianuarius transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-5 h-5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
@@ -417,7 +417,7 @@ export default function Calendario({ user }) {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="cal-fecha-fin" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Fecha fin <span className="text-gray-500 normal-case">(opcional)</span></label>
+                                    <label htmlFor="cal-fecha-fin" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Fecha fin <span className="text-gray-400 normal-case">(opcional)</span></label>
                                     <input
                                         id="cal-fecha-fin"
                                         type="date"
@@ -429,7 +429,7 @@ export default function Calendario({ user }) {
                             </div>
 
                             <div>
-                                <label htmlFor="cal-enlace" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Enlace oficial <span className="text-gray-500 normal-case">(opcional)</span></label>
+                                <label htmlFor="cal-enlace" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Enlace oficial <span className="text-gray-400 normal-case">(opcional)</span></label>
                                 <input
                                     id="cal-enlace"
                                     type="url"
@@ -516,7 +516,7 @@ export default function Calendario({ user }) {
                             <span className={`text-[9px] font-bold px-2 py-1 rounded border uppercase tracking-wider ${TIPO_EVENTO_COLOR[eventoActual.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}>
                                 {TIPO_EVENTO_LABEL[eventoActual.tipo_evento]}
                             </span>
-                            <button onClick={() => setDetalleData(null)} aria-label="Cerrar detalle de evento" className="text-gray-500 hover:text-ianuarius transition">
+                            <button onClick={() => setDetalleData(null)} aria-label="Cerrar detalle de evento" className="text-gray-400 hover:text-ianuarius transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-5 h-5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
@@ -584,7 +584,7 @@ export default function Calendario({ user }) {
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                     </svg>
                                 </button>
-                                <span className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">
+                                <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">
                                     {detalleData.idx + 1} / {detalleData.eventos.length}
                                 </span>
                                 <button

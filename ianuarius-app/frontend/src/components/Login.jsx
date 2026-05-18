@@ -96,7 +96,7 @@ export default function Login({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					</svg>
 					Opción más segura
 				</p>
-				<button onClick={() => setShowForgot(true)} className="w-full text-gray-500 hover:text-white text-[10px] uppercase tracking-widest transition">
+				<button onClick={() => setShowForgot(true)} className="w-full text-gray-400 hover:text-white text-[10px] uppercase tracking-widest transition">
 					¿Olvidaste tu contraseña?
 				</button>
 			</div>

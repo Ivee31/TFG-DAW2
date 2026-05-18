@@ -63,13 +63,13 @@ function PruebaSelect({ pruebas, value, onChange }) {
 	return (
 		<div ref={ref} className="relative">
 			<div onClick={() => setOpen(v => !v)} className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 transition cursor-pointer flex items-center justify-between">
-				<span className={selected ? 'text-white' : 'text-gray-500'}>
+				<span className={selected ? 'text-white' : 'text-gray-400'}>
 					{selected
 						? selected.nombre_prueba + (selected.especificaciones ? ` · ${selected.especificaciones}` : '')
 						: 'Seleccionar prueba'}
 				</span>
 
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
 				</svg>
 			</div>
@@ -90,7 +90,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 										<span>{p.nombre_prueba}</span>
 
 										{p.especificaciones && (
-											<span className="text-gray-500 text-xs">{p.especificaciones}</span>
+											<span className="text-gray-400 text-xs">{p.especificaciones}</span>
 										)}
 									</div>
 								))}
@@ -98,7 +98,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 						))}
 
 						{gruposOrdenados.length === 0 && (
-							<p className="text-gray-500 text-xs text-center py-4 uppercase tracking-widest">Sin resultados</p>
+							<p className="text-gray-400 text-xs text-center py-4 uppercase tracking-widest">Sin resultados</p>
 						)}
 					</div>
 				</div>
@@ -351,7 +351,7 @@ export default function Dashboard() {
 		<main className="space-y-6">
 
 			<div className="bg-white/[0.03] border border-white/8 rounded-xl px-4 py-3 flex items-start gap-3">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-gray-500 shrink-0 mt-0.5">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-gray-400 shrink-0 mt-0.5">
 					<path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
 				</svg>
 				<p className="text-xs text-gray-400 leading-relaxed">
@@ -410,7 +410,7 @@ export default function Dashboard() {
 								<div className="flex justify-between mt-3 pt-3 border-t border-white/5">
 									<button
 										onClick={() => handleAbrirEditar(m)}
-										className="text-gray-500 hover:text-white transition p-1"
+										className="text-gray-400 hover:text-white transition p-1"
 										aria-label="Editar marca" title="Editar marca"
 									>
 										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
@@ -420,7 +420,7 @@ export default function Dashboard() {
 
 									<button
 										onClick={() => { setConfirmandoId(confirmandoId === m.id_marca ? null : m.id_marca); setEditandoId(null); }}
-										className="text-gray-500 hover:text-ianuarius transition p-1"
+										className="text-gray-400 hover:text-ianuarius transition p-1"
 										aria-label="Eliminar marca" title="Eliminar marca"
 									>
 										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
@@ -456,7 +456,7 @@ export default function Dashboard() {
 									<div className="mt-3 pt-3 border-t border-white/20 bg-gris rounded-xl p-4 space-y-4">
 
 										<div>
-											<label htmlFor="dash-edit-competicion" className={labelClasses}>Competición <span className="normal-case text-gray-500 font-normal">(opcional)</span></label>
+											<label htmlFor="dash-edit-competicion" className={labelClasses}>Competición <span className="normal-case text-gray-400 font-normal">(opcional)</span></label>
 											<select
 												id="dash-edit-competicion"
 												value={editEvento?.id_evento ?? ''}
@@ -538,7 +538,7 @@ export default function Dashboard() {
 										</div>
 
 										<div>
-											<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-500 font-normal">(opcional)</span></label>
+											<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-400 font-normal">(opcional)</span></label>
 											<div className="flex gap-2 mb-2">
 												{SENSACIONES.map((emoji, i) => {
 													const val = i + 1;
@@ -653,13 +653,13 @@ export default function Dashboard() {
 						<div>
 							<label htmlFor="dash-new-competicion" className={labelClasses}>Competición</label>
 							{cargandoEventos ? (
-								<div className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm text-gray-500 animate-pulse">
+								<div className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm text-gray-400 animate-pulse">
 									Cargando competiciones...
 								</div>
 							) : competiciones.length === 0 ? (
 								<div className="border border-dashed border-gray-700 rounded-lg py-5 px-3 text-center">
-									<p className="text-gray-500 text-xs uppercase tracking-widest">Sin competiciones en el calendario</p>
-									<p className="text-gray-500 text-[10px] mt-1">Pide a tu entrenador que añada la competición antes de registrar una marca</p>
+									<p className="text-gray-400 text-xs uppercase tracking-widest">Sin competiciones en el calendario</p>
+									<p className="text-gray-400 text-[10px] mt-1">Pide a tu entrenador que añada la competición antes de registrar una marca</p>
 								</div>
 							) : (
 								<>
@@ -722,7 +722,7 @@ export default function Dashboard() {
 						</div>
 
 						<div>
-							<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-500 font-normal">(opcional)</span></label>
+							<label className={labelClasses}>Sensaciones <span className="normal-case text-gray-400 font-normal">(opcional)</span></label>
 							<div className="flex gap-2 mb-3">
 								{SENSACIONES.map((emoji, i) => {
 									const val = i + 1;

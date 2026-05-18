@@ -140,7 +140,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 
 					{cargandoP ? (
 						<div className="w-full py-3 flex items-center justify-center">
-							<span className="text-gray-500 text-[10px] uppercase tracking-widest animate-pulse">Cargando...</span>
+							<span className="text-gray-400 text-[10px] uppercase tracking-widest animate-pulse">Cargando...</span>
 						</div>
 					) : plantilla ? (
 						<div className="space-y-2">
@@ -167,7 +167,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 						</div>
 					) : (
 						<div className="w-full py-3 text-center border border-dashed border-gray-700 rounded">
-							<p className="text-gray-500 text-[10px] uppercase tracking-widest">Pendiente — el administrador aún no ha subido la plantilla</p>
+							<p className="text-gray-400 text-[10px] uppercase tracking-widest">Pendiente — el administrador aún no ha subido la plantilla</p>
 						</div>
 					)}
 				</div>

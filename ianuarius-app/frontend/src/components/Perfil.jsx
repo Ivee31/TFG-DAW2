@@ -105,7 +105,7 @@ function IconCheck() {
 
 function IconDoc() {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-gray-500 shrink-0">
+		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-gray-400 shrink-0">
 			<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 		</svg>
 	);
@@ -159,7 +159,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 					{tooltip && (
 						<button
 							onClick={() => setShowInfo(v => !v)}
-							className={`shrink-0 w-4 h-4 rounded-full border flex items-center justify-center transition ${showInfo ? 'border-white/40 text-white' : 'border-white/20 text-gray-500 hover:border-white/40 hover:text-gray-300'}`}
+							className={`shrink-0 w-4 h-4 rounded-full border flex items-center justify-center transition ${showInfo ? 'border-white/40 text-white' : 'border-white/20 text-gray-400 hover:border-white/40 hover:text-gray-300'}`}
 							title="¿Qué es esto?"
 						>
 							<span className="text-[9px] font-black leading-none">i</span>
@@ -691,7 +691,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 				/>
 
 				<div className="p-6">
-					<p className="text-gray-500 text-sm tracking-[0.3em]">••••••••••••</p>
+					<p className="text-gray-400 text-sm tracking-[0.3em]">••••••••••••</p>
 
 					{showPass && (
 						<form onSubmit={handlePassChange} className="mt-4 space-y-3">
@@ -763,20 +763,20 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 			<SectionHeader title="Historial de marcas" />
 			<div className="p-4">
 				{cargandoMarcas ? (
-					<p className="text-gray-500 text-xs uppercase tracking-widest text-center py-4">Cargando...</p>
+					<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-4">Cargando...</p>
 				) : marcasPerfil.length === 0 ? (
-					<p className="text-gray-500 text-xs uppercase tracking-widest text-center py-4 border border-dashed border-gray-700 rounded-lg">Sin marcas registradas</p>
+					<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-4 border border-dashed border-gray-700 rounded-lg">Sin marcas registradas</p>
 				) : (
 					<div className="space-y-0">
 						{marcasPerfil.slice(0, 8).map(m => (
 							<div key={m.id_marca} className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0 gap-3">
 								<div className="min-w-0">
 									<p className="text-white text-xs font-bold truncate">{m.prueba}</p>
-									<p className="text-gray-500 text-[10px] truncate">{m.titulo_evento ?? m.tipo_competicion}</p>
+									<p className="text-gray-400 text-[10px] truncate">{m.titulo_evento ?? m.tipo_competicion}</p>
 								</div>
 								<div className="text-right shrink-0">
 									<p className="text-ianuarius font-mono text-sm font-bold">{m.marca}</p>
-									<p className="text-gray-500 text-[10px]">{formatFechaPerfil(m.fecha)}</p>
+									<p className="text-gray-400 text-[10px]">{formatFechaPerfil(m.fecha)}</p>
 								</div>
 							</div>
 						))}
