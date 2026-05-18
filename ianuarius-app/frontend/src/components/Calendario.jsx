@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
+import { attachFocusTrap } from '../utils/focusTrap';
 
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DIAS_SEMANA = ['Lu','Ma','Mi','Ju','Vi','Sa','Do'];
@@ -61,9 +62,14 @@ export default function Calendario({ user }) {
     const [guardando, setGuardando]   = useState(false);
     const [errorMsg, setErrorMsg]     = useState('');
 
-    // detalle evento al hacer click
-    const [eventoDetalle, setEventoDetalle] = useState(null);
-    const [eliminando, setEliminando]       = useState(false);
+    // detalle evento — { eventos: [], idx: 0 }
+    const [detalleData, setDetalleData] = useState(null);
+    const [eliminando, setEliminando]   = useState(false);
+
+    const eventoActual = detalleData ? detalleData.eventos[detalleData.idx] : null;
+
+    const modalAddRef     = useRef(null);
+    const modalDetalleRef = useRef(null);
 
     // proximos eventos para el banner
     const [proximos, setProximos] = useState([]);
@@ -94,6 +100,16 @@ export default function Calendario({ user }) {
             .then(r => r.json())
             .then(d => { if (d.status === 'success') setCategorias(d.categorias); });
     }, [puedeEditar]);
+
+    useEffect(() => {
+        if (!modalDia || !modalAddRef.current) return;
+        return attachFocusTrap(modalAddRef.current, cerrarModal);
+    }, [!!modalDia]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        if (!detalleData || !modalDetalleRef.current) return;
+        return attachFocusTrap(modalDetalleRef.current, () => setDetalleData(null));
+    }, [!!detalleData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const irMesAnterior = () => {
         if (month === 0) { setYear(y => y - 1); setMonth(11); }
@@ -170,7 +186,7 @@ export default function Calendario({ user }) {
             .then(d => {
                 setEliminando(false);
                 if (d.status === 'success') {
-                    setEventoDetalle(null);
+                    setDetalleData(null);
                     cargarEventos();
                 }
             })
@@ -193,7 +209,7 @@ export default function Calendario({ user }) {
         const f = new Date(ev.fecha_hora.replace(' ', 'T'));
         setYear(f.getFullYear());
         setMonth(f.getMonth());
-        setEventoDetalle(ev);
+        setDetalleData({ eventos: [ev], idx: 0 });
     };
 
     return (
@@ -284,7 +300,7 @@ export default function Calendario({ user }) {
                                 <div
                                     key={idx}
                                     className={`relative min-h-[80px] md:min-h-[100px] p-1.5 border-b border-r border-white/5 group ${!dia ? 'bg-oscuro/20' : 'hover:bg-white/[0.02] transition'} ${dia && evsDia.length > 0 ? 'cursor-pointer' : ''}`}
-                                    onClick={() => dia && evsDia.length > 0 && setEventoDetalle(evsDia[0])}
+                                    onClick={() => dia && evsDia.length > 0 && setDetalleData({ eventos: evsDia, idx: 0 })}
                                 >
                                     {dia && (
                                         <>
@@ -297,7 +313,7 @@ export default function Calendario({ user }) {
                                                 {evsDia.slice(0, 2).map(ev => (
                                                     <div
                                                         key={ev.id_evento}
-                                                        onClick={(e) => { e.stopPropagation(); setEventoDetalle(ev); }}
+                                                        onClick={(e) => { e.stopPropagation(); setDetalleData({ eventos: evsDia, idx: evsDia.indexOf(ev) }); }}
                                                         className={`text-[9px] font-bold px-1.5 py-0.5 rounded border truncate cursor-pointer ${TIPO_EVENTO_COLOR[ev.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}
                                                     >
                                                         {ev.titulo}
@@ -345,7 +361,7 @@ export default function Calendario({ user }) {
                 <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={cerrarModal} />
 
-                    <div className="relative bg-gris border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl">
+                    <div ref={modalAddRef} role="dialog" aria-modal="true" aria-label="Añadir evento" className="relative bg-gris border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="font-black uppercase tracking-widest text-sm">
                                 Nuevo Evento — <span className="text-ianuarius">{String(modalDia).padStart(2, '0')} {MESES[month]}</span>
@@ -491,54 +507,54 @@ export default function Calendario({ user }) {
             )}
 
             {/* modal detalle evento */}
-            {eventoDetalle && (
+            {eventoActual && (
                 <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setEventoDetalle(null)} />
+                    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onMouseDown={(e) => { if (e.target === e.currentTarget) setDetalleData(null); }} />
 
-                    <div className="relative bg-gris border border-white/10 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+                    <div ref={modalDetalleRef} role="dialog" aria-modal="true" aria-label={eventoActual.titulo} className="relative bg-gris border border-white/10 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
                         <div className="flex items-start justify-between mb-4">
-                            <span className={`text-[9px] font-bold px-2 py-1 rounded border uppercase tracking-wider ${TIPO_EVENTO_COLOR[eventoDetalle.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}>
-                                {TIPO_EVENTO_LABEL[eventoDetalle.tipo_evento]}
+                            <span className={`text-[9px] font-bold px-2 py-1 rounded border uppercase tracking-wider ${TIPO_EVENTO_COLOR[eventoActual.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}>
+                                {TIPO_EVENTO_LABEL[eventoActual.tipo_evento]}
                             </span>
-                            <button onClick={() => setEventoDetalle(null)} className="text-gray-500 hover:text-ianuarius transition">
+                            <button onClick={() => setDetalleData(null)} aria-label="Cerrar detalle de evento" className="text-gray-500 hover:text-ianuarius transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-5 h-5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
 
-                        <h3 className="text-xl font-black tracking-tight mb-2">{eventoDetalle.titulo}</h3>
+                        <h3 className="text-xl font-black tracking-tight mb-2">{eventoActual.titulo}</h3>
 
                         <div className="space-y-1.5 text-xs text-gray-400 mb-4">
                             <p>
                                 <span className="font-bold text-gray-300">Inicio: </span>
-                                {new Date(eventoDetalle.fecha_hora).toLocaleString('es-ES', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                {new Date(eventoActual.fecha_hora).toLocaleString('es-ES', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                             </p>
-                            {eventoDetalle.fecha_fin && (
+                            {eventoActual.fecha_fin && (
                                 <p>
                                     <span className="font-bold text-gray-300">Fin: </span>
-                                    {new Date(eventoDetalle.fecha_fin + 'T00:00:00').toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' })}
+                                    {new Date(eventoActual.fecha_fin + 'T00:00:00').toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' })}
                                 </p>
                             )}
                             <p>
                                 <span className="font-bold text-gray-300">Pista: </span>
-                                {TIPO_PISTA_LABEL[eventoDetalle.tipo_pista]}
+                                {TIPO_PISTA_LABEL[eventoActual.tipo_pista]}
                             </p>
                             <p>
                                 <span className="font-bold text-gray-300">Categoría: </span>
-                                {eventoDetalle.categoria_nombre ?? 'Todos'}
+                                {eventoActual.categoria_nombre ?? 'Todos'}
                             </p>
-                            {eventoDetalle.creado_por && (
+                            {eventoActual.creado_por && (
                                 <p>
                                     <span className="font-bold text-gray-300">Creado por: </span>
-                                    {eventoDetalle.creado_por}
+                                    {eventoActual.creado_por}
                                 </p>
                             )}
                         </div>
 
-                        {eventoDetalle.enlace && (
+                        {eventoActual.enlace && (
                             <a
-                                href={eventoDetalle.enlace}
+                                href={eventoActual.enlace}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 text-xs text-ianuarius hover:text-white transition mb-4 border border-ianuarius/30 rounded-lg px-3 py-2 hover:bg-ianuarius/10"
@@ -550,15 +566,43 @@ export default function Calendario({ user }) {
                             </a>
                         )}
 
-                        {eventoDetalle.descripcion && (
+                        {eventoActual.descripcion && (
                             <p className="text-sm text-gray-300 bg-oscuro/50 rounded-lg p-3 mb-4 leading-relaxed">
-                                {eventoDetalle.descripcion}
+                                {eventoActual.descripcion}
                             </p>
+                        )}
+
+                        {detalleData.eventos.length > 1 && (
+                            <div className="flex items-center justify-between mb-4 border-t border-white/5 pt-4">
+                                <button
+                                    onClick={() => setDetalleData(d => ({ ...d, idx: d.idx - 1 }))}
+                                    disabled={detalleData.idx === 0}
+                                    aria-label="Evento anterior"
+                                    className="p-2 text-gray-400 hover:text-white transition disabled:opacity-25 disabled:cursor-not-allowed"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                    </svg>
+                                </button>
+                                <span className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">
+                                    {detalleData.idx + 1} / {detalleData.eventos.length}
+                                </span>
+                                <button
+                                    onClick={() => setDetalleData(d => ({ ...d, idx: d.idx + 1 }))}
+                                    disabled={detalleData.idx === detalleData.eventos.length - 1}
+                                    aria-label="Evento siguiente"
+                                    className="p-2 text-gray-400 hover:text-white transition disabled:opacity-25 disabled:cursor-not-allowed"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                    </svg>
+                                </button>
+                            </div>
                         )}
 
                         {puedeEditar && (
                             <button
-                                onClick={() => handleEliminar(eventoDetalle.id_evento)}
+                                onClick={() => handleEliminar(eventoActual.id_evento)}
                                 disabled={eliminando}
                                 className="w-full py-2.5 text-[10px] font-bold uppercase tracking-widest border border-ianuarius/40 text-ianuarius rounded-lg hover:bg-ianuarius hover:text-white transition disabled:opacity-50"
                             >

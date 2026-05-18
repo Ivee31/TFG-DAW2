@@ -4,39 +4,14 @@ import Login from './Login';
 import Register from './Register';
 import logoIanuarius from '../assets/logoIanuarius.png';
 import logoInstagram from '../assets/logoInstagram.png';
+import { attachFocusTrap } from '../utils/focusTrap';
 
 function Modal({ onClose, children }) {
 	const containerRef = useRef(null);
 
 	useEffect(() => {
-		const previousFocus = document.activeElement;
-
-		const focusable = containerRef.current?.querySelectorAll(
-			'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-		);
-		if (focusable?.length) focusable[0].focus();
-
-		const onKey = (e) => {
-			if (e.key === 'Escape') { onClose(); return; }
-			if (e.key === 'Tab') {
-				const els = [...(containerRef.current?.querySelectorAll(
-					'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-				) ?? [])];
-				if (!els.length) return;
-				const first = els[0];
-				const last = els[els.length - 1];
-				if (e.shiftKey) {
-					if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-				} else {
-					if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-				}
-			}
-		};
-		document.addEventListener('keydown', onKey);
-		return () => {
-			document.removeEventListener('keydown', onKey);
-			previousFocus?.focus();
-		};
+		if (!containerRef.current) return;
+		return attachFocusTrap(containerRef.current, onClose);
 	}, [onClose]);
 
 	return (
