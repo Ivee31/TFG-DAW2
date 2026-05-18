@@ -498,9 +498,9 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 	};
 
 	return (
-		<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+		<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 items-start">
 
-		<div className="space-y-6">
+		<div className="space-y-6 lg:row-span-2 xl:row-span-1">
 
 			<div className="flex items-center gap-6 p-6 bg-gris rounded-lg border border-white/10">
 				<div className="relative">
@@ -713,35 +713,36 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 
 		</div>
 
-		{/* columna derecha: mis archivos + historial marcas */}
-		<div className="space-y-6">
-			<MisArchivos user={user} onUserUpdate={onUserUpdate} onGoToInscripcion={() => onNavigate?.('inscripcion')} />
-
-			<div className="bg-gris rounded-lg border border-white/10 overflow-hidden">
-				<SectionHeader title="Historial de marcas" />
-				<div className="p-4">
-					{cargandoMarcas ? (
-						<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-4">Cargando...</p>
-					) : marcasPerfil.length === 0 ? (
-						<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-4 border border-dashed border-gray-700 rounded-lg">Sin marcas registradas</p>
-					) : (
-						<div className="space-y-0">
-							{marcasPerfil.slice(0, 8).map(m => (
-								<div key={m.id_marca} className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0 gap-3">
-									<div className="min-w-0">
-										<p className="text-white text-xs font-bold truncate">{m.prueba}</p>
-										<p className="text-gray-500 text-[10px] truncate">{m.titulo_evento ?? m.tipo_competicion}</p>
-									</div>
-									<div className="text-right shrink-0">
-										<p className="text-ianuarius font-mono text-sm font-bold">{m.marca}</p>
-										<p className="text-gray-600 text-[10px]">{formatFechaPerfil(m.fecha)}</p>
-									</div>
+		{/* historial marcas — centro en xl, encima de archivos en lg, debajo de info en mobile */}
+		<div className="bg-gris rounded-lg border border-white/10 overflow-hidden">
+			<SectionHeader title="Historial de marcas" />
+			<div className="p-4">
+				{cargandoMarcas ? (
+					<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-4">Cargando...</p>
+				) : marcasPerfil.length === 0 ? (
+					<p className="text-gray-600 text-xs uppercase tracking-widest text-center py-4 border border-dashed border-gray-700 rounded-lg">Sin marcas registradas</p>
+				) : (
+					<div className="space-y-0">
+						{marcasPerfil.slice(0, 8).map(m => (
+							<div key={m.id_marca} className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0 gap-3">
+								<div className="min-w-0">
+									<p className="text-white text-xs font-bold truncate">{m.prueba}</p>
+									<p className="text-gray-500 text-[10px] truncate">{m.titulo_evento ?? m.tipo_competicion}</p>
 								</div>
-							))}
-						</div>
-					)}
-				</div>
+								<div className="text-right shrink-0">
+									<p className="text-ianuarius font-mono text-sm font-bold">{m.marca}</p>
+									<p className="text-gray-600 text-[10px]">{formatFechaPerfil(m.fecha)}</p>
+								</div>
+							</div>
+						))}
+					</div>
+				)}
 			</div>
+		</div>
+
+		{/* mis archivos — derecha en xl, debajo de marcas en lg */}
+		<div className="lg:col-start-2 xl:col-auto">
+			<MisArchivos user={user} onUserUpdate={onUserUpdate} onGoToInscripcion={() => onNavigate?.('inscripcion')} />
 		</div>
 
 		</div>
