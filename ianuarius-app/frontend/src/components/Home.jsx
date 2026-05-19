@@ -187,7 +187,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				</div>
 
 				{/* SCROLL HINT */}
-				<div className="flex flex-col items-center pb-16 gap-1.5">
+				<div className="flex flex-col items-center pb-28 gap-1.5">
 					<span className="text-[9px] text-gray-300 uppercase tracking-[0.3em]">Descubre más</span>
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="scroll-hint w-5 h-5 text-gray-300">
 						<path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -197,7 +197,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			</section>
 
 			{/* NOTICIAS — MOCKUP */}
-			<section className="bg-oscuro/60 px-6 md:px-12 py-16 max-w-[1400px] mx-auto -mt-20 rounded-t-2xl">
+			<section className="bg-oscuro/60 px-6 md:px-12 pt-6 pb-16 max-w-[1400px] mx-auto -mt-20 rounded-t-2xl">
 
 				<div className="flex items-center justify-between mb-8">
 					<h2 className="text-white font-black text-xl md:text-2xl tracking-widest uppercase">Últimas noticias</h2>
