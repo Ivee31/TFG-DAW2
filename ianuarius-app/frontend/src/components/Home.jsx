@@ -103,7 +103,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			`}</style>
 
 			{/* HERO */}
-			<section className="min-h-[80vh] w-full bg-hero flex flex-col">
+			<section className="min-h-screen w-full bg-hero flex flex-col">
 
 				{/* NAV */}
 				<nav className="w-full px-6 md:px-10 py-5 flex items-center justify-between">
