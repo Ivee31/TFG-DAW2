@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { API } from '../api';
 import JSZip from 'jszip';
+
+const MARCAS_POR_PAG = 8;
+const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
 const SENSACIONES = ['😩', '😟', '😐', '😊', '🤩'];
 
@@ -33,6 +36,13 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 	const [error, setError]     = useState(null);
 	const [tabDoc, setTabDoc]   = useState('carnet');
 	const [zipping, setZipping] = useState(false);
+
+	const [filterYear, setFilterYear]           = useState('');
+	const [filterMonth, setFilterMonth]         = useState('');
+	const [filterTemporada, setFilterTemporada] = useState('');
+	const [marcaPage, setMarcaPage]             = useState(0);
+
+	useEffect(() => { setMarcaPage(0); }, [filterYear, filterMonth, filterTemporada]);
 
 	useEffect(() => {
 		setCargando(true);
@@ -107,6 +117,21 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 		setZipping(false);
 	};
 
+	const yearsDisponibles = useMemo(() =>
+		[...new Set(marcas.map(m => m.fecha?.slice(0, 4)).filter(Boolean))].sort((a, b) => b - a),
+		[marcas]
+	);
+
+	const marcasFiltradas = useMemo(() => marcas.filter(m => {
+		if (filterYear && m.fecha?.slice(0, 4) !== filterYear) return false;
+		if (filterMonth && m.fecha?.slice(5, 7) !== filterMonth) return false;
+		if (filterTemporada && m.temporada !== filterTemporada) return false;
+		return true;
+	}), [marcas, filterYear, filterMonth, filterTemporada]);
+
+	const totalPaginas  = Math.max(1, Math.ceil(marcasFiltradas.length / MARCAS_POR_PAG));
+	const marcasVisible = marcasFiltradas.slice(marcaPage * MARCAS_POR_PAG, (marcaPage + 1) * MARCAS_POR_PAG);
+
 	const initials = ((perfil.nombre?.[0] || '') + (perfil.apellidos?.[0] || '')).toUpperCase();
 	const avatarSrc = perfil.foto_carnet || perfil.foto_perfil || null;
 
@@ -174,51 +199,134 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 					{/* marcas */}
 					<div>
 						<h3 className="text-sm font-bold uppercase tracking-widest text-gray-300 mb-3">
-							Marcas <span className="text-gray-400 font-normal">({marcas.length})</span>
+							Marcas <span className="text-gray-400 font-normal">
+								{marcasFiltradas.length !== marcas.length
+									? `${marcasFiltradas.length} de ${marcas.length}`
+									: marcas.length}
+							</span>
 						</h3>
+
+						{marcas.length > 0 && (
+							<div className="space-y-2 mb-4">
+								<div className="flex gap-2">
+									<select
+										value={filterYear}
+										onChange={e => setFilterYear(e.target.value)}
+										aria-label="Filtrar por año"
+										className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+									>
+										<option value="">Todos los años</option>
+										{yearsDisponibles.map(y => <option key={y} value={y}>{y}</option>)}
+									</select>
+
+									<select
+										value={filterMonth}
+										onChange={e => setFilterMonth(e.target.value)}
+										aria-label="Filtrar por mes"
+										className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+									>
+										<option value="">Todos los meses</option>
+										{MESES.map((m, i) => (
+											<option key={i + 1} value={String(i + 1).padStart(2, '0')}>{m}</option>
+										))}
+									</select>
+								</div>
+
+								<div className="flex gap-1.5" role="group" aria-label="Filtrar por modalidad">
+									{[['', 'Todas'], ['outdoor', 'Outdoor'], ['short_track', 'Indoor']].map(([val, label]) => (
+										<button
+											key={val}
+											onClick={() => setFilterTemporada(val)}
+											aria-pressed={filterTemporada === val}
+											className={`flex-1 py-1.5 text-[9px] font-black uppercase tracking-widest rounded transition ${
+												filterTemporada === val
+													? 'bg-ianuarius text-white'
+													: 'border border-white/10 text-gray-400 hover:text-white hover:border-white/30'
+											}`}
+										>
+											{label}
+										</button>
+									))}
+								</div>
+							</div>
+						)}
 
 						{marcas.length === 0 ? (
 							<div className="flex items-center justify-center py-10 border border-dashed border-gray-700 rounded-xl">
 								<span className="text-gray-400 text-xs uppercase tracking-widest">Sin marcas registradas</span>
 							</div>
-						) : (
-							<div className="overflow-x-auto rounded-xl border border-white/5">
-								<table className="w-full text-xs">
-									<thead>
-										<tr className="border-b border-white/5 text-gray-400 uppercase tracking-widest">
-											<th className="text-left px-3 py-2 font-semibold">Prueba</th>
-											<th className="text-left px-3 py-2 font-semibold">Categoría</th>
-											<th className="text-left px-3 py-2 font-semibold">Marca</th>
-											<th className="text-left px-3 py-2 font-semibold">Tipo</th>
-											<th className="text-left px-3 py-2 font-semibold">Fecha</th>
-											<th className="text-left px-3 py-2 font-semibold">Sensaciones</th>
-										</tr>
-									</thead>
-									<tbody>
-										{marcas.map((m, i) => (
-											<tr key={m.id_marca} className={`border-b border-white/5 ${i % 2 === 0 ? 'bg-oscuro/30' : ''} hover:bg-white/5 transition`}>
-												<td className="px-3 py-2 font-medium text-white">{m.prueba}</td>
-												<td className="px-3 py-2 text-gray-400">{m.categoria_nombre ?? '—'}</td>
-												<td className="px-3 py-2 font-bold text-ianuarius">{m.marca}</td>
-												<td className="px-3 py-2 text-gray-400">{m.tipo_competicion}</td>
-												<td className="px-3 py-2 text-gray-400">{m.fecha}</td>
-												<td className="px-3 py-2">
-													{m.sensaciones_valor ? (
-														<div className="flex flex-col gap-0.5">
-															<span className="text-base leading-none">{SENSACIONES[parseInt(m.sensaciones_valor) - 1]}</span>
-															{m.sensaciones_notas && (
-																<span className="text-gray-400 text-[10px] leading-tight max-w-[140px] break-words">{m.sensaciones_notas}</span>
-															)}
-														</div>
-													) : (
-														<span className="text-gray-700">—</span>
-													)}
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</table>
+						) : marcasVisible.length === 0 ? (
+							<div className="flex items-center justify-center py-10 border border-dashed border-gray-700 rounded-xl">
+								<span className="text-gray-400 text-xs uppercase tracking-widest">Sin marcas para los filtros seleccionados</span>
 							</div>
+						) : (
+							<>
+								<div className="overflow-x-auto rounded-xl border border-white/5">
+									<table className="w-full text-xs">
+										<thead>
+											<tr className="border-b border-white/5 text-gray-400 uppercase tracking-widest">
+												<th className="text-left px-3 py-2 font-semibold">Prueba</th>
+												<th className="text-left px-3 py-2 font-semibold">Categoría</th>
+												<th className="text-left px-3 py-2 font-semibold">Marca</th>
+												<th className="text-left px-3 py-2 font-semibold">Tipo</th>
+												<th className="text-left px-3 py-2 font-semibold">Fecha</th>
+												<th className="text-left px-3 py-2 font-semibold">Sensaciones</th>
+											</tr>
+										</thead>
+										<tbody>
+											{marcasVisible.map((m, i) => (
+												<tr key={m.id_marca} className={`border-b border-white/5 ${i % 2 === 0 ? 'bg-oscuro/30' : ''} hover:bg-white/5 transition`}>
+													<td className="px-3 py-2 font-medium text-white">{m.prueba}</td>
+													<td className="px-3 py-2 text-gray-400">{m.categoria_nombre ?? '—'}</td>
+													<td className="px-3 py-2 font-bold text-ianuarius">{m.marca}</td>
+													<td className="px-3 py-2 text-gray-400">{m.tipo_competicion}</td>
+													<td className="px-3 py-2 text-gray-400">{m.fecha}</td>
+													<td className="px-3 py-2">
+														{m.sensaciones_valor ? (
+															<div className="flex flex-col gap-0.5">
+																<span className="text-base leading-none">{SENSACIONES[parseInt(m.sensaciones_valor) - 1]}</span>
+																{m.sensaciones_notas && (
+																	<span className="text-gray-400 text-[10px] leading-tight max-w-[140px] break-words">{m.sensaciones_notas}</span>
+																)}
+															</div>
+														) : (
+															<span className="text-gray-700">—</span>
+														)}
+													</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+
+								{totalPaginas > 1 && (
+									<div className="mt-3 flex items-center justify-between">
+										<button
+											onClick={() => setMarcaPage(p => Math.max(0, p - 1))}
+											disabled={marcaPage === 0}
+											className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed"
+										>
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+												<path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+											</svg>
+											Ant.
+										</button>
+										<span className="text-[10px] text-gray-500 uppercase tracking-widest">
+											{marcaPage + 1} / {totalPaginas}
+										</span>
+										<button
+											onClick={() => setMarcaPage(p => Math.min(totalPaginas - 1, p + 1))}
+											disabled={marcaPage >= totalPaginas - 1}
+											className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed"
+										>
+											Sig.
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+												<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+											</svg>
+										</button>
+									</div>
+								)}
+							</>
 						)}
 					</div>
 

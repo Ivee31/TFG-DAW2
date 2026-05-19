@@ -1065,15 +1065,13 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 					</div>
 				</div>
 
-				{/* COLUMNA DERECHA — notificaciones */}
-				<div className="lg:col-span-4">
+				{/* COLUMNA DERECHA — notificaciones + archivos */}
+				<div className="lg:col-span-4 space-y-6">
 					<Notificaciones user={user} onUserUpdate={onUserUpdate} />
+					<MisArchivos user={user} onUserUpdate={onUserUpdate} onGoToInscripcion={() => onNavigate?.('inscripcion')} />
 				</div>
 
 			</div>
-
-			{/* FILA INFERIOR — mis archivos */}
-			<MisArchivos user={user} onUserUpdate={onUserUpdate} onGoToInscripcion={() => onNavigate?.('inscripcion')} />
 
 		</div>
 	);
