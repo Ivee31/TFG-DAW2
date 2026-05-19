@@ -4,7 +4,7 @@ import Login from './Login';
 import Register from './Register';
 import logoIanuarius from '../assets/logoIanuarius.png';
 import logoInstagram from '../assets/logoInstagram.png';
-import fondoLanding from '../assets/fondoLanding.png';
+import fondoLanding from '../assets/fondoLanding.webp';
 import { attachFocusTrap } from '../utils/focusTrap';
 
 function Modal({ onClose, children }) {
