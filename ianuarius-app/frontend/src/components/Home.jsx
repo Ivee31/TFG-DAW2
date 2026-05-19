@@ -90,7 +90,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 		<div className="bg-oscuro text-gray-200 font-sans antialiased overflow-x-hidden">
 			<style>{`
 				.bg-hero {
-					background: linear-gradient(to bottom, rgba(23,23,23,0.45), rgba(23,23,23,0.95)),
+					background: linear-gradient(to bottom, rgba(23,23,23,0.70), rgba(23,23,23,0.95)),
 					            url('${fondoLanding}')
 					            no-repeat center center;
 					background-size: cover;
