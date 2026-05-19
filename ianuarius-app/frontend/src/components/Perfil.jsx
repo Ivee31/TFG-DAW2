@@ -746,7 +746,139 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 			{/* Grid principal */}
 			<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-				{/* COLUMNA IZQUIERDA */}
+				{/* COLUMNA IZQUIERDA — historial marcas */}
+				<div className="lg:col-span-5 flex flex-col gap-6">
+
+					<div className="bg-gris rounded-lg border border-white/10 overflow-hidden flex flex-col flex-1">
+						<SectionHeader title="Historial de marcas" />
+
+						{/* filtros */}
+						<div className="px-4 py-3 border-b border-white/10 space-y-2">
+							<div className="flex gap-2">
+								<select
+									value={filterYear}
+									onChange={e => setFilterYear(e.target.value)}
+									aria-label="Filtrar por año"
+									className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+								>
+									<option value="">Todos los años</option>
+									{yearsDisponibles.map(y => <option key={y} value={y}>{y}</option>)}
+								</select>
+
+								<select
+									value={filterMonth}
+									onChange={e => setFilterMonth(e.target.value)}
+									aria-label="Filtrar por mes"
+									className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+								>
+									<option value="">Todos los meses</option>
+									{MESES.map((m, i) => (
+										<option key={i + 1} value={String(i + 1).padStart(2, '0')}>{m}</option>
+									))}
+								</select>
+							</div>
+
+							<div className="flex gap-1.5" role="group" aria-label="Filtrar por modalidad">
+								{[['', 'Todas'], ['outdoor', 'Outdoor'], ['short_track', 'Indoor']].map(([val, label]) => (
+									<button
+										key={val}
+										onClick={() => setFilterTemporada(val)}
+										aria-pressed={filterTemporada === val}
+										className={`flex-1 py-1.5 text-[9px] font-black uppercase tracking-widest rounded transition ${
+											filterTemporada === val
+												? 'bg-ianuarius text-white'
+												: 'border border-white/10 text-gray-400 hover:text-white hover:border-white/30'
+										}`}
+									>
+										{label}
+									</button>
+								))}
+							</div>
+						</div>
+
+						{/* lista */}
+						<div
+							className="flex-1 overflow-y-auto px-4 py-2 min-h-[200px]"
+							role="list"
+							aria-label="Lista de marcas personales"
+							aria-live="polite"
+						>
+							{cargandoMarcas ? (
+								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-8">Cargando...</p>
+							) : marcasVisible.length === 0 ? (
+								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-8 border border-dashed border-gray-700 rounded-lg mt-2">
+									{marcasPerfil.length === 0 ? 'Sin marcas registradas' : 'Sin marcas para los filtros seleccionados'}
+								</p>
+							) : (
+								marcasVisible.map(m => (
+									<div
+										key={m.id_marca}
+										role="listitem"
+										className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0 gap-3"
+									>
+										<div className="min-w-0 flex-1">
+											<p className="text-white text-xs font-bold truncate">{m.prueba}</p>
+											<p className="text-gray-400 text-[10px] truncate">{m.titulo_evento ?? m.tipo_competicion}</p>
+										</div>
+										<div className="flex items-center gap-2 shrink-0">
+											<span className={`text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded ${
+												m.temporada === 'short_track'
+													? 'bg-blue-900/40 text-blue-400'
+													: 'bg-green-900/40 text-green-400'
+											}`}>
+												{m.temporada === 'short_track' ? 'Indoor' : 'Out'}
+											</span>
+											<div className="text-right">
+												<p className="text-ianuarius font-mono text-sm font-bold">{m.marca}</p>
+												<p className="text-gray-400 text-[10px]">{formatFechaPerfil(m.fecha)}</p>
+											</div>
+										</div>
+									</div>
+								))
+							)}
+						</div>
+
+						{/* paginación */}
+						{!cargandoMarcas && totalPaginas > 1 && (
+							<div className="px-4 py-3 border-t border-white/10 flex items-center justify-between shrink-0">
+								<button
+									onClick={() => setMarcaPage(p => Math.max(0, p - 1))}
+									disabled={marcaPage === 0}
+									aria-label="Página anterior de marcas"
+									className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed"
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4" aria-hidden="true">
+										<path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+									</svg>
+									Ant.
+								</button>
+								<span className="text-[10px] text-gray-500 uppercase tracking-widest" aria-live="polite" aria-atomic="true">
+									{marcaPage + 1} / {totalPaginas}
+								</span>
+								<button
+									onClick={() => setMarcaPage(p => Math.min(totalPaginas - 1, p + 1))}
+									disabled={marcaPage >= totalPaginas - 1}
+									aria-label="Página siguiente de marcas"
+									className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed"
+								>
+									Sig.
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4" aria-hidden="true">
+										<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+									</svg>
+								</button>
+							</div>
+						)}
+					</div>
+
+				</div>
+
+				{/* COLUMNA CENTRAL — notificaciones + archivos */}
+				<div className="lg:col-span-4 space-y-6">
+					<Notificaciones user={user} onUserUpdate={onUserUpdate} />
+					<MisArchivos user={user} onUserUpdate={onUserUpdate} onGoToInscripcion={() => onNavigate?.('inscripcion')} />
+				</div>
+
+				{/* COLUMNA DERECHA — avatar + info personal + email + contraseña + zona peligro */}
 				<div className="lg:col-span-3 space-y-6">
 
 					<div className="flex items-center gap-6 p-6 bg-gris rounded-lg border border-white/10">
@@ -939,136 +1071,6 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 						)}
 					</div>
 
-				</div>
-
-				{/* COLUMNA CENTRAL — historial marcas */}
-				<div className="lg:col-span-5 flex flex-col">
-					<div className="bg-gris rounded-lg border border-white/10 overflow-hidden flex flex-col flex-1">
-						<SectionHeader title="Historial de marcas" />
-
-						{/* filtros */}
-						<div className="px-4 py-3 border-b border-white/10 space-y-2">
-							<div className="flex gap-2">
-								<select
-									value={filterYear}
-									onChange={e => setFilterYear(e.target.value)}
-									aria-label="Filtrar por año"
-									className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
-								>
-									<option value="">Todos los años</option>
-									{yearsDisponibles.map(y => <option key={y} value={y}>{y}</option>)}
-								</select>
-
-								<select
-									value={filterMonth}
-									onChange={e => setFilterMonth(e.target.value)}
-									aria-label="Filtrar por mes"
-									className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
-								>
-									<option value="">Todos los meses</option>
-									{MESES.map((m, i) => (
-										<option key={i + 1} value={String(i + 1).padStart(2, '0')}>{m}</option>
-									))}
-								</select>
-							</div>
-
-							<div className="flex gap-1.5" role="group" aria-label="Filtrar por modalidad">
-								{[['', 'Todas'], ['outdoor', 'Outdoor'], ['short_track', 'Indoor']].map(([val, label]) => (
-									<button
-										key={val}
-										onClick={() => setFilterTemporada(val)}
-										aria-pressed={filterTemporada === val}
-										className={`flex-1 py-1.5 text-[9px] font-black uppercase tracking-widest rounded transition ${
-											filterTemporada === val
-												? 'bg-ianuarius text-white'
-												: 'border border-white/10 text-gray-400 hover:text-white hover:border-white/30'
-										}`}
-									>
-										{label}
-									</button>
-								))}
-							</div>
-						</div>
-
-						{/* lista */}
-						<div
-							className="flex-1 overflow-y-auto px-4 py-2 min-h-[200px]"
-							role="list"
-							aria-label="Lista de marcas personales"
-							aria-live="polite"
-						>
-							{cargandoMarcas ? (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-8">Cargando...</p>
-							) : marcasVisible.length === 0 ? (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-8 border border-dashed border-gray-700 rounded-lg mt-2">
-									{marcasPerfil.length === 0 ? 'Sin marcas registradas' : 'Sin marcas para los filtros seleccionados'}
-								</p>
-							) : (
-								marcasVisible.map(m => (
-									<div
-										key={m.id_marca}
-										role="listitem"
-										className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0 gap-3"
-									>
-										<div className="min-w-0 flex-1">
-											<p className="text-white text-xs font-bold truncate">{m.prueba}</p>
-											<p className="text-gray-400 text-[10px] truncate">{m.titulo_evento ?? m.tipo_competicion}</p>
-										</div>
-										<div className="flex items-center gap-2 shrink-0">
-											<span className={`text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded ${
-												m.temporada === 'short_track'
-													? 'bg-blue-900/40 text-blue-400'
-													: 'bg-green-900/40 text-green-400'
-											}`}>
-												{m.temporada === 'short_track' ? 'Indoor' : 'Out'}
-											</span>
-											<div className="text-right">
-												<p className="text-ianuarius font-mono text-sm font-bold">{m.marca}</p>
-												<p className="text-gray-400 text-[10px]">{formatFechaPerfil(m.fecha)}</p>
-											</div>
-										</div>
-									</div>
-								))
-							)}
-						</div>
-
-						{/* paginación */}
-						{!cargandoMarcas && totalPaginas > 1 && (
-							<div className="px-4 py-3 border-t border-white/10 flex items-center justify-between shrink-0">
-								<button
-									onClick={() => setMarcaPage(p => Math.max(0, p - 1))}
-									disabled={marcaPage === 0}
-									aria-label="Página anterior de marcas"
-									className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed"
-								>
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4" aria-hidden="true">
-										<path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-									</svg>
-									Ant.
-								</button>
-								<span className="text-[10px] text-gray-500 uppercase tracking-widest" aria-live="polite" aria-atomic="true">
-									{marcaPage + 1} / {totalPaginas}
-								</span>
-								<button
-									onClick={() => setMarcaPage(p => Math.min(totalPaginas - 1, p + 1))}
-									disabled={marcaPage >= totalPaginas - 1}
-									aria-label="Página siguiente de marcas"
-									className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed"
-								>
-									Sig.
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4" aria-hidden="true">
-										<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-									</svg>
-								</button>
-							</div>
-						)}
-					</div>
-				</div>
-
-				{/* COLUMNA DERECHA — notificaciones + archivos */}
-				<div className="lg:col-span-4 space-y-6">
-					<Notificaciones user={user} onUserUpdate={onUserUpdate} />
-					<MisArchivos user={user} onUserUpdate={onUserUpdate} onGoToInscripcion={() => onNavigate?.('inscripcion')} />
 				</div>
 
 			</div>
