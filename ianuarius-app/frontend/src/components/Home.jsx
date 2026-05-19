@@ -117,8 +117,8 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 								className="flex items-center gap-1.5 hover:opacity-70 transition"
 								aria-label="Instagram de Ianuarius"
 							>
-								<img src={logoInstagram} alt="" className="w-3.5 h-3.5 object-contain" />
-								<span className="text-[9px] text-gray-400 uppercase tracking-widest">@c.a.i.s</span>
+								<img src={logoInstagram} alt="" className="w-5 h-5 object-contain" />
+								<span className="text-[10px] text-gray-400 uppercase tracking-widest">@c.a.i.s</span>
 							</a>
 						</div>
 					</div>
