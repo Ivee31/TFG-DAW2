@@ -5,6 +5,7 @@ import Register from './Register';
 import logoIanuarius from '../assets/logoIanuarius.png';
 import logoInstagram from '../assets/logoInstagram.png';
 import fondoLanding from '../assets/fondoLanding.webp';
+import llanoAlto from '../assets/llanoAltoAlbergue.webp';
 import { attachFocusTrap } from '../utils/focusTrap';
 
 function Modal({ onClose, children }) {
@@ -50,7 +51,7 @@ const noticias = [
 		fecha: '15 abr 2026',
 	},
 	{
-		img: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=70',
+		img: {llanoAlto},
 		categoria: 'Club',
 		titulo: 'Campus de verano Ianuarius — entrenamiento intensivo para jóvenes atletas',
 		fecha: '8 may 2026',
