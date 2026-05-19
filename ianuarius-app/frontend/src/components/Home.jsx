@@ -197,7 +197,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			</section>
 
 			{/* NOTICIAS — MOCKUP */}
-			<section className="bg-oscuro px-6 md:px-12 py-16 -mt-20 rounded-t-2xl">
+			<section className="bg-oscuro/80 px-6 md:px-12 py-16 max-w-[1400px] mx-auto -mt-20 rounded-t-2xl">
 
 				<div className="flex items-center justify-between mb-8">
 					<h2 className="text-white font-black text-xl md:text-2xl tracking-widest uppercase">Últimas noticias</h2>
