@@ -320,7 +320,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 	return (
 		<div className="bg-gris rounded-lg border border-white/10 overflow-hidden">
 			<SectionHeader title="Mis archivos" />
-			<div className="p-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+			<div className="p-4 grid grid-cols-1 gap-3">
 				<FileCard
 					label="DNI escaneado"
 					subido={!!user.foto_dni}

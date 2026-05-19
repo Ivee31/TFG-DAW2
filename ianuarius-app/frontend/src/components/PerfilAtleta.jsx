@@ -44,6 +44,21 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 
 	useEffect(() => { setMarcaPage(0); }, [filterYear, filterMonth, filterTemporada]);
 
+	const yearsDisponibles = useMemo(() =>
+		[...new Set(marcas.map(m => m.fecha?.slice(0, 4)).filter(Boolean))].sort((a, b) => b - a),
+		[marcas]
+	);
+
+	const marcasFiltradas = useMemo(() => marcas.filter(m => {
+		if (filterYear && m.fecha?.slice(0, 4) !== filterYear) return false;
+		if (filterMonth && m.fecha?.slice(5, 7) !== filterMonth) return false;
+		if (filterTemporada && m.temporada !== filterTemporada) return false;
+		return true;
+	}), [marcas, filterYear, filterMonth, filterTemporada]);
+
+	const totalPaginas  = Math.max(1, Math.ceil(marcasFiltradas.length / MARCAS_POR_PAG));
+	const marcasVisible = marcasFiltradas.slice(marcaPage * MARCAS_POR_PAG, (marcaPage + 1) * MARCAS_POR_PAG);
+
 	useEffect(() => {
 		setCargando(true);
 		setError(null);
@@ -116,21 +131,6 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 		} catch {}
 		setZipping(false);
 	};
-
-	const yearsDisponibles = useMemo(() =>
-		[...new Set(marcas.map(m => m.fecha?.slice(0, 4)).filter(Boolean))].sort((a, b) => b - a),
-		[marcas]
-	);
-
-	const marcasFiltradas = useMemo(() => marcas.filter(m => {
-		if (filterYear && m.fecha?.slice(0, 4) !== filterYear) return false;
-		if (filterMonth && m.fecha?.slice(5, 7) !== filterMonth) return false;
-		if (filterTemporada && m.temporada !== filterTemporada) return false;
-		return true;
-	}), [marcas, filterYear, filterMonth, filterTemporada]);
-
-	const totalPaginas  = Math.max(1, Math.ceil(marcasFiltradas.length / MARCAS_POR_PAG));
-	const marcasVisible = marcasFiltradas.slice(marcaPage * MARCAS_POR_PAG, (marcaPage + 1) * MARCAS_POR_PAG);
 
 	const initials = ((perfil.nombre?.[0] || '') + (perfil.apellidos?.[0] || '')).toUpperCase();
 	const avatarSrc = perfil.foto_carnet || perfil.foto_perfil || null;
