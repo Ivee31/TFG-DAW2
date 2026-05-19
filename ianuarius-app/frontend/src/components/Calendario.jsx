@@ -324,7 +324,7 @@ export default function Calendario({ user }) {
                                                 {evsDia.slice(0, 2).map(ev => (
                                                     <div
                                                         key={ev.id_evento}
-                                                        onClick={(e) => { e.stopPropagation(); setDetalleData({ eventos: evsDia, idx: evsDia.indexOf(ev) }); }}
+                                                        onClick={(e) => { e.stopPropagation(); setDetalleData({ eventos: evsDia, idx: evsDia.indexOf(ev), dia }); }}
                                                         className={`text-[9px] font-bold px-1 md:px-1.5 py-0.5 rounded border truncate cursor-pointer ${TIPO_EVENTO_COLOR[ev.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}
                                                     >
                                                         {ev.titulo}
