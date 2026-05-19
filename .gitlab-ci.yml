@@ -29,6 +29,7 @@ deploy:
       DB_PORT=$DB_PORT
       APP_URL=$APP_URL
       BREVO_KEY=$BREVO_KEY
+      CRON_KEY=$CRON_KEY
       EOF
     - lftp -u $FTP_USER,$FTP_PASS ftp://$FTP_SERVER -e "
         mirror -R ianuarius-app/frontend/dist/ /;

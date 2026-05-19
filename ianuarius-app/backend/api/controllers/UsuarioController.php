@@ -537,4 +537,50 @@ class UsuarioController {
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
     }
+
+    public static function toggleNotificaciones(): void {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "error" => "No autenticado"]);
+            return;
+        }
+
+        $input     = json_decode(file_get_contents('php://input'), true);
+        $frecuenciasValidas = ['muy_alta', 'alta', 'baja'];
+
+        $campos = [];
+        $params = [':id' => $_SESSION['id_usuario']];
+
+        if (array_key_exists('activo', $input)) {
+            $campos[]            = 'notificaciones_email = :activo';
+            $params[':activo']   = (int)(bool)$input['activo'];
+        }
+
+        if (isset($input['frecuencia']) && in_array($input['frecuencia'], $frecuenciasValidas)) {
+            $campos[]              = 'frecuencia_notif = :frecuencia';
+            $params[':frecuencia'] = $input['frecuencia'];
+        }
+
+        if (empty($campos)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Sin campos a actualizar"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $sql  = "UPDATE usuarios SET " . implode(', ', $campos) . " WHERE id_usuario = :id";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+
+            http_response_code(200);
+            echo json_encode(["status" => "success"]);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
 }

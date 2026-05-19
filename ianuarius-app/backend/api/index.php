@@ -128,6 +128,9 @@ switch ($endpoint) {
         } elseif ($sub === 'cuenta' && $method === 'DELETE') {
             UsuarioController::eliminarCuenta();
 
+        } elseif ($sub === 'notificaciones' && $method === 'PUT') {
+            UsuarioController::toggleNotificaciones();
+
         } else {
             http_response_code(404);
             echo json_encode(["error" => "Endpoint not found"]);
@@ -256,6 +259,16 @@ switch ($endpoint) {
         } else {
             http_response_code(405);
             echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
+    case 'cron':
+        $sub = $segments[1] ?? '';
+        if ($sub === 'recordatorio' && $method === 'GET') {
+            CronController::recordatorio();
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "Endpoint not found"]);
         }
         break;
 
