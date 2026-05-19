@@ -270,9 +270,14 @@ export default function Calendario({ user }) {
 
             {/* leyenda roles */}
             {puedeEditar && (
-                <p className="text-[10px] text-gray-400 uppercase tracking-widest text-center">
-                    Pasa el cursor sobre un día para añadir un evento
-                </p>
+                <>
+                    <p className="md:hidden text-[10px] text-gray-400 uppercase tracking-widest text-center">
+                        Pulsa <span className="text-ianuarius font-black">+</span> en un día para añadir un evento
+                    </p>
+                    <p className="hidden md:block text-[10px] text-gray-400 uppercase tracking-widest text-center">
+                        Pasa el cursor sobre un día para añadir un evento
+                    </p>
+                </>
             )}
 
             {/* grid */}
@@ -299,29 +304,29 @@ export default function Calendario({ user }) {
                             return (
                                 <div
                                     key={idx}
-                                    className={`relative min-h-[80px] md:min-h-[100px] p-1.5 border-b border-r border-white/5 group ${!dia ? 'bg-oscuro/20' : 'hover:bg-white/[0.02] transition'} ${dia && evsDia.length > 0 ? 'cursor-pointer' : ''}`}
+                                    className={`relative min-h-[88px] md:min-h-[100px] p-0.5 md:p-1.5 border-b border-r border-white/5 group ${!dia ? 'bg-oscuro/20' : 'hover:bg-white/[0.02] transition'} ${dia && evsDia.length > 0 ? 'cursor-pointer' : ''}`}
                                     onClick={() => dia && evsDia.length > 0 && setDetalleData({ eventos: evsDia, idx: 0 })}
                                 >
                                     {dia && (
                                         <>
-                                            <span className={`text-[11px] font-bold inline-flex w-6 h-6 items-center justify-center rounded-full ${esHoy(dia) ? 'bg-ianuarius text-white' : 'text-gray-400'}`}>
+                                            <span className={`text-[10px] md:text-[11px] font-bold inline-flex w-5 h-5 md:w-6 md:h-6 items-center justify-center rounded-full ${esHoy(dia) ? 'bg-ianuarius text-white' : 'text-gray-400'}`}>
                                                 {dia}
                                             </span>
 
                                             {/* eventos del dia */}
-                                            <div className="mt-1 space-y-0.5">
+                                            <div className="mt-0.5 space-y-0.5">
                                                 {evsDia.slice(0, 2).map(ev => (
                                                     <div
                                                         key={ev.id_evento}
                                                         onClick={(e) => { e.stopPropagation(); setDetalleData({ eventos: evsDia, idx: evsDia.indexOf(ev) }); }}
-                                                        className={`text-[9px] font-bold px-1.5 py-0.5 rounded border truncate cursor-pointer ${TIPO_EVENTO_COLOR[ev.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}
+                                                        className={`text-[9px] font-bold px-1 md:px-1.5 py-0.5 rounded border truncate cursor-pointer ${TIPO_EVENTO_COLOR[ev.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}
                                                     >
                                                         {ev.titulo}
                                                     </div>
                                                 ))}
                                                 {evsDia.length > 2 && (
-                                                    <div className="text-[9px] text-gray-400 pl-1.5">
-                                                        +{evsDia.length - 2} más
+                                                    <div className="text-[9px] text-gray-400 pl-1">
+                                                        +{evsDia.length - 2}
                                                     </div>
                                                 )}
                                             </div>
@@ -330,7 +335,7 @@ export default function Calendario({ user }) {
                                             {puedeEditar && (
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); abrirModal(dia); }}
-                                                    className="absolute top-1 right-1 w-5 h-5 bg-ianuarius rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600"
+                                                    className="absolute top-1 right-1 w-5 h-5 bg-ianuarius rounded-full flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600"
                                                     title={`Añadir evento el día ${dia}`}
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" className="w-3 h-3 text-white">
