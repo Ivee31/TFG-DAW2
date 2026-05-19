@@ -66,6 +66,9 @@ export default function Calendario({ user }) {
     const [detalleData, setDetalleData] = useState(null);
     const [eliminando, setEliminando]   = useState(false);
 
+    // modal dia movil — { dia, eventos: [] }
+    const [modalDiaMobile, setModalDiaMobile] = useState(null);
+
     const eventoActual = detalleData ? detalleData.eventos[detalleData.idx] : null;
 
     const modalAddRef     = useRef(null);
@@ -272,7 +275,7 @@ export default function Calendario({ user }) {
             {puedeEditar && (
                 <>
                     <p className="md:hidden text-[10px] text-gray-400 uppercase tracking-widest text-center">
-                        Pulsa <span className="text-ianuarius font-black">+</span> en un día para añadir un evento
+                        Pulsa en un día para ver o añadir eventos
                     </p>
                     <p className="hidden md:block text-[10px] text-gray-400 uppercase tracking-widest text-center">
                         Pasa el cursor sobre un día para añadir un evento
@@ -304,8 +307,15 @@ export default function Calendario({ user }) {
                             return (
                                 <div
                                     key={idx}
-                                    className={`relative min-h-[88px] md:min-h-[100px] p-0.5 md:p-1.5 border-b border-r border-white/5 group ${!dia ? 'bg-oscuro/20' : 'hover:bg-white/[0.02] transition'} ${dia && evsDia.length > 0 ? 'cursor-pointer' : ''}`}
-                                    onClick={() => dia && evsDia.length > 0 && setDetalleData({ eventos: evsDia, idx: 0 })}
+                                    className={`relative min-h-[88px] md:min-h-[100px] p-0.5 md:p-1.5 border-b border-r border-white/5 group ${!dia ? 'bg-oscuro/20' : 'cursor-pointer hover:bg-white/[0.02] transition'}`}
+                                    onClick={() => {
+                                        if (!dia) return;
+                                        if (window.innerWidth < 768) {
+                                            setModalDiaMobile({ dia, eventos: evsDia });
+                                        } else if (evsDia.length > 0) {
+                                            setDetalleData({ eventos: evsDia, idx: 0 });
+                                        }
+                                    }}
                                 >
                                     {dia && (
                                         <>
@@ -335,7 +345,7 @@ export default function Calendario({ user }) {
                                             {puedeEditar && (
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); abrirModal(dia); }}
-                                                    className="absolute top-1 right-1 w-5 h-5 bg-ianuarius rounded-full flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600"
+                                                    className="absolute top-1 right-1 w-5 h-5 bg-ianuarius rounded-full hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600"
                                                     title={`Añadir evento el día ${dia}`}
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" className="w-3 h-3 text-white">
@@ -360,6 +370,53 @@ export default function Calendario({ user }) {
                     </span>
                 ))}
             </div>
+
+            {/* modal dia movil */}
+            {modalDiaMobile && (
+                <div className="fixed inset-0 z-100 flex items-end justify-center md:hidden">
+                    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setModalDiaMobile(null)} />
+                    <div className="relative bg-gris border border-white/10 rounded-t-2xl w-full max-w-lg shadow-2xl p-6 pb-8">
+                        <div className="flex items-center justify-between mb-5">
+                            <h3 className="font-black uppercase tracking-widest text-sm">
+                                {String(modalDiaMobile.dia).padStart(2, '0')} <span className="text-ianuarius">{MESES[month]}</span>
+                            </h3>
+                            <button onClick={() => setModalDiaMobile(null)} className="text-gray-400 hover:text-white transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-5 h-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        {modalDiaMobile.eventos.length > 0 ? (
+                            <div className="space-y-2 mb-5">
+                                {modalDiaMobile.eventos.map((ev, i) => (
+                                    <button
+                                        key={ev.id_evento}
+                                        onClick={() => {
+                                            setModalDiaMobile(null);
+                                            setDetalleData({ eventos: modalDiaMobile.eventos, idx: i });
+                                        }}
+                                        className={`w-full text-left px-3 py-2.5 rounded-lg border text-xs font-bold uppercase tracking-wider transition hover:brightness-125 ${TIPO_EVENTO_COLOR[ev.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}
+                                    >
+                                        {ev.titulo}
+                                    </button>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-gray-500 text-xs uppercase tracking-widest text-center py-4 mb-5">Sin eventos este día</p>
+                        )}
+
+                        {puedeEditar && (
+                            <button
+                                onClick={() => { setModalDiaMobile(null); abrirModal(modalDiaMobile.dia); }}
+                                className="w-full py-3 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest rounded-lg hover:bg-red-700 transition"
+                            >
+                                + Añadir evento
+                            </button>
+                        )}
+                    </div>
+                </div>
+            )}
 
             {/* modal añadir evento */}
             {modalDia && (
