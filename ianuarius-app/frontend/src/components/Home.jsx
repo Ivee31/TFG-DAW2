@@ -108,7 +108,19 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						<div className="w-14 h-14 bg-oscuro/60 backdrop-blur-md rounded-full border border-ianuarius/50 flex items-center justify-center p-2 shadow-[0_0_14px_rgba(254,0,0,0.3)]">
 							<img src={logoIanuarius} alt="Ianuarius" className="w-full h-full object-contain" />
 						</div>
-						<span className="text-white font-black text-sm tracking-[0.25em] uppercase">Ianuarius</span>
+						<div className="flex flex-col gap-0.5">
+							<span className="text-white font-black text-sm tracking-[0.25em] uppercase">Ianuarius</span>
+							<a
+								href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-1.5 hover:opacity-70 transition"
+								aria-label="Instagram de Ianuarius"
+							>
+								<img src={logoInstagram} alt="" className="w-3.5 h-3.5 object-contain" />
+								<span className="text-[9px] text-gray-400 uppercase tracking-widest">@c.a.i.s</span>
+							</a>
+						</div>
 					</div>
 
 				</nav>
@@ -259,16 +271,6 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 			{/* FOOTER */}
 			<footer className="w-full py-8 flex flex-col items-center gap-3 border-t border-white/5">
-				<a
-					href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="flex items-center gap-2 hover:opacity-70 transition"
-					aria-label="Instagram de Ianuarius"
-				>
-					<img src={logoInstagram} alt="" className="w-5 h-5 object-contain" />
-					<span className="text-[10px] text-gray-400 uppercase tracking-widest">@c.a.i.s</span>
-				</a>
 				<p className="text-[9px] text-gray-400 uppercase tracking-[0.5em] text-center leading-relaxed">
 					Ianuarius Athletics Club &copy; 2026<br />
 					<a href="?page=aviso-legal" className="hover:text-gray-400 transition underline underline-offset-2">Aviso Legal</a>
