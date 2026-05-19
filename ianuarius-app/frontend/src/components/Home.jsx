@@ -2,10 +2,14 @@
 import { useState, useEffect, useRef } from "react";
 import Login from './Login';
 import Register from './Register';
-import logoIanuarius from '../assets/logoIanuarius.png';
-import logoInstagram from '../assets/logoInstagram.png';
+import logoIanuarius from '../assets/logoIanuarius.webp';
+import logoInstagram from '../assets/logoInstagram.webp';
 import fondoLanding from '../assets/fondoLanding.webp';
+
+// ELEMENTOS HARDCODEADOS PARA EL MOCKUP DE LAS NOTICIAS
 import llanoAlto from '../assets/llanoAltoAlbergue.webp';
+import record400 from '../assets/record400New.webp';
+
 import { attachFocusTrap } from '../utils/focusTrap';
 
 function Modal({ onClose, children }) {
@@ -57,9 +61,9 @@ const noticias = [
 		fecha: '8 may 2026',
 	},
 	{
-		img: 'https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=600&q=70',
+		img: {record400},
 		categoria: 'Atletismo',
-		titulo: 'Nuevo récord personal en 400m lisos en el meeting regional de primavera',
+		titulo: 'Nuevo récord personal en 400m lisos en el control autonomico de primavera',
 		fecha: '5 may 2026',
 	},
 ];
