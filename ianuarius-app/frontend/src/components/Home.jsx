@@ -4,6 +4,7 @@ import Login from './Login';
 import Register from './Register';
 import logoIanuarius from '../assets/logoIanuarius.png';
 import logoInstagram from '../assets/logoInstagram.png';
+import fondoLanding from '../assets/fondoLanding.png';
 import { attachFocusTrap } from '../utils/focusTrap';
 
 function Modal({ onClose, children }) {
@@ -78,12 +79,14 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 	const openRegister = () => { setShowRegister(true); setShowLogin(false); };
 	const closeAll     = () => { setShowLogin(false); setShowRegister(false); };
 
+	// url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=70')
+
 	return (
 		<div className="bg-oscuro text-gray-200 font-sans antialiased overflow-x-hidden">
 			<style>{`
 				.bg-hero {
 					background: linear-gradient(to bottom, rgba(23,23,23,0.45), rgba(23,23,23,0.95)),
-					            url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=70')
+					            url('${fondoLanding}')
 					            no-repeat center center;
 					background-size: cover;
 				}
