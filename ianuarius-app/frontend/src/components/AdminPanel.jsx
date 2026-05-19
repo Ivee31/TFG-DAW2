@@ -160,39 +160,6 @@ export default function AdminPanel() {
 	return (
 		<main className="space-y-8">
 
-			{/* plantilla inscripcion */}
-			<section>
-				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
-					<div className="flex justify-between items-center mb-4">
-						<div>
-							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Plantilla de inscripción</h2>
-							<p className="text-gray-400 text-xs mt-1 uppercase tracking-widest font-semibold">
-								PDF oficial que los atletas descargarán para inscribirse
-							</p>
-						</div>
-						{plantillaInfo && (
-							<span className="text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-bold uppercase tracking-widest">
-								Subida
-							</span>
-						)}
-					</div>
-					{plantillaMsg && (
-						<p className={`text-xs mb-3 text-center ${plantillaMsg === 'Plantilla actualizada' ? 'text-green-400' : 'text-red-400'}`}>{plantillaMsg}</p>
-					)}
-					<input ref={plantillaRef} type="file" accept="application/pdf" className="hidden" onChange={e => { if (e.target.files[0]) handlePlantilla(e.target.files[0]); e.target.value = ''; }} />
-					<button
-						disabled={subiendoP}
-						onClick={() => plantillaRef.current?.click()}
-						className="flex items-center gap-2 px-5 py-2 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
-					>
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
-						</svg>
-						{subiendoP ? 'Subiendo...' : plantillaInfo ? 'Reemplazar plantilla' : 'Subir plantilla PDF'}
-					</button>
-				</div>
-			</section>
-
 			{/* cuentas pendientes de activacion */}
 			<section>
 				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-yellow-500/20 shadow-2xl">
@@ -246,7 +213,7 @@ export default function AdminPanel() {
 					)}
 				</div>
 			</section>
-
+			
 			{/* listado atletas / entrenadores */}
 			<section>
 				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
@@ -472,6 +439,40 @@ export default function AdminPanel() {
 					)}
 				</div>
 			</section>
+			
+			{/* plantilla inscripcion */}
+			<section>
+				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
+					<div className="flex justify-between items-center mb-4">
+						<div>
+							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Plantilla de inscripción</h2>
+							<p className="text-gray-400 text-xs mt-1 uppercase tracking-widest font-semibold">
+								PDF oficial que los atletas descargarán para inscribirse
+							</p>
+						</div>
+						{plantillaInfo && (
+							<span className="text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-bold uppercase tracking-widest">
+								Subida
+							</span>
+						)}
+					</div>
+					{plantillaMsg && (
+						<p className={`text-xs mb-3 text-center ${plantillaMsg === 'Plantilla actualizada' ? 'text-green-400' : 'text-red-400'}`}>{plantillaMsg}</p>
+					)}
+					<input ref={plantillaRef} type="file" accept="application/pdf" className="hidden" onChange={e => { if (e.target.files[0]) handlePlantilla(e.target.files[0]); e.target.value = ''; }} />
+					<button
+						disabled={subiendoP}
+						onClick={() => plantillaRef.current?.click()}
+						className="flex items-center gap-2 px-5 py-2 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+						</svg>
+						{subiendoP ? 'Subiendo...' : plantillaInfo ? 'Reemplazar plantilla' : 'Subir plantilla PDF'}
+					</button>
+				</div>
+			</section>
+			
 		</main>
 	);
 
