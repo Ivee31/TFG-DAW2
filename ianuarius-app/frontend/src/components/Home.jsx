@@ -90,7 +90,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 		<div className="bg-oscuro text-gray-200 font-sans antialiased overflow-x-hidden">
 			<style>{`
 				.bg-hero {
-					background: linear-gradient(to bottom, rgba(23,23,23,0.70), rgba(23,23,23,0.95)),
+					background: linear-gradient(to bottom, rgba(23,23,23,0.80), rgba(23,23,23,0.95)),
 					            url('${fondoLanding}')
 					            no-repeat center center;
 					background-size: cover;
@@ -197,7 +197,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			</section>
 
 			{/* NOTICIAS — MOCKUP */}
-			<section className="bg-oscuro/60 px-6 md:px-12 pt-6 pb-16 max-w-[1400px] mx-auto -mt-20 rounded-t-2xl">
+			<section className="bg-oscuro/70 px-6 md:px-12 pt-6 pb-16 max-w-[1400px] mx-auto -mt-20 rounded-t-2xl">
 
 				<div className="flex items-center justify-between mb-8">
 					<h2 className="text-white font-black text-xl md:text-2xl tracking-widest uppercase">Últimas noticias</h2>
