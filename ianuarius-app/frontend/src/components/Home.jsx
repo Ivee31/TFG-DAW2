@@ -55,13 +55,13 @@ const noticias = [
 		fecha: '15 abr 2026',
 	},
 	{
-		img: {llanoAlto},
+		img: llanoAlto,
 		categoria: 'Club',
 		titulo: 'Campus de verano Ianuarius — entrenamiento intensivo para jóvenes atletas',
 		fecha: '8 may 2026',
 	},
 	{
-		img: {record400},
+		img: record400,
 		categoria: 'Atletismo',
 		titulo: 'Nuevo récord personal en 400m lisos en el control autonomico de primavera',
 		fecha: '5 may 2026',
