@@ -1,5 +1,6 @@
 ﻿import { useState, useEffect, useRef, useCallback } from 'react';
 import { API } from '../api';
+import BackToTop from './BackToTop';
 
 // tiempo de inactividad antes de mostrar el aviso (15 min)
 const INACTIVIDAD_MS = 15 * 60 * 1000;
@@ -345,6 +346,8 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 
 			</div>
 			</div>
+
+			<BackToTop />
 
 			{/* footer */}
 			<footer className="w-full py-8 mt-auto flex justify-center border-t border-white/15">

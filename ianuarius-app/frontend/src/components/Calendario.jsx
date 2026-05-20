@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 import { attachFocusTrap } from '../utils/focusTrap';
+import Loader from './Loader';
 
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DIAS_SEMANA = ['Lu','Ma','Mi','Ju','Vi','Sa','Do'];
@@ -295,9 +296,7 @@ export default function Calendario({ user }) {
 
                 {/* celdas */}
                 {cargando ? (
-                    <div className="py-20 text-center label-muted animate-pulse">
-                        Cargando eventos...
-                    </div>
+                    <Loader />
                 ) : (
                     <div className="grid grid-cols-7">
                         {celdas.map((dia, idx) => {

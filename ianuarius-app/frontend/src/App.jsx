@@ -12,6 +12,7 @@ import AvisoLegal from './components/AvisoLegal';
 import Perfil from './components/Perfil';
 import Inscripcion from './components/Inscripcion';
 import Calendario from './components/Calendario';
+import Loader from './components/Loader';
 
 export default function App() {
 	const [user, setUser] = useState(null);
@@ -41,15 +42,7 @@ export default function App() {
 			.finally(() => setCargandoSesion(false));
 	}, []);
 
-	if (cargandoSesion) {
-		return (
-			<div className="bg-oscuro min-h-screen flex items-center justify-center">
-				<span className="text-gray-400 text-xs uppercase tracking-[0.4em] animate-pulse">
-					Cargando...
-				</span>
-			</div>
-		);
-	}
+	if (cargandoSesion) return <Loader fullScreen />;
 
 	// aviso legal
 	const page = new URLSearchParams(window.location.search).get('page');

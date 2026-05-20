@@ -11,6 +11,7 @@ import llanoAlto from '../assets/llanoAltoAlbergue.webp';
 import record400 from '../assets/record400New.webp';
 
 import { attachFocusTrap } from '../utils/focusTrap';
+import BackToTop from './BackToTop';
 
 function Modal({ onClose, children }) {
 	const containerRef = useRef(null);
@@ -482,6 +483,8 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					<Register onRegisterSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
 				</Modal>
 			)}
+
+			<BackToTop />
 
 			{/* BANNER COOKIES */}
 			{!cookiesAceptadas && (

@@ -14,19 +14,29 @@ export default function Inscripcion({ user, onUserUpdate }) {
 	const [error, setError]             = useState('');
 	const [ok, setOk]                   = useState(false);
 	const [plantilla, setPlantilla]     = useState(null);
-	const [cargandoP, setCargandoP]     = useState(true);
+	const [cargandoP, setCargandoP]     = useState(false);
 	const [visorAbierto, setVisorAbierto] = useState(false);
+	const [plantillaError, setPlantillaError] = useState(false);
 
 	const inscripcionCompleta = !!(user?.inscripcion_pdf || user?.inscripcion_formulario);
 	const isPdf = user?.inscripcion_pdf?.startsWith('data:application/pdf');
 
-	useEffect(() => {
-		fetch(`${API}/admin/plantilla-inscripcion`, { credentials: 'include' })
-			.then(r => r.json())
-			.then(d => { if (d.status === 'success') setPlantilla(d.pdf); })
-			.catch(() => {})
-			.finally(() => setCargandoP(false));
-	}, []);
+	const cargarPlantilla = async () => {
+		if (plantilla) return plantilla;
+		setCargandoP(true);
+		setPlantillaError(false);
+		try {
+			const r = await fetch(`${API}/admin/plantilla-inscripcion`, { credentials: 'include' });
+			const d = await r.json();
+			if (d.status === 'success') { setPlantilla(d.pdf); return d.pdf; }
+			setPlantillaError(true);
+		} catch {
+			setPlantillaError(true);
+		} finally {
+			setCargandoP(false);
+		}
+		return null;
+	};
 
 	useEffect(() => {
 		if (!visorAbierto) return;
@@ -138,38 +148,45 @@ export default function Inscripcion({ user, onUserUpdate }) {
 						Rellena el formulario directamente en el navegador o descárgalo para completarlo en local.
 					</p>
 
-					{cargandoP ? (
-						<div className="w-full py-3 flex items-center justify-center">
-							<span className="text-gray-400 text-[10px] uppercase tracking-widest animate-pulse">Cargando...</span>
-						</div>
-					) : plantilla ? (
-						<div className="space-y-2">
-							<button
-								onClick={() => setVisorAbierto(true)}
-								className="w-full flex items-center justify-center gap-2 bg-ianuarius text-white label-caps py-3 rounded hover:bg-red-700 transition"
-							>
+					<div className="space-y-2">
+						<button
+							disabled={cargandoP}
+							onClick={async () => { const p = await cargarPlantilla(); if (p) setVisorAbierto(true); }}
+							className="w-full flex items-center justify-center gap-2 bg-ianuarius text-white label-caps py-3 rounded hover:bg-red-700 transition disabled:opacity-50"
+						>
+							{cargandoP ? (
+								<svg className="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+									<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+									<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+								</svg>
+							) : (
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
 								</svg>
-								Rellenar en el navegador
-							</button>
+							)}
+							Rellenar en el navegador
+						</button>
 
-							<a
-								href={plantilla}
-								download="plantilla_inscripcion.pdf"
-								className="w-full flex items-center justify-center gap-2 border border-white/20 text-white label-caps py-3 rounded hover:border-white/40 hover:bg-white/5 transition"
-							>
-								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
-									<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-								</svg>
-								Descargar PDF
-							</a>
-						</div>
-					) : (
-						<div className="w-full py-3 text-center border border-dashed border-gray-700 rounded">
-							<p className="text-gray-400 text-[10px] uppercase tracking-widest">Pendiente — el administrador aún no ha subido la plantilla</p>
-						</div>
-					)}
+						<button
+							disabled={cargandoP}
+							onClick={async () => {
+								const p = await cargarPlantilla();
+								if (!p) return;
+								const a = document.createElement('a');
+								a.href = p; a.download = 'plantilla_inscripcion.pdf'; a.click();
+							}}
+							className="w-full flex items-center justify-center gap-2 border border-white/20 text-white label-caps py-3 rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-50"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+							</svg>
+							Descargar PDF
+						</button>
+
+						{plantillaError && (
+							<p className="text-red-400 text-[10px] uppercase tracking-widest text-center">Error al cargar la plantilla</p>
+						)}
+					</div>
 				</div>
 
 				{/* Subir PDF firmado */}

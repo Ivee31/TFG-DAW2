@@ -1,5 +1,8 @@
-﻿export default function AvisoLegal({ onBack }) {
+﻿import BackToTop from './BackToTop';
+
+export default function AvisoLegal({ onBack }) {
 	return (
+		<>
 		<div className="bg-oscuro text-gray-200 font-sans antialiased min-h-screen">
 			<div className="max-w-3xl mx-auto px-6 py-16">
 
@@ -67,5 +70,7 @@
 
 			</div>
 		</div>
+		<BackToTop />
+		</>
 	);
 }
