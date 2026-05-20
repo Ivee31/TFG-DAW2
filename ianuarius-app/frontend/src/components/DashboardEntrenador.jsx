@@ -43,6 +43,7 @@ export default function DashboardEntrenador() {
 	const [busqueda, setBusqueda]               = useState('');
 	const [filtroGenero, setFiltroGenero]       = useState('todos');
 	const [filtroCategoria, setFiltroCategoria] = useState('');
+	const [filtroDocs, setFiltroDocs]           = useState(false);
 
 	useEffect(() => {
 		fetch(`${API}/usuarios/atletas`, { credentials: 'include' })
@@ -62,6 +63,8 @@ export default function DashboardEntrenador() {
 	const categoriasDisponibles = [...new Set(atletas.map(a => calcularCategoria(a.fecha_nacimiento, a.genero)))]
 		.sort((a, b) => CATEGORIA_ORDEN.indexOf(a) - CATEGORIA_ORDEN.indexOf(b));
 
+	const docsIncompletas = (a) => !parseInt(a.tiene_dni) || !parseInt(a.tiene_carnet) || !parseInt(a.tiene_inscripcion);
+
 	const atletasFiltrados = atletas.filter(a => {
 		const q = busqueda.toLowerCase().trim();
 		const matchBusqueda = !q ||
@@ -69,10 +72,11 @@ export default function DashboardEntrenador() {
 			a.email.toLowerCase().includes(q);
 		const matchGenero    = filtroGenero === 'todos' || a.genero === filtroGenero;
 		const matchCategoria = !filtroCategoria || calcularCategoria(a.fecha_nacimiento, a.genero) === filtroCategoria;
-		return matchBusqueda && matchGenero && matchCategoria;
+		const matchDocs      = !filtroDocs || docsIncompletas(a);
+		return matchBusqueda && matchGenero && matchCategoria && matchDocs;
 	});
 
-	const hayFiltros = busqueda.trim() || filtroGenero !== 'todos' || filtroCategoria;
+	const hayFiltros = busqueda.trim() || filtroGenero !== 'todos' || filtroCategoria || filtroDocs;
 
 	return (
 		<main>
@@ -131,6 +135,17 @@ export default function DashboardEntrenador() {
 								))}
 							</select>
 						)}
+
+						<button
+							onClick={() => setFiltroDocs(v => !v)}
+							className={`shrink-0 px-3 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg border transition ${
+								filtroDocs
+									? 'bg-yellow-500/20 border-yellow-500/50 text-yellow-400'
+									: 'bg-oscuro border-white/10 text-gray-400 hover:text-white hover:border-white/30'
+							}`}
+						>
+							Docs pendientes
+						</button>
 					</div>
 				)}
 
@@ -186,9 +201,16 @@ export default function DashboardEntrenador() {
 											<span className="text-[10px] text-gray-400 uppercase tracking-widest">
 												{a.genero === 'M' ? 'Masculino' : 'Femenino'}
 											</span>
-											<span className="text-[10px] font-bold text-gray-400">
-												{a.total_marcas} {parseInt(a.total_marcas) === 1 ? 'marca' : 'marcas'}
-											</span>
+											<div className="flex items-center gap-2">
+												{docsIncompletas(a) && (
+													<span className="text-[9px] font-bold uppercase tracking-widest text-yellow-400 bg-yellow-500/10 border border-yellow-500/30 px-1.5 py-0.5 rounded">
+														Docs
+													</span>
+												)}
+												<span className="text-[10px] font-bold text-gray-400">
+													{a.total_marcas} {parseInt(a.total_marcas) === 1 ? 'marca' : 'marcas'}
+												</span>
+											</div>
 										</div>
 									</div>
 								</div>

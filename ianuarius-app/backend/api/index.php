@@ -266,6 +266,8 @@ switch ($endpoint) {
         $sub = $segments[1] ?? '';
         if ($sub === 'recordatorio' && $method === 'GET') {
             CronController::recordatorio();
+        } elseif ($sub === 'documentacion' && $method === 'GET') {
+            CronController::avisoDocumentacion();
         } else {
             http_response_code(404);
             echo json_encode(["error" => "Endpoint not found"]);
