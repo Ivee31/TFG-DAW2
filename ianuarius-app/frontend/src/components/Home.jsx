@@ -118,6 +118,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
 					background: transparent; backdrop-filter: blur(4px);
 					border-radius: 6px; transition: all .3s; border: 1px solid rgba(156,156,156,0.4);
+					overflow: hidden;
 				}
 				.insta-bg {
 					position: absolute; inset: 0;
@@ -223,7 +224,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					background: #FE0000; transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
 				}
 				.btn-registrarse:hover::before { scale: 0; }
-				.btn-registrarse:hover { border-color: rgba(255,255,255,0.4); box-shadow: none; scale: 1.05; }
+				.btn-registrarse:hover { border-color: rgba(255,255,255,0.4); box-shadow: none; scale: 1.05; background: rgba(255,255,255,0.1); }
 				.btn-registrarse:active { scale: 1; }
 
 				/* --- Leer más button (versión roja pequeña) --- */
@@ -244,7 +245,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					position: absolute; top: 0; bottom: 0; margin: auto;
 				}
 				.btn-leer-mas .arrow {
-					left: 50%; margin-left: -0.5rem; width: 0.75rem; height: 0.1rem; background: none;
+					left: 0.25rem; width: 0.75rem; height: 0.1rem; background: none;
 				}
 				.btn-leer-mas .arrow::before {
 					position: absolute; content: ''; top: -0.18rem; right: 0.05rem;
@@ -265,6 +266,12 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				.btn-leer-mas:hover .arrow { background: #fff; transform: translate(0.65rem, 0); }
 				.btn-leer-mas:hover .arrow::before { border-top-color: #fff; border-right-color: #fff; }
 				.btn-leer-mas:hover .btn-text { color: #fff; }
+
+				/* Cancelar hover en táctil para evitar animación pillada */
+				@media (hover: none) {
+					.insta-btn:hover .insta-bg { transform: none; }
+					.insta-btn:hover .insta-container { background: transparent; }
+				}
 			`}</style>
 
 			{/* HERO */}
@@ -288,7 +295,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 								>
 									<span className="insta-bg" aria-hidden="true" />
 									<span className="insta-container">
-										<img src={logoInstagram} alt="" aria-hidden="true" className="w-8 h-8 object-contain" />
+										<img src={logoInstagram} alt="" aria-hidden="true" className="w-full h-full object-contain scale-[1.25]" />
 									</span>
 								</a>
 								<span className="text-[12px] text-gray-400 uppercase tracking-widest" aria-hidden="true">@c.a.i.s</span>
