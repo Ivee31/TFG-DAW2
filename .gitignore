@@ -5,3 +5,4 @@ ianuarius_errors.log
 
 # Entorno — claves reales van en servidor, no en git
 ianuarius-app/backend/.env
+ianuarius-app/frontend/.env
