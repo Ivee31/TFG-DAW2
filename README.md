@@ -56,12 +56,14 @@ Ianuarius es una plataforma web de gestión integral para el Club de Atletismo I
 
 - Login / Registro con credenciales propias o Google OAuth
 - Recuperación de contraseña por email (Brevo)
-- Perfil de usuario: datos personales, foto, DNI escaneado, eliminación de cuenta (RGPD)
-- Dashboard del atleta: marcas vinculadas a eventos, sensaciones emoji 1-5
+- Perfil de usuario: datos personales, foto, DNI escaneado, carnet, eliminación de cuenta (RGPD)
+- Dashboard del atleta: marcas vinculadas a eventos del calendario, sensaciones emoji 1-5, edición y borrado
 - Inscripción PDF: admin sube plantilla, atleta la rellena en el navegador
-- Calendario de eventos (competiciones, controles, escolares…)
-- Panel del entrenador: filtros por texto, género y categoría
-- Panel de administración: gestión de atletas y entrenadores
+- Calendario de eventos (competiciones, controles, escolares…) con creación y eliminación por admin/entrenador
+- Notificaciones por email: recordatorio de competiciones próximas (frecuencia configurable) y aviso de documentación pendiente cada 4 días
+- Panel del entrenador: fichas de atletas con filtros por texto, género, categoría y documentación pendiente
+- Panel de administración: gestión de atletas y entrenadores, activación de cuentas, control de pagos, plantilla PDF
+- Aviso de inactividad con cierre de sesión automático
 - Aviso legal público
 
 ---
@@ -135,6 +137,13 @@ APP_URL=http://localhost:5173
 # Clave API de Brevo (email transaccional)
 # Obtener en: https://app.brevo.com → SMTP & API → API Keys
 BREVO_KEY=xkeysib-xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Clave secreta para proteger los endpoints de cron
+# Puede ser cualquier cadena aleatoria larga
+CRON_KEY=cadena-aleatoria-segura
+
+# Client ID de Google OAuth (también necesario en el backend)
+VITE_GOOGLE_CLIENT_ID=XXXXXXXXXXXXXXXX.apps.googleusercontent.com
 ```
 
 ### 1.4 Levantar contenedores Docker
