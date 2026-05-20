@@ -288,7 +288,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				{/* NAV */}
 				<nav className="w-full px-6 md:px-10 py-5 flex items-center justify-between">
 					<div className="flex items-center gap-3">
-						<div className="w-14 h-14 bg-oscuro/60 backdrop-blur-md rounded-full border border-ianuarius/50 flex items-center justify-center p-2 shadow-[0_0_14px_rgba(254,0,0,0.3)]">
+						<div className="w-[72px] h-[72px] bg-oscuro/60 backdrop-blur-md rounded-full border border-white/40 flex items-center justify-center p-2 shadow-[0_0_10px_rgba(255,255,255,0.08)]">
 							<img src={logoIanuarius} alt="Ianuarius" className="w-full h-full object-contain" />
 						</div>
 						<div className="flex flex-col gap-0.5">
