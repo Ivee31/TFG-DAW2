@@ -171,6 +171,115 @@ html, body {
     transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s 0s;
 }
 
+/* Botón descarga */
+.btn-descarga {
+    background: transparent;
+    border: 2px solid #FE0000;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 50px;
+    width: 180px;
+    cursor: pointer;
+    transition: width 0.4s ease, border-color 0.4s ease;
+    padding: 5px;
+    position: relative;
+    overflow: hidden;
+}
+.btn-descarga:disabled { cursor: default; }
+.btn-descarga--descargando { width: 56px; }
+.btn-descarga--listo { border-color: #22c55e; }
+.btn-descarga__circulo {
+    height: 42px;
+    width: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    background-color: #FE0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: background-color 0.4s ease, rotate 0.4s ease;
+}
+.btn-descarga--descargando .btn-descarga__circulo {
+    animation: bd-pulse 1s forwards;
+    rotate: 180deg;
+}
+.btn-descarga--listo .btn-descarga__circulo { background-color: #22c55e; }
+.btn-descarga__circulo::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0;
+    background-color: #b30000;
+    width: 100%;
+    height: 0;
+    transition: opacity 0.25s ease;
+}
+.btn-descarga--descargando .btn-descarga__circulo::before {
+    animation: bd-installing 3s ease-in-out forwards;
+}
+.btn-descarga--listo .btn-descarga__circulo::before { opacity: 0; }
+.btn-descarga__icono {
+    color: #fff;
+    width: 22px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.2s ease;
+    z-index: 1;
+}
+.btn-descarga--descargando .btn-descarga__icono,
+.btn-descarga--listo .btn-descarga__icono { opacity: 0; }
+.btn-descarga__icono-ok {
+    color: #fff;
+    width: 18px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease 0.15s;
+    z-index: 1;
+}
+.btn-descarga--listo .btn-descarga__icono-ok { opacity: 1; }
+.btn-descarga__cuadrado {
+    width: 12px;
+    aspect-ratio: 1;
+    border-radius: 2px;
+    background-color: #fff;
+    opacity: 0;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.2s ease;
+    z-index: 1;
+}
+.btn-descarga--descargando .btn-descarga__cuadrado { opacity: 1; }
+.btn-descarga__texto {
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #fff;
+    position: absolute;
+    right: 16px;
+    white-space: nowrap;
+    transition: opacity 0.25s ease;
+}
+.btn-descarga__texto--ok { opacity: 0; color: #22c55e; }
+.btn-descarga--descargando .btn-descarga__texto { opacity: 0; }
+.btn-descarga--listo .btn-descarga__texto:not(.btn-descarga__texto--ok) { opacity: 0; }
+.btn-descarga--listo .btn-descarga__texto--ok { opacity: 1; }
+@keyframes bd-pulse {
+    0%   { scale: 0.95; box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+    70%  { scale: 1;    box-shadow: 0 0 0 12px rgba(255,255,255,0); }
+    100% { scale: 0.95; box-shadow: 0 0 0 0  rgba(255,255,255,0); }
+}
+@keyframes bd-installing {
+    from { height: 0; }
+    to   { height: 100%; }
+}
+
 /* Back to top button */
 .btn-back-top {
     width: 50px; height: 50px;

@@ -1,5 +1,6 @@
 ﻿import { useState, useRef, useEffect } from 'react';
 import { API } from '../api';
+import BtnDescarga from './BtnDescarga';
 
 const fileToBase64 = (file) => new Promise((resolve, reject) => {
 	const reader = new FileReader();
@@ -20,6 +21,15 @@ export default function Inscripcion({ user, onUserUpdate }) {
 
 	const inscripcionCompleta = !!(user?.inscripcion_pdf || user?.inscripcion_formulario);
 	const isPdf = user?.inscripcion_pdf?.startsWith('data:application/pdf');
+
+	const handleDescarga = async () => {
+		const p = await cargarPlantilla();
+		if (!p) throw new Error('plantilla no disponible');
+		const a = document.createElement('a');
+		a.href = p;
+		a.download = 'plantilla_inscripcion.pdf';
+		a.click();
+	};
 
 	const cargarPlantilla = async () => {
 		if (plantilla) return plantilla;
@@ -167,21 +177,9 @@ export default function Inscripcion({ user, onUserUpdate }) {
 							Rellenar en el navegador
 						</button>
 
-						<button
-							disabled={cargandoP}
-							onClick={async () => {
-								const p = await cargarPlantilla();
-								if (!p) return;
-								const a = document.createElement('a');
-								a.href = p; a.download = 'plantilla_inscripcion.pdf'; a.click();
-							}}
-							className="w-full flex items-center justify-center gap-2 border border-white/20 text-white label-caps py-3 rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-50"
-						>
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
-								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-							</svg>
-							Descargar PDF
-						</button>
+						<div className="flex justify-center pt-1">
+							<BtnDescarga onDescargar={handleDescarga} />
+						</div>
 
 						{plantillaError && (
 							<p className="text-red-400 text-[10px] uppercase tracking-widest text-center">Error al cargar la plantilla</p>
