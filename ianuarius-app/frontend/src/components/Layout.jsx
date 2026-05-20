@@ -252,7 +252,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 			</aside>
 
 			{/* wrapper dinamico contenido */}
-			<div className={`grow transition-all duration-300 ease-in-out ${(isMenuOpen || (isPinned && !isMobile)) ? 'lg:pr-64' : ''}`}>
+			<div className={`grow transition-all duration-300 ease-in-out ${(isMenuOpen || (isPinned && !isMobile)) ? 'xl:pr-64' : ''}`}>
 			<div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full">
 
 				<header className="mb-8 md:mb-12 border-b-2 border-ianuarius pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
