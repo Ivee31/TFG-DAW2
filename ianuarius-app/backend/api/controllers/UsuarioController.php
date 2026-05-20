@@ -428,6 +428,9 @@ class UsuarioController {
             $stmt = $pdo->prepare(
                 "SELECT u.id_usuario, u.nombre, u.apellidos, u.email, u.genero, u.fecha_nacimiento,
                         u.foto_perfil, u.foto_carnet,
+                        (u.foto_dni IS NOT NULL) AS tiene_dni,
+                        (u.foto_carnet IS NOT NULL) AS tiene_carnet,
+                        (u.inscripcion_pdf IS NOT NULL) AS tiene_inscripcion,
                         COUNT(m.id_marca) AS total_marcas,
                         COALESCE(fi.estado_pago, 'pendiente') AS estado_pago
                  FROM usuarios u
