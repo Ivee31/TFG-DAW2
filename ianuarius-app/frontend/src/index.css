@@ -186,6 +186,18 @@ html, body {
     overflow: hidden;
 }
 .btn-descarga:disabled { cursor: default; }
+.btn-descarga:hover:not(:disabled) {
+    border-color: #ff3333;
+    background: rgba(254, 0, 0, 0.05);
+    box-shadow: 0 0 0 3px rgba(254, 0, 0, 0.12);
+}
+.btn-descarga:hover:not(:disabled) .btn-descarga__icono {
+    animation: bd-bounce 0.7s ease infinite;
+}
+@keyframes bd-bounce {
+    0%, 100% { transform: translate(-50%, -50%); }
+    50%       { transform: translate(-50%, calc(-50% + 4px)); }
+}
 .btn-descarga--descargando { width: 56px; }
 .btn-descarga--listo { border-color: #22c55e; }
 .btn-descarga__circulo {
