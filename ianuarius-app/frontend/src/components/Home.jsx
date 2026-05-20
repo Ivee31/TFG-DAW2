@@ -50,19 +50,19 @@ function Modal({ onClose, children }) {
 const noticias = [
 	{
 		img: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=70',
-		categoria: 'Competición',
+		categoria: 'Itinerario',
 		titulo: 'RFEA anuncia el calendario oficial de competiciones para la temporada 2026',
 		fecha: '15 abr 2026',
 	},
 	{
 		img: llanoAlto,
 		categoria: 'Club',
-		titulo: 'Campus de verano Ianuarius — entrenamiento intensivo para jóvenes atletas',
-		fecha: '8 may 2026',
+		titulo: 'Concentraciones de entrenamiento Ianuarius en LLano Alto, Bejar — jornadas de entrenamiento y convivencia para atletas y entrenadores del club.',
+		fecha: '25 sep 2026',
 	},
 	{
 		img: record400,
-		categoria: 'Atletismo',
+		categoria: 'Competicion',
 		titulo: 'Nuevo récord personal en 400m lisos en el control autonomico de primavera',
 		fecha: '5 may 2026',
 	},
@@ -197,7 +197,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			</section>
 
 			{/* NOTICIAS — MOCKUP */}
-			<section className="bg-oscuro/70 px-6 md:px-12 pt-6 pb-16 max-w-[1400px] mx-auto -mt-20 rounded-t-2xl">
+			<section className="bg-oscuro/40 px-6 md:px-12 pt-6 pb-16 max-w-[1400px] mx-auto -mt-20 rounded-t-2xl">
 
 				<div className="flex items-center justify-between mb-8">
 					<h2 className="text-white font-black text-xl md:text-2xl tracking-widest uppercase">Últimas noticias</h2>
