@@ -122,7 +122,10 @@ cd TFG-DAW2/ianuarius-app
 
 ### 1.3 Configurar variables de entorno del backend
 
-Crear o editar `ianuarius-app/backend/.env`:
+> [!IMPORTANT]
+> El archivo `.env` **no está incluido en el repositorio** (contiene credenciales). El desarrollador debe crearlo manualmente en `ianuarius-app/backend/.env` antes de lanzar la aplicación. Puedes usar `backend/.env.example` como referencia.
+
+Crear `ianuarius-app/backend/.env`:
 
 ```env
 DB_HOST=db
