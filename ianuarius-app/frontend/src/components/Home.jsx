@@ -105,6 +105,166 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					50%       { transform: translateY(8px); opacity: 0.9; }
 				}
 				.scroll-hint { animation: scrollBounce 1.8s ease-in-out infinite; }
+
+				/* --- Instagram button --- */
+				.insta-btn {
+					width: 36px; height: 36px; position: relative;
+					display: flex; align-items: center; justify-content: center;
+					text-decoration: none; border: none; background: transparent;
+					cursor: pointer; border-radius: 7px; transition: all .3s;
+				}
+				.insta-container {
+					position: relative; z-index: 1;
+					width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+					background: transparent; backdrop-filter: blur(4px);
+					border-radius: 6px; transition: all .3s; border: 1px solid rgba(156,156,156,0.4);
+				}
+				.insta-bg {
+					position: absolute; inset: 0;
+					background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+					border-radius: 9px; transition: transform .3s;
+				}
+				.insta-btn:hover .insta-bg { transform: rotate(35deg); transform-origin: bottom; }
+				.insta-btn:hover .insta-container { background: rgba(156,156,156,0.3); }
+
+				/* --- Acceder button --- */
+				.btn-acceder {
+					cursor: pointer; position: relative;
+					padding: 10px 32px; font-size: 10px;
+					color: #ffffff; border: 2px solid rgba(255,255,255,0.4);
+					border-radius: 6px; background: rgba(255,255,255,0.1);
+					font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
+					transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); overflow: hidden;
+				}
+				.btn-acceder::before {
+					content: ''; position: absolute; inset: 0; margin: auto;
+					width: 50px; height: 50px; border-radius: inherit; scale: 0; z-index: -1;
+					background: #FE0000; transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+				}
+				.btn-acceder:hover::before { scale: 3; }
+				.btn-acceder:hover { border-color: #FE0000; scale: 1.05; box-shadow: 0 0 20px rgba(254,0,0,0.4); }
+				.btn-acceder:active { scale: 1; }
+
+				/* --- Saber más / Leer más buttons --- */
+				.btn-saber, .btn-saber-sm {
+					position: relative; display: inline-block; cursor: pointer;
+					outline: none; border: 0; vertical-align: middle;
+					text-decoration: none; background: transparent; padding: 0;
+					font-size: inherit; font-family: inherit;
+				}
+				.btn-saber { width: 12rem; }
+				.btn-saber-sm { width: 8rem; }
+
+				.btn-saber .circle, .btn-saber-sm .circle {
+					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+					position: relative; display: block; margin: 0;
+					background: #262626; border: 1px solid rgba(255,255,255,0.15);
+				}
+				.btn-saber .circle { width: 2.5rem; height: 2.5rem; border-radius: 1.25rem; }
+				.btn-saber-sm .circle { width: 1.75rem; height: 1.75rem; border-radius: 0.875rem; }
+
+				.btn-saber .icon, .btn-saber-sm .icon {
+					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+					position: absolute; top: 0; bottom: 0; margin: auto; background: #fff;
+				}
+				.btn-saber .arrow { left: 0.5rem; width: 1rem; height: 0.125rem; background: none; }
+				.btn-saber-sm .arrow { left: 0.35rem; width: 0.75rem; height: 0.1rem; background: none; }
+				.btn-saber .arrow::before {
+					position: absolute; content: ''; top: -0.25rem; right: 0.05rem;
+					width: 0.55rem; height: 0.55rem;
+					border-top: 0.125rem solid #fff; border-right: 0.125rem solid #fff;
+					transform: rotate(45deg);
+				}
+				.btn-saber-sm .arrow::before {
+					position: absolute; content: ''; top: -0.18rem; right: 0.05rem;
+					width: 0.4rem; height: 0.4rem;
+					border-top: 0.1rem solid #fff; border-right: 0.1rem solid #fff;
+					transform: rotate(45deg);
+				}
+
+				.btn-saber .btn-text {
+					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+					position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+					padding: 0.65rem 0; margin: 0 0 0 2.5rem;
+					color: #9ca3af; font-weight: 700; line-height: 1.6;
+					text-align: center; text-transform: uppercase;
+					font-size: 0.65rem; letter-spacing: 0.08em;
+				}
+				.btn-saber-sm .btn-text {
+					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+					position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+					padding: 0.4rem 0; margin: 0 0 0 1.75rem;
+					color: #9ca3af; font-weight: 700; line-height: 1.6;
+					text-align: center; text-transform: uppercase;
+					font-size: 0.55rem; letter-spacing: 0.08em;
+				}
+
+				.btn-saber:hover .circle, .btn-saber-sm:hover .circle {
+					width: 100%; background: #FE0000; border-color: transparent;
+				}
+				.btn-saber:hover .arrow { background: #fff; transform: translate(1rem, 0); }
+				.btn-saber-sm:hover .arrow { background: #fff; transform: translate(0.65rem, 0); }
+				.btn-saber:hover .btn-text, .btn-saber-sm:hover .btn-text { color: #fff; }
+
+				/* --- Registrarse button (inverso de Acceder) --- */
+				.btn-registrarse {
+					cursor: pointer; position: relative;
+					padding: 10px 32px; font-size: 10px;
+					color: #ffffff; border: 2px solid #FE0000;
+					border-radius: 6px; background: transparent;
+					font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
+					transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); overflow: hidden;
+					box-shadow: 0 0 20px rgba(254,0,0,0.4);
+					isolation: isolate;
+				}
+				.btn-registrarse::before {
+					content: ''; position: absolute; inset: 0; margin: auto;
+					width: 50px; height: 50px; border-radius: inherit; scale: 3; z-index: -1;
+					background: #FE0000; transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+				}
+				.btn-registrarse:hover::before { scale: 0; }
+				.btn-registrarse:hover { border-color: rgba(255,255,255,0.4); box-shadow: none; scale: 1.05; }
+				.btn-registrarse:active { scale: 1; }
+
+				/* --- Leer más button (versión roja pequeña) --- */
+				.btn-leer-mas {
+					position: relative; display: inline-block; cursor: pointer;
+					outline: none; border: 0; vertical-align: middle;
+					text-decoration: none; background: transparent; padding: 0;
+					font-size: inherit; font-family: inherit; width: 8rem;
+				}
+				.btn-leer-mas .circle {
+					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+					position: relative; display: block; margin: 0;
+					width: 1.75rem; height: 1.75rem; border-radius: 0.875rem;
+					background: rgba(254,0,0,0.15); border: 1px solid #FE0000;
+				}
+				.btn-leer-mas .icon {
+					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+					position: absolute; top: 0; bottom: 0; margin: auto;
+				}
+				.btn-leer-mas .arrow {
+					left: 50%; margin-left: -0.5rem; width: 0.75rem; height: 0.1rem; background: none;
+				}
+				.btn-leer-mas .arrow::before {
+					position: absolute; content: ''; top: -0.18rem; right: 0.05rem;
+					width: 0.4rem; height: 0.4rem;
+					border-top: 0.1rem solid #f87171; border-right: 0.1rem solid #f87171;
+					transform: rotate(45deg);
+					transition: border-color 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+				}
+				.btn-leer-mas .btn-text {
+					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+					position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+					padding: 0.4rem 0; margin: 0 0 0 1.75rem;
+					color: #f87171; font-weight: 700; line-height: 1.6;
+					text-align: center; text-transform: uppercase;
+					font-size: 0.55rem; letter-spacing: 0.08em;
+				}
+				.btn-leer-mas:hover .circle { width: 100%; background: #FE0000; border-color: transparent; }
+				.btn-leer-mas:hover .arrow { background: #fff; transform: translate(0.65rem, 0); }
+				.btn-leer-mas:hover .arrow::before { border-top-color: #fff; border-right-color: #fff; }
+				.btn-leer-mas:hover .btn-text { color: #fff; }
 			`}</style>
 
 			{/* HERO */}
@@ -118,16 +278,21 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						</div>
 						<div className="flex flex-col gap-0.5">
 							<span className="text-white font-black text-sm tracking-[0.25em] uppercase">Ianuarius</span>
-							<a
-								href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="flex items-center gap-1.5 hover:opacity-70 transition"
-								aria-label="Instagram de Ianuarius"
-							>
-								<img src={logoInstagram} alt="" className="w-7 h-7 object-contain" />
-								<span className="text-[12px] text-gray-400 uppercase tracking-widest">@c.a.i.s</span>
-							</a>
+							<div className="flex items-center gap-2">
+								<a
+									href="https://www.instagram.com/c.a.i.s?igsh=N2Z2MXR2MGI3czI5"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="insta-btn"
+									aria-label="Instagram de Ianuarius — @c.a.i.s, abre en nueva pestaña"
+								>
+									<span className="insta-bg" aria-hidden="true" />
+									<span className="insta-container">
+										<img src={logoInstagram} alt="" aria-hidden="true" className="w-8 h-8 object-contain" />
+									</span>
+								</a>
+								<span className="text-[12px] text-gray-400 uppercase tracking-widest" aria-hidden="true">@c.a.i.s</span>
+							</div>
 						</div>
 					</div>
 
@@ -152,14 +317,16 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					<div className="flex flex-col sm:flex-row items-center gap-3 mb-10">
 						<button
 							onClick={openRegister}
-							className="px-8 py-3 bg-red-600 text-white font-black text-[10px] tracking-widest uppercase rounded shadow-[0_0_20px_rgba(254,0,0,0.4)] hover:bg-red-700 hover:shadow-[0_0_30px_rgba(254,0,0,0.6)] transition duration-300"
+							className="btn-registrarse"
+							aria-label="Registrarse en la plataforma Ianuarius"
 						>
-							Registrarse
+							<span className="relative z-10">Registrarse</span>
 						</button>
 
 						<button
 							onClick={openLogin}
-							className="px-8 py-3 bg-white/10 border border-white/40 text-white font-black text-[10px] tracking-widest uppercase rounded hover:border-white hover:bg-white/20 transition duration-300"
+							className="btn-acceder"
+							aria-label="Acceder a la plataforma Ianuarius"
 						>
 							Acceder
 						</button>
@@ -211,7 +378,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 					{noticias.map((n, i) => (
-						<article key={i} className="bg-gris rounded-xl border border-white/20 overflow-hidden group relative">
+						<article key={i} className="bg-gris rounded-xl border border-white/20 overflow-hidden group relative flex flex-col">
 							{/* mockup badge */}
 							<div className="absolute top-3 left-3 z-10 px-2 py-0.5 bg-black/60 backdrop-blur-sm border border-white/20 rounded text-[8px] font-black uppercase tracking-widest text-gray-400">
 								Mockup
@@ -225,7 +392,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 								/>
 							</div>
 
-							<div className="p-5 space-y-2">
+							<div className="p-5 space-y-2 flex-1">
 								<div className="flex items-center justify-between">
 									<span className="text-[9px] font-black uppercase tracking-widest text-red-400">{n.categoria}</span>
 									<span className="text-[9px] text-gray-400">{n.fecha}</span>
@@ -234,8 +401,14 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 								<p className="text-gray-400 text-xs leading-relaxed">
 									Contenido de la noticia pendiente de implementar en una futura versión de la plataforma.
 								</p>
-								<button disabled className="text-ianuarius/40 text-[10px] font-bold tracking-wide cursor-not-allowed">
-									Leer más →
+							</div>
+
+							<div className="px-5 pb-5">
+								<button disabled className="btn-leer-mas cursor-not-allowed" aria-label="Leer artículo completo (no disponible)" aria-disabled="true">
+									<span className="circle" aria-hidden="true">
+										<span className="icon arrow" aria-hidden="true" />
+									</span>
+									<span className="btn-text">Leer más</span>
 								</button>
 							</div>
 						</article>
@@ -258,8 +431,11 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					<p className="text-gray-400 text-sm md:text-base mb-6 leading-relaxed">
 						Ningún atleta en nuestra región entrena con la dedicación, las instalaciones y el seguimiento biométrico que ofrecemos en la disciplina de Ianuarius.
 					</p>
-					<a href="#" className="text-red-400 hover:text-white text-sm font-semibold tracking-wide flex items-center gap-2 transition">
-						Resumen de noticias <span className="text-xl">&rarr;</span>
+					<a href="#" className="btn-saber" aria-label="Ver resumen de noticias del club">
+						<span className="circle" aria-hidden="true">
+							<span className="icon arrow" />
+						</span>
+						<span className="btn-text">Saber más</span>
 					</a>
 				</div>
 
@@ -270,9 +446,11 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					<p className="text-gray-400 text-base md:text-lg leading-relaxed font-light">
 						<span className="text-white font-medium border-b border-ianuarius pb-1">Ianuarius</span> es la respuesta a este desafío. Desplegamos la pista de tartán para todos aquellos que contribuyen a hacer posible un deporte más fuerte y competitivo en el futuro.
 					</p>
-					<a href="#" className="text-white hover:text-ianuarius text-sm font-semibold tracking-wide flex items-center gap-2 mt-2 transition w-fit group">
-						Descubre más sobre el club
-						<span aria-hidden="true" className="text-ianuarius text-xl transform group-hover:translate-x-2 transition">&rarr;</span>
+					<a href="#" className="btn-saber mt-2" aria-label="Descubre más sobre el club Ianuarius">
+						<span className="circle" aria-hidden="true">
+							<span className="icon arrow" />
+						</span>
+						<span className="btn-text">Descubre más</span>
 					</a>
 				</div>
 			</section>
