@@ -256,7 +256,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 			<div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full">
 
 				<header className="mb-8 md:mb-12 border-b-2 border-ianuarius pb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-					<div className="flex items-center gap-5">
+					<div className="flex items-center gap-5 min-w-0">
 						<button
 							onClick={() => onNavigate?.('perfil')}
 							className="relative shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden shadow-lg group cursor-pointer"
@@ -278,8 +278,8 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 							</div>
 						</button>
 
-						<div className="space-y-2">
-							<h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase"
+						<div className="space-y-2 min-w-0">
+							<h1 className="text-4xl md:text-4xl xl:text-6xl font-black tracking-tighter uppercase"
 								style={{ color: 'transparent', WebkitTextStroke: '1px #FFFFFF', fontFamily: "'Graduate', sans-serif" }}>
 								{{ Atleta: 'Panel de Atleta', Entrenador: 'Panel de Entrenador', Admin: 'Panel de Admin' }[user?.rol] ?? 'Panel de Atleta'}
 							</h1>
