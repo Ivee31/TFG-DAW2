@@ -408,7 +408,7 @@ class UsuarioController {
     }
 
     public static function listarAtletas() {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) session_start();
 
         if (!isset($_SESSION['id_usuario'])) {
             http_response_code(401);
