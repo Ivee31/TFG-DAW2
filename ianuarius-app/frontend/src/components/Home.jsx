@@ -273,6 +273,13 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					.insta-btn:hover .insta-bg { transform: none; }
 					.insta-btn:hover .insta-container { background: transparent; }
 				}
+
+				/* Tamaño reducido en móvil */
+				@media (max-width: 640px) {
+					.insta-btn { width: 26px; height: 26px; border-radius: 5px; }
+					.insta-bg  { border-radius: 6px; }
+					.insta-container { border-radius: 4px; }
+				}
 			`}</style>
 
 			{/* HERO */}
