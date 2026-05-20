@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+﻿import { useState, useEffect, useRef, useMemo } from 'react';
 import { API } from '../api';
 
 const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
@@ -74,7 +74,7 @@ function Avatar({ src, nombre, apellidos, onEdit }) {
 
 function InfoRow({ label, value }) {
 	return (
-		<div className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
+		<div className="flex items-center justify-between py-2 border-b border-white/15 last:border-0">
 			<span className="text-gray-400 text-xs uppercase tracking-wider">{label}</span>
 			<span className="text-white text-sm">{value || '-'}</span>
 		</div>
@@ -83,7 +83,7 @@ function InfoRow({ label, value }) {
 
 function SectionHeader({ title, action }) {
 	return (
-		<div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+		<div className="flex items-center justify-between px-6 py-4 border-b border-white/20">
 			<p className="text-[10px] uppercase tracking-widest text-gray-400">{title}</p>
 			{action}
 		</div>
@@ -154,7 +154,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 	const isPdf = previewSrc?.startsWith('data:application/pdf');
 
 	return (
-		<div className="border border-white/10 rounded-lg p-4 space-y-3">
+		<div className="border border-white/20 rounded-lg p-4 space-y-3">
 			<div className="flex items-center justify-between gap-2">
 				<div className="flex items-center gap-2 min-w-0">
 					<IconDoc />
@@ -178,7 +178,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 			</div>
 
 			{showInfo && tooltip && (
-				<div className="bg-white/5 border border-white/10 rounded-md px-3 py-2">
+				<div className="bg-white/5 border border-white/20 rounded-md px-3 py-2">
 					<p className="text-gray-300 text-xs leading-relaxed">{tooltip}</p>
 				</div>
 			)}
@@ -186,7 +186,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 			{!loading && subido && (
 				<>
 					{previewSrc && !isPdf && (
-						<div className="rounded overflow-hidden border border-white/10">
+						<div className="rounded overflow-hidden border border-white/20">
 							<img src={previewSrc} alt={label} className="w-full h-28 object-cover object-center" />
 						</div>
 					)}
@@ -231,7 +231,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 				<button
 					disabled={loading || deleting || !onUpload}
 					onClick={() => fileRef.current?.click()}
-					className="flex-1 flex items-center justify-center gap-1 border border-white/10 text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition disabled:opacity-40 disabled:cursor-not-allowed"
+					className="flex-1 flex items-center justify-center gap-1 border border-white/20 text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
 						<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
@@ -243,7 +243,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 					<a
 						href={previewSrc}
 						download={(downloadName || label.toLowerCase().replace(/\s+/g, '_')) + extFromDataUri(previewSrc)}
-						className="flex-1 flex items-center justify-center gap-1 border border-white/10 text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition"
+						className="flex-1 flex items-center justify-center gap-1 border border-white/20 text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition"
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5 0-4.5 4.5M12 3v13.5m0 0 4.5-4.5" />
@@ -318,7 +318,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 	const inscripcionCompleta = !!(user.inscripcion_pdf || user.inscripcion_formulario);
 
 	return (
-		<div className="bg-gris rounded-lg border border-white/10 overflow-hidden">
+		<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
 			<SectionHeader title="Mis archivos" />
 			<div className="p-4 grid grid-cols-1 gap-3">
 				<FileCard
@@ -414,7 +414,7 @@ function Notificaciones({ user, onUserUpdate }) {
 
 	return (
 		<>
-			<div className="bg-gris rounded-lg border border-white/10 overflow-hidden">
+			<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
 				<SectionHeader title="Notificaciones" />
 				<div className="p-6 space-y-5">
 
@@ -439,7 +439,7 @@ function Notificaciones({ user, onUserUpdate }) {
 						<button
 							onClick={() => activas ? setShowModal(true) : toggle()}
 							disabled={loadingToggle}
-							className={`w-full py-2 text-[10px] font-black uppercase tracking-widest rounded transition disabled:opacity-50 ${
+							className={`w-full py-2 label-caps rounded transition disabled:opacity-50 ${
 								activas
 									? 'border border-red-900/40 text-red-500/70 hover:text-red-400 hover:border-red-500/40'
 									: 'bg-ianuarius/10 border border-ianuarius/30 text-ianuarius hover:bg-ianuarius/20'
@@ -451,7 +451,7 @@ function Notificaciones({ user, onUserUpdate }) {
 
 					{/* frecuencia */}
 					{activas && (
-						<div className="space-y-2 border-t border-white/10 pt-4">
+						<div className="space-y-2 border-t border-white/20 pt-4">
 							<p className="text-[10px] uppercase tracking-widest text-gray-400">Frecuencia de notificaciones</p>
 
 							<div className="space-y-1.5" role="radiogroup" aria-label="Frecuencia de notificaciones por correo">
@@ -466,10 +466,10 @@ function Notificaciones({ user, onUserUpdate }) {
 										className={`w-full flex items-center justify-between px-3 py-2.5 rounded border text-left transition disabled:opacity-60 ${
 											frecuencia === f.valor
 												? 'border-ianuarius bg-ianuarius/10 text-white'
-												: 'border-white/10 text-gray-400 hover:border-white/30 hover:text-white'
+												: 'border-white/20 text-gray-400 hover:border-white/30 hover:text-white'
 										}`}
 									>
-										<span className="text-[10px] font-black uppercase tracking-widest">{f.label}</span>
+										<span className="label-caps">{f.label}</span>
 										<span className="text-[9px] text-gray-400">{f.desc}</span>
 									</button>
 								))}
@@ -489,7 +489,7 @@ function Notificaciones({ user, onUserUpdate }) {
 						role="dialog"
 						aria-modal="true"
 						aria-labelledby="modal-notif-titulo"
-						className="bg-gris border border-white/10 rounded-xl p-6 max-w-sm w-full space-y-4 shadow-2xl"
+						className="bg-gris border border-white/20 rounded-xl p-6 max-w-sm w-full space-y-4 shadow-2xl"
 					>
 						<div className="flex items-start gap-3">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" aria-hidden="true">
@@ -513,13 +513,13 @@ function Notificaciones({ user, onUserUpdate }) {
 							<button
 								onClick={toggle}
 								disabled={loadingToggle}
-								className="flex-1 bg-red-700 text-white text-[10px] font-black uppercase tracking-widest py-2 rounded hover:bg-red-600 transition disabled:opacity-50"
+								className="flex-1 bg-red-700 text-white label-caps py-2 rounded hover:bg-red-600 transition disabled:opacity-50"
 							>
 								{loadingToggle ? '...' : 'Confirmar — desactivar'}
 							</button>
 							<button
 								onClick={() => setShowModal(false)}
-								className="flex-1 border border-white/10 text-gray-400 text-[10px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition"
+								className="flex-1 border border-white/20 text-gray-400 label-caps py-2 rounded hover:text-white hover:border-white/30 transition"
 							>
 								Cancelar
 							</button>
@@ -749,11 +749,11 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 				{/* COLUMNA IZQUIERDA — historial marcas */}
 				<div className="lg:col-span-5 flex flex-col gap-6">
 
-					<div className="bg-gris rounded-lg border border-white/10 overflow-hidden flex flex-col flex-1">
+					<div className="bg-gris rounded-lg border border-white/20 overflow-hidden flex flex-col flex-1">
 						<SectionHeader title="Historial de marcas" />
 
 						{/* filtros */}
-						<div className="px-4 py-3 border-b border-white/10 space-y-2">
+						<div className="px-4 py-3 border-b border-white/20 space-y-2">
 							<div className="flex gap-2">
 								<select
 									value={filterYear}
@@ -787,7 +787,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 										className={`flex-1 py-1.5 text-[9px] font-black uppercase tracking-widest rounded transition ${
 											filterTemporada === val
 												? 'bg-ianuarius text-white'
-												: 'border border-white/10 text-gray-400 hover:text-white hover:border-white/30'
+												: 'border border-white/20 text-gray-400 hover:text-white hover:border-white/30'
 										}`}
 									>
 										{label}
@@ -804,9 +804,9 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 							aria-live="polite"
 						>
 							{cargandoMarcas ? (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-8">Cargando...</p>
+								<p className="label-muted text-center py-8">Cargando...</p>
 							) : marcasVisible.length === 0 ? (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-8 border border-dashed border-gray-700 rounded-lg mt-2">
+								<p className="label-muted text-center py-8 border border-dashed border-gray-700 rounded-lg mt-2">
 									{marcasPerfil.length === 0 ? 'Sin marcas registradas' : 'Sin marcas para los filtros seleccionados'}
 								</p>
 							) : (
@@ -814,7 +814,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									<div
 										key={m.id_marca}
 										role="listitem"
-										className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0 gap-3"
+										className="flex items-center justify-between py-2.5 border-b border-white/15 last:border-0 gap-3"
 									>
 										<div className="min-w-0 flex-1">
 											<p className="text-white text-xs font-bold truncate">{m.prueba}</p>
@@ -840,7 +840,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 
 						{/* paginación */}
 						{!cargandoMarcas && totalPaginas > 1 && (
-							<div className="px-4 py-3 border-t border-white/10 flex items-center justify-between shrink-0">
+							<div className="px-4 py-3 border-t border-white/20 flex items-center justify-between shrink-0">
 								<button
 									onClick={() => setMarcaPage(p => Math.max(0, p - 1))}
 									disabled={marcaPage === 0}
@@ -881,7 +881,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 				{/* COLUMNA DERECHA — avatar + info personal + email + contraseña + zona peligro */}
 				<div className="lg:col-span-3 space-y-6">
 
-					<div className="flex items-center gap-6 p-6 bg-gris rounded-lg border border-white/10">
+					<div className="flex items-center gap-6 p-6 bg-gris rounded-lg border border-white/20">
 						<div className="relative">
 							<Avatar src={user.foto_perfil} nombre={user.nombre} apellidos={user.apellidos} onEdit={handleFotoChange} />
 							{fotoLoading && (
@@ -902,7 +902,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 						</div>
 					</div>
 
-					<div className="bg-gris rounded-lg border border-white/10 overflow-hidden">
+					<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
 						<SectionHeader
 							title="Información personal"
 							action={
@@ -959,10 +959,10 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									<p className={`text-xs text-center ${infoMsg === 'Datos actualizados' ? 'text-green-400' : 'text-red-400'}`}>{infoMsg}</p>
 								)}
 								<div className="flex gap-3">
-									<button type="submit" disabled={infoLoading} className="flex-1 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
+									<button type="submit" disabled={infoLoading} className="flex-1 bg-ianuarius text-white label-caps py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
 										{infoLoading ? 'Guardando...' : 'Guardar cambios'}
 									</button>
-									<button type="button" onClick={cancelarEdicion} className="flex-1 border border-white/10 text-gray-400 text-[10px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition">
+									<button type="button" onClick={cancelarEdicion} className="flex-1 border border-white/20 text-gray-400 label-caps py-2 rounded hover:text-white hover:border-white/30 transition">
 										Cancelar
 									</button>
 								</div>
@@ -970,7 +970,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 						)}
 					</div>
 
-					<div className="bg-gris rounded-lg border border-white/10 overflow-hidden">
+					<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
 						<SectionHeader
 							title="Correo electrónico"
 							action={
@@ -993,7 +993,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									{emailMsg && (
 										<p className={`text-xs text-center ${emailMsg === 'Email actualizado' ? 'text-green-400' : 'text-red-400'}`}>{emailMsg}</p>
 									)}
-									<button type="submit" disabled={emailLoading} className="w-full bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
+									<button type="submit" disabled={emailLoading} className="w-full bg-ianuarius text-white label-caps py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
 										{emailLoading ? 'Guardando...' : 'Confirmar cambio'}
 									</button>
 								</form>
@@ -1001,7 +1001,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 						</div>
 					</div>
 
-					<div className="bg-gris rounded-lg border border-white/10 overflow-hidden">
+					<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
 						<SectionHeader
 							title="Contraseña"
 							action={
@@ -1032,7 +1032,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									{passMsg && (
 										<p className={`text-xs text-center ${passMsg === 'Contraseña actualizada' ? 'text-green-400' : 'text-red-400'}`}>{passMsg}</p>
 									)}
-									<button type="submit" disabled={passLoading} className="w-full bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
+									<button type="submit" disabled={passLoading} className="w-full bg-ianuarius text-white label-caps py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
 										{passLoading ? 'Guardando...' : 'Confirmar cambio'}
 									</button>
 								</form>
@@ -1063,7 +1063,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 								<button
 									onClick={handleEliminarCuenta}
 									disabled={deleteLoading}
-									className="w-full bg-red-700 text-white text-[10px] font-black uppercase tracking-widest py-2 rounded hover:bg-red-600 transition disabled:opacity-50"
+									className="w-full bg-red-700 text-white label-caps py-2 rounded hover:bg-red-600 transition disabled:opacity-50"
 								>
 									{deleteLoading ? 'Eliminando...' : 'Confirmar — eliminar mi cuenta'}
 								</button>

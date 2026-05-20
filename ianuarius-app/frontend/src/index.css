@@ -20,3 +20,17 @@ html, body {
     --font-sans: "Inter", sans-serif;
     --font-graduate: "Graduate", serif;
 }
+
+@utility label-caps {
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+@utility label-muted {
+    color: var(--color-gray-400);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}

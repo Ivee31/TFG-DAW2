@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+﻿import { useState, useEffect, useRef, useCallback } from 'react';
 import { API } from '../api';
 
 // tiempo de inactividad antes de mostrar el aviso (15 min)
@@ -169,9 +169,9 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 					</div>
 
 					<div className="flex gap-3 shrink-0">
-						<button onClick={continuarSesion} className="px-5 py-2 text-[10px] font-black uppercase tracking-widest bg-white text-oscuro rounded hover:bg-ianuarius hover:text-white transition duration-300">Continuar sesion</button>
+						<button onClick={continuarSesion} className="px-5 py-2 label-caps bg-white text-oscuro rounded hover:bg-ianuarius hover:text-white transition duration-300">Continuar sesion</button>
 
-						<button onClick={handleLogout} className="px-5 py-2 text-[10px] font-black uppercase tracking-widest border border-ianuarius text-ianuarius rounded hover:bg-ianuarius hover:text-white transition duration-300">Cerrar sesion</button>
+						<button onClick={handleLogout} className="px-5 py-2 label-caps border border-ianuarius text-ianuarius rounded hover:bg-ianuarius hover:text-white transition duration-300">Cerrar sesion</button>
 
 					</div>
 				</div>
@@ -180,8 +180,8 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 			{/* menu lateral */}
 			<aside
 				ref={menuRef}
-				className={`fixed right-0 top-0 h-full w-64 bg-gris border-l border-white/10 transform transition-transform duration-300 z-50 p-6 flex flex-col shadow-2xl ${isMenuOpen || (isPinned && !isMobile) ? 'translate-x-0' : 'translate-x-full'}`}>
-				<div className="flex justify-between items-center mb-10 border-b border-white/10 pb-4">
+				className={`fixed right-0 top-0 h-full w-64 bg-gris border-l border-white/20 transform transition-transform duration-300 z-50 p-6 flex flex-col shadow-2xl ${isMenuOpen || (isPinned && !isMobile) ? 'translate-x-0' : 'translate-x-full'}`}>
+				<div className="flex justify-between items-center mb-10 border-b border-white/20 pb-4">
 					<h3 className="font-bold tracking-widest uppercase text-sm">Navegacion</h3>
 					<div className="flex gap-3 items-center">
 						<button onClick={() => setIsPinned(!isPinned)} aria-label={isPinned ? 'Desanclar menú' : 'Anclar menú'} className={`transition ${isPinned ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
@@ -323,7 +323,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 								<path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
 							</svg>
 							<div>
-								<p className="text-yellow-400 text-[10px] font-black uppercase tracking-widest mb-2">Completa tu perfil</p>
+								<p className="text-yellow-400 label-caps mb-2">Completa tu perfil</p>
 								<div className="flex flex-wrap gap-2">
 									{items.map(item => (
 										<button
@@ -347,7 +347,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 			</div>
 
 			{/* footer */}
-			<footer className="w-full py-8 mt-auto flex justify-center border-t border-white/5">
+			<footer className="w-full py-8 mt-auto flex justify-center border-t border-white/15">
 				<div className="max-w-md w-full text-center">
 					<p className="text-xs md:text-[9px] text-gray-400 uppercase tracking-[0.5em] leading-relaxed">
 						Ianuarius Athletics Club &copy; 2026<br />

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import { API } from '../api';
 
 const fileToBase64 = (file) => new Promise((resolve, reject) => {
@@ -66,7 +66,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 					className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col"
 					onClick={() => setVisorAbierto(false)}
 				>
-					<div className="flex items-center justify-between px-6 py-3 bg-gris border-b border-white/10 shrink-0" onClick={e => e.stopPropagation()}>
+					<div className="flex items-center justify-between px-6 py-3 bg-gris border-b border-white/20 shrink-0" onClick={e => e.stopPropagation()}>
 						<div>
 							<p className="text-white text-sm font-black uppercase tracking-widest">Formulario de inscripción</p>
 							<p className="text-gray-400 text-[10px] uppercase tracking-wider mt-0.5">Rellena los campos y descarga el PDF completado desde el visor</p>
@@ -74,7 +74,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 
 						<button
 							onClick={() => setVisorAbierto(false)}
-							className="w-8 h-8 flex items-center justify-center rounded border border-white/10 text-gray-400 hover:text-white hover:border-white/30 transition"
+							className="w-8 h-8 flex items-center justify-center rounded border border-white/20 text-gray-400 hover:text-white hover:border-white/30 transition"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -108,7 +108,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 				</div>
 			)}
 
-			<div className="bg-gris rounded-lg border border-white/10 p-6">
+			<div className="bg-gris rounded-lg border border-white/20 p-6">
 				<p className="text-[10px] uppercase tracking-widest text-gray-400 mb-1">Inscripción de Temporada</p>
 				<h2 className="text-2xl font-black tracking-tight text-white mb-3">Formaliza tu inscripción</h2>
 				<p className="text-gray-400 text-sm leading-relaxed">
@@ -120,7 +120,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
 				{/* Formulario oficial */}
-				<div className="bg-gris rounded-lg border border-white/10 p-6 space-y-4">
+				<div className="bg-gris rounded-lg border border-white/20 p-6 space-y-4">
 					<div className="flex items-center gap-3">
 						<div className="w-10 h-10 bg-ianuarius/10 border border-ianuarius/30 rounded-lg flex items-center justify-center">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-ianuarius">
@@ -146,7 +146,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 						<div className="space-y-2">
 							<button
 								onClick={() => setVisorAbierto(true)}
-								className="w-full flex items-center justify-center gap-2 bg-ianuarius text-white text-[10px] font-black uppercase tracking-widest py-3 rounded hover:bg-red-700 transition"
+								className="w-full flex items-center justify-center gap-2 bg-ianuarius text-white label-caps py-3 rounded hover:bg-red-700 transition"
 							>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
@@ -157,7 +157,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 							<a
 								href={plantilla}
 								download="plantilla_inscripcion.pdf"
-								className="w-full flex items-center justify-center gap-2 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest py-3 rounded hover:border-white/40 hover:bg-white/5 transition"
+								className="w-full flex items-center justify-center gap-2 border border-white/20 text-white label-caps py-3 rounded hover:border-white/40 hover:bg-white/5 transition"
 							>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -173,9 +173,9 @@ export default function Inscripcion({ user, onUserUpdate }) {
 				</div>
 
 				{/* Subir PDF firmado */}
-				<div className="bg-gris rounded-lg border border-white/10 p-6 space-y-4">
+				<div className="bg-gris rounded-lg border border-white/20 p-6 space-y-4">
 					<div className="flex items-center gap-3">
-						<div className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center">
+						<div className="w-10 h-10 bg-white/5 border border-white/20 rounded-lg flex items-center justify-center">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-gray-400">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
 							</svg>
@@ -192,7 +192,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 					</p>
 
 					{user?.inscripcion_pdf && (
-						<div className="rounded border border-white/10 p-3 flex items-center gap-3">
+						<div className="rounded border border-white/20 p-3 flex items-center gap-3">
 							{isPdf ? (
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 text-gray-400 shrink-0">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
@@ -222,7 +222,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 					<button
 						disabled={loading}
 						onClick={() => fileRef.current?.click()}
-						className="w-full flex items-center justify-center gap-2 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest py-3 rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
+						className="w-full flex items-center justify-center gap-2 border border-white/20 text-white label-caps py-3 rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
 					>
 						{loading ? (
 							<>

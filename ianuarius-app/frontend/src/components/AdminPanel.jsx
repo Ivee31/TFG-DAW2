@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 import PerfilAtleta from './PerfilAtleta';
 
@@ -182,13 +182,13 @@ export default function AdminPanel() {
 					</div>
 
 					{cargandoP && (
-						<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-6">
+						<p className="label-muted text-center py-6">
 							Cargando...
 						</p>
 					)}
 
 					{!cargandoP && pendientes.length === 0 && (
-						<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-6 border border-dashed border-gray-700 rounded-xl">
+						<p className="label-muted text-center py-6 border border-dashed border-gray-700 rounded-xl">
 							No hay cuentas pendientes de activación
 						</p>
 					)}
@@ -220,7 +220,7 @@ export default function AdminPanel() {
 			
 			{/* listado atletas / entrenadores */}
 			<section>
-				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
+				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/15 shadow-2xl">
 					<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-8">
 						<div>
 							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Miembros del Club</h2>
@@ -235,16 +235,16 @@ export default function AdminPanel() {
 								</p>
 							)}
 						</div>
-						<div className="flex items-center gap-1 bg-oscuro/60 border border-white/10 rounded-lg p-1">
+						<div className="flex items-center gap-1 bg-oscuro/60 border border-white/20 rounded-lg p-1">
 							<button
 								onClick={() => setTab('atletas')}
-								className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${tab === 'atletas' ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
+								className={`px-4 py-1.5 label-caps rounded transition ${tab === 'atletas' ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
 							>
 								Atletas
 							</button>
 							<button
 								onClick={() => setTab('entrenadores')}
-								className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${tab === 'entrenadores' ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
+								className={`px-4 py-1.5 label-caps rounded transition ${tab === 'entrenadores' ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
 							>
 								Entrenadores
 							</button>
@@ -265,16 +265,16 @@ export default function AdminPanel() {
 											value={busquedaA}
 											onChange={e => setBusquedaA(e.target.value)}
 											placeholder="Buscar por nombre o email..."
-											className="w-full bg-oscuro border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+											className="w-full bg-oscuro border border-white/20 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
 										/>
 									</div>
 
-									<div className="flex items-center gap-1 bg-oscuro/60 border border-white/10 rounded-lg p-1 shrink-0">
+									<div className="flex items-center gap-1 bg-oscuro/60 border border-white/20 rounded-lg p-1 shrink-0">
 										{[['todos','Todos'],['M','Masc'],['F','Fem']].map(([val, label]) => (
 											<button
 												key={val}
 												onClick={() => setFiltroGeneroA(val)}
-												className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${filtroGeneroA === val ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
+												className={`px-3 py-1.5 label-caps rounded transition ${filtroGeneroA === val ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
 											>
 												{label}
 											</button>
@@ -285,7 +285,7 @@ export default function AdminPanel() {
 										<select
 											value={filtroCategoriaA}
 											onChange={e => setFiltroCategoriaA(e.target.value)}
-											className="bg-oscuro border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius appearance-none cursor-pointer shrink-0"
+											className="bg-oscuro border border-white/20 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius appearance-none cursor-pointer shrink-0"
 										>
 											<option value="">Todas las categorías</option>
 											{categoriasDisponibles.map(c => (
@@ -296,10 +296,10 @@ export default function AdminPanel() {
 
 									<button
 										onClick={() => setFiltroDocsA(v => !v)}
-										className={`shrink-0 px-3 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg border transition ${
+										className={`shrink-0 px-3 py-2 label-caps rounded-lg border transition ${
 											filtroDocsA
 												? 'bg-yellow-500/20 border-yellow-500/50 text-yellow-400'
-												: 'bg-oscuro border-white/10 text-gray-400 hover:text-white hover:border-white/30'
+												: 'bg-oscuro border-white/20 text-gray-400 hover:text-white hover:border-white/30'
 										}`}
 									>
 										Docs pendientes
@@ -308,19 +308,19 @@ export default function AdminPanel() {
 							)}
 
 							{cargandoA && (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10">
+								<p className="label-muted text-center py-10">
 									Cargando atletas...
 								</p>
 							)}
 
 							{!cargandoA && atletas.length === 0 && (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
+								<p className="label-muted text-center py-10 border border-dashed border-gray-700 rounded-xl">
 									No hay atletas registrados
 								</p>
 							)}
 
 							{!cargandoA && atletas.length > 0 && atletasFiltrados.length === 0 && (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
+								<p className="label-muted text-center py-10 border border-dashed border-gray-700 rounded-xl">
 									Sin resultados para los filtros aplicados
 								</p>
 							)}
@@ -345,7 +345,7 @@ export default function AdminPanel() {
 															{calcularCategoria(a.fecha_nacimiento, a.genero)}
 														</span>
 													</div>
-													<div className="mt-2 pt-2 border-t border-white/5 flex justify-between items-center">
+													<div className="mt-2 pt-2 border-t border-white/15 flex justify-between items-center">
 														<span className="text-[10px] text-gray-400 uppercase tracking-widest">
 															{a.genero === 'M' ? 'Masculino' : 'Femenino'}
 														</span>
@@ -360,7 +360,7 @@ export default function AdminPanel() {
 															</span>
 														</div>
 													</div>
-													<div className="mt-2 pt-2 border-t border-white/5 flex justify-between items-center" onClick={e => e.stopPropagation()}>
+													<div className="mt-2 pt-2 border-t border-white/15 flex justify-between items-center" onClick={e => e.stopPropagation()}>
 														<span className={`text-[9px] font-bold uppercase tracking-widest ${a.estado_pago === 'pagado' ? 'text-green-500' : 'text-yellow-400'}`}>
 															{a.estado_pago === 'pagado' ? '✓ Pagado' : '⚠ Pago pendiente'}
 														</span>
@@ -394,26 +394,26 @@ export default function AdminPanel() {
 											value={busquedaE}
 											onChange={e => setBusquedaE(e.target.value)}
 											placeholder="Buscar por nombre o email..."
-											className="w-full bg-oscuro border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+											className="w-full bg-oscuro border border-white/20 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
 										/>
 									</div>
 								</div>
 							)}
 
 							{cargandoE && (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10">
+								<p className="label-muted text-center py-10">
 									Cargando entrenadores...
 								</p>
 							)}
 
 							{!cargandoE && entrenadores.length === 0 && (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
+								<p className="label-muted text-center py-10 border border-dashed border-gray-700 rounded-xl">
 									No hay entrenadores activos
 								</p>
 							)}
 
 							{!cargandoE && entrenadores.length > 0 && entrenadoresFiltrados.length === 0 && (
-								<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
+								<p className="label-muted text-center py-10 border border-dashed border-gray-700 rounded-xl">
 									Sin resultados para la búsqueda
 								</p>
 							)}
@@ -443,7 +443,7 @@ export default function AdminPanel() {
 														</span>
 													</div>
 
-													<div className="mt-2 pt-2 border-t border-white/5 flex justify-between items-center">
+													<div className="mt-2 pt-2 border-t border-white/15 flex justify-between items-center">
 														<span className="text-[10px] text-gray-400 uppercase tracking-widest">
 															{e.genero === 'M' ? 'Masculino' : 'Femenino'}
 														</span>
@@ -464,7 +464,7 @@ export default function AdminPanel() {
 			
 			{/* plantilla inscripcion */}
 			<section>
-				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
+				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/15 shadow-2xl">
 					<div className="flex justify-between items-center mb-4">
 						<div>
 							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Plantilla de inscripción</h2>
@@ -485,7 +485,7 @@ export default function AdminPanel() {
 					<button
 						disabled={subiendoP}
 						onClick={() => plantillaRef.current?.click()}
-						className="flex items-center gap-2 px-5 py-2 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
+						className="flex items-center gap-2 px-5 py-2 border border-white/20 text-white label-caps rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />

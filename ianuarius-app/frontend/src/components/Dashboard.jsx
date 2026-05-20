@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 
 const pruebaKey = (p) => `${p.id_prueba}_${p.especificaciones ?? ''}`;
@@ -62,7 +62,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 
 	return (
 		<div ref={ref} className="relative">
-			<div onClick={() => setOpen(v => !v)} className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 transition cursor-pointer flex items-center justify-between">
+			<div onClick={() => setOpen(v => !v)} className="w-full bg-oscuro border border-white/20 p-4 md:p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 transition cursor-pointer flex items-center justify-between">
 				<span className={selected ? 'text-white' : 'text-gray-400'}>
 					{selected
 						? selected.nombre_prueba + (selected.especificaciones ? ` · ${selected.especificaciones}` : '')
@@ -75,15 +75,15 @@ function PruebaSelect({ pruebas, value, onChange }) {
 			</div>
 
 			{open && (
-				<div className="absolute z-50 w-full mt-1 bg-oscuro border border-white/10 rounded-lg shadow-2xl overflow-hidden">
-					<div className="p-2 border-b border-white/5">
+				<div className="absolute z-50 w-full mt-1 bg-oscuro border border-white/20 rounded-lg shadow-2xl overflow-hidden">
+					<div className="p-2 border-b border-white/15">
 						<input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Buscar prueba..." autoFocus className="w-full bg-gris text-white text-sm p-2 rounded focus:ring-2 focus:ring-ianuarius/40 placeholder-gray-600" />
 					</div>
 
 					<div className="max-h-96 overflow-y-auto">
 						{gruposOrdenados.map(([tipo, items]) => (
 							<div key={tipo}>
-								<p className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-ianuarius bg-gris/30 sticky top-0">{tipo}</p>
+								<p className="px-3 py-1.5 label-caps text-ianuarius bg-gris/30 sticky top-0">{tipo}</p>
 
 								{items.map(p => (
 									<div key={pruebaKey(p)} onClick={() => { onChange(pruebaKey(p)); setOpen(false); setQuery(''); }} className={`px-3 py-2.5 text-sm cursor-pointer transition hover:bg-white/5 flex items-center justify-between ${value === pruebaKey(p) ? 'text-ianuarius' : 'text-gray-300'}`}>
@@ -344,13 +344,13 @@ export default function Dashboard() {
 		return marcas;
 	})();
 
-	const selectClasses = "w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition appearance-none cursor-pointer";
+	const selectClasses = "w-full bg-oscuro border border-white/20 p-4 md:p-3 rounded-lg text-sm focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition appearance-none cursor-pointer";
 	const labelClasses = "block text-xs lg:text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2";
 
 	return (
 		<main className="space-y-6">
 
-			<div className="bg-white/[0.03] border border-white/8 rounded-xl px-4 py-3 flex items-start gap-3">
+			<div className="bg-white/[0.03] border border-white/18 rounded-xl px-4 py-3 flex items-start gap-3">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-gray-400 shrink-0 mt-0.5">
 					<path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
 				</svg>
@@ -363,7 +363,7 @@ export default function Dashboard() {
 
 			{/* listado marcas */}
 			<section className="lg:col-span-7">
-				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl h-full flex flex-col">
+				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/15 shadow-2xl h-full flex flex-col">
 					<div className="flex justify-between items-center mb-6 md:mb-8 shrink-0">
 						<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Mis Marcas Recientes</h2>
 						<span className="text-[10px] bg-ianuarius/20 text-ianuarius px-3 py-1 rounded-full font-bold uppercase tracking-widest hidden sm:inline-block">Temporada 2026</span>
@@ -371,11 +371,11 @@ export default function Dashboard() {
 
 					<div className="space-y-4 grow">
 						{cargando && (
-							<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-6">Cargando marcas...</p>
+							<p className="label-muted text-center py-6">Cargando marcas...</p>
 						)}
 
 						{!cargando && marcas.length === 0 && (
-							<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-6 border border-dashed border-gray-700 rounded-xl">
+							<p className="label-muted text-center py-6 border border-dashed border-gray-700 rounded-xl">
 								Aun no hay marcas registradas
 							</p>
 						)}
@@ -397,7 +397,7 @@ export default function Dashboard() {
 								</div>
 
 								{(m.sensaciones_valor || m.sensaciones_notas) && (
-									<div className="mt-3 pt-3 border-t border-white/5 flex items-center gap-2">
+									<div className="mt-3 pt-3 border-t border-white/15 flex items-center gap-2">
 										{m.sensaciones_valor && (
 											<span className="text-lg leading-none">{SENSACIONES[m.sensaciones_valor - 1]}</span>
 										)}
@@ -407,7 +407,7 @@ export default function Dashboard() {
 									</div>
 								)}
 
-								<div className="flex justify-between mt-3 pt-3 border-t border-white/5">
+								<div className="flex justify-between mt-3 pt-3 border-t border-white/15">
 									<button
 										onClick={() => handleAbrirEditar(m)}
 										className="text-gray-400 hover:text-white transition p-1"
@@ -437,7 +437,7 @@ export default function Dashboard() {
 										<div className="flex gap-2">
 											<button
 												onClick={() => setConfirmandoId(null)}
-												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest border border-white/10 text-gray-400 rounded hover:bg-white/5 transition"
+												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest border border-white/20 text-gray-400 rounded hover:bg-white/5 transition"
 											>
 												Cancelar
 											</button>
@@ -501,10 +501,10 @@ export default function Dashboard() {
 												<div>
 													<label className={labelClasses}>Temporada</label>
 													<div className="grid grid-cols-2 gap-3">
-														<button type="button" onClick={() => setEditTemporada('shortTrack')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'shortTrack' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
+														<button type="button" onClick={() => setEditTemporada('shortTrack')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'shortTrack' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/20 text-gray-400 hover:bg-white/5'}`}>
 															Short Track
 														</button>
-														<button type="button" onClick={() => setEditTemporada('outdoor')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'outdoor' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/10 text-gray-400 hover:bg-white/5'}`}>
+														<button type="button" onClick={() => setEditTemporada('outdoor')} className={`py-2 text-[10px] font-bold rounded uppercase tracking-widest transition ${editTemporada === 'outdoor' ? 'bg-ianuarius text-white' : 'bg-oscuro border border-white/20 text-gray-400 hover:bg-white/5'}`}>
 															Outdoor
 														</button>
 													</div>
@@ -530,7 +530,7 @@ export default function Dashboard() {
 												value={editMarca}
 												onChange={(e) => { setEditMarca(formatMarcaTiempo(e.target.value)); setEditFormatoError(false); }}
 												onBlur={() => { if (editMarca && (!REGEX_MARCA.test(editMarca) || !segundosValidos(editMarca))) setEditFormatoError(true); else setEditFormatoError(false); }}
-												className={`w-full bg-oscuro border p-3 rounded-lg text-xl text-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition font-mono ${editFormatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
+												className={`w-full bg-oscuro border p-3 rounded-lg text-xl text-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition font-mono ${editFormatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/20 focus:border-ianuarius'}`}
 											/>
 											{editFormatoError && (
 												<p className="text-red-400 text-[10px] mt-1 uppercase tracking-wider">Formato incorrecto — usa MM'SS"ms</p>
@@ -547,7 +547,7 @@ export default function Dashboard() {
 															key={val}
 															type="button"
 															onClick={() => setEditSensacionesValor(editSensacionesValor === val ? null : val)}
-															className={`flex-1 text-lg py-1.5 rounded-lg border transition ${editSensacionesValor === val ? 'border-ianuarius bg-ianuarius/15' : 'border-white/10 bg-oscuro hover:border-white/30'}`}
+															className={`flex-1 text-lg py-1.5 rounded-lg border transition ${editSensacionesValor === val ? 'border-ianuarius bg-ianuarius/15' : 'border-white/20 bg-oscuro hover:border-white/30'}`}
 														>
 															{emoji}
 														</button>
@@ -560,14 +560,14 @@ export default function Dashboard() {
 												placeholder="Notas opcionales..."
 												maxLength={500}
 												rows={2}
-												className="w-full bg-oscuro border border-white/10 p-2 rounded-lg text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none"
+												className="w-full bg-oscuro border border-white/20 p-2 rounded-lg text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none"
 											/>
 										</div>
 
 										<div className="flex gap-2">
 											<button
 												onClick={() => setEditandoId(null)}
-												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest border border-white/10 text-gray-400 rounded hover:bg-white/5 transition"
+												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest border border-white/20 text-gray-400 rounded hover:bg-white/5 transition"
 											>
 												Cancelar
 											</button>
@@ -590,7 +590,7 @@ export default function Dashboard() {
 						<div className="mt-6 shrink-0 space-y-3">
 
 							{usaPaginacion && (
-								<div className="flex items-center justify-between border border-white/5 rounded-xl px-4 py-3">
+								<div className="flex items-center justify-between border border-white/15 rounded-xl px-4 py-3">
 									<button
 										onClick={() => setPagina(p => Math.max(1, p - 1))}
 										disabled={pagina === 1}
@@ -653,12 +653,12 @@ export default function Dashboard() {
 						<div>
 							<label htmlFor="dash-new-competicion" className={labelClasses}>Competición</label>
 							{cargandoEventos ? (
-								<div className="w-full bg-oscuro border border-white/10 p-4 md:p-3 rounded-lg text-sm text-gray-400 animate-pulse">
+								<div className="w-full bg-oscuro border border-white/20 p-4 md:p-3 rounded-lg text-sm text-gray-400 animate-pulse">
 									Cargando competiciones...
 								</div>
 							) : competiciones.length === 0 ? (
 								<div className="border border-dashed border-gray-700 rounded-lg py-5 px-3 text-center">
-									<p className="text-gray-400 text-xs uppercase tracking-widest">Sin competiciones en el calendario</p>
+									<p className="label-muted">Sin competiciones en el calendario</p>
 									<p className="text-gray-400 text-[10px] mt-1">Pide a tu entrenador que añada la competición antes de registrar una marca</p>
 								</div>
 							) : (
@@ -712,7 +712,7 @@ export default function Dashboard() {
 								value={marcaTiempo}
 								onChange={(e) => { setMarcaTiempo(formatMarcaTiempo(e.target.value)); setFormatoError(false); }}
 								onBlur={handleMarcaBlur}
-								className={`w-full bg-oscuro border p-5 md:p-4 rounded-lg text-2xl text-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition font-mono ${formatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/10 focus:border-ianuarius'}`}
+								className={`w-full bg-oscuro border p-5 md:p-4 rounded-lg text-2xl text-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition font-mono ${formatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/20 focus:border-ianuarius'}`}
 							/>
 							{formatoError && (
 								<p className="text-red-400 text-[10px] mt-1.5 uppercase tracking-wider">
@@ -731,7 +731,7 @@ export default function Dashboard() {
 											key={val}
 											type="button"
 											onClick={() => setSensacionesValor(sensacionesValor === val ? null : val)}
-											className={`flex-1 text-xl py-2 rounded-lg border transition ${sensacionesValor === val ? 'border-ianuarius bg-ianuarius/15' : 'border-white/10 bg-oscuro hover:border-white/30'}`}
+											className={`flex-1 text-xl py-2 rounded-lg border transition ${sensacionesValor === val ? 'border-ianuarius bg-ianuarius/15' : 'border-white/20 bg-oscuro hover:border-white/30'}`}
 											title={['Muy mal', 'Mal', 'Regular', 'Bien', 'Excelente'][i]}
 										>
 											{emoji}
@@ -745,7 +745,7 @@ export default function Dashboard() {
 								placeholder="Notas opcionales..."
 								maxLength={500}
 								rows={2}
-								className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none"
+								className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none"
 							/>
 						</div>
 

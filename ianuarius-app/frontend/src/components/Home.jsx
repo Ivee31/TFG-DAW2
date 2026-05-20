@@ -1,4 +1,4 @@
-// vista Home
+﻿// vista Home
 import { useState, useEffect, useRef } from "react";
 import Login from './Login';
 import Register from './Register';
@@ -211,9 +211,9 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 					{noticias.map((n, i) => (
-						<article key={i} className="bg-gris rounded-xl border border-white/10 overflow-hidden group relative">
+						<article key={i} className="bg-gris rounded-xl border border-white/20 overflow-hidden group relative">
 							{/* mockup badge */}
-							<div className="absolute top-3 left-3 z-10 px-2 py-0.5 bg-black/60 backdrop-blur-sm border border-white/10 rounded text-[8px] font-black uppercase tracking-widest text-gray-400">
+							<div className="absolute top-3 left-3 z-10 px-2 py-0.5 bg-black/60 backdrop-blur-sm border border-white/20 rounded text-[8px] font-black uppercase tracking-widest text-gray-400">
 								Mockup
 							</div>
 
@@ -278,7 +278,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			</section>
 
 			{/* FOOTER */}
-			<footer className="w-full py-8 flex flex-col items-center gap-3 border-t border-white/5">
+			<footer className="w-full py-8 flex flex-col items-center gap-3 border-t border-white/15">
 				<p className="text-[9px] text-gray-400 uppercase tracking-[0.5em] text-center leading-relaxed">
 					Ianuarius Athletics Club &copy; 2026<br />
 					<a href="?page=aviso-legal" className="hover:text-gray-400 transition underline underline-offset-2">Aviso Legal</a>
@@ -301,7 +301,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			{/* BANNER COOKIES */}
 			{!cookiesAceptadas && (
 				<div className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6">
-					<div className="max-w-3xl mx-auto bg-gris border border-white/10 border-t-2 border-t-ianuarius rounded-xl shadow-[0_-4px_30px_rgba(0,0,0,0.5)] px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+					<div className="max-w-3xl mx-auto bg-gris border border-white/20 border-t-2 border-t-ianuarius rounded-xl shadow-[0_-4px_30px_rgba(0,0,0,0.5)] px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-5">
 						<div className="flex-1">
 							<p className="text-white text-xs font-bold uppercase tracking-widest mb-2">Uso de cookies</p>
 							<p className="text-gray-400 text-xs leading-relaxed">
@@ -313,7 +313,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						</div>
 						<button
 							onClick={aceptarCookies}
-							className="shrink-0 px-6 py-2.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest rounded hover:bg-red-700 transition duration-300"
+							className="shrink-0 px-6 py-2.5 bg-red-600 text-white label-caps rounded hover:bg-red-700 transition duration-300"
 						>
 							Aceptar
 						</button>

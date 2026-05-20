@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 import { attachFocusTrap } from '../utils/focusTrap';
 
@@ -223,7 +223,7 @@ export default function Calendario({ user }) {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
                     </svg>
                     <div className="grow">
-                        <p className="text-ianuarius text-[10px] font-black uppercase tracking-widest mb-2">Próximos eventos</p>
+                        <p className="text-ianuarius label-caps mb-2">Próximos eventos</p>
                         <div className="flex flex-wrap gap-2">
                             {proximos.map(ev => {
                                 const f = new Date(ev.fecha_hora.replace(' ', 'T'));
@@ -282,12 +282,12 @@ export default function Calendario({ user }) {
             )}
 
             {/* grid */}
-            <div className="bg-gris/40 backdrop-blur-sm rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+            <div className="bg-gris/40 backdrop-blur-sm rounded-2xl border border-white/15 overflow-hidden shadow-2xl">
 
                 {/* cabecera días semana */}
-                <div className="grid grid-cols-7 border-b border-white/5">
+                <div className="grid grid-cols-7 border-b border-white/15">
                     {DIAS_SEMANA.map(d => (
-                        <div key={d} className="py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-400">
+                        <div key={d} className="py-3 text-center label-caps text-gray-400">
                             {d}
                         </div>
                     ))}
@@ -295,7 +295,7 @@ export default function Calendario({ user }) {
 
                 {/* celdas */}
                 {cargando ? (
-                    <div className="py-20 text-center text-gray-400 text-xs uppercase tracking-widest animate-pulse">
+                    <div className="py-20 text-center label-muted animate-pulse">
                         Cargando eventos...
                     </div>
                 ) : (
@@ -305,7 +305,7 @@ export default function Calendario({ user }) {
                             return (
                                 <div
                                     key={idx}
-                                    className={`relative min-h-[88px] md:min-h-[100px] p-0.5 md:p-1.5 border-b border-r border-white/5 group ${!dia ? 'bg-oscuro/20' : 'cursor-pointer hover:bg-white/[0.02] transition'}`}
+                                    className={`relative min-h-[88px] md:min-h-[100px] p-0.5 md:p-1.5 border-b border-r border-white/15 group ${!dia ? 'bg-oscuro/20' : 'cursor-pointer hover:bg-white/[0.02] transition'}`}
                                     onClick={() => {
                                         if (!dia) return;
                                         if (window.innerWidth < 768 || evsDia.length > 0) {
@@ -325,7 +325,7 @@ export default function Calendario({ user }) {
                                                     <div
                                                         key={ev.id_evento}
                                                         onClick={(e) => { e.stopPropagation(); setDetalleData({ eventos: evsDia, idx: evsDia.indexOf(ev), dia }); }}
-                                                        className={`text-[9px] font-bold px-1 md:px-1.5 py-0.5 rounded border truncate cursor-pointer ${TIPO_EVENTO_COLOR[ev.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}
+                                                        className={`text-[9px] font-bold px-1 md:px-1.5 py-0.5 rounded border truncate cursor-pointer ${TIPO_EVENTO_COLOR[ev.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/20'}`}
                                                     >
                                                         {ev.titulo}
                                                     </div>
@@ -372,7 +372,7 @@ export default function Calendario({ user }) {
                 <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={cerrarModal} />
 
-                    <div ref={modalAddRef} role="dialog" aria-modal="true" aria-label="Añadir evento" className="relative bg-gris border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl">
+                    <div ref={modalAddRef} role="dialog" aria-modal="true" aria-label="Añadir evento" className="relative bg-gris border border-white/20 rounded-2xl p-6 w-full max-w-md shadow-2xl">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="font-black uppercase tracking-widest text-sm">
                                 Nuevo Evento — <span className="text-ianuarius">{String(modalDia).padStart(2, '0')} {MESES[month]}</span>
@@ -392,73 +392,73 @@ export default function Calendario({ user }) {
 
                         <form onSubmit={handleGuardar} className="space-y-4">
                             <div>
-                                <label htmlFor="cal-titulo" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Título *</label>
+                                <label htmlFor="cal-titulo" className="block label-caps text-gray-400 mb-1.5">Título *</label>
                                 <input
                                     id="cal-titulo"
                                     type="text"
                                     value={form.titulo}
                                     onChange={e => setForm(f => ({ ...f, titulo: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
                                     placeholder="Campeonato Provincial de Pista..."
                                     autoFocus
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="cal-descripcion" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Descripción</label>
+                                <label htmlFor="cal-descripcion" className="block label-caps text-gray-400 mb-1.5">Descripción</label>
                                 <textarea
                                     id="cal-descripcion"
                                     value={form.descripcion}
                                     onChange={e => setForm(f => ({ ...f, descripcion: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none h-20"
+                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none h-20"
                                     placeholder="Detalles adicionales..."
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label htmlFor="cal-hora" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Hora inicio</label>
+                                    <label htmlFor="cal-hora" className="block label-caps text-gray-400 mb-1.5">Hora inicio</label>
                                     <input
                                         id="cal-hora"
                                         type="time"
                                         value={form.hora}
                                         onChange={e => setForm(f => ({ ...f, hora: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="cal-fecha-fin" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Fecha fin <span className="text-gray-400 normal-case">(opcional)</span></label>
+                                    <label htmlFor="cal-fecha-fin" className="block label-caps text-gray-400 mb-1.5">Fecha fin <span className="text-gray-400 normal-case">(opcional)</span></label>
                                     <input
                                         id="cal-fecha-fin"
                                         type="date"
                                         value={form.fecha_fin}
                                         onChange={e => setForm(f => ({ ...f, fecha_fin: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label htmlFor="cal-enlace" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Enlace oficial <span className="text-gray-400 normal-case">(opcional)</span></label>
+                                <label htmlFor="cal-enlace" className="block label-caps text-gray-400 mb-1.5">Enlace oficial <span className="text-gray-400 normal-case">(opcional)</span></label>
                                 <input
                                     id="cal-enlace"
                                     type="url"
                                     value={form.enlace}
                                     onChange={e => setForm(f => ({ ...f, enlace: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
                                     placeholder="https://..."
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label htmlFor="cal-tipo-evento" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Tipo de evento</label>
+                                    <label htmlFor="cal-tipo-evento" className="block label-caps text-gray-400 mb-1.5">Tipo de evento</label>
                                     <select
                                         id="cal-tipo-evento"
                                         value={form.tipo_evento}
                                         onChange={e => setForm(f => ({ ...f, tipo_evento: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
+                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
                                     >
                                         {Object.entries(TIPO_EVENTO_LABEL).map(([k, v]) => (
                                             <option key={k} value={k}>{v}</option>
@@ -467,12 +467,12 @@ export default function Calendario({ user }) {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="cal-tipo-pista" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Tipo de pista</label>
+                                    <label htmlFor="cal-tipo-pista" className="block label-caps text-gray-400 mb-1.5">Tipo de pista</label>
                                     <select
                                         id="cal-tipo-pista"
                                         value={form.tipo_pista}
                                         onChange={e => setForm(f => ({ ...f, tipo_pista: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
+                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
                                     >
                                         {Object.entries(TIPO_PISTA_LABEL).map(([k, v]) => (
                                             <option key={k} value={k}>{v}</option>
@@ -482,12 +482,12 @@ export default function Calendario({ user }) {
                             </div>
 
                             <div>
-                                <label htmlFor="cal-categoria" className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1.5">Categoría</label>
+                                <label htmlFor="cal-categoria" className="block label-caps text-gray-400 mb-1.5">Categoría</label>
                                 <select
                                     id="cal-categoria"
                                     value={form.id_categoria}
                                     onChange={e => setForm(f => ({ ...f, id_categoria: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/10 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
+                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
                                 >
                                     <option value="">Todos</option>
                                     {categorias.map(c => (
@@ -500,7 +500,7 @@ export default function Calendario({ user }) {
                                 <button
                                     type="button"
                                     onClick={cerrarModal}
-                                    className="flex-1 py-3 text-[10px] font-bold uppercase tracking-widest border border-white/10 text-gray-400 rounded-lg hover:bg-white/5 transition"
+                                    className="flex-1 py-3 text-[10px] font-bold uppercase tracking-widest border border-white/20 text-gray-400 rounded-lg hover:bg-white/5 transition"
                                 >
                                     Cancelar
                                 </button>
@@ -522,14 +522,14 @@ export default function Calendario({ user }) {
                 <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onMouseDown={(e) => { if (e.target === e.currentTarget) setDetalleData(null); }} />
 
-                    <div ref={modalDetalleRef} role="dialog" aria-modal="true" aria-label={eventoActual?.titulo ?? 'Eventos del día'} className="relative bg-gris border border-white/10 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+                    <div ref={modalDetalleRef} role="dialog" aria-modal="true" aria-label={eventoActual?.titulo ?? 'Eventos del día'} className="relative bg-gris border border-white/20 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
                         <div className="flex items-start justify-between mb-4">
                             {eventoActual ? (
-                                <span className={`text-[9px] font-bold px-2 py-1 rounded border uppercase tracking-wider ${TIPO_EVENTO_COLOR[eventoActual.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/10'}`}>
+                                <span className={`text-[9px] font-bold px-2 py-1 rounded border uppercase tracking-wider ${TIPO_EVENTO_COLOR[eventoActual.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/20'}`}>
                                     {TIPO_EVENTO_LABEL[eventoActual.tipo_evento]}
                                 </span>
                             ) : (
-                                <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                                <span className="label-caps text-gray-400">
                                     {detalleData.dia ? `${String(detalleData.dia).padStart(2, '0')} ${MESES[month]}` : 'Eventos'}
                                 </span>
                             )}
@@ -592,7 +592,7 @@ export default function Calendario({ user }) {
                                 )}
 
                                 {detalleData.eventos.length > 1 && (
-                                    <div className="flex items-center justify-between mb-4 border-t border-white/5 pt-4">
+                                    <div className="flex items-center justify-between mb-4 border-t border-white/15 pt-4">
                                         <button
                                             onClick={() => setDetalleData(d => ({ ...d, idx: d.idx - 1 }))}
                                             disabled={detalleData.idx === 0}
@@ -636,7 +636,7 @@ export default function Calendario({ user }) {
                         {puedeEditar && detalleData.dia && (
                             <button
                                 onClick={() => { setDetalleData(null); abrirModal(detalleData.dia); }}
-                                className="w-full mt-3 py-2.5 text-[10px] font-black uppercase tracking-widest bg-ianuarius text-white rounded-lg hover:bg-red-700 transition"
+                                className="w-full mt-3 py-2.5 label-caps bg-ianuarius text-white rounded-lg hover:bg-red-700 transition"
                             >
                                 + Añadir evento
                             </button>

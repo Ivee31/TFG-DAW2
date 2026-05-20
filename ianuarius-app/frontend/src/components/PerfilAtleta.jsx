@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+﻿import { useState, useEffect, useMemo } from 'react';
 import { API } from '../api';
 import JSZip from 'jszip';
 
@@ -24,7 +24,7 @@ const calcularCategoria = (fechaNacimiento, genero) => {
 function DocVacio() {
 	return (
 		<div className="flex flex-col items-center justify-center py-12 border border-dashed border-gray-700 rounded-xl">
-			<span className="text-gray-400 text-xs uppercase tracking-widest">Sin documento</span>
+			<span className="label-muted">Sin documento</span>
 		</div>
 	);
 }
@@ -168,7 +168,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 				)}
 			</div>
 
-			<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
+			<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/15 shadow-2xl">
 				<div className="flex items-center gap-4 mb-6 md:mb-8">
 					{avatarSrc ? (
 						<img src={avatarSrc} alt={perfil.nombre} className="w-14 h-14 rounded-full object-cover shrink-0" />
@@ -241,7 +241,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 											className={`flex-1 py-1.5 text-[9px] font-black uppercase tracking-widest rounded transition ${
 												filterTemporada === val
 													? 'bg-ianuarius text-white'
-													: 'border border-white/10 text-gray-400 hover:text-white hover:border-white/30'
+													: 'border border-white/20 text-gray-400 hover:text-white hover:border-white/30'
 											}`}
 										>
 											{label}
@@ -253,18 +253,18 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 
 						{marcas.length === 0 ? (
 							<div className="flex items-center justify-center py-10 border border-dashed border-gray-700 rounded-xl">
-								<span className="text-gray-400 text-xs uppercase tracking-widest">Sin marcas registradas</span>
+								<span className="label-muted">Sin marcas registradas</span>
 							</div>
 						) : marcasVisible.length === 0 ? (
 							<div className="flex items-center justify-center py-10 border border-dashed border-gray-700 rounded-xl">
-								<span className="text-gray-400 text-xs uppercase tracking-widest">Sin marcas para los filtros seleccionados</span>
+								<span className="label-muted">Sin marcas para los filtros seleccionados</span>
 							</div>
 						) : (
 							<>
-								<div className="overflow-x-auto rounded-xl border border-white/5">
+								<div className="overflow-x-auto rounded-xl border border-white/15">
 									<table className="w-full text-xs">
 										<thead>
-											<tr className="border-b border-white/5 text-gray-400 uppercase tracking-widest">
+											<tr className="border-b border-white/15 text-gray-400 uppercase tracking-widest">
 												<th className="text-left px-3 py-2 font-semibold">Prueba</th>
 												<th className="text-left px-3 py-2 font-semibold">Categoría</th>
 												<th className="text-left px-3 py-2 font-semibold">Marca</th>
@@ -275,7 +275,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 										</thead>
 										<tbody>
 											{marcasVisible.map((m, i) => (
-												<tr key={m.id_marca} className={`border-b border-white/5 ${i % 2 === 0 ? 'bg-oscuro/30' : ''} hover:bg-white/5 transition`}>
+												<tr key={m.id_marca} className={`border-b border-white/15 ${i % 2 === 0 ? 'bg-oscuro/30' : ''} hover:bg-white/5 transition`}>
 													<td className="px-3 py-2 font-medium text-white">{m.prueba}</td>
 													<td className="px-3 py-2 text-gray-400">{m.categoria_nombre ?? '—'}</td>
 													<td className="px-3 py-2 font-bold text-ianuarius">{m.marca}</td>
@@ -337,12 +337,12 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 						</h3>
 
 						{/* tabs */}
-						<div className="flex items-center gap-1 bg-oscuro/60 border border-white/10 rounded-lg p-1 mb-4 w-fit">
+						<div className="flex items-center gap-1 bg-oscuro/60 border border-white/20 rounded-lg p-1 mb-4 w-fit">
 							{DOCS.map(d => (
 								<button
 									key={d.key}
 									onClick={() => setTabDoc(d.key)}
-									className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${tabDoc === d.key ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
+									className={`px-3 py-1.5 label-caps rounded transition ${tabDoc === d.key ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
 								>
 									{d.label}
 								</button>
@@ -353,7 +353,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 						{!docActual?.src ? (
 							<DocVacio />
 						) : docActual.key === 'inscripcion' ? (
-							<div className="rounded-xl overflow-hidden border border-white/5 bg-oscuro/30">
+							<div className="rounded-xl overflow-hidden border border-white/15 bg-oscuro/30">
 								<embed
 									src={docActual.src}
 									type="application/pdf"
@@ -369,7 +369,7 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 								</a>
 							</div>
 						) : (
-							<div className="rounded-xl overflow-hidden border border-white/5 bg-oscuro/30 flex flex-col items-center gap-2 p-3">
+							<div className="rounded-xl overflow-hidden border border-white/15 bg-oscuro/30 flex flex-col items-center gap-2 p-3">
 								<img
 									src={docActual.src}
 									alt={docActual.label}
