@@ -432,7 +432,7 @@ class UsuarioController {
                         (u.foto_carnet IS NOT NULL) AS tiene_carnet,
                         (u.inscripcion_pdf IS NOT NULL OR u.inscripcion_formulario IS NOT NULL) AS tiene_inscripcion,
                         COUNT(m.id_marca) AS total_marcas,
-                        COALESCE(fi.estado_pago, 'pendiente') AS estado_pago
+                        COALESCE(MAX(fi.estado_pago), 'pendiente') AS estado_pago
                  FROM usuarios u
                  LEFT JOIN marcas m ON u.id_usuario = m.id_usuario
                  LEFT JOIN fichas_inscripcion fi ON u.id_usuario = fi.id_usuario
@@ -447,7 +447,7 @@ class UsuarioController {
             echo json_encode(["status" => "success", "atletas" => $atletas]);
 
         } catch (PDOException $e) {
-            error_log("UsuarioController.listarAtletas() - " . $e->getMessage(), 3, Config::LOGFILE);
+            error_log("UsuarioController.listarAtletas() - " . $e->getMessage());
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
@@ -535,7 +535,7 @@ class UsuarioController {
             echo json_encode(["status" => "success", "atleta" => $atleta]);
 
         } catch (PDOException $e) {
-            error_log("perfilAtleta() - " . $e->getMessage(), 3, Config::LOGFILE);
+            error_log("perfilAtleta() - " . $e->getMessage());
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }

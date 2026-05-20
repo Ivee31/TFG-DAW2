@@ -89,7 +89,7 @@ class CronController {
             echo json_encode(["status" => "success", "emails_enviados" => $enviados]);
 
         } catch (PDOException $e) {
-            error_log("[CronController] DB error: " . $e->getMessage(), 3, Config::LOGFILE);
+            error_log("[CronController] DB error: " . $e->getMessage());
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
@@ -144,7 +144,7 @@ class CronController {
             echo json_encode(["status" => "success", "emails_enviados" => $enviados]);
 
         } catch (PDOException $e) {
-            error_log("[CronController] avisoDocumentacion: " . $e->getMessage(), 3, Config::LOGFILE);
+            error_log("[CronController] avisoDocumentacion: " . $e->getMessage());
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
@@ -204,7 +204,7 @@ class CronController {
         $code     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if ($code !== 201) {
-            error_log("[CronController] Brevo docAviso {$atleta['email']}: {$response}", 3, Config::LOGFILE);
+            error_log("[CronController] Brevo docAviso {$atleta['email']}: {$response}");
         }
     }
 
@@ -256,7 +256,7 @@ class CronController {
         $code     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if ($code !== 201) {
-            error_log("[CronController] Brevo error {$atleta['email']}: {$response}", 3, Config::LOGFILE);
+            error_log("[CronController] Brevo error {$atleta['email']}: {$response}");
         }
     }
 }

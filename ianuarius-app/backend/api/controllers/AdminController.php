@@ -26,7 +26,7 @@ class AdminController {
             echo json_encode(["status" => "success", "pendientes" => $pendientes]);
 
         } catch (PDOException $e) {
-            error_log("AdminController.pendientes() - " . $e->getMessage(), 3, Config::LOGFILE);
+            error_log("AdminController.pendientes() - " . $e->getMessage());
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
@@ -190,7 +190,7 @@ class AdminController {
             }
 
         } catch (PDOException $e) {
-            error_log("AdminController.activar() - " . $e->getMessage(), 3, Config::LOGFILE);
+            error_log("AdminController.activar() - " . $e->getMessage());
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
