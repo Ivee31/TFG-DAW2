@@ -428,11 +428,8 @@ class UsuarioController {
             $stmt = $pdo->prepare(
                 "SELECT u.id_usuario, u.nombre, u.apellidos, u.email, u.genero, u.fecha_nacimiento,
                         u.foto_perfil, u.foto_carnet,
-                        (u.foto_dni IS NOT NULL) AS tiene_dni,
-                        (u.foto_carnet IS NOT NULL) AS tiene_carnet,
-                        (u.inscripcion_pdf IS NOT NULL OR u.inscripcion_formulario IS NOT NULL) AS tiene_inscripcion,
                         COUNT(m.id_marca) AS total_marcas,
-                        COALESCE(MAX(fi.estado_pago), 'pendiente') AS estado_pago
+                        COALESCE(fi.estado_pago, 'pendiente') AS estado_pago
                  FROM usuarios u
                  LEFT JOIN marcas m ON u.id_usuario = m.id_usuario
                  LEFT JOIN fichas_inscripcion fi ON u.id_usuario = fi.id_usuario
