@@ -1,5 +1,6 @@
 ﻿import { useState, useEffect, useRef, useMemo } from 'react';
 import { API } from '../api';
+import Tooltip from './Tooltip';
 
 const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
@@ -127,7 +128,6 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 	const [loading, setLoading] = useState(false);
 	const [deleting, setDeleting] = useState(false);
 	const [error, setError] = useState('');
-	const [showInfo, setShowInfo] = useState(false);
 
 	const handleFile = async (file) => {
 		setLoading(true);
@@ -159,15 +159,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 				<div className="flex items-center gap-2 min-w-0">
 					<IconDoc />
 					<span className="text-xs font-bold uppercase tracking-wider text-gray-300 truncate">{label}</span>
-					{tooltip && (
-						<button
-							onClick={() => setShowInfo(v => !v)}
-							className={`shrink-0 w-4 h-4 rounded-full border flex items-center justify-center transition ${showInfo ? 'border-white/40 text-white' : 'border-white/20 text-gray-400 hover:border-white/40 hover:text-gray-300'}`}
-							title="¿Qué es esto?"
-						>
-							<span className="text-[9px] font-black leading-none">i</span>
-						</button>
-					)}
+					{tooltip && <Tooltip text={tooltip} />}
 				</div>
 				{loading ? (
 					<svg className="animate-spin w-4 h-4 text-gray-400 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -177,11 +169,6 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 				) : subido ? <IconCheck /> : <IconWarning />}
 			</div>
 
-			{showInfo && tooltip && (
-				<div className="bg-white/5 border border-white/20 rounded-md px-3 py-2">
-					<p className="text-gray-300 text-xs leading-relaxed">{tooltip}</p>
-				</div>
-			)}
 
 			{!loading && subido && (
 				<>

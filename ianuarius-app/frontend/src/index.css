@@ -79,6 +79,63 @@ html, body {
     75% { transform: rotate(-70deg); animation-timing-function: ease-in;  }
 }
 
+/* Tooltip */
+.tooltip-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+.tooltip-box {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s 0.25s;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    translate: -50% 0;
+    width: 220px;
+    background: #1f1f1f;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #d1d5db;
+    z-index: 100;
+    pointer-events: none;
+    text-align: left;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+}
+.tooltip-box::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    translate: -50% 0;
+    border: 5px solid transparent;
+    border-top-color: rgba(255,255,255,0.15);
+}
+.tooltip-box::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    translate: -50% 0;
+    border: 4px solid transparent;
+    border-top-color: #1f1f1f;
+    z-index: 1;
+}
+.tooltip-wrap:hover .tooltip-box,
+.tooltip-wrap:focus-within .tooltip-box {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s 0s;
+}
+
 /* Back to top button */
 .btn-back-top {
     width: 50px; height: 50px;
