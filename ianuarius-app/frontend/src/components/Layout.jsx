@@ -21,7 +21,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 
 	// control estados menu lateral
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const [isPinned, setIsPinned] = useState(() => window.innerWidth >= 1024);
+	const [isPinned, setIsPinned] = useState(() => window.innerWidth >= 1280);
 	const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024);
 	const menuRef = useRef(null);
 	const btnRef = useRef(null);
