@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 import PerfilAtleta from './PerfilAtleta';
+import SelectorOpciones from './SelectorOpciones';
 
 const CATEGORIA_ORDEN = [
 	'Sub-10','Sub-12','Sub-14','Sub-16','Sub-18','Sub-20','Sub-23',
@@ -235,20 +236,15 @@ export default function AdminPanel() {
 								</p>
 							)}
 						</div>
-						<div className="flex items-center gap-1 bg-oscuro/60 border border-white/10 rounded-lg p-1">
-							<button
-								onClick={() => setTab('atletas')}
-								className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${tab === 'atletas' ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
-							>
-								Atletas
-							</button>
-							<button
-								onClick={() => setTab('entrenadores')}
-								className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${tab === 'entrenadores' ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
-							>
-								Entrenadores
-							</button>
-						</div>
+						<SelectorOpciones
+							nombre="admin-tab"
+							valor={tab}
+							onChange={setTab}
+							opciones={[
+								{ valor: 'atletas',      etiqueta: 'Atletas'      },
+								{ valor: 'entrenadores', etiqueta: 'Entrenadores' },
+							]}
+						/>
 					</div>
 
 					{/* tab atletas */}
@@ -269,17 +265,16 @@ export default function AdminPanel() {
 										/>
 									</div>
 
-									<div className="flex items-center gap-1 bg-oscuro/60 border border-white/10 rounded-lg p-1 shrink-0">
-										{[['todos','Todos'],['M','Masc'],['F','Fem']].map(([val, label]) => (
-											<button
-												key={val}
-												onClick={() => setFiltroGeneroA(val)}
-												className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${filtroGeneroA === val ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
-											>
-												{label}
-											</button>
-										))}
-									</div>
+									<SelectorOpciones
+										nombre="filtro-genero-admin"
+										valor={filtroGeneroA}
+										onChange={setFiltroGeneroA}
+										opciones={[
+											{ valor: 'todos', etiqueta: 'Todos' },
+											{ valor: 'M',     etiqueta: 'Masc'  },
+											{ valor: 'F',     etiqueta: 'Fem'   },
+										]}
+									/>
 
 									{categoriasDisponibles.length > 1 && (
 										<select
