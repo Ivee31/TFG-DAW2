@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { API } from '../api';
 import PerfilAtleta from './PerfilAtleta';
 
@@ -80,7 +80,7 @@ export default function DashboardEntrenador() {
 
 	return (
 		<main>
-			<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/15 shadow-2xl">
+			<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
 				<div className="flex justify-between items-center mb-6 md:mb-8">
 					<div>
 						<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Atletas del Club</h2>
@@ -107,16 +107,16 @@ export default function DashboardEntrenador() {
 								value={busqueda}
 								onChange={e => setBusqueda(e.target.value)}
 								placeholder="Buscar por nombre o email..."
-								className="w-full bg-oscuro border border-white/20 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+								className="w-full bg-oscuro border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
 							/>
 						</div>
 
-						<div className="flex items-center gap-1 bg-oscuro/60 border border-white/20 rounded-lg p-1 shrink-0">
+						<div className="flex items-center gap-1 bg-oscuro/60 border border-white/10 rounded-lg p-1 shrink-0">
 							{[['todos','Todos'],['M','Masc'],['F','Fem']].map(([val, label]) => (
 								<button
 									key={val}
 									onClick={() => setFiltroGenero(val)}
-									className={`px-3 py-1.5 label-caps rounded transition ${filtroGenero === val ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
+									className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded transition ${filtroGenero === val ? 'bg-ianuarius text-white' : 'text-gray-400 hover:text-white'}`}
 								>
 									{label}
 								</button>
@@ -127,7 +127,7 @@ export default function DashboardEntrenador() {
 							<select
 								value={filtroCategoria}
 								onChange={e => setFiltroCategoria(e.target.value)}
-								className="bg-oscuro border border-white/20 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius appearance-none cursor-pointer shrink-0"
+								className="bg-oscuro border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius appearance-none cursor-pointer shrink-0"
 							>
 								<option value="">Todas las categorías</option>
 								{categoriasDisponibles.map(c => (
@@ -138,10 +138,10 @@ export default function DashboardEntrenador() {
 
 						<button
 							onClick={() => setFiltroDocs(v => !v)}
-							className={`shrink-0 px-3 py-2 label-caps rounded-lg border transition ${
+							className={`shrink-0 px-3 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg border transition ${
 								filtroDocs
 									? 'bg-yellow-500/20 border-yellow-500/50 text-yellow-400'
-									: 'bg-oscuro border-white/20 text-gray-400 hover:text-white hover:border-white/30'
+									: 'bg-oscuro border-white/10 text-gray-400 hover:text-white hover:border-white/30'
 							}`}
 						>
 							Docs pendientes
@@ -150,7 +150,7 @@ export default function DashboardEntrenador() {
 				)}
 
 				{cargando && (
-					<p className="label-muted text-center py-10">
+					<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10">
 						Cargando atletas...
 					</p>
 				)}
@@ -162,13 +162,13 @@ export default function DashboardEntrenador() {
 				)}
 
 				{!cargando && !error && atletas.length === 0 && (
-					<p className="label-muted text-center py-10 border border-dashed border-gray-700 rounded-xl">
+					<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
 						No hay atletas registrados
 					</p>
 				)}
 
 				{!cargando && !error && atletas.length > 0 && atletasFiltrados.length === 0 && (
-					<p className="label-muted text-center py-10 border border-dashed border-gray-700 rounded-xl">
+					<p className="text-gray-400 text-xs uppercase tracking-widest text-center py-10 border border-dashed border-gray-700 rounded-xl">
 						Sin resultados para los filtros aplicados
 					</p>
 				)}
@@ -197,7 +197,7 @@ export default function DashboardEntrenador() {
 											</span>
 										</div>
 
-										<div className="mt-2 pt-2 border-t border-white/15 flex justify-between items-center">
+										<div className="mt-2 pt-2 border-t border-white/5 flex justify-between items-center">
 											<span className="text-[10px] text-gray-400 uppercase tracking-widest">
 												{a.genero === 'M' ? 'Masculino' : 'Femenino'}
 											</span>
