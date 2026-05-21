@@ -9,6 +9,7 @@ import fondoLanding from '../assets/fondoLanding.webp';
 // ELEMENTOS HARDCODEADOS PARA EL MOCKUP DE LAS NOTICIAS
 import llanoAlto from '../assets/llanoAltoAlbergue.webp';
 import record400 from '../assets/record400New.webp';
+import calendar from '../assets/calendar.webp';
 
 import { attachFocusTrap } from '../utils/focusTrap';
 import BackToTop from './BackToTop';
@@ -50,7 +51,7 @@ function Modal({ onClose, children }) {
 
 const noticias = [
 	{
-		img: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=70',
+		img: calendar,
 		categoria: 'Itinerario',
 		titulo: 'RFEA anuncia el calendario oficial de competiciones para la temporada 2026',
 		fecha: '15 abr 2026',
