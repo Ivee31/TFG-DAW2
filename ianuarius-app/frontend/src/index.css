@@ -4,6 +4,10 @@ html, body {
     background-color: #171717;
 }
 
+html {
+    scrollbar-gutter: stable;
+}
+
 /* fuente graduate local - sin necesidad de google fonts */
 @font-face {
     font-family: 'Graduate';

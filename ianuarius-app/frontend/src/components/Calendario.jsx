@@ -222,7 +222,7 @@ export default function Calendario({ user }) {
 
             {/* banner proximos eventos */}
             {proximos.length > 0 && (
-                <div className="bg-ianuarius/5 border border-ianuarius/20 rounded-xl p-4 flex items-start gap-3">
+                <div className="bg-ianuarius/5 border-2 border-ianuarius/30 shadow-[4px_4px_0_#7f1212] rounded-lg p-4 flex items-start gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 text-ianuarius shrink-0 mt-0.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
                     </svg>
@@ -236,7 +236,7 @@ export default function Calendario({ user }) {
                                     <button
                                         key={ev.id_evento}
                                         onClick={() => irAEvento(ev)}
-                                        className="text-[10px] bg-ianuarius/10 border border-ianuarius/25 text-gray-200 px-3 py-1.5 rounded-lg font-bold uppercase tracking-wider hover:bg-ianuarius/20 transition flex items-center gap-2"
+                                        className="text-[10px] bg-ianuarius/10 border-2 border-ianuarius/30 shadow-[2px_2px_0_#7f1212] text-gray-200 px-3 py-1.5 rounded font-bold uppercase tracking-wider hover:bg-ianuarius/20 neo-press transition flex items-center gap-2"
                                     >
                                         <span className="text-ianuarius">{fechaLabel}</span>
                                         <span>{ev.titulo}</span>
