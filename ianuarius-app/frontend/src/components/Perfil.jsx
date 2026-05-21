@@ -4,7 +4,7 @@ import Tooltip from './Tooltip';
 import SelectorOpciones from './SelectorOpciones';
 import CustomSelect from './CustomSelect';
 
-const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
+const inputClasses = "w-full p-2 bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded neo-input outline-none";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
 
 const MARCAS_POR_PAG = 6;
@@ -951,10 +951,10 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									<p className={`text-xs text-center ${infoMsg === 'Datos actualizados' ? 'text-green-400' : 'text-red-400'}`}>{infoMsg}</p>
 								)}
 								<div className="flex gap-3">
-									<button type="submit" disabled={infoLoading} className="flex-1 bg-ianuarius text-white label-caps py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
+									<button type="submit" disabled={infoLoading} className="flex-1 bg-ianuarius text-white label-caps py-2 rounded border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed">
 										{infoLoading ? 'Guardando...' : 'Guardar cambios'}
 									</button>
-									<button type="button" onClick={cancelarEdicion} className="flex-1 border border-white/20 text-gray-400 label-caps py-2 rounded hover:text-white hover:border-white/30 transition">
+									<button type="button" onClick={cancelarEdicion} className="flex-1 bg-oscuro text-gray-400 label-caps py-2 rounded border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] neo-press hover:text-white transition">
 										Cancelar
 									</button>
 								</div>
@@ -985,7 +985,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									{emailMsg && (
 										<p className={`text-xs text-center ${emailMsg === 'Email actualizado' ? 'text-green-400' : 'text-red-400'}`}>{emailMsg}</p>
 									)}
-									<button type="submit" disabled={emailLoading} className="w-full bg-ianuarius text-white label-caps py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
+									<button type="submit" disabled={emailLoading} className="w-full bg-ianuarius text-white label-caps py-2 rounded border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed">
 										{emailLoading ? 'Guardando...' : 'Confirmar cambio'}
 									</button>
 								</form>
@@ -1024,7 +1024,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									{passMsg && (
 										<p className={`text-xs text-center ${passMsg === 'Contraseña actualizada' ? 'text-green-400' : 'text-red-400'}`}>{passMsg}</p>
 									)}
-									<button type="submit" disabled={passLoading} className="w-full bg-ianuarius text-white label-caps py-2 rounded hover:bg-red-700 transition disabled:opacity-50">
+									<button type="submit" disabled={passLoading} className="w-full bg-ianuarius text-white label-caps py-2 rounded border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed">
 										{passLoading ? 'Guardando...' : 'Confirmar cambio'}
 									</button>
 								</form>
@@ -1055,7 +1055,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 								<button
 									onClick={handleEliminarCuenta}
 									disabled={deleteLoading}
-									className="w-full bg-red-700 text-white label-caps py-2 rounded hover:bg-red-600 transition disabled:opacity-50"
+									className="w-full bg-red-700 text-white label-caps py-2 rounded border-2 border-red-700 shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed"
 								>
 									{deleteLoading ? 'Eliminando...' : 'Confirmar — eliminar mi cuenta'}
 								</button>

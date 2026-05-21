@@ -398,7 +398,7 @@ export default function Calendario({ user }) {
                                     type="text"
                                     value={form.titulo}
                                     onChange={e => setForm(f => ({ ...f, titulo: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+                                    className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-3 neo-input outline-none"
                                     placeholder="Campeonato Provincial de Pista..."
                                     autoFocus
                                 />
@@ -410,7 +410,7 @@ export default function Calendario({ user }) {
                                     id="cal-descripcion"
                                     value={form.descripcion}
                                     onChange={e => setForm(f => ({ ...f, descripcion: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none h-20"
+                                    className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-3 neo-input outline-none resize-none h-20"
                                     placeholder="Detalles adicionales..."
                                 />
                             </div>
@@ -423,7 +423,7 @@ export default function Calendario({ user }) {
                                         type="time"
                                         value={form.hora}
                                         onChange={e => setForm(f => ({ ...f, hora: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+                                        className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-3 neo-input outline-none"
                                     />
                                 </div>
 
@@ -434,7 +434,7 @@ export default function Calendario({ user }) {
                                         type="date"
                                         value={form.fecha_fin}
                                         onChange={e => setForm(f => ({ ...f, fecha_fin: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+                                        className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-3 neo-input outline-none"
                                     />
                                 </div>
                             </div>
@@ -446,7 +446,7 @@ export default function Calendario({ user }) {
                                     type="url"
                                     value={form.enlace}
                                     onChange={e => setForm(f => ({ ...f, enlace: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+                                    className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-3 neo-input outline-none"
                                     placeholder="https://..."
                                 />
                             </div>
@@ -458,7 +458,7 @@ export default function Calendario({ user }) {
                                         id="cal-tipo-evento"
                                         value={form.tipo_evento}
                                         onChange={e => setForm(f => ({ ...f, tipo_evento: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition cursor-pointer"
+                                        className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-3 neo-input"
                                         options={Object.entries(TIPO_EVENTO_LABEL).map(([k, v]) => ({ value: k, label: v }))}
                                     />
                                 </div>
@@ -469,7 +469,7 @@ export default function Calendario({ user }) {
                                         id="cal-tipo-pista"
                                         value={form.tipo_pista}
                                         onChange={e => setForm(f => ({ ...f, tipo_pista: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition cursor-pointer"
+                                        className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-3 neo-input"
                                         options={Object.entries(TIPO_PISTA_LABEL).map(([k, v]) => ({ value: k, label: v }))}
                                     />
                                 </div>
@@ -481,7 +481,7 @@ export default function Calendario({ user }) {
                                     id="cal-categoria"
                                     value={form.id_categoria}
                                     onChange={e => setForm(f => ({ ...f, id_categoria: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition cursor-pointer"
+                                    className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-3 neo-input"
                                     options={[
                                         { value: '', label: 'Todos' },
                                         ...categorias.map(c => ({ value: c.id_categoria, label: c.nombre })),
@@ -493,14 +493,14 @@ export default function Calendario({ user }) {
                                 <button
                                     type="button"
                                     onClick={cerrarModal}
-                                    className="flex-1 py-3 text-[10px] font-bold uppercase tracking-widest border border-white/20 text-gray-400 rounded-lg hover:bg-white/5 transition"
+                                    className="flex-1 py-3 text-[10px] font-bold uppercase tracking-widest bg-oscuro text-gray-400 rounded border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] neo-press hover:text-white transition"
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={guardando}
-                                    className="flex-1 py-3 text-[10px] font-bold uppercase tracking-widest bg-white text-oscuro rounded-lg hover:bg-ianuarius hover:text-white transition disabled:opacity-50"
+                                    className="flex-1 py-3 text-[10px] font-bold uppercase tracking-widest bg-ianuarius text-white rounded border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {guardando ? '...' : 'Guardar Evento'}
                                 </button>

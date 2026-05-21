@@ -22,14 +22,14 @@ export default function AuthModal({ onClose, onLoginSuccess, onGoogleNeedsComple
 				<span
 					className="text-xs font-black tracking-widest uppercase cursor-pointer select-none"
 					style={{
-						color: !isRegister ? '#fff' : '#6B7280',
-						textDecoration: !isRegister ? 'underline' : 'none',
+						color: isRegister ? '#fff' : '#6B7280',
+						textDecoration: isRegister ? 'underline' : 'none',
 						textUnderlineOffset: '3px',
 						transition: 'color 0.3s ease',
 					}}
-					onClick={() => isRegister && toggle()}
+					onClick={() => !isRegister && toggle()}
 				>
-					Acceso
+					Registro
 				</span>
 
 				<button
@@ -61,7 +61,7 @@ export default function AuthModal({ onClose, onLoginSuccess, onGoogleNeedsComple
 					<span style={{
 						position: 'absolute',
 						top: '3px',
-						left: isRegister ? '29px' : '3px',
+						left: isRegister ? '3px' : '29px',
 						width: '16px',
 						height: '16px',
 						borderRadius: '3px',
@@ -75,14 +75,14 @@ export default function AuthModal({ onClose, onLoginSuccess, onGoogleNeedsComple
 				<span
 					className="text-xs font-black tracking-widest uppercase cursor-pointer select-none"
 					style={{
-						color: isRegister ? '#fff' : '#6B7280',
-						textDecoration: isRegister ? 'underline' : 'none',
+						color: !isRegister ? '#fff' : '#6B7280',
+						textDecoration: !isRegister ? 'underline' : 'none',
 						textUnderlineOffset: '3px',
 						transition: 'color 0.3s ease',
 					}}
-					onClick={() => !isRegister && toggle()}
+					onClick={() => isRegister && toggle()}
 				>
-					Registro
+					Acceso
 				</span>
 			</div>
 

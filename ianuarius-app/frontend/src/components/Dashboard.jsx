@@ -416,7 +416,7 @@ export default function Dashboard() {
 		return marcas;
 	})();
 
-	const selectClasses = "w-full bg-oscuro border border-white/20 p-4 md:p-3 rounded-lg text-sm focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition appearance-none cursor-pointer";
+	const selectClasses = "w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-3 neo-input";
 	const labelClasses = "block text-xs lg:text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2";
 
 	return (
@@ -609,7 +609,7 @@ export default function Dashboard() {
 												value={editMarca}
 												onChange={(e) => { setEditMarca(formatMarcaTiempo(e.target.value)); setEditFormatoError(false); }}
 												onBlur={() => { if (editMarca && (!REGEX_MARCA.test(editMarca) || !segundosValidos(editMarca))) setEditFormatoError(true); else setEditFormatoError(false); }}
-												className={`w-full bg-oscuro border p-3 rounded-lg text-xl text-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition font-mono ${editFormatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/20 focus:border-ianuarius'}`}
+												className={`w-full bg-oscuro p-3 rounded text-xl text-ianuarius font-mono neo-input outline-none border-2 ${editFormatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-[#4B5563] shadow-[3px_3px_0_#374151]'}`}
 											/>
 											{editFormatoError && (
 												<p className="text-red-400 text-[10px] mt-1 uppercase tracking-wider">Formato incorrecto — usa MM'SS"ms</p>
@@ -639,14 +639,14 @@ export default function Dashboard() {
 												placeholder="Notas opcionales..."
 												maxLength={500}
 												rows={2}
-												className="w-full bg-oscuro border border-white/20 p-2 rounded-lg text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none"
+												className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-2 neo-input outline-none resize-none placeholder-gray-600"
 											/>
 										</div>
 
 										<div className="flex gap-2">
 											<button
 												onClick={() => setEditandoId(null)}
-												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest border border-white/20 text-gray-400 rounded hover:bg-white/5 transition"
+												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest bg-oscuro text-gray-400 rounded border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] neo-press hover:text-white transition"
 											>
 												Cancelar
 											</button>
@@ -654,7 +654,7 @@ export default function Dashboard() {
 											<button
 												onClick={() => handleGuardarEdicion(m.id_marca)}
 												disabled={guardandoEdicion}
-												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest bg-white text-oscuro rounded hover:bg-ianuarius hover:text-white transition disabled:opacity-50"
+												className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest bg-ianuarius text-white rounded border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed"
 											>
 												{guardandoEdicion ? '...' : 'Guardar'}
 											</button>
@@ -792,7 +792,7 @@ export default function Dashboard() {
 								value={marcaTiempo}
 								onChange={(e) => { setMarcaTiempo(formatMarcaTiempo(e.target.value)); setFormatoError(false); }}
 								onBlur={handleMarcaBlur}
-								className={`w-full bg-oscuro border p-5 md:p-4 rounded-lg text-2xl text-ianuarius focus:ring-2 focus:ring-ianuarius/40 transition font-mono ${formatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-white/20 focus:border-ianuarius'}`}
+								className={`w-full bg-oscuro p-5 md:p-4 rounded text-2xl text-ianuarius font-mono neo-input outline-none border-2 ${formatoError ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'border-[#4B5563] shadow-[3px_3px_0_#374151]'}`}
 							/>
 							{formatoError && (
 								<p className="text-red-400 text-[10px] mt-1.5 uppercase tracking-wider">
@@ -832,7 +832,7 @@ export default function Dashboard() {
 						<button
 							type="submit"
 							disabled={guardando || !eventoSeleccionado || cargandoEventos}
-							className="w-full bg-white text-oscuro font-black py-5 md:py-4 rounded-xl text-sm lg:text-xs uppercase tracking-[0.3em] hover:bg-ianuarius hover:text-white transition duration-500 shadow-[0_5px_20px_rgba(255,255,255,0.1)] hover:shadow-[0_5px_20px_rgba(254,0,0,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+							className="w-full bg-ianuarius text-white font-black py-5 md:py-4 rounded text-sm lg:text-xs uppercase tracking-[0.3em] border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed"
 						>
 							{guardando ? 'Guardando...' : 'Guardar Registro'}
 						</button>

@@ -262,7 +262,7 @@ export default function AdminPanel() {
 											value={busquedaA}
 											onChange={e => setBusquedaA(e.target.value)}
 											placeholder="Buscar por nombre o email..."
-											className="w-full bg-oscuro border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+											className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded pl-9 pr-4 py-2.5 neo-input outline-none placeholder-gray-600"
 										/>
 									</div>
 
@@ -390,7 +390,7 @@ export default function AdminPanel() {
 											value={busquedaE}
 											onChange={e => setBusquedaE(e.target.value)}
 											placeholder="Buscar por nombre o email..."
-											className="w-full bg-oscuro border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition"
+											className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded pl-9 pr-4 py-2.5 neo-input outline-none placeholder-gray-600"
 										/>
 									</div>
 								</div>

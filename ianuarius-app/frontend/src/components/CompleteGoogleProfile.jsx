@@ -3,7 +3,7 @@ import { API } from '../api';
 import logoIanuarius from '../assets/logoIanuarius.png';
 import CustomSelect from './CustomSelect';
 
-const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
+const inputClasses = "w-full p-2 bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded neo-input outline-none";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
 
 export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
@@ -131,7 +131,7 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 								/>
 							</div>
 						</div>
-						<button type="submit" disabled={loading} className="w-full bg-ianuarius text-white font-bold py-2 rounded hover:bg-red-700 transition duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+						<button type="submit" disabled={loading} className="w-full bg-ianuarius text-white label-caps py-2 rounded border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed">
 							{loading ? 'REGISTRANDO...' : 'COMPLETAR REGISTRO'}
 						</button>
 					</form>
