@@ -281,6 +281,7 @@ class AuthController {
                 $_SESSION['id_usuario'] = $user['id_usuario'];
                 $_SESSION['rol']        = $user['rol'];
 
+                $user['es_google'] = true;
                 unset($user['estado_cuenta'], $user['google_id']);
 
                 http_response_code(200);
@@ -452,7 +453,7 @@ class AuthController {
         try {
             $pdo  = Connect::conexion();
             $stmt = $pdo->prepare(
-                "SELECT id_usuario, nombre, apellidos, dni, email, genero, fecha_nacimiento, foto_perfil, foto_dni, foto_carnet, inscripcion_pdf, notificaciones_email, frecuencia_notif, rol FROM usuarios WHERE id_usuario = :id"
+                "SELECT id_usuario, nombre, apellidos, dni, email, genero, fecha_nacimiento, foto_perfil, foto_dni, foto_carnet, inscripcion_pdf, notificaciones_email, frecuencia_notif, rol, (google_id IS NOT NULL) AS es_google FROM usuarios WHERE id_usuario = :id"
             );
             $stmt->bindParam(':id', $_SESSION['id_usuario'], PDO::PARAM_INT);
             $stmt->execute();
@@ -460,6 +461,7 @@ class AuthController {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user) {
+                $user['es_google'] = (bool)$user['es_google'];
                 http_response_code(200);
                 echo json_encode(["status" => "success", "user" => $user]);
             } else {

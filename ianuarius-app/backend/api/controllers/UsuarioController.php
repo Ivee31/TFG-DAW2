@@ -33,9 +33,23 @@ class UsuarioController {
                 return;
             }
 
-            $stmt = $pdo->prepare("UPDATE usuarios SET email = :email WHERE id_usuario = :id");
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-            $stmt->bindParam(':id',    $_SESSION['id_usuario'], PDO::PARAM_INT);
+            // si es usuario Google, regenerar google_id basado en el nuevo email
+            $esGoogle = $pdo->prepare("SELECT google_id FROM usuarios WHERE id_usuario = :id");
+            $esGoogle->bindParam(':id', $_SESSION['id_usuario'], PDO::PARAM_INT);
+            $esGoogle->execute();
+            $row = $esGoogle->fetch(PDO::FETCH_ASSOC);
+
+            if (!empty($row['google_id'])) {
+                $nuevoHash = hash('sha256', $email);
+                $stmt = $pdo->prepare("UPDATE usuarios SET email = :email, google_id = :gid WHERE id_usuario = :id");
+                $stmt->bindParam(':email', $email,     PDO::PARAM_STR);
+                $stmt->bindParam(':gid',   $nuevoHash, PDO::PARAM_STR);
+                $stmt->bindParam(':id',    $_SESSION['id_usuario'], PDO::PARAM_INT);
+            } else {
+                $stmt = $pdo->prepare("UPDATE usuarios SET email = :email WHERE id_usuario = :id");
+                $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+                $stmt->bindParam(':id',    $_SESSION['id_usuario'], PDO::PARAM_INT);
+            }
             $stmt->execute();
 
             http_response_code(200);

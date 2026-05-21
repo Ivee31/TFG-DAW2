@@ -978,6 +978,9 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 							<p className="text-white text-sm">{user.email}</p>
 							{showEmail && (
 								<form onSubmit={handleEmailChange} className="mt-4 space-y-3">
+									{user.es_google && (
+										<p className="text-[11px] text-yellow-400/80 uppercase tracking-widest">Cuenta Google — asegúrate de usar el correo de tu nueva cuenta Google</p>
+									)}
 									<div>
 										<label htmlFor="perfil-email" className={labelClasses}>Nuevo email</label>
 										<input id="perfil-email" type="email" className={inputClasses} value={nuevoEmail} onChange={e => setNuevoEmail(e.target.value)} placeholder="nuevo@email.com" required />
@@ -997,37 +1000,45 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 						<SectionHeader
 							title="Contraseña"
 							action={
-								<button
-									onClick={() => { setShowPass(v => !v); setPassMsg(''); setPassForm({ actual: '', nueva: '', confirmar: '' }); }}
-									className="text-[10px] font-bold uppercase tracking-widest text-ianuarius hover:text-red-400 transition"
-								>
-									{showPass ? 'Cancelar' : 'Cambiar'}
-								</button>
+								!user.es_google && (
+									<button
+										onClick={() => { setShowPass(v => !v); setPassMsg(''); setPassForm({ actual: '', nueva: '', confirmar: '' }); }}
+										className="text-[10px] font-bold uppercase tracking-widest text-ianuarius hover:text-red-400 transition"
+									>
+										{showPass ? 'Cancelar' : 'Cambiar'}
+									</button>
+								)
 							}
 						/>
 						<div className="p-6">
-							<p className="text-gray-400 text-sm tracking-[0.3em]">••••••••••••</p>
-							{showPass && (
-								<form onSubmit={handlePassChange} className="mt-4 space-y-3">
-									<div>
-										<label htmlFor="perfil-pwd-actual" className={labelClasses}>Contraseña actual</label>
-										<input id="perfil-pwd-actual" type="password" className={inputClasses} value={passForm.actual} onChange={e => setPassForm({ ...passForm, actual: e.target.value })} placeholder="••••••••" required />
-									</div>
-									<div>
-										<label htmlFor="perfil-pwd-nueva" className={labelClasses}>Nueva contraseña</label>
-										<input id="perfil-pwd-nueva" type="password" className={inputClasses} value={passForm.nueva} onChange={e => setPassForm({ ...passForm, nueva: e.target.value })} placeholder="••••••••" required />
-									</div>
-									<div>
-										<label htmlFor="perfil-pwd-confirm" className={labelClasses}>Confirmar nueva contraseña</label>
-										<input id="perfil-pwd-confirm" type="password" className={inputClasses} value={passForm.confirmar} onChange={e => setPassForm({ ...passForm, confirmar: e.target.value })} placeholder="••••••••" required />
-									</div>
-									{passMsg && (
-										<p className={`text-xs text-center ${passMsg === 'Contraseña actualizada' ? 'text-green-400' : 'text-red-400'}`}>{passMsg}</p>
+							{user.es_google ? (
+								<p className="text-[11px] text-gray-500 uppercase tracking-widest">Gestionado por Google — la contraseña depende de tu cuenta Google</p>
+							) : (
+								<>
+									<p className="text-gray-400 text-sm tracking-[0.3em]">••••••••••••</p>
+									{showPass && (
+										<form onSubmit={handlePassChange} className="mt-4 space-y-3">
+											<div>
+												<label htmlFor="perfil-pwd-actual" className={labelClasses}>Contraseña actual</label>
+												<input id="perfil-pwd-actual" type="password" className={inputClasses} value={passForm.actual} onChange={e => setPassForm({ ...passForm, actual: e.target.value })} placeholder="••••••••" required />
+											</div>
+											<div>
+												<label htmlFor="perfil-pwd-nueva" className={labelClasses}>Nueva contraseña</label>
+												<input id="perfil-pwd-nueva" type="password" className={inputClasses} value={passForm.nueva} onChange={e => setPassForm({ ...passForm, nueva: e.target.value })} placeholder="••••••••" required />
+											</div>
+											<div>
+												<label htmlFor="perfil-pwd-confirm" className={labelClasses}>Confirmar nueva contraseña</label>
+												<input id="perfil-pwd-confirm" type="password" className={inputClasses} value={passForm.confirmar} onChange={e => setPassForm({ ...passForm, confirmar: e.target.value })} placeholder="••••••••" required />
+											</div>
+											{passMsg && (
+												<p className={`text-xs text-center ${passMsg === 'Contraseña actualizada' ? 'text-green-400' : 'text-red-400'}`}>{passMsg}</p>
+											)}
+											<button type="submit" disabled={passLoading} className="w-full bg-ianuarius text-white label-caps py-2 rounded border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed">
+												{passLoading ? 'Guardando...' : 'Confirmar cambio'}
+											</button>
+										</form>
 									)}
-									<button type="submit" disabled={passLoading} className="w-full bg-ianuarius text-white label-caps py-2 rounded border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed">
-										{passLoading ? 'Guardando...' : 'Confirmar cambio'}
-									</button>
-								</form>
+								</>
 							)}
 						</div>
 					</div>
