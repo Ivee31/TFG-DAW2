@@ -478,7 +478,7 @@ function Notificaciones({ user, onUserUpdate }) {
 						role="dialog"
 						aria-modal="true"
 						aria-labelledby="modal-notif-titulo"
-						className="bg-gris border-2 border-white/15 rounded-lg p-6 max-w-sm w-full space-y-4 shadow-[4px_4px_0_#FE0000]"
+						className="bg-gris border-2 border-white/15 rounded-lg p-6 max-w-sm w-full space-y-4 shadow-[4px_4px_0_#FE0000] max-h-[85svh] overflow-y-auto"
 					>
 						<div className="flex items-start gap-3">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" aria-hidden="true">

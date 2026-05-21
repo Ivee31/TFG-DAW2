@@ -374,7 +374,7 @@ export default function Calendario({ user }) {
                 <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={cerrarModal} />
 
-                    <div ref={modalAddRef} role="dialog" aria-modal="true" aria-label="Añadir evento" className="relative bg-gris border-2 border-white/15 rounded-lg p-6 w-full max-w-md shadow-[4px_4px_0_#FE0000]">
+                    <div ref={modalAddRef} role="dialog" aria-modal="true" aria-label="Añadir evento" className="relative bg-gris border-2 border-white/15 rounded-lg p-6 w-full max-w-md shadow-[4px_4px_0_#FE0000] max-h-[85svh] overflow-y-auto">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="font-black uppercase tracking-widest text-sm">
                                 Nuevo Evento — <span className="text-ianuarius">{String(modalDia).padStart(2, '0')} {MESES[month]}</span>
@@ -517,7 +517,7 @@ export default function Calendario({ user }) {
                 <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onMouseDown={(e) => { if (e.target === e.currentTarget) setDetalleData(null); }} />
 
-                    <div ref={modalDetalleRef} role="dialog" aria-modal="true" aria-label={eventoActual?.titulo ?? 'Eventos del día'} className="relative bg-gris border-2 border-white/15 rounded-lg p-6 w-full max-w-sm shadow-[4px_4px_0_#FE0000]">
+                    <div ref={modalDetalleRef} role="dialog" aria-modal="true" aria-label={eventoActual?.titulo ?? 'Eventos del día'} className="relative bg-gris border-2 border-white/15 rounded-lg p-6 w-full max-w-sm shadow-[4px_4px_0_#FE0000] max-h-[85svh] overflow-y-auto">
                         <div className="flex items-start justify-between mb-4">
                             {eventoActual ? (
                                 <span className={`text-[9px] font-bold px-2 py-1 rounded border uppercase tracking-wider ${TIPO_EVENTO_COLOR[eventoActual.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/20'}`}>

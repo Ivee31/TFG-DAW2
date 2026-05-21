@@ -30,7 +30,7 @@ function Modal({ onClose, children }) {
 				ref={containerRef}
 				role="dialog"
 				aria-modal="true"
-				className="relative w-full max-w-sm md:max-w-md"
+				className="relative w-full max-w-sm md:max-w-md max-h-[85svh] overflow-y-auto"
 				onClick={e => e.stopPropagation()}
 			>
 				{children}
