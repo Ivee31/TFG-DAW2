@@ -153,7 +153,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 
 			{/* banner inactividad */}
 			<div className={`fixed top-0 left-0 right-0 z-200 transition-transform duration-500 ease-out ${mostrarAviso ? 'translate-y-0' : '-translate-y-full'}`}>
-				<div className="bg-gris border-b-2 border-ianuarius shadow-[0_4px_30px_rgba(254,0,0,0.3)] px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+				<div className="bg-gris border-b-2 border-ianuarius px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
 					<div className="flex items-center gap-4">
 						{/* icono reloj */}
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-ianuarius shrink-0">

@@ -156,7 +156,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 	const isPdf = previewSrc?.startsWith('data:application/pdf');
 
 	return (
-		<div className="border border-white/20 rounded-lg p-4 space-y-3">
+		<div className="border-2 border-white/15 shadow-[3px_3px_0_#374151] rounded-lg p-4 space-y-3">
 			<div className="flex items-center justify-between gap-2">
 				<div className="flex items-center gap-2 min-w-0">
 					<IconDoc />
@@ -220,7 +220,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 				<button
 					disabled={loading || deleting || !onUpload}
 					onClick={() => fileRef.current?.click()}
-					className="flex-1 flex items-center justify-center gap-1 border border-white/20 text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition disabled:opacity-40 disabled:cursor-not-allowed"
+					className="flex-1 flex items-center justify-center gap-1 border-2 border-[#4B5563] shadow-[2px_2px_0_#374151] text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded neo-press hover:text-white hover:border-white/40 transition disabled:opacity-40 disabled:cursor-not-allowed"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
 						<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
@@ -232,7 +232,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 					<a
 						href={previewSrc}
 						download={(downloadName || label.toLowerCase().replace(/\s+/g, '_')) + extFromDataUri(previewSrc)}
-						className="flex-1 flex items-center justify-center gap-1 border border-white/20 text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded hover:text-white hover:border-white/30 transition"
+						className="flex-1 flex items-center justify-center gap-1 border-2 border-[#4B5563] shadow-[2px_2px_0_#374151] text-gray-400 text-[9px] font-black uppercase tracking-widest py-2 rounded neo-press hover:text-white hover:border-white/40 transition"
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5 0-4.5 4.5M12 3v13.5m0 0 4.5-4.5" />
@@ -243,7 +243,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 
 				{esInscripcion && (
 					<button
-						className="flex-1 flex items-center justify-center gap-1 bg-ianuarius/10 border border-ianuarius/30 text-ianuarius text-[9px] font-black uppercase tracking-widest py-2 rounded hover:bg-ianuarius/20 transition"
+						className="flex-1 flex items-center justify-center gap-1 bg-ianuarius/10 border-2 border-ianuarius/30 shadow-[2px_2px_0_#7f1212] text-ianuarius text-[9px] font-black uppercase tracking-widest py-2 rounded neo-press hover:bg-ianuarius/20 transition"
 						onClick={() => onGoToInscripcion?.()}
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
@@ -258,7 +258,7 @@ function FileCard({ label, subido, esInscripcion, previewSrc, formularioRellenad
 						disabled={deleting || loading}
 						onClick={handleDelete}
 						aria-label={`Eliminar ${label}`}
-						className="flex items-center justify-center gap-1 border border-red-900/40 text-red-500/60 text-[9px] font-black uppercase tracking-widest px-2 py-2 rounded hover:text-red-400 hover:border-red-500/40 transition disabled:opacity-40 disabled:cursor-not-allowed"
+						className="flex items-center justify-center gap-1 border-2 border-red-900/40 shadow-[2px_2px_0_#374151] text-red-500/60 text-[9px] font-black uppercase tracking-widest px-2 py-2 rounded neo-press hover:text-red-400 hover:border-red-500/40 transition disabled:opacity-40 disabled:cursor-not-allowed"
 					>
 						{deleting ? (
 							<svg className="animate-spin w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -307,7 +307,7 @@ function MisArchivos({ user, onUserUpdate, onGoToInscripcion }) {
 	const inscripcionCompleta = !!(user.inscripcion_pdf || user.inscripcion_formulario);
 
 	return (
-		<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
+		<div className="bg-gris rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151] overflow-hidden">
 			<SectionHeader title="Mis archivos" />
 			<div className="p-4 grid grid-cols-1 gap-3">
 				<FileCard
@@ -403,7 +403,7 @@ function Notificaciones({ user, onUserUpdate }) {
 
 	return (
 		<>
-			<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
+			<div className="bg-gris rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151] overflow-hidden">
 				<SectionHeader title="Notificaciones" />
 				<div className="p-6 space-y-5">
 
@@ -428,10 +428,10 @@ function Notificaciones({ user, onUserUpdate }) {
 						<button
 							onClick={() => activas ? setShowModal(true) : toggle()}
 							disabled={loadingToggle}
-							className={`w-full py-2 label-caps rounded transition disabled:opacity-50 ${
+							className={`w-full py-2 label-caps rounded border-2 neo-press transition disabled:opacity-50 ${
 								activas
-									? 'border border-red-900/40 text-red-500/70 hover:text-red-400 hover:border-red-500/40'
-									: 'bg-ianuarius/10 border border-ianuarius/30 text-ianuarius hover:bg-ianuarius/20'
+									? 'border-red-900/40 shadow-[3px_3px_0_#374151] text-red-500/70 hover:text-red-400 hover:border-red-500/40'
+									: 'bg-ianuarius/10 border-ianuarius/30 shadow-[3px_3px_0_#7f1212] text-ianuarius hover:bg-ianuarius/20'
 							}`}
 						>
 							{loadingToggle ? '...' : activas ? 'Desactivar avisos' : 'Activar avisos'}
@@ -452,10 +452,10 @@ function Notificaciones({ user, onUserUpdate }) {
 										aria-pressed={frecuencia === f.valor}
 										role="radio"
 										aria-checked={frecuencia === f.valor}
-										className={`w-full flex items-center justify-between px-3 py-2.5 rounded border text-left transition disabled:opacity-60 ${
+										className={`w-full flex items-center justify-between px-3 py-2.5 rounded border-2 neo-press text-left transition disabled:opacity-60 ${
 											frecuencia === f.valor
-												? 'border-ianuarius bg-ianuarius/10 text-white'
-												: 'border-white/20 text-gray-400 hover:border-white/30 hover:text-white'
+												? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/10 text-white'
+												: 'border-[#4B5563] shadow-[3px_3px_0_#374151] text-gray-400 hover:border-white/40 hover:text-white'
 										}`}
 									>
 										<span className="label-caps">{f.label}</span>
@@ -478,7 +478,7 @@ function Notificaciones({ user, onUserUpdate }) {
 						role="dialog"
 						aria-modal="true"
 						aria-labelledby="modal-notif-titulo"
-						className="bg-gris border-2 border-white/15 rounded-lg p-6 max-w-sm w-full space-y-4 shadow-[4px_4px_0_#000]"
+						className="bg-gris border-2 border-white/15 rounded-lg p-6 max-w-sm w-full space-y-4 shadow-[4px_4px_0_#FE0000]"
 					>
 						<div className="flex items-start gap-3">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" aria-hidden="true">
@@ -738,7 +738,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 				{/* COLUMNA IZQUIERDA — historial marcas */}
 				<div className="lg:col-span-5 flex flex-col gap-6">
 
-					<div className="bg-gris rounded-lg border border-white/20 overflow-hidden flex flex-col flex-1">
+					<div className="bg-gris rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151] overflow-hidden flex flex-col flex-1">
 						<SectionHeader title="Historial de marcas" />
 
 						{/* filtros */}
@@ -749,7 +749,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									value={filterYear}
 									onChange={e => setFilterYear(e.target.value)}
 									containerClassName="flex-1"
-									className="w-full bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+									className="w-full bg-oscuro text-white text-[10px] font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded px-2 py-1.5 neo-input outline-none"
 									options={[
 										{ value: '', label: 'Todos los años' },
 										...yearsDisponibles.map(y => ({ value: y, label: String(y) })),
@@ -761,7 +761,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									value={filterMonth}
 									onChange={e => setFilterMonth(e.target.value)}
 									containerClassName="flex-1"
-									className="w-full bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+									className="w-full bg-oscuro text-white text-[10px] font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded px-2 py-1.5 neo-input outline-none"
 									options={[
 										{ value: '', label: 'Todos los meses' },
 										...MESES.map((m, i) => ({ value: String(i + 1).padStart(2, '0'), label: m })),
@@ -866,7 +866,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 				{/* COLUMNA DERECHA — avatar + info personal + email + contraseña + zona peligro */}
 				<div className="lg:col-span-3 space-y-6">
 
-					<div className="flex items-center gap-6 p-6 bg-gris rounded-lg border border-white/20">
+					<div className="flex items-center gap-6 p-6 bg-gris rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151]">
 						<div className="relative">
 							<Avatar src={user.foto_perfil} nombre={user.nombre} apellidos={user.apellidos} onEdit={handleFotoChange} />
 							{fotoLoading && (
@@ -881,13 +881,13 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 
 						<div>
 							<h2 className="text-2xl font-black text-white tracking-tight">{user.nombre} {user.apellidos}</h2>
-							<span className="inline-block mt-2 px-3 py-1 bg-ianuarius/20 border border-ianuarius/40 text-ianuarius text-[10px] font-bold uppercase tracking-widest rounded-full">
+							<span className="inline-block mt-2 px-3 py-1 bg-ianuarius/20 border-2 border-ianuarius/40 shadow-[2px_2px_0_#7f1212] text-ianuarius text-[10px] font-bold uppercase tracking-widest rounded">
 								{user.rol}
 							</span>
 						</div>
 					</div>
 
-					<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
+					<div className="bg-gris rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151] overflow-hidden">
 						<SectionHeader
 							title="Información personal"
 							action={
@@ -962,7 +962,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 						)}
 					</div>
 
-					<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
+					<div className="bg-gris rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151] overflow-hidden">
 						<SectionHeader
 							title="Correo electrónico"
 							action={
@@ -993,7 +993,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 						</div>
 					</div>
 
-					<div className="bg-gris rounded-lg border border-white/20 overflow-hidden">
+					<div className="bg-gris rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151] overflow-hidden">
 						<SectionHeader
 							title="Contraseña"
 							action={
@@ -1032,7 +1032,7 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 						</div>
 					</div>
 
-					<div className="bg-gris rounded-lg border border-red-900/40 overflow-hidden">
+					<div className="bg-gris rounded-lg border-2 border-red-900/40 shadow-[4px_4px_0_#7f1212] overflow-hidden">
 						<SectionHeader
 							title="Zona de peligro"
 							action={
