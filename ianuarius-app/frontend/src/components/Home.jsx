@@ -33,15 +33,6 @@ function Modal({ onClose, children }) {
 				className="relative w-full max-w-sm md:max-w-md"
 				onClick={e => e.stopPropagation()}
 			>
-				<button
-					onClick={onClose}
-					className="absolute -top-3 -right-3 z-10 w-7 h-7 rounded-full bg-gris border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/50 transition"
-					aria-label="Cerrar"
-				>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
-						<path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
-					</svg>
-				</button>
 				{children}
 			</div>
 		</div>
@@ -488,6 +479,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			{authMode && (
 				<Modal onClose={closeAll}>
 					<AuthModal
+						onClose={closeAll}
 						onLoginSuccess={onLoginSuccess}
 						onGoogleNeedsCompletion={onGoogleNeedsCompletion}
 						initialMode={authMode}

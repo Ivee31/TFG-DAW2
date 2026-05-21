@@ -2,7 +2,7 @@ import { useState, useLayoutEffect, useRef } from 'react';
 import Login from './Login';
 import Register from './Register';
 
-export default function AuthModal({ onLoginSuccess, onGoogleNeedsCompletion, initialMode = 'login' }) {
+export default function AuthModal({ onClose, onLoginSuccess, onGoogleNeedsCompletion, initialMode = 'login' }) {
 	const [isRegister, setIsRegister] = useState(initialMode === 'register');
 	const frontRef = useRef(null);
 	const backRef = useRef(null);
@@ -112,6 +112,7 @@ export default function AuthModal({ onLoginSuccess, onGoogleNeedsCompletion, ini
 						}}
 					>
 						<Login
+							onClose={onClose}
 							onLoginSuccess={onLoginSuccess}
 							onGoogleNeedsCompletion={onGoogleNeedsCompletion}
 						/>
@@ -129,6 +130,7 @@ export default function AuthModal({ onLoginSuccess, onGoogleNeedsCompletion, ini
 						}}
 					>
 						<Register
+							onClose={onClose}
 							onRegisterSuccess={onLoginSuccess}
 							onGoogleNeedsCompletion={onGoogleNeedsCompletion}
 						/>

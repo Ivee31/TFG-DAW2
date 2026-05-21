@@ -43,7 +43,7 @@ const labelStyle = {
 	fontSize: '11px',
 };
 
-export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion }) {
+export default function Register({ onClose, onRegisterSuccess, onGoogleNeedsCompletion }) {
 	const [form, setForm] = useState({
 		nombre: '', apellidos: '', dni: '', email: '',
 		fecha_nacimiento: '', genero: '', rol: 'Atleta',
@@ -122,13 +122,33 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 
 	return (
 		<div style={card}>
-			<div>
-				<div style={{ color: '#fff', fontWeight: 900, fontSize: '20px', letterSpacing: '0.05em' }}>
-					Únete,
+			<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+				<div>
+					<div style={{ color: '#fff', fontWeight: 900, fontSize: '20px', letterSpacing: '0.05em' }}>
+						Únete,
+					</div>
+					<div style={{ color: '#9CA3AF', fontWeight: 600, fontSize: '14px' }}>
+						crea tu cuenta para continuar
+					</div>
 				</div>
-				<div style={{ color: '#9CA3AF', fontWeight: 600, fontSize: '14px' }}>
-					crea tu cuenta para continuar
-				</div>
+				<button
+					onClick={onClose}
+					aria-label="Cerrar"
+					style={{
+						width: '28px', height: '28px',
+						borderRadius: '5px',
+						border: '2px solid rgba(255,255,255,0.2)',
+						backgroundColor: '#171717',
+						boxShadow: '2px 2px 0 #374151',
+						display: 'flex', alignItems: 'center', justifyContent: 'center',
+						cursor: 'pointer', color: '#9CA3AF', flexShrink: 0,
+					}}
+					className="neo-press"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
+						<path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+					</svg>
+				</button>
 			</div>
 
 			{errorMsg && (
@@ -137,30 +157,29 @@ export default function Register({ onRegisterSuccess, onGoogleNeedsCompletion })
 				</div>
 			)}
 
-			<div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-				<button
-					onClick={() => googleLogin()}
-					style={{
-						width: '40px',
-						height: '40px',
-						borderRadius: '100%',
-						border: '2px solid #4B5563',
-						backgroundColor: '#171717',
-						boxShadow: '3px 3px 0 #374151',
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						cursor: 'pointer',
-						flexShrink: 0,
-					}}
-					className="neo-press"
-				>
-					<GoogleIcon />
-				</button>
-				<span style={{ color: '#9CA3AF', fontSize: '12px', fontWeight: 600 }}>
-					Registrarse con Google
-				</span>
-			</div>
+			<button
+				onClick={() => googleLogin()}
+				style={{
+					width: '100%',
+					height: '40px',
+					borderRadius: '9999px',
+					border: '2px solid #4B5563',
+					backgroundColor: '#171717',
+					boxShadow: '3px 3px 0 #374151',
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					gap: '10px',
+					cursor: 'pointer',
+					color: '#9CA3AF',
+					fontSize: '13px',
+					fontWeight: 600,
+				}}
+				className="neo-press"
+			>
+				<GoogleIcon />
+				Registrarse con Google
+			</button>
 
 			<div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
 				<div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
