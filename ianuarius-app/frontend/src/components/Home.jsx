@@ -143,9 +143,9 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					content: ''; position: absolute; inset: 0;
 					background: #FE0000;
 					clip-path: circle(0% at center);
-					transition: clip-path 0.9s cubic-bezier(0.23, 1, 0.320, 1);
+					transition: clip-path 1.1s cubic-bezier(0.23, 1, 0.320, 1);
 				}
-				.btn-acceder:hover::before { clip-path: circle(150% at center); transition: clip-path 1.5s cubic-bezier(0.23, 1, 0.320, 1); }
+				.btn-acceder:hover::before { clip-path: circle(150% at center); transition: clip-path 1.8s cubic-bezier(0.23, 1, 0.320, 1); }
 				.btn-acceder:hover { border-color: #FE0000; box-shadow: 0 0 20px rgba(254,0,0,0.4); scale: 1.05; }
 				.btn-acceder:active { scale: 1; }
 
