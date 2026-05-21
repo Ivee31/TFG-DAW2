@@ -435,7 +435,7 @@ export default function Dashboard() {
 
 			{/* listado marcas */}
 			<section className="lg:col-span-7">
-				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/15 shadow-2xl h-full flex flex-col">
+				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151] h-full flex flex-col">
 					<div className="flex justify-between items-center mb-6 md:mb-8 shrink-0">
 						<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Mis Marcas Recientes</h2>
 						<span className="text-[10px] bg-ianuarius/20 text-ianuarius px-3 py-1 rounded-full font-bold uppercase tracking-widest hidden sm:inline-block">Temporada 2026</span>
@@ -453,7 +453,7 @@ export default function Dashboard() {
 						)}
 
 						{!cargando && marcasVisibles.map((m) => (
-							<div key={m.id_marca} className="group bg-oscuro/50 p-4 md:p-5 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-500">
+							<div key={m.id_marca} className="group bg-oscuro/50 p-4 md:p-5 rounded-lg border-2 border-white/10 shadow-[3px_3px_0_#374151] hover:border-ianuarius/40 transition duration-300">
 								<div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 sm:gap-0">
 									<div>
 										<h3 className="text-white font-bold text-base md:text-lg">{m.prueba}</h3>
@@ -626,7 +626,7 @@ export default function Dashboard() {
 															key={val}
 															type="button"
 															onClick={() => setEditSensacionesValor(editSensacionesValor === val ? null : val)}
-															className={`flex-1 text-lg py-1.5 rounded-lg border transition ${editSensacionesValor === val ? 'border-ianuarius bg-ianuarius/15' : 'border-white/20 bg-oscuro hover:border-white/30'}`}
+															className={`flex-1 text-lg py-1.5 rounded border-2 neo-press transition ${editSensacionesValor === val ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/15' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro hover:border-white/40'}`}
 														>
 															{emoji}
 														</button>
@@ -715,7 +715,7 @@ export default function Dashboard() {
 
 			{/* formulario nueva marca */}
 			<aside className="lg:col-span-5 lg:self-start">
-				<div className="bg-gris p-6 md:p-8 rounded-2xl border-t-8 border-ianuarius shadow-2xl">
+				<div className="bg-gris p-6 md:p-8 rounded-lg border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212]">
 					<div className="shrink-0">
 						<h2 className="text-xl md:text-2xl font-extrabold mb-2 tracking-tight">Nueva Marca</h2>
 						<p className="text-gray-400 text-xs mb-6 md:mb-8 uppercase tracking-widest font-semibold">Guardar tiempo en bd</p>
@@ -811,7 +811,7 @@ export default function Dashboard() {
 											key={val}
 											type="button"
 											onClick={() => setSensacionesValor(sensacionesValor === val ? null : val)}
-											className={`flex-1 text-xl py-2 rounded-lg border transition ${sensacionesValor === val ? 'border-ianuarius bg-ianuarius/15' : 'border-white/20 bg-oscuro hover:border-white/30'}`}
+											className={`flex-1 text-xl py-2 rounded border-2 neo-press transition ${sensacionesValor === val ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/15' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro hover:border-white/40'}`}
 											title={['Muy mal', 'Mal', 'Regular', 'Bien', 'Excelente'][i]}
 										>
 											{emoji}
@@ -825,7 +825,7 @@ export default function Dashboard() {
 								placeholder="Notas opcionales..."
 								maxLength={500}
 								rows={2}
-								className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm text-white placeholder-gray-600 focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition resize-none"
+								className="w-full bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded p-2 neo-input outline-none resize-none placeholder-gray-600"
 							/>
 						</div>
 
