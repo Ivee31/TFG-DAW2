@@ -21,6 +21,20 @@ html, body {
     --font-graduate: "Graduate", serif;
 }
 
+.neo-input:focus {
+    border-color: #FE0000 !important;
+    box-shadow: 3px 3px 0 #7f1212 !important;
+}
+
+.neo-press {
+    transition: box-shadow 0.1s ease, transform 0.1s ease;
+}
+
+.neo-press:active {
+    box-shadow: none !important;
+    transform: translate(3px, 3px);
+}
+
 @utility label-caps {
     font-size: 10px;
     font-weight: 900;

@@ -1,7 +1,6 @@
 ﻿// vista Home
 import { useState, useEffect, useRef } from "react";
-import Login from './Login';
-import Register from './Register';
+import AuthModal from './AuthModal';
 import logoIanuarius from '../assets/logoIanuarius.webp';
 import logoInstagram from '../assets/logoInstagram.webp';
 import fondoLanding from '../assets/fondoLanding.webp';
@@ -71,8 +70,7 @@ const noticias = [
 ];
 
 export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
-	const [showLogin, setShowLogin]       = useState(false);
-	const [showRegister, setShowRegister] = useState(false);
+	const [authMode, setAuthMode] = useState(null);
 	const [cookiesAceptadas, setCookiesAceptadas] = useState(
 		() => localStorage.getItem('cookies_aceptadas') === 'true'
 	);
@@ -82,9 +80,9 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 		setCookiesAceptadas(true);
 	};
 
-	const openLogin    = () => { setShowLogin(true);  setShowRegister(false); };
-	const openRegister = () => { setShowRegister(true); setShowLogin(false); };
-	const closeAll     = () => { setShowLogin(false); setShowRegister(false); };
+	const openLogin    = () => setAuthMode('login');
+	const openRegister = () => setAuthMode('register');
+	const closeAll     = () => setAuthMode(null);
 
 	// url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=70')
 
@@ -487,15 +485,13 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 			</footer>
 
 			{/* MODALES */}
-			{showLogin && (
+			{authMode && (
 				<Modal onClose={closeAll}>
-					<Login onLoginSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
-				</Modal>
-			)}
-
-			{showRegister && (
-				<Modal onClose={closeAll}>
-					<Register onRegisterSuccess={onLoginSuccess} onGoogleNeedsCompletion={onGoogleNeedsCompletion} />
+					<AuthModal
+						onLoginSuccess={onLoginSuccess}
+						onGoogleNeedsCompletion={onGoogleNeedsCompletion}
+						initialMode={authMode}
+					/>
 				</Modal>
 			)}
 
