@@ -287,11 +287,12 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				}
 			`}</style>
 
+			<main>
 			{/* HERO */}
 			<section className="min-h-screen w-full bg-hero flex flex-col">
 
 				{/* NAV */}
-				<nav className="w-full px-6 md:px-10 py-5 flex items-center justify-between">
+				<nav aria-label="Navegación principal" className="w-full px-6 md:px-10 py-5 flex items-center justify-between">
 					<div className="flex items-center gap-3">
 						<div className="w-[72px] h-[72px] bg-oscuro/60 backdrop-blur-md rounded-full border border-white/40 flex items-center justify-center p-2 shadow-[0_0_10px_rgba(255,255,255,0.08)]">
 							<img src={logoIanuarius} alt="Ianuarius" className="w-full h-full object-contain" />
@@ -473,6 +474,8 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					</a>
 				</div>
 			</section>
+
+			</main>
 
 			{/* FOOTER */}
 			<footer className="w-full py-8 flex flex-col items-center gap-3 border-t border-white/15">
