@@ -1,5 +1,6 @@
 ﻿import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
+import CustomSelect from './CustomSelect';
 
 const pruebaKey = (p) => `${p.id_prueba}_${p.especificaciones ?? ''}`;
 
@@ -61,36 +62,107 @@ function PruebaSelect({ pruebas, value, onChange }) {
 	});
 
 	return (
-		<div ref={ref} className="relative">
-			<div onClick={() => setOpen(v => !v)} className="w-full bg-oscuro border border-white/20 p-4 md:p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 transition cursor-pointer flex items-center justify-between">
-				<span className={selected ? 'text-white' : 'text-gray-400'}>
+		<div ref={ref} style={{ position: 'relative' }}>
+			<div
+				onClick={() => setOpen(v => !v)}
+				style={{
+					width: '100%',
+					backgroundColor: '#171717',
+					border: '2px solid #4B5563',
+					boxShadow: open ? 'none' : '3px 3px 0 #374151',
+					borderRadius: '5px',
+					padding: '9px 10px',
+					fontSize: '13px',
+					fontWeight: 600,
+					cursor: 'pointer',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'space-between',
+					gap: '8px',
+					transition: 'box-shadow 0.1s ease',
+				}}
+			>
+				<span style={{ color: selected ? '#fff' : '#6B7280', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
 					{selected
 						? selected.nombre_prueba + (selected.especificaciones ? ` · ${selected.especificaciones}` : '')
 						: 'Seleccionar prueba'}
 				</span>
-
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="#6B7280" width="14" height="14" style={{ flexShrink: 0, transition: 'transform 0.2s ease', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}>
 					<path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
 				</svg>
 			</div>
 
 			{open && (
-				<div className="absolute z-50 w-full mt-1 bg-oscuro border border-white/20 rounded-lg shadow-2xl overflow-hidden">
-					<div className="p-2 border-b border-white/15">
-						<input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Buscar prueba..." autoFocus className="w-full bg-gris text-white text-sm p-2 rounded focus:ring-2 focus:ring-ianuarius/40 placeholder-gray-600" />
+				<div style={{
+					position: 'absolute',
+					zIndex: 50,
+					width: '100%',
+					top: 'calc(100% + 4px)',
+					backgroundColor: '#171717',
+					border: '2px solid #4B5563',
+					borderRadius: '5px',
+					boxShadow: '3px 3px 0 #374151',
+					overflow: 'hidden',
+				}}>
+					<div style={{ padding: '8px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+						<input
+							type="text"
+							value={query}
+							onChange={e => setQuery(e.target.value)}
+							placeholder="Buscar prueba..."
+							autoFocus
+							style={{
+								width: '100%',
+								backgroundColor: '#262626',
+								border: '2px solid #4B5563',
+								borderRadius: '4px',
+								padding: '6px 10px',
+								fontSize: '12px',
+								fontWeight: 600,
+								color: '#fff',
+								outline: 'none',
+							}}
+							className="neo-input"
+						/>
 					</div>
 
-					<div className="max-h-96 overflow-y-auto">
+					<div style={{ maxHeight: '320px', overflowY: 'auto' }}>
 						{gruposOrdenados.map(([tipo, items]) => (
 							<div key={tipo}>
-								<p className="px-3 py-1.5 label-caps text-ianuarius bg-gris/30 sticky top-0">{tipo}</p>
+								<p style={{
+									padding: '6px 12px',
+									fontSize: '10px',
+									fontWeight: 900,
+									textTransform: 'uppercase',
+									letterSpacing: '0.1em',
+									color: '#FE0000',
+									backgroundColor: 'rgba(254,0,0,0.08)',
+									position: 'sticky',
+									top: 0,
+								}}>{tipo}</p>
 
 								{items.map(p => (
-									<div key={pruebaKey(p)} onClick={() => { onChange(pruebaKey(p)); setOpen(false); setQuery(''); }} className={`px-3 py-2.5 text-sm cursor-pointer transition hover:bg-white/5 flex items-center justify-between ${value === pruebaKey(p) ? 'text-ianuarius' : 'text-gray-300'}`}>
+									<div
+										key={pruebaKey(p)}
+										onClick={() => { onChange(pruebaKey(p)); setOpen(false); setQuery(''); }}
+										style={{
+											padding: '9px 12px',
+											fontSize: '13px',
+											fontWeight: 600,
+											cursor: 'pointer',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'space-between',
+											color: value === pruebaKey(p) ? '#FE0000' : '#fff',
+											borderBottom: '1px solid rgba(255,255,255,0.05)',
+											transition: 'background 0.1s ease',
+										}}
+										onMouseEnter={e => { if (value !== pruebaKey(p)) e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
+										onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+									>
 										<span>{p.nombre_prueba}</span>
-
 										{p.especificaciones && (
-											<span className="text-gray-400 text-xs">{p.especificaciones}</span>
+											<span style={{ color: '#6B7280', fontSize: '11px' }}>{p.especificaciones}</span>
 										)}
 									</div>
 								))}
@@ -98,7 +170,7 @@ function PruebaSelect({ pruebas, value, onChange }) {
 						))}
 
 						{gruposOrdenados.length === 0 && (
-							<p className="text-gray-400 text-xs text-center py-4 uppercase tracking-widest">Sin resultados</p>
+							<p style={{ color: '#6B7280', fontSize: '10px', textAlign: 'center', padding: '16px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Sin resultados</p>
 						)}
 					</div>
 				</div>
@@ -457,7 +529,7 @@ export default function Dashboard() {
 
 										<div>
 											<label htmlFor="dash-edit-competicion" className={labelClasses}>Competición <span className="normal-case text-gray-400 font-normal">(opcional)</span></label>
-											<select
+											<CustomSelect
 												id="dash-edit-competicion"
 												value={editEvento?.id_evento ?? ''}
 												onChange={(e) => {
@@ -465,14 +537,11 @@ export default function Dashboard() {
 													setEditEvento(id ? (competiciones.find(c => c.id_evento === id) ?? null) : null);
 												}}
 												className={selectClasses}
-											>
-												<option value="">Sin competición vinculada</option>
-												{competiciones.map(c => (
-													<option key={c.id_evento} value={c.id_evento}>
-														{c.titulo} — {formatFechaEvento(c.fecha_hora)}
-													</option>
-												))}
-											</select>
+												options={[
+													{ value: '', label: 'Sin competición vinculada' },
+													...competiciones.map(c => ({ value: c.id_evento, label: `${c.titulo} — ${formatFechaEvento(c.fecha_hora)}` })),
+												]}
+											/>
 											{editEvento && (
 												<p className="text-[10px] text-gray-400 mt-1.5 uppercase tracking-wider">
 													{MAP_TIPO[editEvento.tipo_evento]} · {etiquetaTipoPista(editEvento.tipo_pista)}
@@ -489,13 +558,19 @@ export default function Dashboard() {
 											<>
 												<div>
 													<label htmlFor="dash-edit-tipo" className={labelClasses}>Tipo de Competicion</label>
-													<select id="dash-edit-tipo" value={editTipo} onChange={(e) => setEditTipo(e.target.value)} className={selectClasses}>
-														<option>Nacional</option>
-														<option>Autonomico</option>
-														<option>Provincial</option>
-														<option>Escolar</option>
-														<option>Control</option>
-													</select>
+													<CustomSelect
+														id="dash-edit-tipo"
+														value={editTipo}
+														onChange={(e) => setEditTipo(e.target.value)}
+														className={selectClasses}
+														options={[
+															{ value: 'Nacional', label: 'Nacional' },
+															{ value: 'Autonomico', label: 'Autonomico' },
+															{ value: 'Provincial', label: 'Provincial' },
+															{ value: 'Escolar', label: 'Escolar' },
+															{ value: 'Control', label: 'Control' },
+														]}
+													/>
 												</div>
 
 												<div>
@@ -514,12 +589,16 @@ export default function Dashboard() {
 
 										<div>
 											<label htmlFor="dash-edit-categoria" className={labelClasses}>Categoría</label>
-											<select id="dash-edit-categoria" value={editCategoria} onChange={(e) => setEditCategoria(e.target.value)} className={selectClasses}>
-												<option value="">Sin especificar</option>
-												{categorias.map(c => (
-													<option key={c.id_categoria} value={c.id_categoria}>{c.nombre}</option>
-												))}
-											</select>
+											<CustomSelect
+												id="dash-edit-categoria"
+												value={editCategoria}
+												onChange={(e) => setEditCategoria(e.target.value)}
+												className={selectClasses}
+												options={[
+													{ value: '', label: 'Sin especificar' },
+													...categorias.map(c => ({ value: c.id_categoria, label: c.nombre })),
+												]}
+											/>
 										</div>
 
 										<div>
@@ -663,7 +742,7 @@ export default function Dashboard() {
 								</div>
 							) : (
 								<>
-									<select
+									<CustomSelect
 										id="dash-new-competicion"
 										value={eventoSeleccionado?.id_evento ?? ''}
 										onChange={(e) => {
@@ -671,14 +750,11 @@ export default function Dashboard() {
 											setEventoSeleccionado(id ? (competiciones.find(c => c.id_evento === id) ?? null) : null);
 										}}
 										className={selectClasses}
-									>
-										<option value="">Seleccionar competición</option>
-										{competiciones.map(c => (
-											<option key={c.id_evento} value={c.id_evento}>
-												{c.titulo} — {formatFechaEvento(c.fecha_hora)}
-											</option>
-										))}
-									</select>
+										options={[
+											{ value: '', label: 'Seleccionar competición' },
+											...competiciones.map(c => ({ value: c.id_evento, label: `${c.titulo} — ${formatFechaEvento(c.fecha_hora)}` })),
+										]}
+									/>
 									{eventoSeleccionado && (
 										<p className="text-[10px] text-gray-400 mt-1.5 uppercase tracking-wider">
 											{MAP_TIPO[eventoSeleccionado.tipo_evento]} · {etiquetaTipoPista(eventoSeleccionado.tipo_pista)}
@@ -695,12 +771,16 @@ export default function Dashboard() {
 
 						<div>
 							<label htmlFor="dash-new-categoria" className={labelClasses}>Categoría</label>
-							<select id="dash-new-categoria" value={categoriaSeleccionada} onChange={(e) => setCategoriaSeleccionada(e.target.value)} className={selectClasses}>
-								<option value="">Sin especificar</option>
-								{categorias.map(c => (
-									<option key={c.id_categoria} value={c.id_categoria}>{c.nombre}</option>
-								))}
-							</select>
+							<CustomSelect
+								id="dash-new-categoria"
+								value={categoriaSeleccionada}
+								onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+								className={selectClasses}
+								options={[
+									{ value: '', label: 'Sin especificar' },
+									...categorias.map(c => ({ value: c.id_categoria, label: c.nombre })),
+								]}
+							/>
 						</div>
 
 						<div>

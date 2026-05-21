@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { API } from '../api';
+import CustomSelect from './CustomSelect';
 
 const GoogleIcon = () => (
 	<svg viewBox="0 0 24 24" width="20" height="20">
@@ -206,10 +207,17 @@ export default function Register({ onClose, onRegisterSuccess, onGoogleNeedsComp
 					</div>
 					<div>
 						<label style={labelStyle}>Rol</label>
-						<select name="rol" value={form.rol} onChange={handleChange} required style={{ ...inputStyle, cursor: 'pointer' }} className="neo-input">
-							<option value="Atleta">Atleta</option>
-							<option value="Entrenador">Entrenador</option>
-						</select>
+						<CustomSelect
+							name="rol"
+							value={form.rol}
+							onChange={handleChange}
+							style={inputStyle}
+							className="neo-input"
+							options={[
+								{ value: 'Atleta', label: 'Atleta' },
+								{ value: 'Entrenador', label: 'Entrenador' },
+							]}
+						/>
 					</div>
 				</div>
 
@@ -239,11 +247,18 @@ export default function Register({ onClose, onRegisterSuccess, onGoogleNeedsComp
 					</div>
 					<div>
 						<label style={labelStyle}>Género</label>
-						<select name="genero" value={form.genero} onChange={handleChange} required style={{ ...inputStyle, cursor: 'pointer' }} className="neo-input">
-							<option value="" disabled>Seleccionar</option>
-							<option value="M">Masculino</option>
-							<option value="F">Femenino</option>
-						</select>
+						<CustomSelect
+							name="genero"
+							value={form.genero}
+							onChange={handleChange}
+							placeholder="Seleccionar"
+							style={inputStyle}
+							className="neo-input"
+							options={[
+								{ value: 'M', label: 'Masculino' },
+								{ value: 'F', label: 'Femenino' },
+							]}
+						/>
 					</div>
 				</div>
 

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { API } from '../api';
 import PerfilAtleta from './PerfilAtleta';
 import SelectorOpciones from './SelectorOpciones';
+import CustomSelect from './CustomSelect';
 
 const CATEGORIA_ORDEN = [
 	'Sub-10','Sub-12','Sub-14','Sub-16','Sub-18','Sub-20','Sub-23',
@@ -277,16 +278,16 @@ export default function AdminPanel() {
 									/>
 
 									{categoriasDisponibles.length > 1 && (
-										<select
+										<CustomSelect
 											value={filtroCategoriaA}
 											onChange={e => setFiltroCategoriaA(e.target.value)}
-											className="bg-oscuro border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius appearance-none cursor-pointer shrink-0"
-										>
-											<option value="">Todas las categorías</option>
-											{categoriasDisponibles.map(c => (
-												<option key={c} value={c}>{c}</option>
-											))}
-										</select>
+											containerClassName="shrink-0"
+											className="bg-oscuro border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius cursor-pointer"
+											options={[
+												{ value: '', label: 'Todas las categorías' },
+												...categoriasDisponibles.map(c => ({ value: c, label: c })),
+											]}
+										/>
 									)}
 
 									<button

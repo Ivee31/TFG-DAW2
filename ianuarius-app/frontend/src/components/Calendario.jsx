@@ -2,6 +2,7 @@
 import { API } from '../api';
 import { attachFocusTrap } from '../utils/focusTrap';
 import Loader from './Loader';
+import CustomSelect from './CustomSelect';
 
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DIAS_SEMANA = ['Lu','Ma','Mi','Ju','Vi','Sa','Do'];
@@ -453,46 +454,39 @@ export default function Calendario({ user }) {
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <label htmlFor="cal-tipo-evento" className="block label-caps text-gray-400 mb-1.5">Tipo de evento</label>
-                                    <select
+                                    <CustomSelect
                                         id="cal-tipo-evento"
                                         value={form.tipo_evento}
                                         onChange={e => setForm(f => ({ ...f, tipo_evento: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
-                                    >
-                                        {Object.entries(TIPO_EVENTO_LABEL).map(([k, v]) => (
-                                            <option key={k} value={k}>{v}</option>
-                                        ))}
-                                    </select>
+                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition cursor-pointer"
+                                        options={Object.entries(TIPO_EVENTO_LABEL).map(([k, v]) => ({ value: k, label: v }))}
+                                    />
                                 </div>
 
                                 <div>
                                     <label htmlFor="cal-tipo-pista" className="block label-caps text-gray-400 mb-1.5">Tipo de pista</label>
-                                    <select
+                                    <CustomSelect
                                         id="cal-tipo-pista"
                                         value={form.tipo_pista}
                                         onChange={e => setForm(f => ({ ...f, tipo_pista: e.target.value }))}
-                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
-                                    >
-                                        {Object.entries(TIPO_PISTA_LABEL).map(([k, v]) => (
-                                            <option key={k} value={k}>{v}</option>
-                                        ))}
-                                    </select>
+                                        className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition cursor-pointer"
+                                        options={Object.entries(TIPO_PISTA_LABEL).map(([k, v]) => ({ value: k, label: v }))}
+                                    />
                                 </div>
                             </div>
 
                             <div>
                                 <label htmlFor="cal-categoria" className="block label-caps text-gray-400 mb-1.5">Categoría</label>
-                                <select
+                                <CustomSelect
                                     id="cal-categoria"
                                     value={form.id_categoria}
                                     onChange={e => setForm(f => ({ ...f, id_categoria: e.target.value }))}
-                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition appearance-none cursor-pointer"
-                                >
-                                    <option value="">Todos</option>
-                                    {categorias.map(c => (
-                                        <option key={c.id_categoria} value={c.id_categoria}>{c.nombre}</option>
-                                    ))}
-                                </select>
+                                    className="w-full bg-oscuro border border-white/20 p-3 rounded-lg text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius transition cursor-pointer"
+                                    options={[
+                                        { value: '', label: 'Todos' },
+                                        ...categorias.map(c => ({ value: c.id_categoria, label: c.nombre })),
+                                    ]}
+                                />
                             </div>
 
                             <div className="flex gap-3 pt-2">

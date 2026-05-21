@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { API } from '../api';
 import logoIanuarius from '../assets/logoIanuarius.png';
+import CustomSelect from './CustomSelect';
 
 const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
@@ -91,10 +92,17 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 							</div>
 							<div>
 								<label htmlFor="cgp-rol" className={labelClasses}>Rol</label>
-								<select id="cgp-rol" name="rol" className={inputClasses} value={form.rol} onChange={handleChange} required>
-									<option value="Atleta">Atleta</option>
-									<option value="Entrenador">Entrenador</option>
-								</select>
+								<CustomSelect
+									id="cgp-rol"
+									name="rol"
+									value={form.rol}
+									onChange={handleChange}
+									className={inputClasses}
+									options={[
+										{ value: 'Atleta', label: 'Atleta' },
+										{ value: 'Entrenador', label: 'Entrenador' },
+									]}
+								/>
 							</div>
 						</div>
 						{form.rol === 'Entrenador' && (
@@ -109,11 +117,18 @@ export default function CompleteGoogleProfile({ data, onSuccess, onCancel }) {
 							</div>
 							<div>
 								<label htmlFor="cgp-genero" className={labelClasses}>Género</label>
-								<select id="cgp-genero" name="genero" className={inputClasses} value={form.genero} onChange={handleChange} required>
-									<option value="" disabled>Seleccionar</option>
-									<option value="M">Masculino</option>
-									<option value="F">Femenino</option>
-								</select>
+								<CustomSelect
+									id="cgp-genero"
+									name="genero"
+									value={form.genero}
+									onChange={handleChange}
+									placeholder="Seleccionar"
+									className={inputClasses}
+									options={[
+										{ value: 'M', label: 'Masculino' },
+										{ value: 'F', label: 'Femenino' },
+									]}
+								/>
 							</div>
 						</div>
 						<button type="submit" disabled={loading} className="w-full bg-ianuarius text-white font-bold py-2 rounded hover:bg-red-700 transition duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed">

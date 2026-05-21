@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useMemo } from 'react';
 import { API } from '../api';
 import JSZip from 'jszip';
+import CustomSelect from './CustomSelect';
 
 const MARCAS_POR_PAG = 8;
 const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
@@ -209,27 +210,29 @@ export default function PerfilAtleta({ atletaId, onVolver }) {
 						{marcas.length > 0 && (
 							<div className="space-y-2 mb-4">
 								<div className="flex gap-2">
-									<select
+									<CustomSelect
+										aria-label="Filtrar por año"
 										value={filterYear}
 										onChange={e => setFilterYear(e.target.value)}
-										aria-label="Filtrar por año"
-										className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
-									>
-										<option value="">Todos los años</option>
-										{yearsDisponibles.map(y => <option key={y} value={y}>{y}</option>)}
-									</select>
+										containerClassName="flex-1"
+										className="w-full bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+										options={[
+											{ value: '', label: 'Todos los años' },
+											...yearsDisponibles.map(y => ({ value: y, label: String(y) })),
+										]}
+									/>
 
-									<select
+									<CustomSelect
+										aria-label="Filtrar por mes"
 										value={filterMonth}
 										onChange={e => setFilterMonth(e.target.value)}
-										aria-label="Filtrar por mes"
-										className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
-									>
-										<option value="">Todos los meses</option>
-										{MESES.map((m, i) => (
-											<option key={i + 1} value={String(i + 1).padStart(2, '0')}>{m}</option>
-										))}
-									</select>
+										containerClassName="flex-1"
+										className="w-full bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+										options={[
+											{ value: '', label: 'Todos los meses' },
+											...MESES.map((m, i) => ({ value: String(i + 1).padStart(2, '0'), label: m })),
+										]}
+									/>
 								</div>
 
 								<div className="flex gap-1.5" role="group" aria-label="Filtrar por modalidad">

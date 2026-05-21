@@ -2,6 +2,7 @@
 import { API } from '../api';
 import Tooltip from './Tooltip';
 import SelectorOpciones from './SelectorOpciones';
+import CustomSelect from './CustomSelect';
 
 const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
@@ -743,27 +744,29 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 						{/* filtros */}
 						<div className="px-4 py-3 border-b border-white/20 space-y-2">
 							<div className="flex gap-2">
-								<select
+								<CustomSelect
+									aria-label="Filtrar por año"
 									value={filterYear}
 									onChange={e => setFilterYear(e.target.value)}
-									aria-label="Filtrar por año"
-									className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
-								>
-									<option value="">Todos los años</option>
-									{yearsDisponibles.map(y => <option key={y} value={y}>{y}</option>)}
-								</select>
+									containerClassName="flex-1"
+									className="w-full bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+									options={[
+										{ value: '', label: 'Todos los años' },
+										...yearsDisponibles.map(y => ({ value: y, label: String(y) })),
+									]}
+								/>
 
-								<select
+								<CustomSelect
+									aria-label="Filtrar por mes"
 									value={filterMonth}
 									onChange={e => setFilterMonth(e.target.value)}
-									aria-label="Filtrar por mes"
-									className="flex-1 bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
-								>
-									<option value="">Todos los meses</option>
-									{MESES.map((m, i) => (
-										<option key={i + 1} value={String(i + 1).padStart(2, '0')}>{m}</option>
-									))}
-								</select>
+									containerClassName="flex-1"
+									className="w-full bg-oscuro text-white text-[10px] border border-gray-700 rounded px-2 py-1.5 focus:border-ianuarius outline-none"
+									options={[
+										{ value: '', label: 'Todos los meses' },
+										...MESES.map((m, i) => ({ value: String(i + 1).padStart(2, '0'), label: m })),
+									]}
+								/>
 							</div>
 
 							<SelectorOpciones
@@ -931,10 +934,17 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 									</div>
 									<div>
 										<label htmlFor="perfil-genero" className={labelClasses}>Género</label>
-										<select id="perfil-genero" name="genero" className={inputClasses} value={form.genero} onChange={handleInfoChange} required>
-											<option value="M">Masculino</option>
-											<option value="F">Femenino</option>
-										</select>
+										<CustomSelect
+											id="perfil-genero"
+											name="genero"
+											value={form.genero}
+											onChange={handleInfoChange}
+											className={inputClasses}
+											options={[
+												{ value: 'M', label: 'Masculino' },
+												{ value: 'F', label: 'Femenino' },
+											]}
+										/>
 									</div>
 								</div>
 								{infoMsg && (
