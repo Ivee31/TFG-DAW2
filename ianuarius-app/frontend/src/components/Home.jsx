@@ -218,7 +218,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				}
 				.btn-registrarse::before {
 					content: ''; position: absolute; inset: 0;
-					background: #FE0000;
+					background: rgba(254,0,0,0.45);
 					mask-image: radial-gradient(circle, transparent 0%, transparent var(--reg-hole), black var(--reg-hole));
 					-webkit-mask-image: radial-gradient(circle, transparent 0%, transparent var(--reg-hole), black var(--reg-hole));
 					transition: --reg-hole 0.9s cubic-bezier(0.23, 1, 0.320, 1);

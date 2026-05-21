@@ -168,7 +168,7 @@ export default function AdminPanel() {
 
 			{/* cuentas pendientes de activacion */}
 			<section>
-				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-yellow-500/20 shadow-2xl">
+				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-lg border-2 border-yellow-500/30 shadow-[4px_4px_0_#78650a]">
 					<div className="flex justify-between items-center mb-6">
 						<div>
 							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Cuentas Pendientes</h2>
@@ -199,7 +199,7 @@ export default function AdminPanel() {
 						<div className="space-y-3">
 							{pendientes.map(p => (
 								<div key={p.id_usuario}
-									className="bg-oscuro/50 p-4 rounded-xl border border-yellow-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+									className="bg-oscuro/50 p-4 rounded-lg border-2 border-yellow-500/30 shadow-[3px_3px_0_#78650a] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
 									<div>
 										<p className="text-white font-bold text-sm">
 											{p.nombre} {p.apellidos}
@@ -209,7 +209,7 @@ export default function AdminPanel() {
 									<button
 										onClick={() => handleActivar(p.id_usuario)}
 										disabled={activando === p.id_usuario}
-										className="shrink-0 px-5 py-2 bg-yellow-500/20 border border-yellow-500/50 text-yellow-400 text-[10px] font-bold uppercase tracking-widest rounded-lg hover:bg-yellow-500/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
+										className="shrink-0 px-5 py-2 bg-yellow-500/20 border-2 border-yellow-500/50 shadow-[3px_3px_0_#78650a] text-yellow-400 text-[10px] font-bold uppercase tracking-widest rounded-lg hover:bg-yellow-500/30 neo-press transition disabled:opacity-50 disabled:cursor-not-allowed"
 									>
 										{activando === p.id_usuario ? 'Activando...' : 'Activar cuenta'}
 									</button>
@@ -222,7 +222,7 @@ export default function AdminPanel() {
 
 			{/* listado atletas / entrenadores */}
 			<section>
-				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
+				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151]">
 					<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-8">
 						<div>
 							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Miembros del Club</h2>
@@ -282,7 +282,7 @@ export default function AdminPanel() {
 											value={filtroCategoriaA}
 											onChange={e => setFiltroCategoriaA(e.target.value)}
 											containerClassName="shrink-0"
-											className="bg-oscuro border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:ring-2 focus:ring-ianuarius/40 focus:border-ianuarius cursor-pointer"
+											className="bg-oscuro text-white text-sm font-semibold border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] rounded px-3 py-2 neo-input outline-none"
 											options={[
 												{ value: '', label: 'Todas las categorías' },
 												...categoriasDisponibles.map(c => ({ value: c, label: c })),
@@ -292,10 +292,10 @@ export default function AdminPanel() {
 
 									<button
 										onClick={() => setFiltroDocsA(v => !v)}
-										className={`shrink-0 px-3 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg border transition ${
+										className={`shrink-0 px-3 py-2 text-[10px] font-black uppercase tracking-widest rounded border-2 neo-press transition ${
 											filtroDocsA
-												? 'bg-yellow-500/20 border-yellow-500/50 text-yellow-400'
-												: 'bg-oscuro border-white/10 text-gray-400 hover:text-white hover:border-white/30'
+												? 'bg-yellow-500/20 border-yellow-500/50 shadow-[3px_3px_0_#78650a] text-yellow-400'
+												: 'bg-oscuro border-[#4B5563] shadow-[3px_3px_0_#374151] text-gray-400 hover:text-white hover:border-white/40'
 										}`}
 									>
 										Docs pendientes
@@ -326,7 +326,7 @@ export default function AdminPanel() {
 									{atletasFiltrados.map(a => (
 										<div key={a.id_usuario}
 											onClick={() => setAtletaSeleccionado(a.id_usuario)}
-											className={`bg-oscuro/50 p-4 rounded-xl border transition duration-300 cursor-pointer hover:border-ianuarius/50 ${a.estado_pago !== 'pagado' ? 'border-yellow-500/20' : 'border-transparent'}`}>
+											className={`bg-oscuro/50 p-4 rounded-lg border-2 transition duration-300 cursor-pointer ${a.estado_pago !== 'pagado' ? 'border-yellow-500/30 shadow-[3px_3px_0_#78650a] hover:border-yellow-500/60' : 'border-ianuarius/30 shadow-[3px_3px_0_#7f1212] hover:border-ianuarius/60'}`}>
 											<div className="flex items-start gap-3">
 												<UsuarioAvatar fotoPerfil={a.foto_perfil} fotoCarnet={a.foto_carnet} nombre={a.nombre} apellidos={a.apellidos} />
 												<div className="flex-1 min-w-0">
@@ -420,7 +420,7 @@ export default function AdminPanel() {
 										<div
 											key={e.id_usuario}
 											onClick={() => setEntrenadorSeleccionado(e.id_usuario)}
-											className="bg-oscuro/50 p-4 rounded-xl border border-transparent hover:border-ianuarius/50 transition duration-300 cursor-pointer"
+											className="bg-oscuro/50 p-4 rounded-lg border-2 border-ianuarius/30 shadow-[3px_3px_0_#7f1212] hover:border-ianuarius/60 transition duration-300 cursor-pointer"
 										>
 											<div className="flex items-start gap-3">
 												<UsuarioAvatar fotoPerfil={e.foto_perfil} fotoCarnet={e.foto_carnet} nombre={e.nombre} apellidos={e.apellidos} />
@@ -460,7 +460,7 @@ export default function AdminPanel() {
 
 			{/* plantilla inscripcion */}
 			<section>
-				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl">
+				<div className="bg-gris/40 backdrop-blur-sm p-6 md:p-8 rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151]">
 					<div className="flex justify-between items-center mb-4">
 						<div>
 							<h2 className="text-xl md:text-2xl font-extrabold tracking-tight">Plantilla de inscripción</h2>
@@ -481,7 +481,7 @@ export default function AdminPanel() {
 					<button
 						disabled={subiendoP}
 						onClick={() => plantillaRef.current?.click()}
-						className="flex items-center gap-2 px-5 py-2 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest rounded hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
+						className="flex items-center gap-2 px-5 py-2 border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] text-white text-[10px] font-black uppercase tracking-widest rounded neo-press hover:border-white/40 hover:bg-white/5 transition disabled:opacity-40"
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />

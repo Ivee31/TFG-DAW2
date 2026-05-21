@@ -69,9 +69,10 @@ select option {
     display: flex;
     flex-shrink: 0;
     background: rgba(23, 23, 23, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border: 2px solid #4B5563;
+    border-radius: 6px;
     padding: 3px;
+    box-shadow: 3px 3px 0 #374151;
 }
 .selector-opciones__indicador {
     position: absolute;
@@ -358,7 +359,7 @@ select option {
 }
 .btn-logout {
     cursor: pointer; position: relative;
-    color: #ffffff; border: 2px solid rgba(255,255,255,0.4);
+    color: #ffffff; border: 2px solid #FE0000;
     border-radius: 6px; background: rgba(255,255,255,0.1);
     font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); overflow: hidden;
@@ -366,7 +367,7 @@ select option {
 }
 .btn-logout::before {
     content: ''; position: absolute; inset: 0;
-    background: #FE0000;
+    background: rgba(254,0,0,0.45);
     mask-image: radial-gradient(circle, transparent 0%, transparent var(--logout-hole), black var(--logout-hole));
     -webkit-mask-image: radial-gradient(circle, transparent 0%, transparent var(--logout-hole), black var(--logout-hole));
     transition: --logout-hole 0.9s cubic-bezier(0.23, 1, 0.320, 1);
