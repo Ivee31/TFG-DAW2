@@ -131,7 +131,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				}
 				.btn-acceder::before {
 					content: ''; position: absolute; inset: 0;
-					background: #FE0000;
+					background: rgba(254,0,0,0.45);
 					clip-path: circle(0% at center);
 					transition: clip-path 1.1s cubic-bezier(0.23, 1, 0.320, 1);
 				}
@@ -145,14 +145,17 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					outline: none; border: 0; vertical-align: middle;
 					text-decoration: none; background: transparent; padding: 0;
 					font-size: inherit; font-family: inherit;
+					transition: transform 0.1s ease;
 				}
 				.btn-saber { width: 12rem; }
 				.btn-saber-sm { width: 8rem; }
+				.btn-saber:active, .btn-saber-sm:active { transform: translate(3px, 3px); }
 
 				.btn-saber .circle, .btn-saber-sm .circle {
 					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
 					position: relative; display: block; margin: 0;
-					background: #262626; border: 1px solid rgba(255,255,255,0.15);
+					background: #262626; border: 2px solid rgba(255,255,255,0.25);
+					box-shadow: 3px 3px 0 #374151;
 				}
 				.btn-saber .circle { width: 2.5rem; height: 2.5rem; border-radius: 1.25rem; }
 				.btn-saber-sm .circle { width: 1.75rem; height: 1.75rem; border-radius: 0.875rem; }
@@ -161,8 +164,8 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
 					position: absolute; top: 0; bottom: 0; margin: auto; background: #fff;
 				}
-				.btn-saber .arrow { left: 0.5rem; width: 1rem; height: 0.125rem; background: none; }
-				.btn-saber-sm .arrow { left: 0.35rem; width: 0.75rem; height: 0.1rem; background: none; }
+				.btn-saber .arrow { left: 0.4rem; width: 1rem; height: 0.125rem; background: none; }
+				.btn-saber-sm .arrow { left: 0.25rem; width: 0.75rem; height: 0.1rem; background: none; }
 				.btn-saber .arrow::before {
 					position: absolute; content: ''; top: -0.25rem; right: 0.05rem;
 					width: 0.55rem; height: 0.55rem;
@@ -194,7 +197,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				}
 
 				.btn-saber:hover .circle, .btn-saber-sm:hover .circle {
-					width: 100%; background: #FE0000; border-color: transparent;
+					width: 100%; background: #FE0000; border-color: #b30000; box-shadow: 3px 3px 0 #7f1212;
 				}
 				.btn-saber:hover .arrow { background: #fff; transform: translate(1rem, 0); }
 				.btn-saber-sm:hover .arrow { background: #fff; transform: translate(0.65rem, 0); }
@@ -233,19 +236,22 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					outline: none; border: 0; vertical-align: middle;
 					text-decoration: none; background: transparent; padding: 0;
 					font-size: inherit; font-family: inherit; width: 8rem;
+					transition: transform 0.1s ease;
 				}
+				.btn-leer-mas:active { transform: translate(3px, 3px); }
 				.btn-leer-mas .circle {
 					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
 					position: relative; display: block; margin: 0;
 					width: 1.75rem; height: 1.75rem; border-radius: 0.875rem;
-					background: rgba(254,0,0,0.15); border: 1px solid #FE0000;
+					background: rgba(254,0,0,0.15); border: 2px solid rgba(254,0,0,0.5);
+					box-shadow: 2px 2px 0 #7f1212;
 				}
 				.btn-leer-mas .icon {
 					transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
 					position: absolute; top: 0; bottom: 0; margin: auto;
 				}
 				.btn-leer-mas .arrow {
-					left: 0.25rem; width: 0.75rem; height: 0.1rem; background: none;
+					left: 0.15rem; width: 0.75rem; height: 0.1rem; background: none;
 				}
 				.btn-leer-mas .arrow::before {
 					position: absolute; content: ''; top: -0.18rem; right: 0.05rem;
@@ -262,7 +268,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					text-align: center; text-transform: uppercase;
 					font-size: 0.55rem; letter-spacing: 0.08em;
 				}
-				.btn-leer-mas:hover .circle { width: 100%; background: #FE0000; border-color: transparent; }
+				.btn-leer-mas:hover .circle { width: 100%; background: #FE0000; border-color: #b30000; box-shadow: 2px 2px 0 #7f1212; }
 				.btn-leer-mas:hover .arrow { background: #fff; transform: translate(0.65rem, 0); }
 				.btn-leer-mas:hover .arrow::before { border-top-color: #fff; border-right-color: #fff; }
 				.btn-leer-mas:hover .btn-text { color: #fff; }
@@ -381,7 +387,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 				<div className="flex items-center justify-between mb-8">
 					<h2 className="text-white font-black text-xl md:text-2xl tracking-widest uppercase">Últimas noticias</h2>
-					<span className="flex items-center gap-1.5 px-3 py-1 bg-yellow-500/10 border border-yellow-500/30 rounded-full text-yellow-500 text-[9px] font-black uppercase tracking-widest">
+					<span className="flex items-center gap-1.5 px-3 py-1 bg-yellow-500/10 border-2 border-yellow-500/30 shadow-[2px_2px_0_#78650a] rounded text-yellow-500 text-[9px] font-black uppercase tracking-widest">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3">
 							<path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495ZM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clipRule="evenodd" />
 						</svg>
@@ -391,7 +397,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 					{noticias.map((n, i) => (
-						<article key={i} className="bg-gris rounded-xl border border-white/20 overflow-hidden group relative flex flex-col">
+						<article key={i} className="bg-gris rounded-lg border-2 border-white/15 shadow-[4px_4px_0_#374151] overflow-hidden group relative flex flex-col">
 							{/* mockup badge */}
 							<div className="absolute top-3 left-3 z-10 px-2 py-0.5 bg-black/60 backdrop-blur-sm border border-white/20 rounded text-[8px] font-black uppercase tracking-widest text-gray-400">
 								Mockup
@@ -432,7 +438,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 
 			{/* INFO SECTION */}
 			<section className="bg-oscuro px-6 md:px-12 pb-16 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-				<div className="lg:col-span-6 bg-gris p-5 md:p-6 rounded-xl border-t-4 border-ianuarius shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+				<div className="lg:col-span-6 bg-gris p-5 md:p-6 rounded-lg border-2 border-ianuarius/30 shadow-[4px_4px_0_#7f1212]">
 					<div className="w-full h-48 bg-oscuro rounded-lg mb-5 overflow-hidden relative group">
 						<img
 							src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=70"
