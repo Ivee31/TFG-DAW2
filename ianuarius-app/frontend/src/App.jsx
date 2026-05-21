@@ -21,6 +21,7 @@ export default function App() {
 	const [currentView, setCurrentView] = useState('dashboard');
 
 	const navigate = (view) => {
+		window.scrollTo({ top: 0, behavior: 'instant' });
 		window.history.pushState({ view }, '');
 		setCurrentView(view);
 	};

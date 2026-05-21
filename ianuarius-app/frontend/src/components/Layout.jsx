@@ -181,8 +181,8 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 			{/* menu lateral */}
 			<aside
 				ref={menuRef}
-				className={`fixed right-0 top-0 h-full w-64 bg-gris border-l border-white/20 transform transition-transform duration-300 z-50 p-6 flex flex-col shadow-2xl ${isMenuOpen || (isPinned && !isMobile) ? 'translate-x-0' : 'translate-x-full'}`}>
-				<div className="flex justify-between items-center mb-10 border-b border-white/20 pb-4">
+				className={`fixed right-0 top-0 h-full w-64 bg-gris border-l border-white/10 transform transition-transform duration-300 z-50 p-3 flex flex-col ${isMenuOpen || (isPinned && !isMobile) ? 'translate-x-0' : 'translate-x-full'}`}>
+				<div className="flex justify-between items-center mb-10 border-b-2 border-[#4B5563] pb-4">
 					<h3 className="font-bold tracking-widest uppercase text-sm">Navegacion</h3>
 					<div className="flex gap-3 items-center">
 						<button onClick={() => setIsPinned(!isPinned)} aria-label={isPinned ? 'Desanclar menú' : 'Anclar menú'} className={`transition ${isPinned ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
@@ -202,15 +202,15 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 					</div>
 				</div>
 
-				<nav className="space-y-6 grow">
-					<button onClick={() => { onNavigate?.('dashboard'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'dashboard' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Inicio</button>
+				<nav className="space-y-2 grow">
+					<button onClick={() => { onNavigate?.('dashboard'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-[11px] font-black uppercase tracking-widest py-3 px-3 rounded border-2 neo-press transition ${currentView === 'dashboard' ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/10 text-ianuarius' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro/50 text-gray-400 hover:text-white'}`}>Inicio</button>
 
 					{user?.rol === 'Atleta' && (
-						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Registro de Marcas</button>
+						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-[11px] font-black uppercase tracking-widest py-3 px-3 rounded border-2 neo-press transition ${currentView === 'marcas' ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/10 text-ianuarius' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro/50 text-gray-400 hover:text-white'}`}>Registro de Marcas</button>
 					)}
 
 					{user?.rol === 'Admin' && (
-						<button onClick={() => { onNavigate?.('admin'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'admin' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
+						<button onClick={() => { onNavigate?.('admin'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-[11px] font-black uppercase tracking-widest py-3 px-3 rounded border-2 neo-press transition ${currentView === 'admin' ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/10 text-ianuarius' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro/50 text-gray-400 hover:text-white'}`}>
 							Panel Admin
 							{hayPendientes && (
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-yellow-400 shrink-0">
@@ -221,18 +221,18 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 					)}
 
 					{user?.rol === 'Admin' && (
-						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Mis Marcas</button>
+						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-[11px] font-black uppercase tracking-widest py-3 px-3 rounded border-2 neo-press transition ${currentView === 'marcas' ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/10 text-ianuarius' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro/50 text-gray-400 hover:text-white'}`}>Mis Marcas</button>
 					)}
 
 					{user?.rol === 'Entrenador' && (
-						<button onClick={() => { onNavigate?.('entrenador'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'entrenador' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Panel Entrenador</button>
+						<button onClick={() => { onNavigate?.('entrenador'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-[11px] font-black uppercase tracking-widest py-3 px-3 rounded border-2 neo-press transition ${currentView === 'entrenador' ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/10 text-ianuarius' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro/50 text-gray-400 hover:text-white'}`}>Panel Entrenador</button>
 					)}
 
 					{user?.rol === 'Entrenador' && (
-						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Mis Marcas</button>
+						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-[11px] font-black uppercase tracking-widest py-3 px-3 rounded border-2 neo-press transition ${currentView === 'marcas' ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/10 text-ianuarius' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro/50 text-gray-400 hover:text-white'}`}>Mis Marcas</button>
 					)}
 
-					<button onClick={() => { onNavigate?.('perfil'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'perfil' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
+					<button onClick={() => { onNavigate?.('perfil'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-[11px] font-black uppercase tracking-widest py-3 px-3 rounded border-2 neo-press transition ${currentView === 'perfil' ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/10 text-ianuarius' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro/50 text-gray-400 hover:text-white'}`}>
 						Mi Perfil
 						{(!user?.foto_dni || !user?.foto_carnet) && (
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-yellow-400 shrink-0">
@@ -241,7 +241,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 						)}
 					</button>
 
-					<button onClick={() => { onNavigate?.('inscripcion'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'inscripcion' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>
+					<button onClick={() => { onNavigate?.('inscripcion'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-[11px] font-black uppercase tracking-widest py-3 px-3 rounded border-2 neo-press transition ${currentView === 'inscripcion' ? 'border-ianuarius shadow-[3px_3px_0_#7f1212] bg-ianuarius/10 text-ianuarius' : 'border-[#4B5563] shadow-[3px_3px_0_#374151] bg-oscuro/50 text-gray-400 hover:text-white'}`}>
 						Inscripción
 						{(!user?.inscripcion_pdf && !user?.inscripcion_formulario) && (
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3.5 h-3.5 text-yellow-400 shrink-0">
@@ -319,7 +319,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 					].filter(Boolean);
 					if (!items.length) return null;
 					return (
-						<div className="mb-6 bg-yellow-400/5 border border-yellow-400/15 rounded-xl p-4 flex items-start gap-3">
+						<div className="mb-6 bg-yellow-400/5 border-2 border-yellow-500/30 shadow-[4px_4px_0_#78650a] rounded-lg p-4 flex items-start gap-3">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
 							</svg>
@@ -330,7 +330,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 										<button
 											key={item.label}
 											onClick={() => onNavigate?.(item.nav)}
-											className="text-[10px] bg-yellow-400/10 border border-yellow-400/25 text-yellow-300 px-3 py-1 rounded-full font-bold uppercase tracking-wider hover:bg-yellow-400/20 transition"
+											className="text-[10px] font-bold uppercase tracking-wider bg-yellow-400/10 border-2 border-yellow-500/30 shadow-[2px_2px_0_#78650a] text-yellow-300 px-3 py-1 rounded neo-press transition hover:bg-yellow-400/20"
 										>
 											{item.label} →
 										</button>
