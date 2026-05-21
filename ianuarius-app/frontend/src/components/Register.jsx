@@ -88,6 +88,7 @@ export default function Register({ onClose, onRegisterSuccess, onGoogleNeedsComp
 			setLoading(false);
 			if (data.status === 'success') onRegisterSuccess(data.user);
 			else if (data.status === 'pending') setPendingMsg(data.message);
+			else if (data.status === 'pending_verification') setPendingMsg('__verify__');
 			else setErrorMsg(data.error);
 		})
 		.catch(() => { setLoading(false); setErrorMsg('Error de conexión'); });
@@ -111,6 +112,16 @@ export default function Register({ onClose, onRegisterSuccess, onGoogleNeedsComp
 		},
 		onError: () => setErrorMsg('Error al registrarse con Google'),
 	});
+
+	if (pendingMsg === '__verify__') {
+		return (
+			<div style={{ ...card, borderColor: '#22c55e', boxShadow: '4px 4px 0 #14532d', textAlign: 'center' }}>
+				<p style={{ color: '#22c55e', fontSize: '13px', fontWeight: 900, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>¡Casi listo!</p>
+				<p style={{ color: '#9CA3AF', fontSize: '12px', lineHeight: 1.6 }}>Te hemos enviado un email de verificación. Haz clic en el enlace para activar tu cuenta.</p>
+				<p style={{ color: '#6B7280', fontSize: '11px', marginTop: '12px' }}>Revisa también tu carpeta de spam.</p>
+			</div>
+		);
+	}
 
 	if (pendingMsg) {
 		return (

@@ -7,6 +7,7 @@ import DashboardEntrenador from "./components/DashboardEntrenador";
 import AdminPanel from "./components/AdminPanel";
 import Home from './components/Home';
 import ResetPassword from './components/ResetPassword';
+import VerifyEmail from './components/VerifyEmail';
 import CompleteGoogleProfile from './components/CompleteGoogleProfile';
 import AvisoLegal from './components/AvisoLegal';
 import Perfil from './components/Perfil';
@@ -49,6 +50,14 @@ export default function App() {
 	const page = new URLSearchParams(window.location.search).get('page');
 	if (page === 'aviso-legal') {
 		return <AvisoLegal onBack={() => window.history.replaceState({}, '', '/')} />;
+	}
+
+	// enlace de verificacion de email en la URL
+	const verifyToken = new URLSearchParams(window.location.search).get('verify_token');
+	if (verifyToken) {
+		return (
+			<VerifyEmail token={verifyToken} onSuccess={() => { window.location.href = '/'; }} />
+		);
 	}
 
 	// enlace de recuperacion de contraseña en la URL

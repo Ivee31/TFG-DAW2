@@ -33,7 +33,7 @@ class AuthController {
 
         try {
             $pdo = Connect::conexion();
-            $stmt = $pdo->prepare("SELECT id_usuario, nombre, apellidos, dni, email, genero, fecha_nacimiento, foto_perfil, foto_dni, foto_carnet, inscripcion_pdf, notificaciones_email, frecuencia_notif, password_hash, rol, estado_cuenta FROM usuarios WHERE email = :email");
+            $stmt = $pdo->prepare("SELECT id_usuario, nombre, apellidos, dni, email, genero, fecha_nacimiento, foto_perfil, foto_dni, foto_carnet, inscripcion_pdf, notificaciones_email, frecuencia_notif, password_hash, rol, estado_cuenta, email_verificado FROM usuarios WHERE email = :email");
             $stmt->bindParam(":email", $email, PDO::PARAM_STR);
             $stmt->execute();
 
@@ -48,12 +48,19 @@ class AuthController {
                         return;
                     }
 
+                    if (!$user['email_verificado']) {
+                        http_response_code(403);
+                        echo json_encode(["status" => "email_not_verified", "error" => "Debes verificar tu email antes de iniciar sesión.", "email" => $email]);
+                        return;
+                    }
+
                     // guardar datos clave en sesion
                     $_SESSION['id_usuario'] = $user['id_usuario'];
                     $_SESSION['rol']        = $user['rol'];
 
                     unset($user['password_hash']);
                     unset($user['estado_cuenta']);
+                    unset($user['email_verificado']);
 
                     http_response_code(200);
                     echo json_encode([
@@ -205,20 +212,21 @@ class AuthController {
                 return;
             }
 
-            self::iniciarSesion();
-            $_SESSION['id_usuario'] = $id;
-            $_SESSION['rol']        = 'Atleta';
+            // Generar token de verificación de email
+            $token   = bin2hex(random_bytes(32));
+            $expires = date('Y-m-d H:i:s', strtotime('+24 hours'));
+            $tokStmt = $pdo->prepare("UPDATE usuarios SET email_token_verificacion = :token, email_token_expires = :expires WHERE id_usuario = :id");
+            $tokStmt->bindParam(':token',   $token,   PDO::PARAM_STR);
+            $tokStmt->bindParam(':expires', $expires, PDO::PARAM_STR);
+            $tokStmt->bindParam(':id',      $id,      PDO::PARAM_INT);
+            $tokStmt->execute();
+
+            self::enviarEmailVerificacion($email, $nombre, $token);
 
             http_response_code(201);
             echo json_encode([
-                "status" => "success",
-                "user"   => [
-                    "id_usuario" => $id,
-                    "nombre"     => $nombre,
-                    "apellidos"  => $apellidos,
-                    "email"      => $email,
-                    "rol"        => 'Atleta'
-                ]
+                "status"  => "pending_verification",
+                "message" => "Registro completado. Revisa tu correo para verificar tu cuenta."
             ]);
 
         } catch (PDOException $e) {
@@ -473,5 +481,132 @@ class AuthController {
             http_response_code(500);
             echo json_encode(["status" => "error", "error" => "Error interno"]);
         }
+    }
+
+    public static function verifyEmail() {
+        $input = json_decode(file_get_contents('php://input'), true);
+        $token = trim($input['token'] ?? '');
+
+        if (!$token) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Token no proporcionado"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare(
+                "SELECT id_usuario, nombre, rol, email_token_expires FROM usuarios WHERE email_token_verificacion = :token AND email_verificado = 0"
+            );
+            $stmt->bindParam(':token', $token, PDO::PARAM_STR);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$user) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "error" => "Token inválido o cuenta ya verificada"]);
+                return;
+            }
+
+            if (strtotime($user['email_token_expires']) < time()) {
+                http_response_code(400);
+                echo json_encode(["status" => "expired", "error" => "El enlace ha expirado. Solicita uno nuevo."]);
+                return;
+            }
+
+            $upd = $pdo->prepare("UPDATE usuarios SET email_verificado = 1, email_token_verificacion = NULL, email_token_expires = NULL WHERE id_usuario = :id");
+            $upd->bindParam(':id', $user['id_usuario'], PDO::PARAM_INT);
+            $upd->execute();
+
+            self::iniciarSesion();
+            $_SESSION['id_usuario'] = $user['id_usuario'];
+            $_SESSION['rol']        = $user['rol'];
+
+            http_response_code(200);
+            echo json_encode(["status" => "success", "message" => "Email verificado. ¡Bienvenido!"]);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
+
+    public static function resendVerification() {
+        $input = json_decode(file_get_contents('php://input'), true);
+        $email = trim($input['email'] ?? '');
+
+        if (!$email) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "error" => "Email requerido"]);
+            return;
+        }
+
+        try {
+            $pdo  = Connect::conexion();
+            $stmt = $pdo->prepare("SELECT id_usuario, nombre, email_verificado FROM usuarios WHERE email = :email AND google_id IS NULL");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // respuesta identica exista o no — evita enumeracion
+            if (!$user || $user['email_verificado']) {
+                http_response_code(200);
+                echo json_encode(["status" => "success"]);
+                return;
+            }
+
+            $token   = bin2hex(random_bytes(32));
+            $expires = date('Y-m-d H:i:s', strtotime('+24 hours'));
+            $upd = $pdo->prepare("UPDATE usuarios SET email_token_verificacion = :token, email_token_expires = :expires WHERE id_usuario = :id");
+            $upd->bindParam(':token',   $token,              PDO::PARAM_STR);
+            $upd->bindParam(':expires', $expires,            PDO::PARAM_STR);
+            $upd->bindParam(':id',      $user['id_usuario'], PDO::PARAM_INT);
+            $upd->execute();
+
+            self::enviarEmailVerificacion($email, $user['nombre'], $token);
+
+            http_response_code(200);
+            echo json_encode(["status" => "success"]);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "error" => "Error interno"]);
+        }
+    }
+
+    private static function enviarEmailVerificacion($email, $nombre, $token) {
+        $app_url = Config::get('APP_URL', 'http://localhost:5173');
+        $link    = "{$app_url}?verify_token={$token}";
+
+        $html = "
+            <div style='font-family:sans-serif;max-width:480px;margin:0 auto;background:#171717;padding:32px;border-radius:8px;'>
+                <h2 style='color:#FE0000;letter-spacing:4px;font-size:13px;text-transform:uppercase;margin:0 0 24px;'>Ianuarius Athletics</h2>
+                <p style='color:#e5e7eb;margin:0 0 12px;'>Hola, <strong>{$nombre}</strong>.</p>
+                <p style='color:#9ca3af;font-size:14px;margin:0 0 24px;line-height:1.6;'>Confirma tu dirección de correo para activar tu cuenta. El enlace es válido durante <strong style='color:#fff;'>24 horas</strong>.</p>
+                <a href='{$link}' style='display:inline-block;background:#FE0000;color:white;padding:12px 28px;border-radius:4px;text-decoration:none;font-weight:bold;font-size:12px;letter-spacing:3px;text-transform:uppercase;'>
+                    Verificar email
+                </a>
+                <p style='color:#4b5563;font-size:11px;margin-top:32px;'>Si no te registraste en Ianuarius, ignora este email.</p>
+            </div>
+        ";
+
+        $api_key = Config::get('BREVO_KEY');
+        $payload = json_encode([
+            'sender'      => ['name' => 'Ianuarius', 'email' => 'ivinmn31@gmail.com'],
+            'to'          => [['email' => $email, 'name' => $nombre]],
+            'subject'     => 'Verifica tu email — Ianuarius',
+            'htmlContent' => $html,
+        ]);
+
+        $ch = curl_init('https://api.brevo.com/v3/smtp/email');
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_HTTPHEADER     => ['api-key: ' . $api_key, 'Content-Type: application/json'],
+            CURLOPT_POSTFIELDS     => $payload,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 10,
+        ]);
+        curl_exec($ch);
+        curl_close($ch);
     }
 }

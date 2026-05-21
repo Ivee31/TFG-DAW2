@@ -2,10 +2,11 @@
 
 html, body {
     background-color: #171717;
+    scrollbar-width: none;
 }
 
-html {
-    scrollbar-gutter: stable;
+html::-webkit-scrollbar {
+    display: none;
 }
 
 /* fuente graduate local - sin necesidad de google fonts */

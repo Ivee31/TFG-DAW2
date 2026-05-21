@@ -218,6 +218,24 @@ switch ($endpoint) {
         }
         break;
 
+    case 'verify-email':
+        if ($method === 'POST') {
+            AuthController::verifyEmail();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
+    case 'resend-verification':
+        if ($method === 'POST') {
+            AuthController::resendVerification();
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Method not allowed"]);
+        }
+        break;
+
     case 'forgot-password':
         if ($method === 'POST') {
             ResetController::solicitar();

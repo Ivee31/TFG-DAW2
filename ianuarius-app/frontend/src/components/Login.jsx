@@ -43,10 +43,15 @@ export default function Login({ onClose, onLoginSuccess, onGoogleNeedsCompletion
 	const [errorMsg, setErrorMsg] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [showForgot, setShowForgot] = useState(false);
+	const [unverifiedEmail, setUnverifiedEmail] = useState(null);
+	const [resendMsg, setResendMsg] = useState('');
+	const [resendLoading, setResendLoading] = useState(false);
 
 	const handleLogin = (e) => {
 		e.preventDefault();
 		setErrorMsg('');
+		setUnverifiedEmail(null);
+		setResendMsg('');
 		setLoading(true);
 		fetch(`${API}/login`, {
 			method: 'POST',
@@ -57,9 +62,23 @@ export default function Login({ onClose, onLoginSuccess, onGoogleNeedsCompletion
 		.then(data => {
 			setLoading(false);
 			if (data.status === 'success') onLoginSuccess(data.user);
+			else if (data.status === 'email_not_verified') setUnverifiedEmail(data.email);
 			else setErrorMsg(data.error);
 		})
 		.catch(() => { setLoading(false); setErrorMsg('Error de conexion'); });
+	};
+
+	const handleResend = () => {
+		setResendLoading(true);
+		setResendMsg('');
+		fetch(`${API}/resend-verification`, {
+			method: 'POST',
+			credentials: 'include',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email: unverifiedEmail }),
+		})
+		.then(() => { setResendLoading(false); setResendMsg('Email reenviado. Revisa tu bandeja.'); })
+		.catch(() => { setResendLoading(false); setResendMsg('Error al reenviar.'); });
 	};
 
 	const googleLogin = useGoogleLogin({
@@ -82,6 +101,22 @@ export default function Login({ onClose, onLoginSuccess, onGoogleNeedsCompletion
 	});
 
 	if (showForgot) return <ForgotPassword onBack={() => setShowForgot(false)} />;
+
+	if (unverifiedEmail) return (
+		<div style={{ ...card, borderColor: '#EAB308', boxShadow: '4px 4px 0 #713f12', textAlign: 'center' }}>
+			<p style={{ color: '#EAB308', fontSize: '13px', fontWeight: 900, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Email sin verificar</p>
+			<p style={{ color: '#9CA3AF', fontSize: '12px', lineHeight: 1.6, marginBottom: '16px' }}>Revisa tu bandeja de entrada y haz clic en el enlace de verificación que te enviamos al registrarte.</p>
+			{resendMsg
+				? <p style={{ color: '#6ee7b7', fontSize: '11px' }}>{resendMsg}</p>
+				: <button onClick={handleResend} disabled={resendLoading} style={{ background: 'rgba(234,179,8,0.1)', border: '2px solid rgba(234,179,8,0.4)', boxShadow: '2px 2px 0 #713f12', color: '#EAB308', padding: '8px 16px', borderRadius: '5px', fontSize: '10px', fontWeight: 900, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', opacity: resendLoading ? 0.6 : 1 }}>
+					{resendLoading ? 'Enviando...' : 'Reenviar email de verificación'}
+				</button>
+			}
+			<button onClick={() => setUnverifiedEmail(null)} style={{ marginTop: '12px', background: 'none', border: 'none', color: '#6B7280', fontSize: '11px', cursor: 'pointer', textDecoration: 'underline' }}>
+				Volver al login
+			</button>
+		</div>
+	);
 
 	return (
 		<div style={card}>
