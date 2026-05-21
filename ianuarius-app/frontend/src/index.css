@@ -243,7 +243,7 @@ select option {
     transition: background-color 0.4s ease, rotate 0.4s ease;
 }
 .btn-descarga--descargando .btn-descarga__circulo {
-    animation: bd-pulse 1s forwards;
+    animation: bd-pulse 0.3s forwards;
     rotate: 180deg;
 }
 .btn-descarga--listo .btn-descarga__circulo { background-color: #22c55e; }
@@ -257,7 +257,7 @@ select option {
     transition: opacity 0.25s ease;
 }
 .btn-descarga--descargando .btn-descarga__circulo::before {
-    animation: bd-installing 3s ease-in-out forwards;
+    animation: bd-installing 0.7s ease-in-out forwards;
 }
 .btn-descarga--listo .btn-descarga__circulo::before { opacity: 0; }
 .btn-descarga__icono {
@@ -349,3 +349,28 @@ select option {
 .btn-back-top:hover::before {
     font-size: 11px; bottom: unset; transition: font-size 0.3s ease;
 }
+
+/* Botón cerrar sesión — mismo efecto que btn-registrarse en Home */
+@property --logout-hole {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+}
+.btn-logout {
+    cursor: pointer; position: relative;
+    color: #ffffff; border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 6px; background: rgba(255,255,255,0.1);
+    font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); overflow: hidden;
+    box-shadow: 4px 4px 0 rgba(255,255,255,0.15);
+}
+.btn-logout::before {
+    content: ''; position: absolute; inset: 0;
+    background: #FE0000;
+    mask-image: radial-gradient(circle, transparent 0%, transparent var(--logout-hole), black var(--logout-hole));
+    -webkit-mask-image: radial-gradient(circle, transparent 0%, transparent var(--logout-hole), black var(--logout-hole));
+    transition: --logout-hole 0.9s cubic-bezier(0.23, 1, 0.320, 1);
+}
+.btn-logout:hover::before { --logout-hole: 150%; transition: --logout-hole 1.5s cubic-bezier(0.23, 1, 0.320, 1); }
+.btn-logout:hover { border-color: rgba(255,255,255,0.6); box-shadow: none; scale: 1.05; }
+.btn-logout:active { scale: 1; }

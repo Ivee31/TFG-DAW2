@@ -11,10 +11,10 @@ export default function BtnDescarga({ onDescargar, label = 'Descargar PDF', labe
 
 		let ok = true;
 		const descarga = onDescargar().catch(() => { ok = false; });
-		await Promise.all([descarga, new Promise(r => setTimeout(r, 3200))]);
+		await Promise.all([descarga, new Promise(r => setTimeout(r, 800))]);
 
 		setEstado(ok ? 'listo' : 'idle');
-		if (ok) timerRef.current = setTimeout(() => setEstado('idle'), 2500);
+		if (ok) timerRef.current = setTimeout(() => setEstado('idle'), 800);
 	};
 
 	const cls = `btn-descarga${estado === 'descargando' ? ' btn-descarga--descargando' : ''}${estado === 'listo' ? ' btn-descarga--listo' : ''}`;

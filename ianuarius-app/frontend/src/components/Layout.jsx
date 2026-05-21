@@ -297,8 +297,8 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 					</div>
 
 					<div className="flex gap-3 md:gap-4 items-center w-full md:w-auto justify-end">
-						<button onClick={handleLogout} className="bg-ianuarius px-4 py-3 md:px-4 md:py-2 rounded text-xs md:text-[10px] font-bold tracking-widest uppercase hover:bg-red-700 transition duration-300">
-							Cerrar Sesion
+						<button onClick={handleLogout} className="btn-logout px-4 py-3 md:px-4 md:py-2 text-xs md:text-[10px]">
+							<span className="relative z-10">Cerrar Sesion</span>
 						</button>
 
 						<button ref={btnRef} onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={isMenuOpen} className="text-white hover:text-ianuarius transition p-2 ml-1">

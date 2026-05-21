@@ -94,7 +94,7 @@ export default function Inscripcion({ user, onUserUpdate }) {
 
 						<button
 							onClick={() => setVisorAbierto(false)}
-							className="w-8 h-8 flex items-center justify-center rounded border border-white/20 text-gray-400 hover:text-white hover:border-white/30 transition"
+							className="w-8 h-8 flex items-center justify-center rounded border-2 border-[#4B5563] bg-oscuro text-gray-400 shadow-[2px_2px_0_#374151] neo-press hover:text-white transition"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
 								<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />

@@ -478,7 +478,7 @@ function Notificaciones({ user, onUserUpdate }) {
 						role="dialog"
 						aria-modal="true"
 						aria-labelledby="modal-notif-titulo"
-						className="bg-gris border border-white/20 rounded-xl p-6 max-w-sm w-full space-y-4 shadow-2xl"
+						className="bg-gris border-2 border-white/15 rounded-lg p-6 max-w-sm w-full space-y-4 shadow-[4px_4px_0_#000]"
 					>
 						<div className="flex items-start gap-3">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" aria-hidden="true">
@@ -502,13 +502,13 @@ function Notificaciones({ user, onUserUpdate }) {
 							<button
 								onClick={toggle}
 								disabled={loadingToggle}
-								className="flex-1 bg-red-700 text-white label-caps py-2 rounded hover:bg-red-600 transition disabled:opacity-50"
+								className="flex-1 bg-red-700 text-white label-caps py-2 rounded border-2 border-red-700 shadow-[4px_4px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed"
 							>
 								{loadingToggle ? '...' : 'Confirmar — desactivar'}
 							</button>
 							<button
 								onClick={() => setShowModal(false)}
-								className="flex-1 border border-white/20 text-gray-400 label-caps py-2 rounded hover:text-white hover:border-white/30 transition"
+								className="flex-1 bg-oscuro text-gray-400 label-caps py-2 rounded border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] neo-press hover:text-white transition"
 							>
 								Cancelar
 							</button>

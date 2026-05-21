@@ -67,7 +67,9 @@ export default function Calendario({ user }) {
     // detalle evento — { eventos: [], idx: 0 }
     const [detalleData, setDetalleData] = useState(null);
     const [eliminando, setEliminando]   = useState(false);
+    const [confirmarEliminar, setConfirmarEliminar] = useState(false);
 
+    useEffect(() => { setConfirmarEliminar(false); }, [detalleData]);
 
     const eventoActual = detalleData ? detalleData.eventos[detalleData.idx] : null;
 
@@ -284,7 +286,7 @@ export default function Calendario({ user }) {
             )}
 
             {/* grid */}
-            <div className="bg-gris/40 backdrop-blur-sm rounded-2xl border border-white/15 overflow-hidden shadow-2xl">
+            <div className="bg-gris/40 backdrop-blur-sm rounded-lg border-2 border-white/15 overflow-hidden shadow-[4px_4px_0_#7f1212]">
 
                 {/* cabecera días semana */}
                 <div className="grid grid-cols-7 border-b border-white/15">
@@ -372,7 +374,7 @@ export default function Calendario({ user }) {
                 <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={cerrarModal} />
 
-                    <div ref={modalAddRef} role="dialog" aria-modal="true" aria-label="Añadir evento" className="relative bg-gris border border-white/20 rounded-2xl p-6 w-full max-w-md shadow-2xl">
+                    <div ref={modalAddRef} role="dialog" aria-modal="true" aria-label="Añadir evento" className="relative bg-gris border-2 border-white/15 rounded-lg p-6 w-full max-w-md shadow-[4px_4px_0_#FE0000]">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="font-black uppercase tracking-widest text-sm">
                                 Nuevo Evento — <span className="text-ianuarius">{String(modalDia).padStart(2, '0')} {MESES[month]}</span>
@@ -515,7 +517,7 @@ export default function Calendario({ user }) {
                 <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onMouseDown={(e) => { if (e.target === e.currentTarget) setDetalleData(null); }} />
 
-                    <div ref={modalDetalleRef} role="dialog" aria-modal="true" aria-label={eventoActual?.titulo ?? 'Eventos del día'} className="relative bg-gris border border-white/20 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+                    <div ref={modalDetalleRef} role="dialog" aria-modal="true" aria-label={eventoActual?.titulo ?? 'Eventos del día'} className="relative bg-gris border-2 border-white/15 rounded-lg p-6 w-full max-w-sm shadow-[4px_4px_0_#FE0000]">
                         <div className="flex items-start justify-between mb-4">
                             {eventoActual ? (
                                 <span className={`text-[9px] font-bold px-2 py-1 rounded border uppercase tracking-wider ${TIPO_EVENTO_COLOR[eventoActual.tipo_evento] ?? 'bg-white/10 text-gray-300 border-white/20'}`}>
@@ -613,13 +615,33 @@ export default function Calendario({ user }) {
                                 )}
 
                                 {puedeEditar && (
-                                    <button
-                                        onClick={() => handleEliminar(eventoActual.id_evento)}
-                                        disabled={eliminando}
-                                        className="w-full py-2.5 text-[10px] font-bold uppercase tracking-widest border border-ianuarius/40 text-ianuarius rounded-lg hover:bg-ianuarius hover:text-white transition disabled:opacity-50"
-                                    >
-                                        {eliminando ? '...' : 'Eliminar evento'}
-                                    </button>
+                                    confirmarEliminar ? (
+                                        <div style={{ border: '2px solid #FE0000', borderRadius: '5px', padding: '12px', background: 'rgba(254,0,0,0.07)' }}>
+                                            <p className="text-white text-[10px] font-black uppercase tracking-widest text-center mb-3">¿Eliminar este evento?</p>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => { handleEliminar(eventoActual.id_evento); setConfirmarEliminar(false); }}
+                                                    disabled={eliminando}
+                                                    className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest bg-red-700 text-white rounded border-2 border-red-700 shadow-[3px_3px_0_#7f1212] neo-press disabled:opacity-50 disabled:cursor-not-allowed"
+                                                >
+                                                    {eliminando ? '...' : 'Confirmar'}
+                                                </button>
+                                                <button
+                                                    onClick={() => setConfirmarEliminar(false)}
+                                                    className="flex-1 py-2 text-[10px] font-bold uppercase tracking-widest bg-oscuro text-gray-400 rounded border-2 border-[#4B5563] shadow-[3px_3px_0_#374151] neo-press hover:text-white transition"
+                                                >
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <button
+                                            onClick={() => setConfirmarEliminar(true)}
+                                            className="w-full py-2.5 text-[10px] font-bold uppercase tracking-widest bg-oscuro text-red-400 rounded border-2 border-red-700/50 shadow-[3px_3px_0_#7f1212] neo-press"
+                                        >
+                                            Eliminar evento
+                                        </button>
+                                    )
                                 )}
                             </>
                         ) : (
@@ -629,7 +651,7 @@ export default function Calendario({ user }) {
                         {puedeEditar && detalleData.dia && (
                             <button
                                 onClick={() => { setDetalleData(null); abrirModal(detalleData.dia); }}
-                                className="w-full mt-3 py-2.5 label-caps bg-ianuarius text-white rounded-lg hover:bg-red-700 transition"
+                                className="w-full mt-3 py-2.5 label-caps bg-ianuarius text-white rounded border-2 border-[#FE0000] shadow-[4px_4px_0_#7f1212] neo-press"
                             >
                                 + Añadir evento
                             </button>

@@ -127,6 +127,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					border-radius: 6px; background: rgba(255,255,255,0.1);
 					font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
 					transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); overflow: hidden;
+					box-shadow: 3px 3px 0 #7f1212;
 				}
 				.btn-acceder::before {
 					content: ''; position: absolute; inset: 0;
@@ -213,7 +214,7 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					border-radius: 6px; background: rgba(255,255,255,0.1);
 					font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
 					transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); overflow: hidden;
-					box-shadow: 0 0 20px rgba(254,0,0,0.4);
+					box-shadow: 4px 4px 0 rgba(255,255,255,0.15);
 				}
 				.btn-registrarse::before {
 					content: ''; position: absolute; inset: 0;
