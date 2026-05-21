@@ -221,7 +221,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 					)}
 
 					{user?.rol === 'Admin' && (
-						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Tus Marcas</button>
+						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Mis Marcas</button>
 					)}
 
 					{user?.rol === 'Entrenador' && (
@@ -229,7 +229,7 @@ export default function Layout({ children, user, onLogout, onUserUpdate, current
 					)}
 
 					{user?.rol === 'Entrenador' && (
-						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Tus Marcas</button>
+						<button onClick={() => { onNavigate?.('marcas'); setIsMenuOpen(false); }} className={`block w-full text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'marcas' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>Mis Marcas</button>
 					)}
 
 					<button onClick={() => { onNavigate?.('perfil'); setIsMenuOpen(false); }} className={`flex w-full items-center justify-between text-left text-base lg:text-sm uppercase tracking-widest font-bold hover:translate-x-2 transition transform ${currentView === 'perfil' ? 'text-ianuarius' : 'text-gray-400 hover:text-white'}`}>

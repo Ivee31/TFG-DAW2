@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useRef, useMemo } from 'react';
 import { API } from '../api';
 import Tooltip from './Tooltip';
+import SelectorOpciones from './SelectorOpciones';
 
 const inputClasses = "w-full p-2 bg-oscuro text-white border border-gray-600 rounded focus:border-ianuarius focus:ring-2 focus:ring-ianuarius/40 text-sm";
 const labelClasses = "block text-gray-400 mb-1 text-xs";
@@ -765,22 +766,16 @@ export default function Perfil({ user, onUserUpdate, onNavigate }) {
 								</select>
 							</div>
 
-							<div className="flex gap-1.5" role="group" aria-label="Filtrar por modalidad">
-								{[['', 'Todas'], ['outdoor', 'Outdoor'], ['short_track', 'Indoor']].map(([val, label]) => (
-									<button
-										key={val}
-										onClick={() => setFilterTemporada(val)}
-										aria-pressed={filterTemporada === val}
-										className={`flex-1 py-1.5 text-[9px] font-black uppercase tracking-widest rounded transition ${
-											filterTemporada === val
-												? 'bg-ianuarius text-white'
-												: 'border border-white/20 text-gray-400 hover:text-white hover:border-white/30'
-										}`}
-									>
-										{label}
-									</button>
-								))}
-							</div>
+							<SelectorOpciones
+								nombre="historial-temporada"
+								valor={filterTemporada}
+								onChange={setFilterTemporada}
+								opciones={[
+									{ valor: '',            etiqueta: 'Todas'   },
+									{ valor: 'outdoor',     etiqueta: 'Outdoor' },
+									{ valor: 'short_track', etiqueta: 'Indoor'  },
+								]}
+							/>
 						</div>
 
 						{/* lista */}
