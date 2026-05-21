@@ -139,12 +139,13 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 					transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); overflow: hidden;
 				}
 				.btn-acceder::before {
-					content: ''; position: absolute; inset: 0; margin: auto;
-					width: 50px; height: 50px; border-radius: inherit; scale: 0; z-index: -1;
-					background: #FE0000; transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+					content: ''; position: absolute; inset: 0;
+					background: #FE0000;
+					clip-path: circle(0% at center);
+					transition: clip-path 0.9s cubic-bezier(0.23, 1, 0.320, 1);
 				}
-				.btn-acceder:hover::before { scale: 3; }
-				.btn-acceder:hover { border-color: #FE0000; scale: 1.05; box-shadow: 0 0 20px rgba(254,0,0,0.4); }
+				.btn-acceder:hover::before { clip-path: circle(150% at center); transition: clip-path 1.5s cubic-bezier(0.23, 1, 0.320, 1); }
+				.btn-acceder:hover { border-color: #FE0000; box-shadow: 0 0 20px rgba(254,0,0,0.4); scale: 1.05; }
 				.btn-acceder:active { scale: 1; }
 
 				/* --- Saber más / Leer más buttons --- */
@@ -208,24 +209,31 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 				.btn-saber-sm:hover .arrow { background: #fff; transform: translate(0.65rem, 0); }
 				.btn-saber:hover .btn-text, .btn-saber-sm:hover .btn-text { color: #fff; }
 
-				/* --- Registrarse button (inverso de Acceder) --- */
+				@property --reg-hole {
+					syntax: '<percentage>';
+					inherits: false;
+					initial-value: 0%;
+				}
+
+				/* --- Registrarse button --- */
 				.btn-registrarse {
 					cursor: pointer; position: relative;
 					padding: 10px 32px; font-size: 10px;
 					color: #ffffff; border: 2px solid #FE0000;
-					border-radius: 6px; background: transparent;
+					border-radius: 6px; background: rgba(255,255,255,0.1);
 					font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
 					transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); overflow: hidden;
 					box-shadow: 0 0 20px rgba(254,0,0,0.4);
-					isolation: isolate;
 				}
 				.btn-registrarse::before {
-					content: ''; position: absolute; inset: 0; margin: auto;
-					width: 50px; height: 50px; border-radius: inherit; scale: 3; z-index: -1;
-					background: #FE0000; transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+					content: ''; position: absolute; inset: 0;
+					background: #FE0000;
+					mask-image: radial-gradient(circle, transparent 0%, transparent var(--reg-hole), black var(--reg-hole));
+					-webkit-mask-image: radial-gradient(circle, transparent 0%, transparent var(--reg-hole), black var(--reg-hole));
+					transition: --reg-hole 0.9s cubic-bezier(0.23, 1, 0.320, 1);
 				}
-				.btn-registrarse:hover::before { scale: 0; }
-				.btn-registrarse:hover { border-color: rgba(255,255,255,0.4); box-shadow: none; scale: 1.05; background: rgba(255,255,255,0.1); }
+				.btn-registrarse:hover::before { --reg-hole: 150%; transition: --reg-hole 1.5s cubic-bezier(0.23, 1, 0.320, 1); }
+				.btn-registrarse:hover { border-color: rgba(255,255,255,0.4); box-shadow: none; scale: 1.05; }
 				.btn-registrarse:active { scale: 1; }
 
 				/* --- Leer más button (versión roja pequeña) --- */
@@ -337,13 +345,12 @@ export default function Home({ onLoginSuccess, onGoogleNeedsCompletion }) {
 						>
 							<span className="relative z-10">Registrarse</span>
 						</button>
-
 						<button
 							onClick={openLogin}
 							className="btn-acceder"
 							aria-label="Acceder a la plataforma Ianuarius"
 						>
-							Acceder
+							<span className="relative z-10">Acceder</span>
 						</button>
 					</div>
 
