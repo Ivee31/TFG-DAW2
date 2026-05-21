@@ -65,8 +65,11 @@ CREATE TABLE `usuarios` (
     `foto_dni`             MEDIUMTEXT DEFAULT NULL,
     `foto_carnet`          MEDIUMTEXT DEFAULT NULL,
     `inscripcion_pdf`      MEDIUMTEXT DEFAULT NULL,
-    `notificaciones_email` TINYINT(1) NOT NULL DEFAULT 1,
-    `frecuencia_notif`     VARCHAR(10) NOT NULL DEFAULT 'alta',
+    `notificaciones_email`       TINYINT(1) NOT NULL DEFAULT 1,
+    `frecuencia_notif`           VARCHAR(10) NOT NULL DEFAULT 'alta',
+    `email_verificado`           TINYINT(1) NOT NULL DEFAULT 0,
+    `email_token_verificacion`   VARCHAR(64) DEFAULT NULL,
+    `email_token_expires`        DATETIME DEFAULT NULL,
     FOREIGN KEY (`id_categoria`) REFERENCES `categorias`(`id_categoria`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -413,8 +416,8 @@ INSERT INTO `pruebas_variantes` (`id_prueba`, `id_categoria`, `genero_aplicable`
 -- USUARIO ADMINISTRADOR POR DEFECTO
 -- Contraseña: password
 -- ========================================================
-INSERT INTO `usuarios` (`id_categoria`, `nombre`, `apellidos`, `dni`, `email`, `password_hash`, `rol`, `fecha_nacimiento`, `genero`, `estado_cuenta`) VALUES
-(NULL, 'Admin', 'Ianuarius', '00000000A', 'admin@ianuarius.com', '$2y$12$IwbfV5lhLBrPsPVSuLB1q.H1EM5GxHIltCOj.xIaVfhEcoSKtCS7y', 'Admin', '2000-01-01', 'M', 1);
+INSERT INTO `usuarios` (`id_categoria`, `nombre`, `apellidos`, `dni`, `email`, `password_hash`, `rol`, `fecha_nacimiento`, `genero`, `estado_cuenta`, `email_verificado`) VALUES
+(NULL, 'Admin', 'Ianuarius', '00000000A', 'admin@ianuarius.com', '$2y$12$IwbfV5lhLBrPsPVSuLB1q.H1EM5GxHIltCOj.xIaVfhEcoSKtCS7y', 'Admin', '2000-01-01', 'M', 1, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
 COMMIT;
