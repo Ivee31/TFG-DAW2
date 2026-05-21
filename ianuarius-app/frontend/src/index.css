@@ -214,7 +214,7 @@ select option {
     border-radius: 50px;
     width: 180px;
     cursor: pointer;
-    transition: width 0.4s ease, border-color 0.4s ease;
+    transition: width 0.28s ease, border-color 0.28s ease;
     padding: 5px;
     position: relative;
     overflow: hidden;
@@ -246,7 +246,7 @@ select option {
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
-    transition: background-color 0.4s ease, rotate 0.4s ease;
+    transition: background-color 0.28s ease, rotate 0.28s ease;
 }
 .btn-descarga--descargando .btn-descarga__circulo {
     animation: bd-pulse 0.3s forwards;
@@ -263,7 +263,7 @@ select option {
     transition: opacity 0.25s ease;
 }
 .btn-descarga--descargando .btn-descarga__circulo::before {
-    animation: bd-installing 0.7s ease-in-out forwards;
+    animation: bd-installing 0.5s ease-in-out forwards;
 }
 .btn-descarga--listo .btn-descarga__circulo::before { opacity: 0; }
 .btn-descarga__icono {
